@@ -1,1 +1,52 @@
 <!--Die Index.html ist die Startseite also wäre das die log-in.html.-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style/log_in.css">
+    <script src="./js/storage.js"></script>
+    <script src="./js/log_in.js"></script>
+    <title>Log In</title>
+</head>
+
+<body class="background-color-F6F7F8" onload="init()">
+
+    <div class="rigister-user">
+        <span>Not a Join user?</span>
+        <button class="btn btn-primary ">Sign up</button>
+    </div>
+
+    <div class="content-log-in">
+        <div id="log_in" class="log-in">
+            <div class="log-in-logo">
+                <img src="./assets/img/log_in_logo.svg" alt="">
+            </div>
+            <form onsubmit="logIn(); return false">
+                <div class="mb-3">
+                    <input type="email" class="form-control email-input" id="email_log_in" placeholder="Email ">
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" id="password_log_in" placeholder="Password">
+                </div>
+                <div class="mb-3 form-check d-flex-around">
+                    <div>
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Remember me</label>
+                    </div>
+                        <a href="#">I forgot my password</a>
+                </div>
+                <div class="submit-button">
+                    <button type="submit" class="btn btn-primary login-button">Log in</button>
+                    <button type="submit" class="btn btn-primary login-guest-button" onclick="logIn('guest@guest.com', '12345678')">Guest Log in</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
