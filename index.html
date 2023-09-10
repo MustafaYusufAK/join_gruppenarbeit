@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="./font/fonts.css">
     <link rel="stylesheet" href="./style/log_in.css">
     <script src="./js/storage.js"></script>
     <script src="./js/log_in.js"></script>
@@ -15,10 +16,14 @@
 </head>
 
 <body class="background-color-F6F7F8" onload="init()">
+    <div id="startscreen_logo" class="startscreen-logo">
+        <img id="join_logo" src="./assets/img/Capa1.svg" alt="">
+    </div>
 
-    <div class="rigister-user">
+
+    <div class="rigister-user-login">
         <span>Not a Join user?</span>
-        <button class="btn btn-primary ">Sign up</button>
+        <button class="sign-up-login-btn login-btn-filled">Sign up</button>
     </div>
 
     <div class="content-log-in">
@@ -27,22 +32,57 @@
                 <img src="./assets/img/log_in_logo.svg" alt="">
             </div>
             <form onsubmit="logIn(); return false">
-                <div class="mb-3">
-                    <input type="email" class="form-control email-input" id="email_log_in" placeholder="Email ">
+                <div id="log_in_email" class="log-in-input mb-3">
+                    <input required type="email" class="email-input" id="email_log_in" placeholder="Email" onmouseup="resetWrongEnter()">
+                    <div class="password-icon"><img src="./assets/img/mail.svg" alt=""></div>
+                    <label for="content">User don´t excist</label>
                 </div>
-                <div class="mb-3">
-                    <input type="password" class="form-control" id="password_log_in" placeholder="Password">
+                <div id="log_in_password" class="log-in-input mb-3">
+                    <input required type="password" class="" id="password_log_in" placeholder="Password" onmouseup="resetWrongEnter(); showPasswordIcon()">
+                    <div class="password-icon"><img id="password_icon" src="./assets/img/lock.svg" alt=""></div>
+                    <label for="content">Wrong password Ups! Try again.</label>
                 </div>
                 <div class="mb-3 form-check d-flex-around">
                     <div>
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <input type="checkbox" class="form-check-input">
                         <label class="form-check-label" for="exampleCheck1">Remember me</label>
                     </div>
                         <a href="#">I forgot my password</a>
                 </div>
-                <div class="submit-button">
-                    <button type="submit" class="btn btn-primary login-button">Log in</button>
-                    <button type="submit" class="btn btn-primary login-guest-button" onclick="logIn('guest@guest.com', '12345678')">Guest Log in</button>
+                <div class="submit-btn">
+                    <button type="submit" class="login-btn login-btn-filled">Log in</button>
+                    <button type="submit" class="login-guest-btn" onclick="logIn('guest@guest.com', '12345678')">Guest Log in</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="content-log-in d-none">
+        <div id="sign_up" class="log-in">
+            <div class="log-in-logo">
+                <img src="./assets/img/sign_up.svg" alt="">
+            </div>
+            <form onsubmit="signUp(); return false">
+                <div class="mb-3">
+                    <input required type="text" class="form-control" id="name_sign_up" placeholder="Name">
+                </div>
+                <div class="mb-3">
+                    <input required type="email" class="form-control email-input" id="email_sign_up" placeholder="Email ">
+                </div>
+                <div class="mb-3">
+                    <input required type="password" class="form-control" id="password1_sign_up" placeholder="Password">
+                </div>
+                <div class="mb-3">
+                    <input required type="password" class="form-control" id="password2_sign_up" placeholder="Password">
+                </div>
+                <div class="mb-3 form-check d-flex-around">
+                    <div>
+                        <input required type="checkbox" class="form-check-input">
+                        <label class="form-check-label" for="exampleCheck1">I accept the <a href="">Privacy policy</a></label>
+                    </div>                       
+                </div>
+                <div class="submit-btn">
+                    <button type="submit" class="signup-btn login-btn-filled">Sign up</button>
                 </div>
             </form>
         </div>
