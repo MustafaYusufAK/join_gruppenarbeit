@@ -23,6 +23,13 @@ body {
     background-color: #29abe2;
 }
 
+.log-in-form {
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .rigister-user-login {
     position: absolute;
     top: 67px;
@@ -43,6 +50,20 @@ body {
     align-items: center;
     background-color: #F6F7F8;
     z-index: 1;
+}
+
+.startscreen-logo-side {
+    position: absolute;
+    top: 80px;
+    left: 77px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F6F7F8;
+}
+
+.startscreen-logo-side img {
+    width: 100px;
 }
 
 @keyframes reduceLogo {
@@ -69,8 +90,16 @@ body {
     }
 }
 
+
 .form-control {
     border: 1px solid #E2E2E2 !important;
+}
+
+.form-check-input {
+    border: 2px solid #2A3647;
+    border-radius: 3px !important;
+    width: 16px;
+    height: 16px;
 }
 
 .font-size-16-400 {
@@ -84,18 +113,18 @@ body {
     outline: none;
     padding: 12px 21px;
     border-radius: 10px;
-    border: 1px solid #E2E2E2;
+    border: 1px solid #D1D1D1
 }
 
 .log-in-input input::placeholder {
     font-size: 20px;
-    color: #E2E2E2;
+    color: #D1D1D1;
     opacity: 1;
 }
 
 .log-in-input label {
-    margin-top: 18px;
-    font-size: 12px;
+    margin-top: 12px;
+    font-size: 10px;
     color: #FFFFFF;
 }
 
@@ -114,6 +143,11 @@ body {
     margin-top: -34px;
 }
 
+.password-icon img {
+    width: 24px;
+    height: 24px;
+}
+
 .d-flex-around {
     display: flex;
     justify-content: space-around;
@@ -128,13 +162,7 @@ a:hover {
     text-decoration: underline;
 }
 
-/*.email-input {
-    background-image: url(../assets/img/mail.svg);
-    background-repeat: no-repeat;
-    background-position: 95% center;
-    background-size: 20px 16px;
 
-}*/
 
 .content-log-in {
     width: 100%;
@@ -158,6 +186,7 @@ a:hover {
 
 .mb-3 {
     width: 400px;
+    margin-bottom: 0 !important;
 }
 
 .submit-btn {
@@ -201,6 +230,49 @@ a:hover {
     background-color: #2A3647;
     color: #FFFFFF;
 }
+
+
+
+/*----------------------------Sign up----------------------------*/
+.sign-up-form {
+    height: 430px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.sign-up {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #FFFFFF;
+    width: 598px;
+    height: 630px;
+    padding: 30px 115px;
+    border-radius: 30px;
+}
+
+/*.name-sign-up-bg{
+    background-image: url(../assets/img/user_icon.svg);
+    background-repeat: no-repeat;
+    background-position: 95% center;
+    background-size: 24px 24px;
+}
+
+.email-sign-up-bg {
+    background-image: url(../assets/img/mail.svg);
+    background-repeat: no-repeat;
+    background-position: 95% center;
+    background-size: 20px 16px;
+
+}
+
+.password-sign-up-bg {
+    background-image: url(../assets/img/lock.svg);
+    background-repeat: no-repeat;
+    background-position: 95% center;
+    background-size: 24px 24px;
+}*/
 
 .sign-up-login-btn {
     width: 91px;
