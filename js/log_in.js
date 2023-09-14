@@ -23,18 +23,17 @@ async function loadUsers() {
 
 function logIn(guestemail, guestpassword) {
     let email = document.getElementById('email_log_in');
-    let password = document.getElementById('password1');
+    let password = document.getElementById('password1_input');
 
     if (guestemail == 'guest@guest.com') {
         email.value = guestemail;
         password.value = guestpassword;
-        console.log('Guest Log in')
 
     } else {
         let user = users.find(u => u.email == email.value && u.password == password.value);
         console.log(user);
         if (user) {
-            console.log('User gefunden');
+            window.location.href = 'summary.html?msg=Welcomme to Join';
         } else {
             wrongEnter(email.value, password.value);
         }
@@ -48,16 +47,13 @@ function wrongEnter(emailValue, passwordValue) {
     let password = users.find(u => u.password == passwordValue);
 
     if (email && !password) {
-        console.log('email korrekt');
         passwordInput.classList.add('log-in-wrong')
     }
     if (!email && password) {
-        console.log('password korrekt');
         emailInput.classList.add('log-in-wrong')
 
     }
     if (!email && !password) {
-        console.log('alles falsch');
         emailInput.classList.add('log-in-wrong')
         passwordInput.classList.add('log-in-wrong')
     }
@@ -65,7 +61,7 @@ function wrongEnter(emailValue, passwordValue) {
 
 
 function resetWrongEnter(id) {
-    if(id){
+    if (id) {
         document.getElementById(id).classList.remove('log-in-wrong');
     }
 }
@@ -86,27 +82,30 @@ async function signUp() {
                 password: password1.value,
             })
             await setItem('users', JSON.stringify(users));
-            //resetForm();
-            //window.location.href = 'login.html?msg=Du hast dich erfolgreich registiert';
+            //window.location.href = 'summary.html?msg=Du hast dich erfolgreich registiert';
         } else if (password1.value != password2.value) {
             document.getElementById('password2').classList.add('log-in-wrong');
         }
     } else {
         document.getElementById('email').classList.add('log-in-wrong');
     }
-    resetForm();
 }
 
 function showPasswordIcon(password) {
-    let password1 = document.getElementById('password1_icon')
-    let password2 = document.getElementById('password2_icon')
+    let password1 = document.getElementById('password1')
+    let password2 = document.getElementById('password2')
     if (password == 'password1') {
-        password1.src = './assets/img/eye.png'
-        password1.onclick = function () { showPassword('password1'); };
+        password1.innerHTML = `
+        <input required type="password" class="" id="password1_input" placeholder="Password" onmouseup="resetWrongEnter('password1');">
+        <div class="password-icon"><img onclick="showPassword('password1')" id="password1_icon" src="./assets/img/visibility_off.svg" alt=""></div>
+        <label for="content">Wrong password Ups! Try again.</label>`
     }
     if (password == 'password2') {
-        password2.src = './assets/img/eye.png'
-        password2.onclick = function () { showPassword('password2'); };
+        password2.innerHTML = `
+        <input required type="password" class="" id="password2_input" placeholder="Password" onmouseup="resetWrongEnter('password2');">
+        <div class="password-icon"><img onclick="showPassword('password2')" id="password2_icon" src="./assets/img/visibility_off.svg" alt=""></div>
+        <label for="content">Wrong password Ups! Try again.</label>`
+        
     }
 }
 
@@ -115,16 +114,14 @@ function showPassword(password) {
     let password1 = document.getElementById('password1_icon')
     let password2 = document.getElementById('password2_icon')
     if (password == 'password1') {
-        password1.src = './assets/img/mail.svg'
+        password1.src = './assets/img/visibility.svg'
         password1.onclick = function () { hidePassword('password1'); };
-        //document.getElementById('password1').removeEventListener('mouseup', showPasswordIcon('password1'))
-        document.getElementById('password1').type = "text";
+        document.getElementById('password1_input').type = "text";
     }
     if (password == 'password2') {
-        password2.src = './assets/img/mail.svg'
+        password2.src = './assets/img/visibility.svg'
         password2.onclick = function () { hidePassword('password2'); };
-        document.getElementById('password2').onmouseup = function () { resetWrongEnter(); };
-        document.getElementById('password2').type = "text";
+        document.getElementById('password2_input').type = "text";
     }
 }
 
@@ -132,16 +129,14 @@ function hidePassword(password) {
     let password1 = document.getElementById('password1_icon')
     let password2 = document.getElementById('password2_icon')
     if (password == 'password1') {
-        password1.src = './assets/img/mail.svg'
-        password1.onclick = function () { hidePassword('password1'); };
-        document.getElementById('password1').onmouseup = function () { resetWrongEnter(), showPasswordIcon('password1') };
-        document.getElementById('password1').type = "text";
+        password1.src = './assets/img/visibility_off.svg'
+        password1.onclick = function () { showPassword('password1'); };
+        document.getElementById('password1_input').type = "password";
     }
     if (password == 'password2') {
-        password2.src = './assets/img/mail.svg'
-        password2.onclick = function () { hidePassword('password2'); };
-        document.getElementById('password2').onmouseup = function () { resetWrongEnter(), showPasswordIcon('password2'); };
-        document.getElementById('password2').type = "text";
+        password2.src = './assets/img/visibility_off.svg'
+        password2.onclick = function () { showPassword('password2'); };
+        document.getElementById('password2_input').type = "password";
     }
 }
 
