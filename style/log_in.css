@@ -42,7 +42,7 @@ h1 {
 }
 
 .log-in-form {
-    /*height: 250px;*/
+    height: 250px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -101,10 +101,14 @@ h1 {
         background-color: rgba(246, 247, 248, 100%);
     }
 
+    50% {
+        background-color: rgba(246, 247, 248, 50%);
+    }
+
     100% {
         width: 100px;
         height: 122px;
-        background-color: rgba(246, 247, 248, 0%);
+        background-color: none;
     }
 }
 
@@ -154,14 +158,14 @@ h1 {
     border: 1px solid #FF4057;
 }
 
-.password-icon {
+.input-icon {
     width: 401px;
     display: flex;
     justify-content: flex-end;
     margin-top: -34px;
 }
 
-.password-icon img {
+.input-icon img {
     width: 24px;
     height: 24px;
 }
@@ -300,27 +304,43 @@ a:hover {
     margin-right: 90px;
 }
 
-/*.name-sign-up-bg{
-    background-image: url(../assets/img/user_icon.svg);
-    background-repeat: no-repeat;
-    background-position: 95% center;
-    background-size: 24px 24px;
+.sign-up-succesfully-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }
 
-.email-sign-up-bg {
-    background-image: url(../assets/img/mail.svg);
-    background-repeat: no-repeat;
-    background-position: 95% center;
-    background-size: 20px 16px;
-
+.sign-up-succesfully {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 312px;
+    height: 74px;
+    padding: 0px 25px;
+    border-radius: 20px;
+    border: none;
+    background-color: #2A3647;
 }
 
-.password-sign-up-bg {
-    background-image: url(../assets/img/lock.svg);
-    background-repeat: no-repeat;
-    background-position: 95% center;
-    background-size: 24px 24px;
-}*/
+.sign-up-succesfully span {
+    font-size: 20px;
+    font-weight: 400;
+    color: #FFFFFF;
+}
+
+@keyframes signUpSuccesfull {
+    0% {
+        /*display: flex;*/
+        bottom: 0;
+    }
+
+    100% {
+        bottom: 50vh;
+    }
+}
 
 .sign-up-login-btn {
     width: 91px;
@@ -336,7 +356,6 @@ a:hover {
 
 /*----------------------------Forgot Password----------------------------*/
 .forgot-password-form {
-    height: 150px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -351,6 +370,11 @@ a:hover {
     height: 441px;
     padding: 30px 115px;
     border-radius: 30px;
+}
+
+.forgot-password-logo {
+    gap: 15px;
+    margin-right: 32px;
 }
 
 .forgot-password span{

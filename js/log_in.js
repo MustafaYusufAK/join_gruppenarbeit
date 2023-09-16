@@ -10,24 +10,16 @@ function init() {
     playAnimation();
 }
 
-async function loadUsers() {
-    try {
-        users = JSON.parse(await getItem('users'));
-    } catch (e) {
-        console.error('Loading error:', e);
-    }
-
-}
-
 //log in funktion
 
-function logIn(guestemail, guestpassword) {
+function logIn(guest) {
     let email = document.getElementById('email_log_in');
     let password = document.getElementById('password1_input');
 
-    if (guestemail == 'guest@guest.com') {
-        email.value = guestemail;
-        password.value = guestpassword;
+    if (guest == 'guest@guest.com') {
+        let user = users.find(u => u.email == guest)
+        email.value = user.email;
+        password.value = user.password;
 
     } else {
         let user = users.find(u => u.email == email.value && u.password == password.value);
@@ -74,6 +66,7 @@ async function signUp() {
     let password1 = document.getElementById('password1_input');
     let password2 = document.getElementById('password2_input');
     let emailChecked = users.find(u => u.email == email.value.toLowerCase());
+    let signUpSuccesfully = document.getElementById('sign_up_succesfully');
     if (!emailChecked) {
         if (password1.value == password2.value) {
             users.push({
@@ -81,14 +74,18 @@ async function signUp() {
                 email: email.value.toLowerCase(),
                 password: password1.value,
             })
-            await setItem('users', JSON.stringify(users));
-            //window.location.href = 'summary.html?msg=Du hast dich erfolgreich registiert';
+            //await setItem('users', JSON.stringify(users));
+            signUpSuccesfully.classList.remove('d-none')
+            signUpSuccesfully.style.animation = 'signUpSuccesfull 125ms ease-in-out forwards'
+            console.log('Done');
+            
         } else if (password1.value != password2.value) {
             document.getElementById('password2').classList.add('log-in-wrong');
         }
     } else {
         document.getElementById('email').classList.add('log-in-wrong');
     }
+    setTimeout(function() {window.location.href = 'index.html?msg=Welcomme to Join'}, 800)
 }
 
 function showPasswordIcon(password) {
@@ -97,15 +94,15 @@ function showPasswordIcon(password) {
     if (password == 'password1') {
         password1.innerHTML = `
         <input required type="password" class="" id="password1_input" placeholder="Password" onmouseup="resetWrongEnter('password1');">
-        <div class="password-icon"><img onclick="showPassword('password1')" id="password1_icon" src="./assets/img/visibility_off.svg" alt=""></div>
+        <div class="input-icon"><img onclick="showPassword('password1')" id="password1_icon" src="./assets/img/visibility_off.svg" alt=""></div>
         <label for="content">Wrong password Ups! Try again.</label>`
     }
     if (password == 'password2') {
         password2.innerHTML = `
         <input required type="password" class="" id="password2_input" placeholder="Password" onmouseup="resetWrongEnter('password2');">
-        <div class="password-icon"><img onclick="showPassword('password2')" id="password2_icon" src="./assets/img/visibility_off.svg" alt=""></div>
+        <div class="input-icon"><img onclick="showPassword('password2')" id="password2_icon" src="./assets/img/visibility_off.svg" alt=""></div>
         <label for="content">Wrong password Ups! Try again.</label>`
-        
+
     }
 }
 
@@ -169,17 +166,32 @@ function playAnimation() {
     logo.style.animation = 'reduceLogo 1s ease-in-out forwards';
 }
 
+function showForgotPassword() {
+    let lognInCard = document.getElementById('log_in_card');
+    let signUpCard = document.getElementById('sign_up_btn_card');
+    let forgotPasswordCard = document.getElementById('forgot_password_card');
 
-/*function signUp() {
-    let name = document.getElementById('name_sign_up');
-    let email = document.getElementById('email_sign_up');
-    let password1 = document.getElementById('password1');
-    let password2 = document.getElementById('password2');
+    lognInCard.classList.add('d-none');
+    signUpCard.classList.add('d-none');
+    forgotPasswordCard.classList.remove('d-none');
+}
 
+function resetPassword() {
+    let password1 = document.getElementById('password1_input');
+    let password2 = document.getElementById('password2_input');
+    //let msgBox = document.getElementById('msg_box');
+    const urlParams = new URLSearchParams(window.location.search);
+    const msg = urlParams.get('msg');
+
+    //console.log('Password erfolgreich zurückgesetzt', msg)
     if (password1.value == password2.value) {
-        console.log('User angelegt');
-    } else {
-        console.log('User password nicht gleich');
-    }
+        let user = users.find(u => u.email === msg);
+        console.log('Password erfolgreich zurückgesetzt', user)
+        user.password = password1.value;
+        setItem('users', JSON.stringify(users));
 
-}*/
+    } else if (password1.value != password2.value) {
+        document.getElementById('password2').classList.add('log-in-wrong');
+    }
+}
+

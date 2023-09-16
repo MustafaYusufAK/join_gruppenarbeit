@@ -24,7 +24,9 @@
     <div class="content-log-in">
         <div id="sign_up" class="sign-up">
             <div class="sign-up-logo logo-input">
-                <img class="arrow-left-line" src="./assets/img/arrow-left-line.svg">
+                <a href="index.html">
+                    <img class="arrow-left-line" src="./assets/img/arrow-left-line.svg">
+                </a>
                 <div class="header-logo">
                     <h1>Sign up</h1>
                     <div class="headline-underline"></div>
@@ -34,25 +36,25 @@
 
                 <div id="name" class="log-in-input mb-3">
                     <input required type="text" class="name-sign-up-bg" id="name_sign_up" placeholder="Name">
-                    <div class="password-icon"><img id="user_icon" src="./assets/img/user_icon.svg" alt=""></div>
+                    <div class="input-icon"><img id="user_icon" src="./assets/img/user_icon.svg" alt=""></div>
                     <label for="content">Wrong password Ups! Try again.</label>
                 </div>
 
                 <div id="email" class="log-in-input mb-3">
                     <input required type="email" class="email-sign-up-bg" id="email_sign_up" placeholder="Email" onmouseup="resetWrongEnter('email')">
-                    <div class="password-icon"><img id="email_icon" src="./assets/img/mail.svg" alt=""></div>
+                    <div class="input-icon"><img id="email_icon" src="./assets/img/mail.svg" alt=""></div>
                     <label for="content">Email already exists</label>
                 </div>
 
                 <div id="password1" class="log-in-input mb-3">
                     <input required type="password" class="password-sign-up-bg" id="password1_input" placeholder="Password" onmouseover="showPasswordIcon('password1')">
-                    <div class="password-icon"><img id="password1_icon" src="./assets/img/lock.svg" alt=""></div>
+                    <div class="input-icon"><img id="password1_icon" src="./assets/img/lock.svg" alt=""></div>
                     <label for="content">Wrong password Ups! Try again.</label>
                 </div>
 
                 <div id="password2" class="log-in-input mb-3">
                     <input required type="password" class="password-sign-up-bg" id="password2_input" placeholder="Password" onmouseover="resetWrongEnter('password2'); showPasswordIcon('password2')">
-                    <div class="password-icon"><img id="password2_icon" src="./assets/img/lock.svg" alt=""></div>
+                    <div class="input-icon"><img id="password2_icon" src="./assets/img/lock.svg" alt=""></div>
                     <label for="content">Ups! your password don´t match</label>
                 </div>
 
@@ -66,6 +68,11 @@
                     <button type="submit" class="signup-btn login-btn-filled">Sign up</button>
                 </div>
             </form>
+        </div>
+    </div>
+    <div id="sign_up_succesfully" class="sign-up-succesfully-container d-none">
+        <div class="sign-up-succesfully">
+            <span>You Signed Up successfully</span>
         </div>
     </div>
 </body>

@@ -1,5 +1,3 @@
-<!--Die Index.html ist die Startseite also wäre das die log-in.html.-->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,12 +20,12 @@
     </div>
 
 
-    <div class="rigister-user-login">
+    <div id="sign_up_btn_card" class="rigister-user-login">
         <span>Not a Join user?</span>
         <a href="./signup.html"><button class="sign-up-login-btn login-btn-filled">Sign up</button></a>
     </div>
 
-    <div class="content-log-in d-none">
+    <div id="log_in_card" class="content-log-in">
         <div id="log_in" class="log-in">
             <div class="log-in-logo logo-input">
                 <div class="header-logo">
@@ -36,32 +34,34 @@
                 </div>
             </div>
             <form class="log-in-form" onsubmit="logIn(); return false">
-                <div id="email" class="log-in-input mb-3">
-                    <input required type="email" class="email-input" id="email_log_in" placeholder="Email"
-                        onmouseup="resetWrongEnter('email')">
-                    <div class="password-icon"><img src="./assets/img/mail.svg" alt=""></div>
-                    <label for="content">User don´t excist</label>
-                </div>
-
-                <div id="password1" class="log-in-input mb-3">
-                    <input required type="password" class="" id="password1_input" placeholder="Password"
-                        onmouseup="resetWrongEnter('password1'); showPasswordIcon('password1')">
-                    <div class="password-icon"><img id="password1_icon" src="./assets/img/lock.svg" alt=""></div>
-                    <label for="content">Wrong password Ups! Try again.</label>
-                </div>
-
-                <div class="mb-3 form-check d-flex-around">
-                    <div>
-                        <input type="checkbox" class="form-check-input">
-                        <label class="form-check-label" for="exampleCheck1">Remember me</label>
+                <div>
+                    <div id="email" class="log-in-input mb-3">
+                        <input required type="email" class="email-input" id="email_log_in" placeholder="Email"
+                            onmouseup="resetWrongEnter('email')">
+                        <div class="input-icon">
+                            <img src="./assets/img/mail.svg" alt="">
+                        </div>
+                        <label for="content">User don´t excist</label>
                     </div>
-                    <a href="#">I forgot my password</a>
-                </div>
 
+                    <div id="password1" class="log-in-input mb-3">
+                        <input required type="password" class="" id="password1_input" placeholder="Password"
+                            onmouseup="resetWrongEnter('password1'); showPasswordIcon('password1')">
+                        <div class="input-icon"><img id="password1_icon" src="./assets/img/lock.svg" alt=""></div>
+                        <label for="content">Wrong password Ups! Try again.</label>
+                    </div>
+
+                    <div class="mb-3 form-check d-flex-around">
+                        <div>
+                            <input type="checkbox" class="form-check-input">
+                            <label class="form-check-label" for="exampleCheck1">Remember me</label>
+                        </div>
+                        <a href="#" onclick="showForgotPassword()">I forgot my password</a><a href="resetpassword.html?msg=guest@guest.com">Test Link</a>
+                    </div>
+                </div>
                 <div class="submit-btn">
                     <button type="submit" class="login-btn login-btn-filled">Log in</button>
-                    <button type="submit" class="login-guest-btn" onclick="logIn('guest@guest.com', '12345678')">Guest
-                        Log in</button>
+                    <button type="submit" class="login-guest-btn" onclick="logIn('guest@guest.com')">Guest Log in</button>
                 </div>
             </form>
         </div>
@@ -73,11 +73,13 @@
 
 
 
-    <div class="content-log-in">
+    <div id="forgot_password_card" class="content-log-in d-none">
         <div id="forgot_password" class="forgot-password">
             <div class="log-in-logo logo-input">
-                <div class="sign-up-logo logo-input">
-                    <img class="arrow-left-line" src="./assets/img/arrow-left-line.svg">
+                <div class="forgot-password-logo logo-input">
+                    <a href="index.html">
+                        <img class="arrow-left-line" src="./assets/img/arrow-left-line.svg">
+                    </a>
                     <div class="header-logo">
                         <h1>I forgot my password</h1>
                         <div class="headline-underline"></div>
@@ -85,11 +87,11 @@
                 </div>
             </div>
             <span>Don't worry! We will send you an email with the instructions to reset your password.</span>
-            <form class="log-in-form" onsubmit="sendMail(); return false">
+            <form class="forgot-password-form" onsubmit="sendMail(); return false">
                 <div id="email" class="log-in-input mb-3">
                     <input required type="email" class="email-input" id="email_password_forgot" placeholder="Email"
                         onmouseup="resetWrongEnter('email')">
-                    <div class="password-icon">
+                    <div class="input-icon">
                         <img src="./assets/img/mail.svg" alt="">
                     </div>
                     <label for="content">User don´t excist</label>
