@@ -23,8 +23,12 @@
 
     <div class="content-log-in">
         <div id="sign_up" class="sign-up">
-            <div class="sign-up-logo">
-                <img src="./assets/img/sign_up.svg" alt="">
+            <div class="sign-up-logo logo-input">
+                <img class="arrow-left-line" src="./assets/img/arrow-left-line.svg">
+                <div class="header-logo">
+                    <h1>Sign up</h1>
+                    <div class="headline-underline"></div>
+                </div>
             </div>
             <form class="sign-up-form" onsubmit="signUp(); return false">
 
@@ -41,13 +45,13 @@
                 </div>
 
                 <div id="password1" class="log-in-input mb-3">
-                    <input required type="password" class="password-sign-up-bg" id="password1_input" placeholder="Password" onmouseup="showPasswordIcon('password1')">
+                    <input required type="password" class="password-sign-up-bg" id="password1_input" placeholder="Password" onmouseover="showPasswordIcon('password1')">
                     <div class="password-icon"><img id="password1_icon" src="./assets/img/lock.svg" alt=""></div>
                     <label for="content">Wrong password Ups! Try again.</label>
                 </div>
 
                 <div id="password2" class="log-in-input mb-3">
-                    <input required type="password" class="password-sign-up-bg" id="password2_input" placeholder="Password" onmouseup="resetWrongEnter('password2'); showPasswordIcon('password2')">
+                    <input required type="password" class="password-sign-up-bg" id="password2_input" placeholder="Password" onmouseover="resetWrongEnter('password2'); showPasswordIcon('password2')">
                     <div class="password-icon"><img id="password2_icon" src="./assets/img/lock.svg" alt=""></div>
                     <label for="content">Ups! your password don´t match</label>
                 </div>

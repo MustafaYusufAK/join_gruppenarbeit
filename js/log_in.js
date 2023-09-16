@@ -43,7 +43,7 @@ function logIn(guestemail, guestpassword) {
 function wrongEnter(emailValue, passwordValue) {
     let emailInput = document.getElementById('email')
     let passwordInput = document.getElementById('password1')
-    let email = users.find(u => u.email == emailValue);
+    let email = users.find(u => u.email == emailValue.toLowerCase());
     let password = users.find(u => u.password == passwordValue);
 
     if (email && !password) {
@@ -71,8 +71,8 @@ async function signUp() {
     //register_button.disabled = true;
     let name = document.getElementById('name_sign_up');
     let email = document.getElementById('email_sign_up');
-    let password1 = document.getElementById('password1_sign_up');
-    let password2 = document.getElementById('password2_sign_up');
+    let password1 = document.getElementById('password1_input');
+    let password2 = document.getElementById('password2_input');
     let emailChecked = users.find(u => u.email == email.value.toLowerCase());
     if (!emailChecked) {
         if (password1.value == password2.value) {
