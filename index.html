@@ -47,63 +47,27 @@
                     <div id="password1" class="log-in-input mb-3">
                         <input required type="password" class="" id="password1_input" placeholder="Password"
                             onmouseup="resetWrongEnter('password1'); showPasswordIcon('password1')">
-                        <div class="input-icon"><img id="password1_icon" src="./assets/img/lock.svg" alt=""></div>
+                        <div id="input_icon_password1" class="input-icon">
+                            <img id="password1_icon" src="./assets/img/lock.svg" alt="">
+                        </div>
                         <label for="content">Wrong password Ups! Try again.</label>
                     </div>
 
                     <div class="mb-3 form-check d-flex-around">
                         <div>
-                            <input type="checkbox" class="form-check-input">
+                            <img id="check_btn" src="./assets/img/checkbutton.svg" onclick="checkBtnLogIn()">
                             <label class="form-check-label" for="exampleCheck1">Remember me</label>
                         </div>
-                        <a href="#" onclick="showForgotPassword()">I forgot my password</a><a href="resetpassword.html?msg=guest@guest.com">Test Link</a>
+                        <a href="./forgotmypassword.html">I forgot my password</a><a href="resetpassword.html?msg=guest@guest.com">Test Link</a>
                     </div>
                 </div>
                 <div class="submit-btn">
-                    <button type="submit" class="login-btn login-btn-filled">Log in</button>
+                    <button id="log_in_btn" type="submit" class="login-btn login-btn-filled">Log in</button>
                     <button type="submit" class="login-guest-btn" onclick="logIn('guest@guest.com')">Guest Log in</button>
                 </div>
             </form>
         </div>
     </div>
-
-
-
-
-
-
-
-    <div id="forgot_password_card" class="content-log-in d-none">
-        <div id="forgot_password" class="forgot-password">
-            <div class="log-in-logo logo-input">
-                <div class="forgot-password-logo logo-input">
-                    <a href="index.html">
-                        <img class="arrow-left-line" src="./assets/img/arrow-left-line.svg">
-                    </a>
-                    <div class="header-logo">
-                        <h1>I forgot my password</h1>
-                        <div class="headline-underline"></div>
-                    </div>
-                </div>
-            </div>
-            <span>Don't worry! We will send you an email with the instructions to reset your password.</span>
-            <form class="forgot-password-form" onsubmit="sendMail(); return false">
-                <div id="email" class="log-in-input mb-3">
-                    <input required type="email" class="email-input" id="email_password_forgot" placeholder="Email"
-                        onmouseup="resetWrongEnter('email')">
-                    <div class="input-icon">
-                        <img src="./assets/img/mail.svg" alt="">
-                    </div>
-                    <label for="content">User don´t excist</label>
-                </div>
-
-                <div class="submit-btn">
-                    <button type="submit" class="forgot-password-btn login-btn-filled">Send me the email</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
 </body>
 
 </html>

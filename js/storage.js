@@ -20,3 +20,27 @@ async function loadUsers() {
     }
 
 }
+
+function loadUsersFromLocalStorage() {
+    return lokalUsers = JSON.parse(localStorage.getItem('users')) || [];
+}
+
+function saveUserToLocalStorage() {
+    debugger;
+    let emailValue = document.getElementById('email_log_in')
+    let user = users.find(u => u.email == emailValue.value.toLowerCase())
+    let userNumber = lokalUsers.find(l => l.email == emailValue.value.toLowerCase())
+
+    if (userNumber != undefined) {
+        lokalUsers.splice(0);
+        lokalUsers.push(user);
+    } else {
+        lokalUsers.push(user);
+    }
+    localStorage.setItem('users', JSON.stringify(lokalUsers));
+}
+
+async function deleteUser(email) {
+    users = users.filter(u => u.email !== email.toLowerCase());
+    await setItem('users', JSON.stringify(users));
+}
