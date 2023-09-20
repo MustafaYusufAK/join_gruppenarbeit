@@ -133,6 +133,10 @@ function resetForm(id, email, password1, password2, name) {
     }
 }
 
+//---------------------------------------//
+//------------play Keyframes-------------//
+//---------------------------------------//
+
 function playAnimation() {
     let logo = document.getElementById('join_logo');
     let startscreenLogo = document.getElementById('startscreen_logo');

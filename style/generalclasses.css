@@ -40,3 +40,27 @@ h1 {
     font-size: 27px;
     font-weight: 400;
 }
+
+.fontSize-64-600 {
+    font-size: 64px;
+    font-weight: 600;    
+}
+
+.fontSize-20-400 {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+/*-----------------------Font Color--------------------*/
+
+.color-000000 {
+    color: #000000;
+}
+
+.color-2A3647 {
+    color: #2A3647;
+}
+
+.color-FFFFFF {
+    color: #FFFFFF;
+}

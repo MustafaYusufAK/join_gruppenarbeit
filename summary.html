@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,22 +9,63 @@
     <link rel="stylesheet" href="./style/summary.css">
     <link rel="stylesheet" href="./font/fonts.css">
     <link rel="stylesheet" href="./style/generalclasses.css">
+    <script src="./js/storage.js"></script>
     <script src="./js/board.js"></script>
+    <script src="./js/summary.js"></script>
     <title>Summary</title>
 </head>
+
 <body onload="generateSideBar()" class="background-color-F6F7F8">
     <div id="content"></div>
-    
-    <div class="header-summary">
-        <h1>Summary</h1>
-        <span></span>
-        <div class="fontSize-27-400">Everything in a nutshell!</div>
+    <div class="summary-board">
+
+
+        <div class="header-summary">
+            <h1>Summary</h1>
+            <span></span>
+            <div class="fontSize-27-400">Everything in a nutshell!</div>
+        </div>
+
+        <div>
+            <div id="task_summary" class="task-summary">
+                <div class="to-do-and-done">
+                    <div id="to_do" class="summary-progress summary-progress-none-hover" onmouseover="hoverOverSummaryTasks('to_do', 'pen')" onmouseleave="hoverLeaveSummaryTasks('to_do', 'pen')">
+                        <img id="to_do_img" src="./assets/img/summary_pen.svg" alt="">
+                        <div class="summary-progress-count">
+                            <span id="to_do_count" class="fontSize-64-600 color-000000">1</span>
+                            <span id="to_do_section" class="fontSize-20-400 color-2A3647">To-do</span>
+                        </div>
+                    </div>
+                    <div id="done" class="summary-progress summary-progress-none-hover" onmouseover="hoverOverSummaryTasks('done', 'check')" onmouseleave="hoverLeaveSummaryTasks('done', 'check')">
+                        <img id="done_img" src="./assets/img/summary_check.svg" alt="">
+                        <div class="summary-progress-count">
+                            <span id="done_count" class="fontSize-64-600 color-000000">1</span>
+                            <span id="done_section" class="fontSize-20-400 color-2A3647">Done</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="urgent">
+
+                </div>
+
+                <div id="task_bord">
+
+                </div>
+
+                <div id="task_prgress">
+
+                </div>
+
+                <div id="task_feedback">
+
+                </div>
+
+            </div>
+            <div id="greeting_user"></div>
+        </div>
     </div>
 
-    <div>
-        <div id="task"></div>
-        <div id="greeting_user"></div>
-    </div>
-    
 </body>
+
 </html>

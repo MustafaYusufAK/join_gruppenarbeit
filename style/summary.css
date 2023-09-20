@@ -1,15 +1,70 @@
+.summary-board {
+    margin-left: 328px;
+}
+
+.task-summary {
+    width: 560px;
+    height: 562px;
+}
+
 /*--------------------------Headline-----------------------*/
 
 .header-summary {
     display: flex;
     align-items: center;
     gap: 30px;
-    margin: 106px 0 0 328px;
+    margin: 106px 0 0 0;
 }
 
-.header-summary h1 {}
+/*.header-summary h1 {}*/
 
 .header-summary span {
     height: 59px;
     border-right: 3px solid #29ABE2;
+}
+
+/*---------------------Task Board--------------------------*/
+.to-do-and-done {
+display: flex;
+gap: 32px;
+}
+
+.summary-progress {
+    cursor: pointer;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+}
+
+.summary-progress-none-hover {
+    width: 282px;
+    height: 184px;
+    background-color: #ffffff;
+}
+
+.summary-progress-hover {
+    width: 264px;
+    height: 168px;
+    background-color: #2A3647;
+}
+
+.summary-progress img {
+    width: 69px;
+}
+
+.summary-progress-count {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.summary-amount {
+
+}
+
+.summary-section {
+
 }
