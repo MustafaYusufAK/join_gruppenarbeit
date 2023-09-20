@@ -4,8 +4,10 @@ async function signUp() {
     let email = document.getElementById('email_sign_up');
     let password1 = document.getElementById('password1_input');
     let password2 = document.getElementById('password2_input');
+    let users = JSON.parse(await getItem('users'));
     let emailChecked = users.find(u => u.email == email.value.toLowerCase());
     let signUpSuccesfully = document.getElementById('sign_up_succesfully');
+    
     if (!emailChecked) {
         if (password1.value == password2.value) {
             users.push({

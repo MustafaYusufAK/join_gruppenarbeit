@@ -1,6 +1,7 @@
-function sendMail() {
+async function sendMail() {
     let forgotPasswordSuccesfully = document.getElementById('forgot_password_succesfully');
     let forgotPasswordEmail = document.getElementById('email_password_forgot');
+    let users = JSON.parse(await getItem('users'));
     let user = users.find(u => u.email == forgotPasswordEmail.value.toLowerCase())
 
     if (user) {

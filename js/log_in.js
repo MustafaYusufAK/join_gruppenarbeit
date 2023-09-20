@@ -1,24 +1,26 @@
-let users = [];
+//let users = [];
 let lokalUsers = [];
 
 function init() {
-    loadUsers();
+    //loadUsers();
     loadUsersFromLocalStorage();
     playAnimation();
 }
 
-function logIn(guest) {
+async function logIn(guest) {
     let email = document.getElementById('email_log_in');
     let password1 = document.getElementById('password1_input');
+    let users = JSON.parse(await getItem('users'));
 
     if (guest == 'guest@guest.com') {
         window.location.href = 'summary.html?msg=Welcomme to Join, Guest';
     } else {
         let user = users.find(u => u.email == email.value && u.password == password1.value);
         if (user) {
-            window.location.href = `summary.html?msg=Welcomme to Join, ${user.name}`;            
+            console.log('login :)');
+            //window.location.href = `summary.html?msg=Welcomme to Join, ${user.name}`;            
         } else {
-            wrongEnter(email.value, password1.value);
+            wrongEnter(users, email.value, password1.value);
             return
         }
     }
@@ -49,7 +51,7 @@ function checkBtnLogIn() {
     }
 }
 
-function wrongEnter(emailValue, passwordValue) {
+function wrongEnter(users, emailValue, passwordValue) {
     let emailInput = document.getElementById('email')
     let passwordInput = document.getElementById('password1')
     let userEmailIndex = users.findIndex(u => u.email == emailValue.toLowerCase());
@@ -134,6 +136,6 @@ function resetForm(id, email, password1, password2, name) {
 function playAnimation() {
     let logo = document.getElementById('join_logo');
     let startscreenLogo = document.getElementById('startscreen_logo');
-    startscreenLogo.style.animation = 'reduceBackground 500ms ease-in-out forwards'
-    logo.style.animation = 'reduceLogo 500ms ease-in-out forwards';
+    startscreenLogo.style.animation = 'reduceBackground 1s ease-in-out forwards'
+    logo.style.animation = 'reduceLogo 1s ease-in-out forwards';
 }

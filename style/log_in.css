@@ -46,7 +46,7 @@ h1 {
 }
 
 .log-in-form {
-    height: 250px;
+    height: 70%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -65,8 +65,6 @@ h1 {
     width: 100%;
     height: 100vh;
     position: absolute;
-    /*padding-top: 141px;
-    padding-left: 127px;*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -80,7 +78,7 @@ h1 {
     left: calc(50% - (274px / 2));
 }
 
-.startscreen-logo-side{
+.startscreen-logo-side {
     position: absolute;
     top: 80px;
     left: 77px;
@@ -116,7 +114,7 @@ h1 {
     50% {
         width: 100%;
         height: 100vh;
-        background-color: rgba(246, 247, 248, 50%);
+        background-color: rgba(246, 247, 248, 30%);
     }
 
     99% {
@@ -173,7 +171,7 @@ h1 {
     color: #FF4057;
 }
 
-.log-in-wrong input{
+.log-in-wrong input {
     border: 1px solid #FF4057;
 }
 
@@ -300,9 +298,11 @@ a:hover {
 
 /*----------------------------Sign up----------------------------*/
 .sign-up-form {
-    height: 430px;
+    height: 391px;
+    width: 422px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: space-between;
 }
 
@@ -314,7 +314,7 @@ a:hover {
     background-color: #FFFFFF;
     width: 598px;
     height: 630px;
-    padding: 30px 115px;
+    padding: 48px 88px;
     border-radius: 30px;
 }
 
@@ -352,7 +352,6 @@ a:hover {
 
 @keyframes signUpSuccesfull {
     0% {
-        /*display: flex;*/
         bottom: 0;
     }
 
@@ -382,14 +381,13 @@ a:hover {
     width: 16px;
 }
 
-/*#checkbox_container {
-    
-}*/
 
 .checkbox-container {
     display: flex;
-    
+    margin: 20px 0;
+
 }
+
 .checkbox {
     display: flex;
     align-items: center;
@@ -405,6 +403,7 @@ a:hover {
     flex-direction: column;
     justify-content: space-between;
 }
+
 .forgot-password {
     display: flex;
     flex-direction: column;
@@ -422,7 +421,7 @@ a:hover {
     margin-right: 32px;
 }
 
-.forgot-password span{
+.forgot-password span {
     font-size: 20px;
     font-weight: 400;
     text-align: center;
@@ -488,7 +487,7 @@ a:hover {
     margin-right: 32px;
 }
 
-.reset-password span{
+.reset-password span {
     font-size: 20px;
     font-weight: 400;
     text-align: center;
@@ -526,4 +525,152 @@ a:hover {
     font-size: 20px;
     font-weight: 400;
     color: #FFFFFF;
+}
+
+@media (max-width: 1000px) {
+
+    /*---------------------Log In-------------------*/
+    .startscreen-logo {
+        background-color: #2A3647;
+    }
+
+    .startscreen-logo img {
+        top: calc(50% - (122px / 2));
+        left: calc(50% - (100px / 2));
+    }
+
+    @keyframes reduceLogo {
+        0% {
+            width: 100px;
+
+        }
+
+        100% {
+            width: 64px;
+            top: 37px;
+            left: 38px;
+        }
+    }
+
+    @keyframes reduceBackground {
+        0% {
+            width: 100%;
+            height: 100vh;
+            background-color: rgb(42, 54, 71);
+        }
+
+        50% {
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(42, 54, 71, 30%);
+        }
+
+        99% {
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(42, 54, 71, 0%);
+        }
+
+        100% {
+            width: 0;
+            height: 0;
+        }
+    }
+
+    .log-in {
+        width: 90%;
+        height: 550px;
+        padding: 32px 0px;
+    }
+
+    .log-in-form {
+        width: 364px;
+        align-items: center;
+    }
+
+    .log-in-input {
+        width: 100%;
+    }
+
+    .log-in-input input {
+        width: 100%;
+
+    }
+
+    .input-icon {
+        width: 95%;
+    }
+
+    .mb-3 {
+        width: 90px;
+        height: 59px;
+        padding: 0 16px;
+    }
+
+    .d-flex-around {
+        flex-direction: column-reverse;
+    }
+
+    .rigister-user-login {
+        top: unset;
+        right: 0;
+        left: 0;
+        bottom: 10px;
+        justify-content: center;
+    }
+
+    .inputfields {
+        height: 60%;
+        width: 100%;
+    }
+
+    /*----------------------------Sign Up---------------------------*/
+    .sign-up-form {
+        width: 364px;
+        height: 392px;
+    }
+
+    .sign-up {
+        width: 90%;
+        height: 595px;
+        padding: 32px 0px;
+    }
+
+    .startscreen-logo-side {
+        top: 37px;
+        left: 38px;
+    }
+
+    .startscreen-logo-side img {
+        width: 64px;
+    }
+
+}
+
+@media (max-width: 500px) {
+    .log-in-form {
+        width: 95%;
+    }
+
+    .submit-btn {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 123px;
+        gap: 10px;
+    }
+
+    .login-btn {
+        width: 180px;
+        height: 51px;
+    }
+
+    .login-guest-btn {
+        width: 180px;
+        height: 51px;
+    }
+
+    .sign-up-form {
+        width: 95%;
+    }
 }

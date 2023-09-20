@@ -12,22 +12,32 @@ async function getItem(key){
     return fetch(url).then(res => res.json().then(res => res.data.value));
 }
 
-async function loadUsers() {
+/*async function loadUsers() {
     try {
         users = JSON.parse(await getItem('users'));
     } catch (e) {
         console.error('Loading error:', e);
     }
+}*/
 
+async function fetchToJson(URL) {
+    let users = await fetch(URL);
+    let usersAsJson = await users.json();
+    if (usersAsJson === false) {
+        return
+    } else {
+        return usersAsJson;
+    }
 }
 
 function loadUsersFromLocalStorage() {
     return lokalUsers = JSON.parse(localStorage.getItem('users')) || [];
 }
 
-function saveUserToLocalStorage() {
+async function saveUserToLocalStorage() {
     debugger;
     let emailValue = document.getElementById('email_log_in')
+    let users = JSON.parse(await getItem('users'));
     let user = users.find(u => u.email == emailValue.value.toLowerCase())
     let userNumber = lokalUsers.find(l => l.email == emailValue.value.toLowerCase())
 
@@ -41,6 +51,7 @@ function saveUserToLocalStorage() {
 }
 
 async function deleteUser(email) {
+    let users = JSON.parse(await getItem('users'));
     users = users.filter(u => u.email !== email.toLowerCase());
     await setItem('users', JSON.stringify(users));
 }

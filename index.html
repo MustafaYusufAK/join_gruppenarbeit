@@ -34,8 +34,8 @@
                 </div>
             </div>
             <form class="log-in-form" onsubmit="logIn(); return false">
-                <div>
-                    <div id="email" class="log-in-input mb-3">
+                <div class="inputfields">
+                    <div id="email" class="log-in-input">
                         <input required type="email" class="email-input" id="email_log_in" placeholder="Email"
                             onmouseup="resetWrongEnter('email')">
                         <div class="input-icon">
@@ -44,7 +44,7 @@
                         <label for="content">User don´t excist</label>
                     </div>
 
-                    <div id="password1" class="log-in-input mb-3">
+                    <div id="password1" class="log-in-input">
                         <input required type="password" class="" id="password1_input" placeholder="Password"
                             onmouseup="resetWrongEnter('password1'); showPasswordIcon('password1')">
                         <div id="input_icon_password1" class="input-icon">
@@ -53,12 +53,12 @@
                         <label for="content">Wrong password Ups! Try again.</label>
                     </div>
 
-                    <div class="mb-3 form-check d-flex-around">
+                    <div class="form-check d-flex-around">
                         <div>
                             <img id="check_btn" src="./assets/img/checkbutton.svg" onclick="checkBtnLogIn()">
                             <label class="form-check-label" for="exampleCheck1">Remember me</label>
                         </div>
-                        <a href="./forgotmypassword.html">I forgot my password</a><a href="resetpassword.html?msg=guest@guest.com">Test Link</a>
+                        <a href="./forgotmypassword.html">I forgot my password</a>
                     </div>
                 </div>
                 <div class="submit-btn">
