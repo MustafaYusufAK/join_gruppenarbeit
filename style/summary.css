@@ -1,0 +1,15 @@
+/*--------------------------Headline-----------------------*/
+
+.header-summary {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin: 106px 0 0 328px;
+}
+
+.header-summary h1 {}
+
+.header-summary span {
+    height: 59px;
+    border-right: 3px solid #29ABE2;
+}

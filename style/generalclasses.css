@@ -1,0 +1,42 @@
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+}
+
+.d-none {
+    display: none;
+}
+
+/*---------------Background-Color--------------*/
+
+.background-color-2A3647 {
+    background-color: #2A3647 !important;
+}
+
+.background-color-F6F7F8 {
+    background-color: #F6F7F8 !important;
+}
+
+.background-color-D1D1D1 {
+    background-color: #D1D1D1 !important;
+}
+
+/*.background-color {
+    background-color: #29abe2;
+}*/
+
+.backgroundColor-29ABE2 {
+    background-color: #29ABE2;
+}
+
+/*-----------------------Font Sizes--------------------*/
+
+h1 {
+    font-size: 61px;
+    font-weight: 700;
+}
+
+.fontSize-27-400 {
+    font-size: 27px;
+    font-weight: 400;
+}
