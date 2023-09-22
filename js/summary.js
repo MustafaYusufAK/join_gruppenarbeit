@@ -1,17 +1,57 @@
-function hoverOverSummaryTasks(id, imgSrc) {
+//----------------------on Mouse over-------------------//
+
+function hoverOverSummaryTasks(id, section, imgSrc) {
     document.getElementById(`${id}`).classList.remove('summary-progress-none-hover');
     document.getElementById(`${id}_count`).classList.remove('color-000000');
     document.getElementById(`${id}_section`).classList.remove('color-2A3647');
+
 
     document.getElementById(`${id}`).classList.add('summary-progress-hover');
     document.getElementById(`${id}_count`).classList.add('color-FFFFFF');
     document.getElementById(`${id}_section`).classList.add('color-FFFFFF');
 
 
+    if (section == 'to_do_and_done') {
+        hoverOverToDoAndDone(id, imgSrc);
+    };
+
+    if (section == 'urgend-tasks') {
+        hoverOverUrgendTask(id);
+    };
+
+    if (section == 'summary-task-board') {
+        hoverOverTaskCounts(id);
+    };
+}
+
+
+function hoverOverToDoAndDone(id, imgSrc) {
+    document.getElementById(`${id}`).classList.remove('to-do-and-done-taskarea');
+    document.getElementById(`${id}`).classList.add('to-do-and-done-taskarea-hover');
     document.getElementById(`${id}_img`).src = `./assets/img/summary_${imgSrc}_hover.svg`;
 }
 
-function hoverLeaveSummaryTasks(id, imgSrc) {
+
+function hoverOverUrgendTask(id) {
+    document.getElementById(`${id}_taskfield`).classList.remove('summary-urgend');
+    document.getElementById(`${id}_date`).classList.remove('color-2A3647');
+    document.getElementById(`${id}_deadline`).classList.remove('color-2A3647');
+
+    document.getElementById(`${id}_taskfield`).classList.add('summary-urgend-hover');
+    document.getElementById(`${id}_date`).classList.add('color-FFFFFF');
+    document.getElementById(`${id}_deadline`).classList.add('color-FFFFFF');
+}
+
+
+function hoverOverTaskCounts(id) {
+    document.getElementById(`${id}`).classList.remove('urgent-task-overview');
+    document.getElementById(`${id}`).classList.add('urgent-task-overview-hover');
+}
+
+
+//----------------------on Mouse leave-------------------//
+
+function hoverLeaveSummaryTasks(id, section, imgSrc) {
     document.getElementById(`${id}`).classList.remove('summary-progress-hover');
     document.getElementById(`${id}_count`).classList.remove('color-FFFFFF');
     document.getElementById(`${id}_section`).classList.remove('color-FFFFFF');
@@ -20,9 +60,29 @@ function hoverLeaveSummaryTasks(id, imgSrc) {
     document.getElementById(`${id}_count`).classList.add('color-000000');
     document.getElementById(`${id}_section`).classList.add('color-2A3647');
 
-    
 
 
-    document.getElementById(`${id}_img`).src = `./assets/img/summary_${imgSrc}.svg`;
+    if (section == 'to_do_and_done') {
+        document.getElementById(`${id}`).classList.remove('to-do-and-done-taskarea-hover');
+        document.getElementById(`${id}`).classList.add('to-do-and-done-taskarea');
+        document.getElementById(`${id}_img`).src = `./assets/img/summary_${imgSrc}.svg`;
+    };
 
+    if (section == 'urgend-tasks') {
+        document.getElementById(`${id}_taskfield`).classList.remove('summary-urgend-hover');
+        document.getElementById(`${id}_date`).classList.remove('color-FFFFFF');
+        document.getElementById(`${id}_deadline`).classList.remove('color-FFFFFF');
+
+        document.getElementById(`${id}_taskfield`).classList.add('summary-urgend');
+        document.getElementById(`${id}_date`).classList.add('color-2A3647');
+        document.getElementById(`${id}_deadline`).classList.add('color-2A3647');
+
+
+    };
+
+    if (section == 'summary-task-board') {
+        document.getElementById(`${id}`).classList.remove('urgent-task-overview-hover');
+        document.getElementById(`${id}`).classList.add('urgent-task-overview');
+
+    };
 }

@@ -1,8 +1,6 @@
-//let users = [];
 let lokalUsers = [];
 
 function init() {
-    //loadUsers();
     loadUsersFromLocalStorage();
     playAnimation();
 }
@@ -18,7 +16,7 @@ async function logIn(guest) {
         let user = users.find(u => u.email == email.value && u.password == password1.value);
         if (user) {
             console.log('login :)');
-            //window.location.href = `summary.html?msg=Welcomme to Join, ${user.name}`;            
+            window.location.href = `summary.html?msg=Welcomme to Join, ${user.name}`;            
         } else {
             wrongEnter(users, email.value, password1.value);
             return

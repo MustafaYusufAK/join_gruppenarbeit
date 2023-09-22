@@ -1,10 +1,19 @@
+.summary-content {
+    height: calc(100vh - 100px);
+    display: flex;
+}
+
 .summary-board {
     margin-left: 328px;
+    width: 100%;
 }
 
 .task-summary {
     width: 560px;
     height: 562px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 /*--------------------------Headline-----------------------*/
@@ -13,7 +22,7 @@
     display: flex;
     align-items: center;
     gap: 30px;
-    margin: 106px 0 0 0;
+    margin: 20px 0 0 0;
 }
 
 /*.header-summary h1 {}*/
@@ -24,9 +33,29 @@
 }
 
 /*---------------------Task Board--------------------------*/
+
+.tasks-and-greeting {
+    display: flex;
+    align-items: center;
+    height: 65vh;
+}
+
 .to-do-and-done {
-display: flex;
-gap: 32px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 560px;
+    height: 184px;
+}
+
+.to-do-and-done-taskarea {
+    width: 264px;
+    height: 168px;
+}
+
+.to-do-and-done-taskarea-hover {
+    width: 280px;
+    height: 184px;
 }
 
 .summary-progress {
@@ -39,19 +68,16 @@ gap: 32px;
 }
 
 .summary-progress-none-hover {
-    width: 282px;
-    height: 184px;
     background-color: #ffffff;
 }
 
 .summary-progress-hover {
-    width: 264px;
-    height: 168px;
     background-color: #2A3647;
 }
 
 .summary-progress img {
     width: 69px;
+    height: 69px;
 }
 
 .summary-progress-count {
@@ -61,10 +87,104 @@ gap: 32px;
     align-items: center;
 }
 
-.summary-amount {
+.summary-amount {}
 
+.summary-section {}
+
+.summary-urgend {
+    width: 100%;
+    height: 168px;
 }
 
-.summary-section {
-
+.summary-urgend-hover {
+    width: 100%;
+    height: 184px;
 }
+
+.urgend-count {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.urgend-tasks {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 61px;
+}
+
+.urgend-task-border {
+    border: 2px solid #D1D1D1;
+    height: 102px;
+}
+
+.urgend-deadline {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.summary-task-board {
+    width: 100%;
+    height: 184px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.summary-task-board-container {
+    width: 184px;
+    height: 184px;
+}
+
+.summary-tasks {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 13px;
+    border-radius: 30px;
+}
+
+.urgent-task-overview {
+    width: 168px;
+    height: 168px;
+}
+
+.urgent-task-overview-hover {
+    width: 184px;
+    height: 184px;
+}
+
+/*---------------------Greeting User-------------------*/
+
+#greeting_user {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 3px;
+    width: 385px;
+    height: 136px;
+}
+
+.greeting-background {
+    z-index: 1;
+    margin-left: -328px;
+    /*position: absolute;*/
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(246, 247, 248, 0.5)
+}
+
+.greeting-user {
+    top: 50%;
+    right: 50%;
+}
+
