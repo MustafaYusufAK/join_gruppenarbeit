@@ -86,3 +86,15 @@ function hoverLeaveSummaryTasks(id, section, imgSrc) {
 
     };
 }
+
+
+//----------------------------------Summary Animation----------------------------------//
+
+function playSummaryGreetingAnimation() {
+    let greetingUserBackground = document.getElementById('greeting_user_background');
+    let greetingBackground = document.getElementById('greeting_background');
+
+    greetingUserBackground.style.animation = 'reduceGreeting 1s ease-in-out forwards'
+    greetingBackground.style.animation = 'reduceGreetingBg 1s ease-in-out forwards'
+
+}

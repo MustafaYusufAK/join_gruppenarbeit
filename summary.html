@@ -15,7 +15,7 @@
     <title>Summary</title>
 </head>
 
-<body onload="generateSideBar()" class="background-color-F6F7F8">
+<body onload="generateSideBar(); playSummaryGreetingAnimation()" class="background-color-F6F7F8">
     <div id="content"></div>
     <div class="summary-content">
         <div class="summary-board">
@@ -120,18 +120,19 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="greeting-background">
+                <div id="greeting_background" class="greeting-background"></div>
+                <div id="greeting_user_background" class="greeting-user-background">
                     <div id="greeting_user" class="greeting-user">
                         <span class="fontSize-47-500 color-2A3647">Good morning,</span>
                         <span class="fontSize-64-700 color-29ABE2">Sofia Müller</span>
                     </div>
                 </div>
-                
+
+
             </div>
         </div>
 
-        
+
 
     </div>
 

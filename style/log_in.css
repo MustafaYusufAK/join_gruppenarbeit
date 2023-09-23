@@ -111,11 +111,6 @@
     height: 19px;
 }
 
-.font-size-16-400 {
-    font-size: 16px;
-    font-weight: 400;
-}
-
 .log-in-input input {
     width: 422px;
     height: 48px;
@@ -194,18 +189,24 @@ a:hover {
 }
 
 .arrow-left-line {
-    cursor: pointer;
-    width: 21.33px;
-    height: 20.74px;
+    height: 45px;
+    width: 45px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.arrow-left-line:hover {
-    width: 23.93px;
-    height: 20.74px;
+.arrow-left-line img{
+    cursor: pointer;
+    height: 35px;
+}
+
+.arrow-left-line img:hover {
+    height: 40px;
 }
 
 .logo-input {
-    width: 100%;
+    /*width: 100%;*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -231,7 +232,6 @@ a:hover {
 .login-btn {
     width: 110px;
     height: 48px;
-    font-size: 21px;
 }
 
 .login-btn-filled:hover {
@@ -243,8 +243,6 @@ a:hover {
     height: 48px;
     background-color: #FFFFFF;
     color: #2A3647;
-    font-size: 21px;
-    font-weight: 700;
     border: 1px solid #2A3647;
     border-radius: 8px;
 }
@@ -333,7 +331,6 @@ a:hover {
 .sign-up-login-btn {
     width: 91px;
     height: 49px;
-    font-size: 16px;
 }
 
 .signup-btn {
@@ -372,6 +369,7 @@ a:hover {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
 }
 
 .forgot-password {
@@ -400,8 +398,6 @@ a:hover {
 .forgot-password-btn {
     width: 237px;
     height: 55px;
-    font-size: 21px;
-    font-weight: 700;
 }
 
 .forgot-password-succesfully-container {
@@ -498,6 +494,9 @@ a:hover {
 }
 
 @media (max-width: 1000px) {
+    h1 {
+        font-size: 47px;
+    }
 
     /*---------------------Log In-------------------*/
     .startscreen-logo {
@@ -559,7 +558,10 @@ a:hover {
     }
 
     .log-in-input {
-        width: 100%;
+        /*width: 90%;*/
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .log-in-input input {
@@ -568,7 +570,7 @@ a:hover {
     }
 
     .input-icon {
-        width: 95%;
+        width: 90%;
     }
 
     .mb-3 {
@@ -577,21 +579,20 @@ a:hover {
         padding: 0 16px;
     }
 
-    .d-flex-around {
-        flex-direction: column-reverse;
-    }
-
     .rigister-user-login {
         top: unset;
         right: 0;
         left: 0;
-        bottom: 10px;
+        bottom: 5px;
         justify-content: center;
     }
 
     .inputfields {
         height: 60%;
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     /*----------------------------Sign Up---------------------------*/
@@ -601,7 +602,7 @@ a:hover {
     }
 
     .sign-up {
-        width: 90%;
+        width: 396px;
         height: 595px;
         padding: 32px 0px;
     }
@@ -615,9 +616,67 @@ a:hover {
         width: 64px;
     }
 
+    .sign-up-logo {
+        gap: 30px;
+        margin-right: 45px;
+    }
+
+    /*----------------Forgot Pasword----------------*/
+
+    .forgot-password {
+        width: 630px;
+        padding: 30px 30px;
+    }
+
+    .forgot-password span {
+        font-size: 16px;
+    }
+
+    /*----------------Reset Pasword----------------*/
+
+    .reset-password {
+        width: 630px;
+        padding: 30px;
+    }
+
+}
+
+@media (max-width: 650px) {
+    .header-logo {
+        text-wrap: wrap;
+        text-align: center;
+    }
+
+    .forgot-password {
+        width: 95%;
+    }
+
+    .reset-password {
+        width: 95%;
+    }
 }
 
 @media (max-width: 500px) {
+
+    .header-logo {
+        height: auto;
+        text-wrap: wrap;
+        text-align: center;
+    }
+
+    @keyframes reduceLogo {
+        0% {
+            width: 100px;
+
+        }
+
+        100% {
+            width: 50px;
+            top: 10px;
+            left: 10px;
+        }
+    }
+
     .log-in-form {
         width: 95%;
     }
@@ -626,7 +685,12 @@ a:hover {
         flex-direction: column;
         align-items: center;
         width: 100%;
-        height: 123px;
+        gap: 10px;
+        font-size: 16px !important;
+    }
+
+    .d-flex-around {
+        flex-direction: column-reverse;
         gap: 10px;
     }
 
@@ -640,7 +704,49 @@ a:hover {
         height: 51px;
     }
 
+    /*---------Sign Up---------------*/
+
     .sign-up-form {
+        width: 90%;
+    }
+
+    .startscreen-logo-side {
+        top: 10px;
+        left: 10px;
+    }
+
+    .startscreen-logo-side img {
+        width: 50px;
+    }
+
+    /*----------------Forgot Pasword----------------*/
+
+    
+}
+
+@media (max-width: 400px) {
+
+    /*--------------------Log In--------------------*/
+
+    .startscreen-logo {
+        display: none;
+    }
+
+
+    /*--------------------Sign Up--------------------*/
+
+    .sign-up {
         width: 95%;
+    }
+
+    .startscreen-logo-side {
+        display: none;
+    }
+
+
+    /*----------------Forgot Pasword----------------*/
+
+    .forgot-password {
+        height: 500px;
     }
 }

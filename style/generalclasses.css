@@ -3,6 +3,10 @@ body {
     margin: 0;
 }
 
+.width-100 {
+    width: 100%;
+}
+
 .d-none {
     display: none;
 }
@@ -54,6 +58,11 @@ h1 {
 .fontSize-16-400 {
     font-size: 16px;
     font-weight: 400;
+}
+
+.fontSize-16-700 {
+    font-size: 16px;
+    font-weight: 700;
 }
 
 /*--------Size 20px--------*/
@@ -115,4 +124,16 @@ h1 {
 
 .color-29ABE2 {
     color: #29ABE2;
+}
+
+@media (max-width: 1000px) {
+    h1 {
+        font-size: 47px;
+    }
+}
+
+@media (max-width: 500px) {
+    .fontSize-21-700 {
+        font-size: 16px;
+    }
 }
