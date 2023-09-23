@@ -142,6 +142,7 @@ header {
     font-size: 21px;
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 16px;
 }
 
@@ -271,7 +272,6 @@ header {
     width: 96px;
     height: 40px;
     cursor: pointer;
-    margin-right: 20px;
     background-image: url('../assets/img/delete-img.svg');
     background-repeat: no-repeat;
 }
