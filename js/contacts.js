@@ -53,84 +53,141 @@ function generateHeader(menu) {
 }
 
 function showContacts() {
-    let contactContent = document.getElementById('new-contacts');
+    const contactContent = document.getElementById('new-contacts');
     contactContent.innerHTML = '';
     const { sortedFirstLetters, firstLettersMap } = generateFirstLetters();
 
     sortedFirstLetters.forEach(letter => {
         const contactIndices = firstLettersMap.get(letter);
         if (contactIndices) {
-            contactIndices.forEach(index => {
-                const contact = contacts[index];
-                const id = `contact-icon-${index}`;
-                const randomColor = contact.color;
-                const initials = generateInitials(contact.name);
-
-                // Hier generieren Sie eindeutige IDs für die Anfangsbuchstaben und die Trenndivs
-                const letterId = `first-letter-${index}`;
-                const divId = `div-separate-contacts-${index}`;
-
-                contactContent.innerHTML += /*html*/ `<div class="first-letter" id="${letterId}">${letter}<div class="separate-contacts" id="${divId}"></div></div><div class="new-contact-box" onclick="openContact('${contact['name']}', '${contact['email']}', '${index}', '${randomColor}')">
-                    <span class="small-contact-icon" id="${id}">${initials}</span>
-                    <div>
-                        <div class="name">${contact['name']}</div>
-                        <div class="email">${contact['email']}</div>
-                    </div>
-                </div>`;
-
-                const element = document.getElementById(id);
-                element.style.backgroundColor = randomColor;
-            });
+            addFirstLetter(contactContent, letter);
+            addSeparateContactsDiv(contactContent, contactIndices);
+            addContacts(contactContent, contactIndices);
         }
     });
 }
 
+function addFirstLetter(contactContent, letter) {
+    contactContent.innerHTML += `<div class="first-letter">${letter}</div>`;
+}
+
+function addSeparateContactsDiv(contactContent, contactIndices) {
+    const divId = `div-separate-contacts-${contactIndices[0]}`;
+    contactContent.innerHTML += `<div class="separate-contacts" id="${divId}"></div>`;
+}
+
+function addContacts(contactContent, contactIndices) {
+    contactIndices.forEach(index => {
+        const contact = contacts[index];
+        const id = `contact-icon-${index}`;
+        const randomColor = contact.color;
+        const initials = generateInitials(contact.name);
+
+        contactContent.innerHTML += contactContentTemplate(contact, index,  randomColor, initials, id);
+
+        const element = document.getElementById(id);
+        element.style.backgroundColor = randomColor;
+    });
+}
+
+function contactContentTemplate(contact, index, randomColor, initials, id) {
+    return /*html*/ `<div class="new-contact-box" onclick="openContact('${contact['name']}', '${contact['email']}', '${index}', '${randomColor}')">
+        <span class="small-contact-icon" id="${id}">${initials}</span>
+        <div>
+            <div class="name">${contact['name']}</div>
+            <div class="email">${contact['email']}</div>
+        </div>
+    </div>`;
+}
 
 function openContact(contactName, contactEmail, i, randomColor) {
+    const selectedContact = document.querySelector(`#contact-icon-${i}`);
+    if (selectedContact) {
+        document.querySelectorAll('.new-contact-box').forEach(contact => contact.classList.remove('selected-contact'));
+        selectedContact.parentElement.classList.add('selected-contact');
+    }
+
     let showContact = document.getElementById('show-contact');
     const initials = generateInitials(contactName);
     showContact.innerHTML = '';
-    showContact.innerHTML = /*html*/ `<div class="flex-box"><span class="big-contact-icon margin-left" id="big-contact-icon-${i}">${initials}</span>
-    <div class="flex-box-contact"><div class="name-contact">${contactName}</div><div class="edit-box"><div class="edit-image" onclick="showOverlayEdit('${i}', '${randomColor}', '${initials}')">
-    </div><div class="delete-image" onclick="deleteContact(${i})"></div>
-    </div></div></div><p class="contact-info">Contact Information</p><b class="email-headline">Email</b><p class="email margin-left">${contactEmail}</p>
-    <b class="margin-left">Phone</b><p class="margin-left">${contacts[i]['phone']}</p>`;
+    showContact.innerHTML = showContactTemplate(contactName, contactEmail, i, randomColor, initials);
     document.getElementById('change-color-icon').innerHTML = /*html*/ `<div class="big-contact-icon" id="color-icon-change-${i}"></div>`
     const bigContactIcon = document.getElementById(`big-contact-icon-${i}`);
     bigContactIcon.style.backgroundColor = randomColor;
 }
 
+function showContactTemplate(contactName, contactEmail, i, randomColor, initials) {
+    return /*html*/ `<div class="flex-box"><span class="big-contact-icon margin-left" id="big-contact-icon-${i}">${initials}</span>
+    <div class="flex-box-contact"><div class="name-contact">${contactName}</div><div class="edit-box"><div class="edit-image" onclick="showOverlayEdit('${i}', '${randomColor}', '${initials}')">
+    </div><div class="delete-image" onclick="deleteContact(${i})"></div>
+    </div></div></div><p class="contact-info">Contact Information</p><b class="email-headline">Email</b><p class="email margin-left">${contactEmail}</p>
+    <b class="margin-left">Phone</b><p class="margin-left">${contacts[i]['phone']}</p>`;
+}
+
 function addNewContact() {
-    let name = document.getElementById('add-name').value;
-    let email = document.getElementById('add-email').value;
-    let phone = document.getElementById('add-phone').value;
+    const nameInput = document.getElementById('add-name');
+    const emailInput = document.getElementById('add-email');
+    let phoneInput = document.getElementById('add-phone');
+    
+    const name = nameInput.value;
+    const email = emailInput.value;
+    let phone = phoneInput.value;
 
-    if (!name || !email || !phone || email.indexOf('@') === -1) return alert("All fields are required, and a valid email address is needed.");
-
-    phone = '+49 ' + phone;
-
+    if (!validateName(name) || !validateEmail(email) || !validatePhone(phone)) {
+        return;
+    }
+    
     const randomColor = getRandomColor();
-    const newContact = { "name": name, "email": email, "phone": phone, "color": randomColor };
-    contacts.push(newContact);
+    const newContact = createContact(name, email, phone, randomColor);
+    addContactAndUpdateUI(newContact);
+}
 
-    // Sortieren Sie die Kontakte
+function validateName(name) {
+    if (!/^[A-Za-z\s\-ÄÜÖäüö]+$/.test(name)) {
+        alert("Name should contain only letters, spaces, hyphens, and umlauts.");
+        return false;
+    }
+    return true;
+}
+
+function validateEmail(email) {
+    if (!email || email.indexOf('@') === -1) {
+        alert("A valid email address is needed.");
+        return false;
+    }
+    return true;
+}
+
+function validatePhone(phone) {
+    if (!/^\+?\d+(\s\d+)*$/.test(phone)) {
+        alert("Phone number should contain digits with optional spaces and can start with '+'.");
+        return false;
+    }
+    return true;
+}
+
+function createContact(name, email, phone, color) {
+    return { "name": name, "email": email, "phone": phone, "color": color };
+}
+
+function addContactAndUpdateUI(contact) {
+    contacts.push(contact);
     sortContacts();
+    generateFirstLettersAndUpdateSidebar();
+    hideOverlay();
+    emptyInput();
+}
 
-    // Nach dem Hinzufügen eines neuen Kontakts die Anfangsbuchstaben neu generieren
-    const { sortedFirstLetters } = generateFirstLetters(); // Änderung hier
-
-    sortedFirstLetters.forEach((letter, index) => {
+function generateFirstLettersAndUpdateSidebar() {
+    generateFirstLetters().sortedFirstLetters.forEach((letter, index) => {
         const letterElement = document.getElementById(`first-letter-${index}`);
         if (letterElement) {
             letterElement.innerHTML = `${letter}<div class="separate-contacts"></div>`;
         }
     });
+
     generateSideBar();
-    hideOverlay();
-    emptyInput();
 }
-
-
 
 function emptyInput() {
     document.getElementById('add-name').value = '';
@@ -143,23 +200,30 @@ function EditContact(i) {
     const editNameInput = document.getElementById('edit-name');
     const editEmailInput = document.getElementById('edit-email');
     const editPhoneInput = document.getElementById('edit-phone');
+    const editName = editNameInput.value;
+    const editEmail = editEmailInput.value;
+    const editPhone = editPhoneInput.value;
 
-    if (!editEmailInput.value || editEmailInput.value.indexOf('@') === -1 || !editNameInput.value || !editPhoneInput.value) {
-        alert('Bitte füllen Sie alle Felder korrekt aus.');
+    // Überprüfe, ob der Name, die E-Mail und die Telefonnummer gültig sind
+    if (!validateName(editName) || !validateEmail(editEmail) || !validatePhone(editPhone)) {
         return;
     }
 
-    // Aktuelle Farbe des bearbeiteten Kontakts speichern
     const currentColor = contacts[i].color;
-
-    // Kontakt aktualisieren und die Farbe beibehalten
-    contacts[i] = { ...contacts[i], name: editNameInput.value, email: editEmailInput.value, phone: editPhoneInput.value, color: currentColor };
-
+    contacts[i] = createContact(editName, editEmail, editPhone, currentColor);
     generateSideBar();
     hideOverlayEdit();
     openContact(contacts[i].name, contacts[i].email, i, currentColor);
 }
 
+function validatePhone(phone) {
+    // Überprüfe, ob die Telefonnummer ungültige Zeichen (Buchstaben) enthält oder nicht mit '+' beginnt
+    if (!/^\+?\d+(\s\d+)*$/.test(phone)) {
+        alert("Phone number should start with '+' and contain only digits with optional spaces.");
+        return false;
+    }
+    return true;
+}
 
 
 
@@ -182,7 +246,11 @@ function showOverlayEdit(i, randomColor, initials) {
     showContactValue(i);
     const saveButton = document.querySelector('.save-button');
     saveButton.onclick = () => EditContact(i);
+
+    const deleteButton = document.querySelector('.delete-button'); // Füge diese Zeile hinzu
+    deleteButton.onclick = () => deleteContact(i); // Füge diese Zeile hinzu
 }
+
 
 function showContactValue(i) {
     const selectedContact = contacts[i];
@@ -212,11 +280,9 @@ function getRandomColor() {
     const letters = '0123456789ABCDEF';
     let color = '#';
 
-    // Schleife, bis eine ausreichend dunkle Farbe generiert wird
     do {
-        color = '#'; // Zurücksetzen der Farbe auf den Anfangswert
+        color = '#'; 
         for (let i = 0; i < 6; i++) {
-            // Generiere einen zufälligen Buchstaben aus '0123456789ABCDEF'
             const randomLetter = letters[Math.floor(Math.random() * 16)];
             color += randomLetter;
         }
@@ -247,53 +313,45 @@ function sortContacts() {
 
 function generateInitials(name) {
     const nameParts = name.split(' ');
-    if (nameParts.length >= 1) {
-        const firstName = nameParts[0];
-        const lastName = nameParts.length > 1 ? nameParts[1] : '';
-        let initials = '';
+    const firstName = nameParts[0] || '';
+    const lastName = nameParts.length > 1 ? nameParts[1] : ''; // Hier prüfen, ob es einen Nachnamen gibt
+    let initials = (firstName[0] || '') + (lastName[0] || ''); // Entferne das 'X' für den Nachnamen
 
-        if (firstName.length > 0) {
-            initials += firstName[0];
-        }
-
-        if (lastName.length > 0) {
-            initials += lastName[0];
-        }
-
-        // Falls keine Initials erstellt wurden, setze einen Standardbuchstaben (z.B. 'X')
-        if (initials.length === 0) {
-            initials = 'X';
-        }
-
-        return initials;
+    // Falls keine Initials erstellt wurden, setze einen Standardbuchstaben (z.B. 'X')
+    if (initials.length === 0) {
+        initials = 'X';
     }
 
-    // Falls kein Name vorhanden ist, gib einen Standardbuchstaben (z.B. 'X') zurück
-    return 'X';
+    return initials;
 }
-
 
 
 function generateFirstLetters() {
     const firstLettersMap = new Map();
 
-    for (let i = 0; i < contacts.length; i++) {
-        const contact = contacts[i];
-        const nameParts = contact.name.split(' ');
-        if (nameParts.length > 0) {
-            const firstName = nameParts[0][0].toUpperCase(); // Konvertieren Sie den Buchstaben in Großbuchstaben
-            if (!firstLettersMap.has(firstName)) {
-                firstLettersMap.set(firstName, []);
-            }
-            firstLettersMap.get(firstName).push(i);
-        }
-    }
+    contacts.forEach((contact, i) => {
+        const [firstName] = contact.name.split(' ').map(part => part[0].toUpperCase());
+        firstLettersMap.set(firstName, [...(firstLettersMap.get(firstName) || []), i]);
+    });
 
-    const sortedFirstLetters = Array.from(firstLettersMap.keys()).sort();
+    const sortedFirstLetters = [...firstLettersMap.keys()].sort();
     return { sortedFirstLetters, firstLettersMap };
 }
 
 
+function highlightContact(index) {
+    // Entferne die Hervorhebung von allen Kontakten
+    const allContacts = document.querySelectorAll('.new-contact-box');
+    allContacts.forEach(contact => {
+        contact.classList.remove('selected-contact');
+    });
+
+    // Füge die Hervorhebung zum ausgewählten Kontakt hinzu
+    const selectedContact = document.querySelector(`#contact-icon-${index}`);
+    if (selectedContact) {
+        selectedContact.parentElement.classList.add('selected-contact');
+    }
+}
 
 
 

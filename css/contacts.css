@@ -55,6 +55,7 @@ nav {
     color: rgb(205, 205, 205);
     font-size: 14px;
     margin-bottom: 40px;
+    gap: 10px;
 }
 
 .nav-bottom-a {
@@ -456,16 +457,27 @@ header {
 }
 
 .cancel-button {
-    background-image: url('../assets/img/cancel.svg');
-    background-repeat: no-repeat;
+    display: flex;
+    padding: 10px 25px 10px 25px;
+    border: 1px solid black;
+    border-radius: 10px;
+    font-size: 21px;
     cursor: pointer;
     width: 138px;
+    align-items: center;
     height: 62px;
+    gap: 10px;
+    background-image: url('../assets/img/close.svg');
+    background-repeat: no-repeat;
+    background-position: 106px 24px;
 }
 
 .cancel-button:hover {
+    color: #29ABE2;
+    border: 1px solid #29ABE2;
     background-image: url('../assets/img/cancel-blue.svg');
-    width: 140px;
+    background-repeat: no-repeat;
+    background-position: 100px 18px;
 }
 
 .create-button {
@@ -476,7 +488,7 @@ header {
     background-color: #2A3647;
     border-radius: 10px;
     padding: 15px 10px 20px 10px;
-    background-image: url(/assets/img/check.svg);
+    background-image: url('../assets/img/check.svg');
     background-repeat: no-repeat;
     background-position: 160px 18px;
     width: 186px;
@@ -494,35 +506,4 @@ header {
 .create-image {
     height: 22px;
     width: 22px;
-}
-
-.delete-button {
-    padding: 10px 25px 10px 25px;
-    border: 1px solid black;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 21px;
-}
-
-.delete-button:hover {
-    color: #29ABE2;
-    border: 1px solid #29ABE2;
-}
-
-.save-button {
-    color: white;
-    font-weight: 600px;
-    background-color: #2A3647;
-    padding: 10px 25px 10px 25px;
-    font-size: 21px;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.save-button:hover {
-    background-color:#29ABE2;
-}
-
-.first-letter {
-    margin-top: 30px;
 }
