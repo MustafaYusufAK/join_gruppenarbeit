@@ -26,6 +26,7 @@ nav {
     gap: 10px;
     font-size: 16px;
     margin: 0;
+    margin-bottom: 10px;
 }
 
 .contacts-background {
@@ -173,7 +174,7 @@ header {
     font-size: 61px;
 }
 
-.seperator {
+.separator {
     height: 59px;
     border: 3px solid rgba(0, 0, 0, 0.1);
     background-color: #29ABE2;
@@ -187,7 +188,7 @@ header {
     padding: 30px;
 }
 
-.seperate-contacts {
+.separate-contacts {
     border: 1px solid #D1D1D1;
     width: 352px;
 }
@@ -200,7 +201,6 @@ header {
     border-radius: 10px;
     width: 352px;
     cursor: pointer;
-    margin-bottom: 40px;
 }
 
 .margin-right {
@@ -236,6 +236,7 @@ header {
     border: 3px solid white;
     box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.04);
     color: white;
+    font-size: 47px;
 }
 
 .random-background {
@@ -256,14 +257,30 @@ header {
     margin-left: 30px;
 }
 
-.cursor {
+.edit-image {
+    width: 96px;
+    height: 40px;
     cursor: pointer;
     margin-right: 20px;
+    background-image: url('../assets/img/edit-img.svg');
+    background-repeat: no-repeat;
 }
 
-.cursor:hover {
-    color: #29ABE2;
-    font-weight: 600;
+.delete-image {
+    width: 96px;
+    height: 40px;
+    cursor: pointer;
+    margin-right: 20px;
+    background-image: url('../assets/img/delete-img.svg');
+    background-repeat: no-repeat;
+}
+
+.edit-image:hover {
+    background-image: url('../assets/img/edit-blue.svg');
+}
+
+.delete-image:hover {
+    background-image: url('../assets/img/delete-blue.svg')
 }
 
 .contact-info {
@@ -305,7 +322,7 @@ header {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(80%, -50%);
+    transform: translate(100%, -50%);
     transition: 175ms ease-in-out;
     width: 1000px;
     height: 510px;
@@ -317,7 +334,7 @@ header {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(80%, -50%);
+    transform: translate(100%, -50%);
     transition: 175ms ease-in-out;
     width: 1000px;
     height: 510px;
@@ -378,9 +395,18 @@ header {
 
 .close-button {
     position: absolute;
-    right: 20px;
-    top: 20px;
+    right: 26px;
+    top: 10px;
     cursor: pointer;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    padding-top: 2px;
+    border-radius: 50%;
+}
+
+.close-button:hover {
+    background-color: #F6F7F8;
 }
 
 .input-fields {
@@ -395,7 +421,6 @@ header {
     border-radius: 6px;
     border-color: rgba(0, 0, 0, 0.1);
     padding: 4px;
-    cursor: pointer;
     padding-left: 20px;
     width: 281px;
 }
@@ -406,19 +431,19 @@ header {
 }
 
 .person-icon {
-    background-image: url('/assets/img/person.svg');
+    background-image: url('../assets/img/person.svg');
     background-repeat: no-repeat;
     background-position: 210px 4px;
 }
 
 .email-icon {
-    background-image: url('/assets/img/mail.svg');
+    background-image: url('../assets/img/mail-icon.svg');
     background-repeat: no-repeat;
     background-position: 210px 4px;
 }
 
 .phone-icon {
-    background-image: url('/assets/img/call.svg');
+    background-image: url('../assets/img/call.svg');
     background-repeat: no-repeat;
     background-position: 210px 4px;
 }
@@ -431,23 +456,34 @@ header {
 }
 
 .cancel-button {
-    border: 1px solid black;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
+    background-image: url('../assets/img/cancel.svg');
+    background-repeat: no-repeat;
     cursor: pointer;
-    padding: 0px 10px;
+    width: 138px;
+    height: 62px;
+}
+
+.cancel-button:hover {
+    background-image: url('../assets/img/cancel-blue.svg');
+    width: 140px;
 }
 
 .create-button {
-    border-radius: 6px;
-    background-color: #2A3647;
-    color: white;
-    padding: 5px 10px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
     cursor: pointer;
+    height: 60px;
+    color: white;
+    font-size: 21px;
+    background-color: #2A3647;
+    border-radius: 10px;
+    padding: 15px 10px 20px 10px;
+    background-image: url(/assets/img/check.svg);
+    background-repeat: no-repeat;
+    background-position: 160px 18px;
+    width: 186px;
+}
+
+.create-button:hover {
+    background-color:#29ABE2;
 }
 
 .close-image {
@@ -458,4 +494,35 @@ header {
 .create-image {
     height: 22px;
     width: 22px;
+}
+
+.delete-button {
+    padding: 10px 25px 10px 25px;
+    border: 1px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 21px;
+}
+
+.delete-button:hover {
+    color: #29ABE2;
+    border: 1px solid #29ABE2;
+}
+
+.save-button {
+    color: white;
+    font-weight: 600px;
+    background-color: #2A3647;
+    padding: 10px 25px 10px 25px;
+    font-size: 21px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.save-button:hover {
+    background-color:#29ABE2;
+}
+
+.first-letter {
+    margin-top: 30px;
 }

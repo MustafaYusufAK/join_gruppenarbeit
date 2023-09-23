@@ -25,7 +25,7 @@
         </div>
         <div class="headline-flex-box">
             <h1 class="headline-contacts">Contacts</h1>
-            <div class="seperator"></div>
+            <div class="separator"></div>
             <h2 class="subheadline">Better with a team</h2>
         </div>
         <div id="show-contact"></div>
@@ -39,7 +39,7 @@
             <div class="flex-box-overlay">
                 <img src="./assets/img/Frame 79.svg" alt="person-image">
             </div>
-            <img onclick="hideOverlay()" class="close-button" src="./assets/img/Close.svg" alt="close-button">
+            <div class="close-button" onclick="hideOverlay()"><img src="./assets/img/Close.svg" alt="close-button"></div>
             <div class="input-fields">
                 <form>
                     <input class="input person-icon" id="add-name" type="text" placeholder="Name" required>
@@ -49,12 +49,9 @@
             </div>
             <div class="overlay-buttons">
                 <div onclick="hideOverlay()" class="cancel-button">
-                    Cancel
-                    <img src="./assets/img/Close.svg" class="close-image" alt="close-image">
                 </div>
                 <div class="create-button" onclick="addNewContact()">
                     Create contact
-                    <img src="./assets/img/check.svg" class="create-image" alt="check-image">
                 </div>
             </div>
         </div>
@@ -68,7 +65,7 @@
             <div class="flex-box-overlay">
                 <div id="change-color-icon"></div>
             </div>
-            <img onclick="hideOverlayEdit()" class="close-button" src="./assets/img/Close.svg" alt="close-button">
+            <div class="close-button" onclick="hideOverlayEdit()"><img src="./assets/img/Close.svg" alt="close-button"></div>
             <div class="input-fields">
                 <form action="onsubmit">
                     <input class="input person-icon" type="text" id="edit-name" placeholder="Name" required>
@@ -77,13 +74,11 @@
                 </form>
             </div>
             <div class="overlay-buttons">
-                <div onclick="hideOverlayEdit()" class="cancel-button">
-                    Cancel
-                    <img src="./assets/img/Close.svg" class="close-image" alt="close-image">
+                <div onclick="deleteContact()" class="delete-button">
+                    Delete
                 </div>
-                <div class="create-button" onclick="addNewContact()">
-                    Create contact
-                    <img src="./assets/img/check.svg" class="create-image" alt="check-image">
+                <div class="save-button">
+                    save <img src="./assets/img/check.svg" alt="checkmark-image">
                 </div>
             </div>
         </div>
