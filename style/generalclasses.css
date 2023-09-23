@@ -132,6 +132,24 @@ h1 {
     }
 }
 
+@media (max-width: 600px) {
+    .fontSize-64-600 {
+        font-size: 47px;
+    }
+
+    .fontSize-16-400 {
+        font-size: 14px;
+    }
+
+    .fontSize-20-400 {
+        font-size: 14px;
+    }
+
+    .fontSize-21-700 {
+        font-size: 16px;
+    }
+}
+
 @media (max-width: 500px) {
     .fontSize-21-700 {
         font-size: 16px;

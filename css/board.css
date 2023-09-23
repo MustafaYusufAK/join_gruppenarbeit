@@ -150,3 +150,32 @@ header {
     width: 240px;
     margin-top: 10px;
 }
+
+@media (max-width: 850px) {
+
+    header {
+        margin-left: 0;
+        height: 80px;
+    }
+
+    nav {
+        height: 80px;
+        width: 100%;
+        bottom: 0;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    .nav-sub {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .nav-bottom {
+        display: none;
+    }
+}
