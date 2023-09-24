@@ -19,6 +19,9 @@
     font-size: 21px;
     border-radius: 10px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .save-button:hover {
@@ -106,6 +109,10 @@ footer {
     #show-contact {
         margin-left: 640px;
     }
+
+    .overlay-headline {
+        margin-bottom: 10px;
+    }
 }
 
 @media (max-width: 1050px) {
@@ -157,6 +164,7 @@ footer {
         flex: 1;
         flex-direction: column;
     }
+
 }
 
 @media (max-width: 850px) {
