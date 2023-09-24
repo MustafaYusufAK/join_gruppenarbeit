@@ -22,7 +22,7 @@
 }
 
 .save-button:hover {
-    background-color:#29ABE2;
+    background-color: #29ABE2;
 }
 
 .first-letter {
@@ -33,11 +33,15 @@
 
 .selected-contact {
     background-color: rgb(42, 54, 71);
-    color: white; 
+    color: white;
 }
 
 .selected-contact:hover {
     background-color: rgb(42, 54, 71);
+}
+
+footer {
+    display: absolute;
 }
 
 @media (max-width: 1320px) {
@@ -60,7 +64,7 @@
     }
 }
 
-@media (max-width: 1220px) {
+@media (max-width: 1250px) {
     .headline-contacts {
         font-size: 30px;
     }
@@ -79,7 +83,7 @@
 
     .contact-info {
         font-size: 18px;
-    
+
     }
 
     .big-contact-icon {
@@ -104,19 +108,70 @@
     }
 }
 
-@media (max-width: 1020px) {
+@media (max-width: 1050px) {
+    nav {
+        height: 10%;
+        width: 100%;
+        bottom: 0;
+        z-index: 2;
+        flex-direction: unset;
+    }
+
+    header {
+        margin-left: 0px;
+    }
+
     .contact-menu {
-        width: 300px;
+        margin-left: 0px;
+        max-height: 76%;
+    }
+
+    .headline-flex-box {
+        margin-left: 400px;
+    }
+
+    #show-contact {
+        margin-left: 400px;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    .nav-bottom {
+        display: none;
+    }
+
+    .flex-box-mobile {
+        display: flex;
+    }
+
+    .nav-sub {
+        flex-direction: column;
+        flex: 1;
+        padding: 10px;
+    }
+
+    .contacts-background {
+        padding: 10px;
+        flex: 1;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 850px) {
+    .contact-menu {
+        width: 320px;
     }
 
     .add-button {
-        width: 240px;
-        margin-left: 25px;
+        width: 290px;
+        margin-left: 11px;
         font-size: 18px;
     }
 
     .new-contact-box {
-        width: 240px;
+        width: 290px;
     }
 
     .small-contact-icon {
@@ -142,17 +197,18 @@
     }
 
     .headline-flex-box {
-        margin-left: 530px;
+        margin-left: 320px;
     }
 
     #show-contact {
-        margin-left: 530px;
+        margin-left: 320px;
     }
+
     .overlay-buttons {
-    display: flex;
-    margin-left: 490px;
-    margin-top: 0px;
-    gap: 20px;
+        display: flex;
+        margin-left: 490px;
+        margin-top: 0px;
+        gap: 20px;
     }
 
     .overlay-logo {
@@ -188,4 +244,19 @@
     .input-fields {
         margin-left: 480px;
     }
+
+    #overlay-add-contact {
+        width: 800px;
+        height: 400px;
+    }
+
+    .over-logo-person {
+        width: 90px;
+        height: 90px;
+    }
+
+    .buttons-margin-left {
+        margin-left: 450px;
+    }
 }
+
