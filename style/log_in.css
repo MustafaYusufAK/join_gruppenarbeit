@@ -499,14 +499,14 @@ a:hover {
     }
 
     /*---------------------Log In-------------------*/
-    .startscreen-logo {
+    /*.startscreen-logo {
         background-color: #2A3647;
-    }
+    }*/
 
-    .startscreen-logo img {
+    /*.startscreen-logo img {
         top: calc(50% - (122px / 2));
         left: calc(50% - (100px / 2));
-    }
+    }*/
 
     @keyframes reduceLogo {
         0% {
@@ -558,7 +558,7 @@ a:hover {
     }
 
     .log-in-input {
-        /*width: 90%;*/
+        width: 90%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -728,8 +728,29 @@ a:hover {
 
     /*--------------------Log In--------------------*/
 
-    .startscreen-logo {
+    /*.startscreen-logo {
         display: none;
+    }*/
+
+    @keyframes reduceLogo {
+        0% {
+            opacity: 1;
+
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @keyframes reduceBackground {
+        0% {
+            opacity: 1;
+        }
+    
+        100% {
+            opacity: 0;
+        }
     }
 
 

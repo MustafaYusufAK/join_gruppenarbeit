@@ -148,6 +148,14 @@ h1 {
     .fontSize-21-700 {
         font-size: 16px;
     }
+
+    .fontSize-47-500 {
+        font-size: 36px;
+    }
+
+    .fontSize-64-700 {
+        font-size: 47px;
+    }
 }
 
 @media (max-width: 500px) {
