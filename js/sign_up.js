@@ -1,3 +1,7 @@
+//------------------------------------------------------------------------------//
+//---------------------------------Register User--------------------------------//
+//------------------------------------------------------------------------------//
+
 async function signUp() {
     document.getElementById('sign_up_btn').disabled = true;
     let name = document.getElementById('name_sign_up');
@@ -29,6 +33,11 @@ async function signUp() {
     }
     document.getElementById('sign_up_btn').disabled = false;
 }
+
+
+//------------------------------------------------------------------------------//
+//-----------------------------Check Btn vor Sign Up----------------------------//
+//------------------------------------------------------------------------------//
 
 function checkBtnSignUp(check) {
     let signUpCheckBtn = document.getElementById('checkbox_container');

@@ -1,9 +1,31 @@
-let lokalUsers = [];
+
+//------------------------------------------------------------------------------//
+//----------------------initialize first Steps for the Page---------------------//
+//------------------------------------------------------------------------------//
 
 function init() {
     loadUsersFromLocalStorage();
+    loadLoakalUser();
     playAnimation();
 }
+
+
+//------------------------------------------------------------------------------//
+//----------------------load remind User from local Storage---------------------//
+//------------------------------------------------------------------------------//
+
+function loadLoakalUser() {
+    if (lokalUsers.length > 0) {
+        document.getElementById('email_log_in').value = lokalUsers[0]['email'];
+        document.getElementById('password1_input').value = lokalUsers[0]['password'];
+        document.getElementById('check_btn').src = './assets/img/checkbuttonchecked.svg';
+    }
+}
+
+
+//------------------------------------------------------------------------------//
+//---------------------------Log In for User and Guest--------------------------//
+//------------------------------------------------------------------------------//
 
 async function logIn(guest) {
     let email = document.getElementById('email_log_in');
@@ -24,6 +46,11 @@ async function logIn(guest) {
     }
 }
 
+
+//------------------------------------------------------------------------------//
+//---------------------------Change the Event Listener--------------------------//
+//------------------------------------------------------------------------------//
+
 function saveHandler() {
     saveUserToLocalStorage();
 }
@@ -38,6 +65,11 @@ function removeClickHandler() {
     log_in_btn.removeEventListener('click', saveHandler);
 }
 
+
+//------------------------------------------------------------------------------//
+//-------------------------Change the chop for the Form-------------------------//
+//------------------------------------------------------------------------------//
+
 function checkBtnLogIn() {
     let logInCheckBtn = document.getElementById('check_btn');
     if (logInCheckBtn.src.includes('checkbuttonchecked')) {
@@ -48,6 +80,11 @@ function checkBtnLogIn() {
         addClickHandler();
     }
 }
+
+
+//------------------------------------------------------------------------------//
+//-----------------------------Show the worng Input-----------------------------//
+//------------------------------------------------------------------------------//
 
 function wrongEnter(users, emailValue, passwordValue) {
     let emailInput = document.getElementById('email')
@@ -69,11 +106,21 @@ function wrongEnter(users, emailValue, passwordValue) {
     }
 }
 
+
+//------------------------------------------------------------------------------//
+//-----------------------------Reset the worng Input----------------------------//
+//------------------------------------------------------------------------------//
+
 function resetWrongEnter(id) {
     if (id) {
         document.getElementById(id).classList.remove('log-in-wrong');
     }
 }
+
+
+//------------------------------------------------------------------------------//
+//-------------------------Change Img for Password Input------------------------//
+//------------------------------------------------------------------------------//
 
 function showPasswordIcon(password) {
     let password1 = document.getElementById('input_icon_password1')
@@ -89,6 +136,10 @@ function showPasswordIcon(password) {
     }
 }
 
+//------------------------------------------------------------------------------//
+//--------------Change Img for Password Input and Show the Password-------------//
+//------------------------------------------------------------------------------//
+
 function showPassword(password) {
     let password1 = document.getElementById('input_icon_password1')
     let password2 = document.getElementById('input_icon_password2')
@@ -102,6 +153,11 @@ function showPassword(password) {
         document.getElementById('password2_input').type = "text";
     }
 }
+
+
+//------------------------------------------------------------------------------//
+//-------------Change Img for Password Input and hide the Password--------------//
+//------------------------------------------------------------------------------//
 
 function hidePassword(password) {
     let password1 = document.getElementById('input_icon_password1')
@@ -117,6 +173,11 @@ function hidePassword(password) {
     }
 }
 
+
+
+//------------------------------------------------------------------------------//
+//---------------------------------Reset Inputs---------------------------------//
+//------------------------------------------------------------------------------//
 
 function resetForm(id, email, password1, password2, name) {
     if (id == 'signup') {

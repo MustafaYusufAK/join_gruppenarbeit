@@ -1,41 +1,70 @@
 const STORAGE_TOKEN = '6JWGFSP8ZA4Y8JE2FOVSN7ZO8Z67IFY8GHNHPA6B'
 const STORAGE_URL = 'https://remote-storage.developerakademie.org/item'
 
+let lokalUsers = [];
+let users;
+
+//------------------------------------------------------------------------------//
+//-----------------------------save User at Backend-----------------------------//
+//------------------------------------------------------------------------------//
+
 async function setItem(key, value){
     const payload = {key, value, token: STORAGE_TOKEN};
     return fetch(STORAGE_URL, {method: 'POST', body: JSON.stringify(payload)})
     .then(res => res.json());
 }
 
+
+//------------------------------------------------------------------------------//
+//-----------------------------get User from Backend----------------------------//
+//------------------------------------------------------------------------------//
+
 async function getItem(key){
     const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
     return fetch(url).then(res => res.json().then(res => res.data.value));
 }
 
-/*async function loadUsers() {
+
+//------------------------------------------------------------------------------//
+//-----------------------------get Username from URL----------------------------//
+//------------------------------------------------------------------------------//
+
+function getUserName() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const msg = urlParams.get('msg');
+
+    let userName = msg.split(', ');
+    return userName[1];
+}
+
+
+//------------------------------------------------------------------------------//
+//----------------------------load User from Backend----------------------------//
+//------------------------------------------------------------------------------//
+
+async function loadUsers() {
     try {
         users = JSON.parse(await getItem('users'));
     } catch (e) {
         console.error('Loading error:', e);
     }
-}*/
-
-async function fetchToJson(URL) {
-    let users = await fetch(URL);
-    let usersAsJson = await users.json();
-    if (usersAsJson === false) {
-        return
-    } else {
-        return usersAsJson;
-    }
 }
+
+
+//------------------------------------------------------------------------------//
+//-------------------------load User from local Storage-------------------------//
+//------------------------------------------------------------------------------//
 
 function loadUsersFromLocalStorage() {
     return lokalUsers = JSON.parse(localStorage.getItem('users')) || [];
 }
 
+
+//------------------------------------------------------------------------------//
+//--------------------------save User at local Storage--------------------------//
+//------------------------------------------------------------------------------//
+
 async function saveUserToLocalStorage() {
-    debugger;
     let emailValue = document.getElementById('email_log_in')
     let users = JSON.parse(await getItem('users'));
     let user = users.find(u => u.email == emailValue.value.toLowerCase())
@@ -50,8 +79,38 @@ async function saveUserToLocalStorage() {
     localStorage.setItem('users', JSON.stringify(lokalUsers));
 }
 
+
+//------------------------------------------------------------------------------//
+//----------------------------------delete User---------------------------------//
+//------------------------------------------------------------------------------//
+
 async function deleteUser(email) {
     let users = JSON.parse(await getItem('users'));
     users = users.filter(u => u.email !== email.toLowerCase());
     await setItem('users', JSON.stringify(users));
+}
+
+
+//------------------------------------------------------------------------------//
+//---------------------------save Contacts at Backend---------------------------//
+//------------------------------------------------------------------------------//
+
+async function saveContacts(email) {
+    users = JSON.parse(await getItem('users'));
+
+    let userIndex = users.findIndex(u => u.email === email);
+    users[userIndex].contacts = contacts; 
+}
+
+
+//------------------------------------------------------------------------------//
+//-----------------------------save Tasks at Backend----------------------------//
+//------------------------------------------------------------------------------//
+
+async function saveTasks(email) {
+    users = JSON.parse(await getItem('users'));
+    debugger;
+
+    let userIndex = users.findIndex(u => u.email === email);
+    users[userIndex].tasks = contacts; 
 }

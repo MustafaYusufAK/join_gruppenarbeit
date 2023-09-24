@@ -1,10 +1,13 @@
+//------------------------------------------------------------------------------//
+//---------------------------------Reset Password-------------------------------//
+//------------------------------------------------------------------------------//
+
 async function resetPassword() {
     let password1 = document.getElementById('password1_input');
     let password2 = document.getElementById('password2_input');
     let resetPasswordSuccesfully = document.getElementById('reset_password_succesfully');
     let users = JSON.parse(await getItem('users'));
     const urlParams = new URLSearchParams(window.location.search);
-
     const msg = urlParams.get('msg');
 
     if (password1.value == password2.value) {
