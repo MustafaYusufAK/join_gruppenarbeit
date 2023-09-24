@@ -98,6 +98,7 @@ function createContactDropdown() {
         let option = document.createElement('option');
         option.value = contact.name;
         option.textContent = contact.name;
+        option.classList.add('not_selected');  // Füge die Klasse hinzu
         dropdown.appendChild(option);
     });
 
@@ -113,7 +114,6 @@ function createContactDropdown() {
         }
     });
 }
-
 
 function createAssigneeBall(contact) {
     let assignedToList = document.getElementById('assignedToList');
@@ -138,11 +138,44 @@ function createAssigneeBall(contact) {
         // Freigebe die Option, indem das `disabled`-Attribut entfernt wird
         if (option) {
             option.disabled = false;
+
+            // Entferne die Klasse 'selected' vom vorher ausgewählten Container
+            document.querySelectorAll('.assigneeContainer').forEach(container => {
+                container.classList.remove('selected');
+            });
         }
+    });
+
+    // Event-Listener, um die ausgewählte Farbe zu speichern
+    assigneeContainer.addEventListener('click', () => {
+        const selectedColor = assigneeContainer.style.backgroundColor;  // Ändere dies
+
+        // Füge die Farbe dem Array hinzu
+        assignedToColorsArray.push(selectedColor);
+
+        // Entferne die 'selected'-Klasse von allen AssigneeContainern
+        document.querySelectorAll('.assigneeContainer').forEach(container => {
+            container.classList.remove('selected');
+        });
+
+        // Füge die 'selected'-Klasse nur dem ausgewählten Container hinzu
+        assigneeContainer.classList.add('selected');
+        option.classList.remove('not_selected');  // Entferne die Klasse 'not_selected'
     });
 
     assignedToList.appendChild(assigneeContainer);
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -165,98 +198,110 @@ let assignedToIDsArray = [];
 function addTask() {
     // Get references to the required form elements
     const selectedOption = document.getElementById('which_assigned_contact').options[document.getElementById('which_assigned_contact').selectedIndex];
+    let assignedToDiv = document.getElementById('assignedToList');  // Änderung hier
     let titleInput = document.getElementById('title');
     let descriptionInput = document.getElementById('description_text');
-    let subtaskInput = document.getElementById('subtaskInput');
     let categorySelect = document.getElementById('category');
-    let assignedToDiv = document.getElementById('assignedToList');  // Änderung hier
     let createdAtInput = document.getElementById('createdAt');
-    let assignedToSelect = document.getElementById('which_assigned_contact');
-    let assignedToColor = document.getElementById('assignedToList').style.backgroundColor;
+
+    // Extrahiere Subtask-Texte aus den Listenelementen im subtasksArray
+
+
+
+
 
     // Check if all required fields are filled
-    if (
-        titleInput.checkValidity() &&
-        descriptionInput.checkValidity() &&
-        subtaskInput.checkValidity() &&
-        assignedToDiv &&  // Änderung hier
-        createdAtInput.checkValidity() &&
-        categorySelect.innerText.trim() !== ""
-    ) {
-        let categoryColor = categorySelect.querySelector('.categoryColor').style.backgroundColor;        // All required fields are filled, proceed to create the task
-        let title = titleInput.value;
-        let description = descriptionInput.value;
-        let subtask = subtaskInput.value;
-        let category = categorySelect.innerText;
-        let assignedTo = assignedToDiv.innerText;  // Änderung hier
-        let createdAt = createdAtInput.value;
-        const assignedColor = selectedOption.getAttribute('data-color');
-        const assignedID = selectedOption.getAttribute('data-id');
 
-        // Create a unique ID for the task
-        let id = generateUniqueID();
-
-        // Get the selected priority
-        let priority = null;
-        const priorityButtons = document.querySelectorAll('.prio_btn_characteristics');
-        for (const button of priorityButtons) {
-            if (!button.classList.contains('d-none')) {
-                priority = button.value;
-                break;
-            }
-        }
-
-        let task = {
-            id: id,
-            title: title,
-            description_text: description,
-            task_category: category,
-            subtaskInput: subtask,
-            which_assigned_contact: assignedTo,  // Änderung hier
-            createdAt: createdAt,
-            priority: priority // Add priority to the task
-        };
-
-        allTasks.push(task);
-        titlesArray.push(title);
-        descriptionsArray.push(description);
-        createdAtArray.push(createdAtInput.value);
-        priorityArray.push(priority);
-        categoryArray.push(categorySelect.innerText);
-        categoryColorArray.push(categoryColor);
-        subtasksArray.push(subtaskInput.value);
+    let categoryColor = categorySelect.querySelector('.categoryColor').style.backgroundColor;        // All required fields are filled, proceed to create the task
+    let title = titleInput.value;
+    let description = descriptionInput.value;
+    let category = categorySelect.innerText;
+    let assignedTo = assignedToDiv.innerText;  // Änderung hier
+    let createdAt = createdAtInput.value;
 
 
-        // Push assigned color to the array
-        assignedToColorsArray.push(assignedColor);
-
-        // Push assigned ID to the array (as an example)
-        assignedToIDsArray.push(assignedID);
 
 
-        // Reset the input fields
-        titleInput.value = '';
-        descriptionInput.value = '';
-        subtaskInput.value = '';
-        createdAtInput.value = '';
 
-        // Update the localStorage with the updated task list
-        localStorage.setItem('allTasks', JSON.stringify(allTasks));
-        // Füge das aktualisierte Titel-Array dem allTasks-Objekt hinzu
-        allTasks.titles = titlesArray;
-        allTasks.descriptions = descriptionsArray;
-        allTasks.createdAt = createdAtArray;
-        allTasks.priority = priorityArray;
-        allTasks.category = categoryArray;
-        allTasks.categoryColors = categoryColorArray;
-        allTasks.subtasks = subtasksArray;
-        // Füge das aktualisierte zugewiesene Werte- und Farben-Array dem allTasks-Objekt hinzu
-        allTasks.assignedToValues = assignedToValuesArray;
-        allTasks.assignedToColors = assignedToColorsArray;
-    } else {
-        // At least one required field is not filled, display a message or take appropriate action
-        alert('Please fill all required fields.');
+
+
+
+    const selectedAssigneeContainer = document.querySelector('.assigneeContainer');
+    let assignedToColor = null;
+
+    if (selectedAssigneeContainer && !selectedAssigneeContainer.classList.contains('not_selected')) {
+        // Ändere dies, um die Hintergrundfarbe des Containers zu extrahieren
+        assignedToColor = selectedAssigneeContainer.style.backgroundColor;
+        assignedToColorsArray.push(assignedToColor);
     }
+    // Create a unique ID for the task
+    let id = generateUniqueID();
+
+    // Get the selected priority
+    let priority = null;
+    const priorityButtons = document.querySelectorAll('.prio_btn_characteristics');
+    for (const button of priorityButtons) {
+        if (!button.classList.contains('d-none')) {
+            priority = button.value;
+            priorityArray.push(priority);  // Push priority to the priorityArray
+            break;
+        }
+    }
+
+    let task = {
+        id: id,
+        title: title,
+        description_text: description,
+        task_category: category,
+        which_assigned_contact: assignedTo,  // Änderung hier
+        createdAt: createdAt,
+        priority: priority, // Add priority to the task
+        assignedToValues: [selectedOption.value],
+        assignedToColors: [assignedToColor]
+    };
+
+
+
+    // Hinzufügen des Subtasks zuerst zum subtasksArray und dann zu allTasks
+    allTasks.push(task);
+    titlesArray.push(title);
+    descriptionsArray.push(description);
+    createdAtArray.push(createdAtInput.value);
+    categoryArray.push(categorySelect.innerText);
+    categoryColorArray.push(categoryColor);
+
+    // Push assigned value to the array
+    const assignedValue = selectedOption.value;
+    assignedToValuesArray.push(assignedValue);
+
+
+
+
+
+
+
+    // Reset the input fields
+    titleInput.value = '';
+    descriptionInput.value = '';
+    subtaskInput.value = '';
+    createdAtInput.value = '';
+
+    // Update the localStorage with the updated task list
+    localStorage.setItem('allTasks', JSON.stringify(allTasks));
+    // Füge das aktualisierte Titel-Array dem allTasks-Objekt hinzu
+    allTasks.titles = titlesArray;
+    allTasks.descriptions = descriptionsArray;
+    allTasks.createdAt = createdAtArray;
+    allTasks.priority = priorityArray;
+    allTasks.category = categoryArray;
+    allTasks.categoryColors = categoryColorArray;
+    allTasks.subtasks = subtasksArray;
+    // Füge das aktualisierte zugewiesene Werte- und Farben-Array dem allTasks-Objekt hinzu
+    allTasks.assignedToValues = assignedToValuesArray;
+    allTasks.assignedToColors = assignedToColorsArray;
+
+
+
 }
 
 
@@ -270,20 +315,19 @@ function generateUniqueID() {
 
 function clickEventlisteners() {
     document.getElementById('normal_urgent_btn').addEventListener('click', (event) => {
-        event.preventDefault(); // Verhindert das Neuladen der Seite
+        event.preventDefault();
         handlePrioButtonClick('urgent');
     });
 
     document.getElementById('normal_medium_btn').addEventListener('click', (event) => {
-        event.preventDefault(); // Verhindert das Neuladen der Seite
+        event.preventDefault();
         handlePrioButtonClick('medium');
     });
 
     document.getElementById('normal_low_btn').addEventListener('click', (event) => {
-        event.preventDefault(); // Verhindert das Neuladen der Seite
+        event.preventDefault();
         handlePrioButtonClick('low');
     });
-
 }
 
 
@@ -589,6 +633,9 @@ function addSubtask() {
         // Füge das Listenelement zur Subtask-Liste hinzu
         subtaskList.appendChild(listItem);
 
+        // Füge das Listenelement dem subtasksArray hinzu
+        subtasksArray.push(subtaskText);
+
         // Leere das Eingabefeld nach Hinzufügen des Subtasks
         subtaskInput.value = '';
     }
@@ -724,6 +771,13 @@ function handlePrioButtonClick(prio) {
         document.getElementById(normalButtonId).classList.remove('d-none');
         document.getElementById(clickedButtonId).classList.add('d-none');
         toggleDropdown(); // Hier wird das Dropdown zurückgesetzt
+
+        // Entferne die Priorität aus dem priorityArray
+        const index = priorityArray.indexOf(prio);
+        if (index !== -1) {
+            priorityArray.splice(index, 1);
+        }
+
     } else {
         // Aktivieren Sie den ausgewählten Prio-Button und setzen Sie die anderen zurück
         if (selectedPrioButton) {
@@ -736,8 +790,12 @@ function handlePrioButtonClick(prio) {
         selectedPrioButton = prio;
         document.getElementById(normalButtonId).classList.add('d-none');
         document.getElementById(clickedButtonId).classList.remove('d-none');
+
+        // Füge die Priorität zum priorityArray hinzu
+        priorityArray.push(prio);
     }
 }
+
 
 
 // Function to open the datepicker
