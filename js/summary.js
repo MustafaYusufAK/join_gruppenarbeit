@@ -181,6 +181,11 @@ function openTaskBoard() {
     window.location.href = `board.html?msg=Welcomme to Join, ${userName}`;
 }
 
+
+//------------------------------------------------------------------------------//
+//--------------------------------fill Summary----------------------------------//
+//------------------------------------------------------------------------------//
+
 async function fillSummary() {
     let userName = getUserName();
     console.log('userName:', userName);
@@ -190,4 +195,48 @@ async function fillSummary() {
 
     let user = users.find(u => u.name == userName);
     console.log('user:', user);
+
+    // ToDo and Done//
+    fillToDoDoneTasks(user);
+
+    //urgend//
+    fillUrgendTasks(user);
+
+    //Task Progress//
+    let totalTaskBoard = document.getElementById('task_board_count');
+    let taskProgress = document.getElementById('task_progress_count');
+    let awaitFeedback = document.getElementById('task_feedback_count');
+}
+
+
+//------------------------------------------------------------------------------//
+//-----------------------------fill ToDo and Done-------------------------------//
+//------------------------------------------------------------------------------//
+
+function fillToDoDoneTasks(user) {
+    let toDoCount = document.getElementById('to_do_count');
+    let doneCount = document.getElementById('done_count');
+}
+
+
+//------------------------------------------------------------------------------//
+//------------------------------fill Urgend Tasks-------------------------------//
+//------------------------------------------------------------------------------//
+
+function fillUrgendTasks(user) {
+    let urgendCount = document.getElementById('urgend_count');
+    let urgendDueDate = document.getElementById('urgend_date');
+}
+
+
+//------------------------------------------------------------------------------//
+//-----------------------------fill Task Progress-------------------------------//
+//------------------------------------------------------------------------------//
+
+function fillTaskProgress(user) {
+    let totalTaskBoard = document.getElementById('task_board_count');
+    let taskProgress = document.getElementById('task_progress_count');
+    let awaitFeedback = document.getElementById('task_feedback_count');
+
+    totalTaskBoard.innerHTML = user.tasks.length;
 }
