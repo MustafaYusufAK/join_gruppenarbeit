@@ -40,7 +40,7 @@ function hoverOverSummaryTasks(id, section, imgSrc) {
 function hoverOverToDoAndDone(id, imgSrc) {
     document.getElementById(`${id}`).classList.remove('to-do-and-done-taskarea');
     document.getElementById(`${id}`).classList.add('to-do-and-done-taskarea-hover');
-    document.getElementById(`${id}_img`).src = `./assets/img/summary_${imgSrc}_hover.svg`;
+    document.getElementById(`${id}_img`).src = `../assets/img/summary_${imgSrc}_hover.svg`;
 }
 
 
@@ -94,7 +94,7 @@ function hoverLeaveSummaryTasks(id, section, imgSrc) {
 function hoverLeaveToDoAndDone(id, imgSrc) {
     document.getElementById(`${id}`).classList.remove('to-do-and-done-taskarea-hover');
     document.getElementById(`${id}`).classList.add('to-do-and-done-taskarea');
-    document.getElementById(`${id}_img`).src = `./assets/img/summary_${imgSrc}.svg`;
+    document.getElementById(`${id}_img`).src = `../assets/img/summary_${imgSrc}.svg`;
 }
 
 

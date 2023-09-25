@@ -42,8 +42,8 @@ async function signUp() {
 function checkBtnSignUp(check) {
     let signUpCheckBtn = document.getElementById('checkbox_container');
     if (check == 'nonecheck') {
-        signUpCheckBtn.innerHTML = '<img id="check_btn" src="./assets/img/checkbuttonchecked.svg" onclick="checkBtn(`signup`, `checked`)">';
+        signUpCheckBtn.innerHTML = '<img id="check_btn" src="../assets/img/checkbuttonchecked.svg" onclick="checkBtnSignUp(`checked`)">';
     } else {
-        signUpCheckBtn.innerHTML = '<input id="input_checkbox_none_checked" required type="checkbox" class="form-check-input" onclick="checkBtn(`signup`, `nonecheck`)">';
+        signUpCheckBtn.innerHTML = '<input id="input_checkbox_none_checked" required type="checkbox" class="form-check-input" onclick="checkBtnSignUp(`nonecheck`)">';
     }
 }

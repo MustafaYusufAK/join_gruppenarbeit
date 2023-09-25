@@ -1,6 +1,10 @@
-/*body {
-    overflow-x: hidden;
-}*/
+.summary-background {
+    background-color: rgb(9, 25, 49);
+}
+
+.contacts-background {
+    background-color: unset;
+}
 
 .summary-hoverd {
     background-color: rgb(9, 25, 49);
@@ -34,8 +38,6 @@
     gap: 30px;
     margin: 20px 0 0 0;
 }
-
-/*.header-summary h1 {}*/
 
 .header-summary span {
     height: 59px;

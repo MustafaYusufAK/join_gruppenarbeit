@@ -18,7 +18,7 @@ function loadLoakalUser() {
     if (lokalUsers.length > 0) {
         document.getElementById('email_log_in').value = lokalUsers[0]['email'];
         document.getElementById('password1_input').value = lokalUsers[0]['password'];
-        document.getElementById('check_btn').src = './assets/img/checkbuttonchecked.svg';
+        document.getElementById('check_btn').src = '../assets/img/checkbuttonchecked.svg';
     }
 }
 
@@ -73,10 +73,10 @@ function removeClickHandler() {
 function checkBtnLogIn() {
     let logInCheckBtn = document.getElementById('check_btn');
     if (logInCheckBtn.src.includes('checkbuttonchecked')) {
-        logInCheckBtn.src = './assets/img/checkbutton.svg';
+        logInCheckBtn.src = '../assets/img/checkbutton.svg';
         removeClickHandler();
     } else {
-        logInCheckBtn.src = './assets/img/checkbuttonchecked.svg';
+        logInCheckBtn.src = '../assets/img/checkbuttonchecked.svg';
         addClickHandler();
     }
 }
@@ -129,10 +129,10 @@ function showPasswordIcon(password) {
     let passwordIcon2 = document.getElementById('password2_icon');
 
     if (password == 'password1' && passwordIcon1.src.endsWith('lock.svg')) {
-        password1.innerHTML = `<img onclick="showPassword('password1')" id="password1_icon" src="./assets/img/visibility_off.svg" alt="">`
+        password1.innerHTML = `<img onclick="showPassword('password1')" id="password1_icon" src="../assets/img/visibility_off.svg" alt="">`
     }
     if (password == 'password2' && passwordIcon2.src.endsWith('lock.svg')) {
-        password2.innerHTML = `<img onclick="showPassword('password2')" id="password2_icon" src="./assets/img/visibility_off.svg" alt="">`
+        password2.innerHTML = `<img onclick="showPassword('password2')" id="password2_icon" src="../assets/img/visibility_off.svg" alt="">`
     }
 }
 
@@ -145,11 +145,11 @@ function showPassword(password) {
     let password2 = document.getElementById('input_icon_password2')
 
     if (password == 'password1') {
-        password1.innerHTML = `<img onclick="hidePassword('password1')" id="password1_icon" src="./assets/img/visibility.svg" alt="">`
+        password1.innerHTML = `<img onclick="hidePassword('password1')" id="password1_icon" src="../assets/img/visibility.svg" alt="">`
         document.getElementById('password1_input').type = "text";
     }
     if (password == 'password2') {
-        password2.innerHTML = `<img onclick="hidePassword('password2')" id="password2_icon" src="./assets/img/visibility.svg" alt="">`
+        password2.innerHTML = `<img onclick="hidePassword('password2')" id="password2_icon" src="../assets/img/visibility.svg" alt="">`
         document.getElementById('password2_input').type = "text";
     }
 }
@@ -164,11 +164,11 @@ function hidePassword(password) {
     let password2 = document.getElementById('input_icon_password2')
 
     if (password == 'password1') {
-        password1.innerHTML = `<img onclick="showPassword('password1')" id="password1_icon" src="./assets/img/visibility_off.svg" alt="">`
+        password1.innerHTML = `<img onclick="showPassword('password1')" id="password1_icon" src="../assets/img/visibility_off.svg" alt="">`
         document.getElementById('password1_input').type = "password";
     }
     if (password == 'password2') {
-        password2.innerHTML = `<img onclick="showPassword('password2')" id="password2_icon" src="./assets/img/visibility_off.svg" alt="">`
+        password2.innerHTML = `<img onclick="showPassword('password2')" id="password2_icon" src="../assets/img/visibility_off.svg" alt="">`
         document.getElementById('password2_input').type = "password";
     }
 }
