@@ -168,6 +168,22 @@ footer {
     .buttons-margin-left {
         margin-left: 450px;
     }
+
+    .input {
+        width: 240px;
+    }
+
+    .person-icon {
+        background-position: 230px 4px;
+    }
+    
+    .email-icon {
+        background-position: 230px 4px;
+    }
+    
+    .phone-icon {
+        background-position: 230px 4px;
+    }
 }
 
 @media (max-width: 1050px) {

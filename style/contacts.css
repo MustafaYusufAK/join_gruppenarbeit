@@ -64,6 +64,7 @@
 .headline-contacts {
     font-weight: bold;
     padding: 30px;
+    margin: 0;
     font-size: 61px;
 }
 
@@ -325,19 +326,19 @@
 .person-icon {
     background-image: url('../assets/img/person.svg');
     background-repeat: no-repeat;
-    background-position: 210px 4px;
+    background-position: 270px 4px;
 }
 
 .email-icon {
     background-image: url('../assets/img/mail-icon.svg');
     background-repeat: no-repeat;
-    background-position: 210px 4px;
+    background-position: 270px 4px;
 }
 
 .phone-icon {
     background-image: url('../assets/img/call.svg');
     background-repeat: no-repeat;
-    background-position: 210px 4px;
+    background-position: 270px 4px;
 }
 
 .overlay-buttons {
