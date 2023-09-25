@@ -33,7 +33,7 @@
 
                         <div id="to_do" class="summary-progress summary-progress-none-hover to-do-and-done-taskarea"
                             onmouseover="hoverOverSummaryTasks('to_do', 'to_do_and_done', 'pen')"
-                            onmouseleave="hoverLeaveSummaryTasks('to_do', 'to_do_and_done', 'pen')">
+                            onmouseleave="hoverLeaveSummaryTasks('to_do', 'to_do_and_done', 'pen')" onclick="openTaskBoard()">
                             <img id="to_do_img" src="../assets/img/summary_pen.svg" alt="">
                             <div class="summary-progress-count">
                                 <span id="to_do_count" class="fontSize-64-600 color-000000">0</span>
@@ -45,7 +45,7 @@
 
                         <div id="done" class="summary-progress summary-progress-none-hover to-do-and-done-taskarea"
                             onmouseover="hoverOverSummaryTasks('done', 'to_do_and_done', 'check')"
-                            onmouseleave="hoverLeaveSummaryTasks('done', 'to_do_and_done', 'check')">
+                            onmouseleave="hoverLeaveSummaryTasks('done', 'to_do_and_done', 'check')" onclick="openTaskBoard()">
                             <img id="done_img" src="../assets/img/summary_check.svg" alt="">
                             <div class="summary-progress-count">
                                 <span id="done_count" class="fontSize-64-600 color-000000">0</span>
@@ -57,7 +57,7 @@
 
                     <div id="urgend" class="summary-progress summary-progress-none-hover"
                         onmouseover="hoverOverSummaryTasks('urgend', 'urgend-tasks')"
-                        onmouseleave="hoverLeaveSummaryTasks('urgend', 'urgend-tasks')">
+                        onmouseleave="hoverLeaveSummaryTasks('urgend', 'urgend-tasks')" onclick="openTaskBoard()">
 
                         <div id="urgend_taskfield" class="urgend-tasks summary-urgend">
                             <div class="urgend-count">
@@ -84,7 +84,7 @@
                         <div class="summary-task-board-container">
                             <div id="task_board" class="urgent-task-overview summary-tasks summary-progress-none-hover"
                                 onmouseover="hoverOverSummaryTasks('task_board', 'summary-task-board')"
-                                onmouseleave="hoverLeaveSummaryTasks('task_board', 'summary-task-board')">
+                                onmouseleave="hoverLeaveSummaryTasks('task_board', 'summary-task-board')" onclick="openTaskBoard()">
 
                                 <span id="task_board_count" class="fontSize-64-600 color-000000">0</span>
                                 <span id="task_board_section"
@@ -97,7 +97,7 @@
                             <div id="task_progress"
                                 class="urgent-task-overview summary-tasks summary-progress-none-hover"
                                 onmouseover="hoverOverSummaryTasks('task_progress', 'summary-task-board')"
-                                onmouseleave="hoverLeaveSummaryTasks('task_progress', 'summary-task-board')">
+                                onmouseleave="hoverLeaveSummaryTasks('task_progress', 'summary-task-board')" onclick="openTaskBoard()">
 
                                 <span id="task_progress_count" class="fontSize-64-600 color-000000">0</span>
                                 <span id="task_progress_section"
@@ -110,7 +110,7 @@
                             <div id="task_feedback"
                                 class="urgent-task-overview summary-tasks summary-progress-none-hover"
                                 onmouseover="hoverOverSummaryTasks('task_feedback', 'summary-task-board')"
-                                onmouseleave="hoverLeaveSummaryTasks('task_feedback', 'summary-task-board')">
+                                onmouseleave="hoverLeaveSummaryTasks('task_feedback', 'summary-task-board')" onclick="openTaskBoard()">
 
                                 <span id="task_feedback_count" class="fontSize-64-600 color-000000">0</span>
                                 <span id="task_feedback_section"

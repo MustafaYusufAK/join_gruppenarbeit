@@ -164,3 +164,10 @@ function getGreeting() {
         return "Good evening,";
     }
 }
+
+function openTaskBoard() {
+    let userName = getUserName();
+
+    window.location.href = `board.html?msg=Welcomme to Join, ${userName}`;            
+
+}

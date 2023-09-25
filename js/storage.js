@@ -32,9 +32,12 @@ async function getItem(key){
 function getUserName() {
     const urlParams = new URLSearchParams(window.location.search);
     const msg = urlParams.get('msg');
-
-    let userName = msg.split(', ');
-    return userName[1];
+    if (msg){
+        let userName = msg.split(', ');
+        return userName[1];
+    } else {
+        return 'Guest'
+    }
 }
 
 
@@ -95,10 +98,11 @@ async function deleteUser(email) {
 //---------------------------save Contacts at Backend---------------------------//
 //------------------------------------------------------------------------------//
 
-async function saveContacts(email) {
+async function saveContacts() {
     users = JSON.parse(await getItem('users'));
+    let userName = getUserName();
 
-    let userIndex = users.findIndex(u => u.email === email);
+    let userIndex = users.findIndex(u => u.name === userName);
     users[userIndex].contacts = contacts; 
 }
 
@@ -107,10 +111,11 @@ async function saveContacts(email) {
 //-----------------------------save Tasks at Backend----------------------------//
 //------------------------------------------------------------------------------//
 
-async function saveTasks(email) {
+async function saveTasks() {
     users = JSON.parse(await getItem('users'));
+    let userName = getUserName();
     debugger;
 
-    let userIndex = users.findIndex(u => u.email === email);
-    users[userIndex].tasks = contacts; 
+    let userIndex = users.findIndex(u => u.name === userName);
+    users[userIndex].tasks = allTasks; 
 }

@@ -7,10 +7,10 @@ function generateSideBar() {
         <img src="../assets/img/Capa 2.svg" class="logo">
         <div class="nav-flex-box">
             <div class="flex-box-mobile">
-                <a href="../summary.html?msg=Welcomme to Join, ${userName}" class="nav-sub summary-background"><img src="../assets/img/Icons.svg">Summary</a>
-                <a href="../add_task.html?msg=Welcomme to Join, ${userName}" class="nav-sub"><img src="../assets/img/Icons (1).svg">Add Task</a>
-                <a href="../board.html?msg=Welcomme to Join, ${userName}" class="nav-sub"><img src="../assets/img/Icons (2).svg">Board</a>
-                <a href="../contacts.html?msg=Welcomme to Join, ${userName}" class="nav-sub contacts-background"><img src="../assets/img/Icons (3).svg">Contacs</a>
+                <a href="./summary.html?msg=Welcomme to Join, ${userName}" class="nav-sub summary-background"><img src="../assets/img/Icons.svg">Summary</a>
+                <a href="./add_task.html?msg=Welcomme to Join, ${userName}" class="nav-sub"><img src="../assets/img/Icons (1).svg">Add Task</a>
+                <a href="./board.html?msg=Welcomme to Join, ${userName}" class="nav-sub"><img src="../assets/img/Icons (2).svg">Board</a>
+                <a href="./contacts.html?msg=Welcomme to Join, ${userName}" class="nav-sub contacts-background"><img src="../assets/img/Icons (3).svg">Contacs</a>
             </div>
             <div class="nav-bottom">
                 <a href="#" class="nav-bottom-a">Privacy Policy</a>
