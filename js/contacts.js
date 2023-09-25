@@ -37,6 +37,11 @@ let contacts = [
     }
 ];
 
+function initContacts() {
+    generateSideBar();
+    showContacts();
+}
+
 function showContacts() {
     const contactContent = document.getElementById('new-contacts');
     contactContent.innerHTML = '';

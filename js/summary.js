@@ -8,7 +8,7 @@ let contacts = [
     },
 ]
 
-function init() {
+function initSummary() {
     generateSideBar()
     generateUserName()
     fillSummary()
