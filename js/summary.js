@@ -1,12 +1,18 @@
 //-------------------Test for Backend-------------------//
-/*let contacts = [
+let contacts = [
     {
         "name": "Anja Schulz",
         "email": "schulz@hotmail.com",
         "phone": "+49 151 1234 5678",
         "color": '#29ABE2',
     },
-];*/
+]
+
+function init() {
+    generateSideBar()
+    generateUserName()
+    fillSummary()
+}
 
 //------------------------------------------------------------------------------//
 //---------------------------------on Mouse over--------------------------------//
@@ -165,9 +171,23 @@ function getGreeting() {
     }
 }
 
+
+//------------------------------------------------------------------------------//
+//---------------------------------open Board-----------------------------------//
+//------------------------------------------------------------------------------//
+
 function openTaskBoard() {
     let userName = getUserName();
+    window.location.href = `board.html?msg=Welcomme to Join, ${userName}`;
+}
 
-    window.location.href = `board.html?msg=Welcomme to Join, ${userName}`;            
+async function fillSummary() {
+    let userName = getUserName();
+    console.log('userName:', userName);
 
+    let users = JSON.parse(await getItem('users'));
+    console.log('users:', users);
+
+    let user = users.find(u => u.name == userName);
+    console.log('user:', user);
 }

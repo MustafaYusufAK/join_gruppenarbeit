@@ -2,7 +2,6 @@ const STORAGE_TOKEN = '6JWGFSP8ZA4Y8JE2FOVSN7ZO8Z67IFY8GHNHPA6B'
 const STORAGE_URL = 'https://remote-storage.developerakademie.org/item'
 
 let lokalUsers = [];
-let users;
 
 //------------------------------------------------------------------------------//
 //-----------------------------save User at Backend-----------------------------//
@@ -99,11 +98,12 @@ async function deleteUser(email) {
 //------------------------------------------------------------------------------//
 
 async function saveContacts() {
-    users = JSON.parse(await getItem('users'));
+    let users = JSON.parse(await getItem('users'));
     let userName = getUserName();
 
     let userIndex = users.findIndex(u => u.name === userName);
     users[userIndex].contacts = contacts; 
+    await setItem('users', JSON.stringify(users));
 }
 
 
@@ -112,10 +112,10 @@ async function saveContacts() {
 //------------------------------------------------------------------------------//
 
 async function saveTasks() {
-    users = JSON.parse(await getItem('users'));
+    let users = JSON.parse(await getItem('users'));
     let userName = getUserName();
-    debugger;
 
     let userIndex = users.findIndex(u => u.name === userName);
     users[userIndex].tasks = allTasks; 
+    await setItem('users', JSON.stringify(users));
 }
