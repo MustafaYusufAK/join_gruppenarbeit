@@ -312,7 +312,7 @@
     margin-bottom: 20px;
     border-radius: 6px;
     border-color: rgba(0, 0, 0, 0.1);
-    padding: 4px;
+    padding: 8px;
     padding-left: 20px;
     width: 281px;
 }
@@ -349,18 +349,18 @@
 
 .cancel-button {
     display: flex;
-    padding: 10px 25px 10px 25px;
     border: 1px solid black;
+    padding-left: 10px;
     border-radius: 10px;
     font-size: 21px;
     cursor: pointer;
-    width: 138px;
+    width: 110px;
     align-items: center;
-    height: 62px;
+    height: 60px;
     gap: 10px;
-    background-image: url('../assets/img/close.svg');
+    background-image: url(../assets/img/close.svg);
     background-repeat: no-repeat;
-    background-position: 106px 24px;
+    background-position: 90px 24px;
 }
 
 .cancel-button:hover {
@@ -368,7 +368,7 @@
     border: 1px solid #29ABE2;
     background-image: url('../assets/img/cancel-blue.svg');
     background-repeat: no-repeat;
-    background-position: 100px 18px;
+    background-position: 85px 18px;
 }
 
 .create-button {
@@ -378,11 +378,14 @@
     font-size: 21px;
     background-color: #2A3647;
     border-radius: 10px;
-    padding: 15px 10px 20px 10px;
+    padding-left: 10px;
     background-image: url('../assets/img/check.svg');
     background-repeat: no-repeat;
-    background-position: 160px 18px;
+    background-position: 164px 18px;
     width: 186px;
+    display: flex;
+    align-items: center;
+
 }
 
 .create-button:hover {
