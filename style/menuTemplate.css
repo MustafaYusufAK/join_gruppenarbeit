@@ -102,7 +102,26 @@ header {
     cursor: pointer;
 }
 
+.header-icons {
+    display: flex;
+}
+
 .group-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 100%;
+    border: 3px solid #2A3647;
+    background-color: #FFFFFF;
     margin-right: 50px;
     cursor: pointer;
+}
+
+.group-icon span {
+    text-align: center;
+    color: #29ABE2;
+    font-size: 27px;
+    font-weight: 700;
 }

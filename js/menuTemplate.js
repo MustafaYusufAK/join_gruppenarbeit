@@ -18,16 +18,35 @@ function generateSideBar() {
             </div>
         </div>
     </nav>`;
-    generateHeader(menu);
+    generateHeader(menu, userName);
     //showContacts();
 }
 
-function generateHeader(menu) {
+function generateHeader(menu, userName) {
+
+    let userInitial = getInitials(userName)
+
     menu.innerHTML += /*html*/ `
-    <header>
-        <span class="header-text">Kanban Project Management Tool</span>
-        <div class="header-icons">
-        <img src="../assets/img/help.svg" class="help-icon">
-        <img src="../assets/img/Group 5.svg" class="group-icon">
-    </header>`;
+        <header>
+            <span class="header-text">Kanban Project Management Tool</span>
+            <div class="header-icons">
+                <img src="../assets/img/help.svg" class="help-icon">
+                <div class="group-icon">
+                    <span>${userInitial}</span>
+                </div>
+            </div>
+        </header>`;
+}
+
+function getInitials(userName) {
+    let [firstName, lastName] = userName.split(' ');
+
+    let firstInitial = firstName[0];
+    if(lastName) {
+        let lastInitial = lastName[0];
+        return `${firstInitial}${lastInitial}`;
+    } else {
+        return `${firstInitial}`;
+    }
+    
 }
