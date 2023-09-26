@@ -43,6 +43,10 @@
     margin: 20px 0 0 0;
 }
 
+.header-summary h1 {
+    margin: 5px 0;
+}
+
 .header-summary span {
     height: 59px;
     border-right: 3px solid #29ABE2;
@@ -229,6 +233,13 @@
 
 @media (max-width: 1300px) {
 
+    .header-summary {
+        justify-content: center;
+    }
+
+    .tasks-and-greeting {
+        justify-content: center;
+    }
     
 
     #greeting_user {
@@ -259,52 +270,31 @@
     }*/
 }
 
-@media (max-width: 950px) {
+@media (max-width: 1050px) {
 
-    /*.task-summary {
-        width: 90%;
-        height: 80%;
-    }*/
+    .summary-content {
+        height: calc(100vh - 180px);
+        justify-content: center;
+        align-items: center;
+    }
 
     .summary-board {
-        margin-left: 260px;
+        margin-left: 0px;
     }
 
-    /*.to-do-and-done {
-        width: 90%;
-        height: 25%;
-    }
-    
-    .to-do-and-done-taskarea {
-        width: 40%;
-        height: 80%;
-    }
-    
-    .to-do-and-done-taskarea-hover {
-        width: 45%;
-        height: 100%;
-    }
-
-    .summary-urgend {
-        height: 80%;
-    }
-
-    .summary-urgend-hover {
-        height: 100%;
+    /*.greeting-user-background {
+        display: none;
     }*/
+
+}
+
+@media (max-width: 950px) {
+
+    
+
 }
 
 @media (max-width: 850px) {
-
-    .summary-content {
-        height: calc(100vh - 160px);
-    }
-
-    /*.task-summary {
-        width: 90%;
-        height: 80%;
-    }*/
-
     .summary-board {
         margin-left: 0;
         display: flex;
@@ -312,29 +302,6 @@
         justify-content: center;
         align-items: center;
     }
-
-    /*.to-do-and-done {
-        width: 90%;
-        height: 25%;
-    }
-    
-    .to-do-and-done-taskarea {
-        width: 40%;
-        height: 80%;
-    }
-    
-    .to-do-and-done-taskarea-hover {
-        width: 45%;
-        height: 100%;
-    }
-
-    .summary-urgend {
-        height: 80%;
-    }
-
-    .summary-urgend-hover {
-        height: 100%;
-    }*/
 }
 
 @media (max-width: 750px) {    
@@ -419,6 +386,14 @@
 
 @media (max-width: 500px) {
 
+    body {
+        height: 100vh;
+    }
+
+    .tasks-and-greeting {
+        height: 55vh;
+    }
+
     .task-summary {
         width: 388px;
         height: 80%;
@@ -426,6 +401,7 @@
 
     .to-do-and-done {
         width: 100%;
+        height: 120px;
     }
 
     .to-do-and-done-taskarea {

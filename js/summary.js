@@ -1,12 +1,4 @@
-//-------------------Test for Backend-------------------//
-let contacts = [
-    {
-        "name": "Anja Schulz",
-        "email": "schulz@hotmail.com",
-        "phone": "+49 151 1234 5678",
-        "color": '#29ABE2',
-    },
-]
+let taskAtBoard = 0;
 
 function initSummary() {
     generateSideBar()
@@ -136,7 +128,12 @@ function playSummaryGreetingAnimation() {
         greetingUser.style.animation = 'reduceGreeting 2s ease-in-out forwards'
         greetingBackground.style.animation = 'reduceGreetingBg 2s ease-in-out forwards'
     }, 500)
-    
+
+    /* setTimeout(function () {
+         document.getElementById('greeting_user_background').classList.add('d-none')
+     }, 500)*/
+
+
 }
 
 
@@ -196,47 +193,49 @@ async function fillSummary() {
     let user = users.find(u => u.name == userName);
     console.log('user:', user);
 
-    // ToDo and Done//
-    fillToDoDoneTasks(user);
+    //ToDo//
+    countTasks(user, 'task_category', 'ToDo', 'to_do_count');
+
+    //Done//
+    countTasks(user, 'task_category', 'Done', 'done_count');
 
     //urgend//
-    fillUrgendTasks(user);
+    countTasks(user, 'priority', 'urgend', 'urgend_count');
 
     //Task Progress//
-    let totalTaskBoard = document.getElementById('task_board_count');
-    let taskProgress = document.getElementById('task_progress_count');
-    let awaitFeedback = document.getElementById('task_feedback_count');
+    countTasks(user, 'task_category', 'TaskProgess', 'task_progress_count');
+
+    //Task Await Feedback//
+    countTasks(user, 'task_category', 'TaskFeedback', 'task_feedback_count');
+
+    //Tasks at Board//
+    countBoardTasks(user, 'task_board_count');
 }
 
 
 //------------------------------------------------------------------------------//
-//-----------------------------fill ToDo and Done-------------------------------//
+//---------------------------Count Tasks for Summary----------------------------//
 //------------------------------------------------------------------------------//
 
-function fillToDoDoneTasks(user) {
-    let toDoCount = document.getElementById('to_do_count');
-    let doneCount = document.getElementById('done_count');
+function countTasks(user, taskcategory, status, containerID) {
+    let taskCount = 0;
+    for (let i = 0; i < user['tasks'].length; i++) {
+        const task = user['tasks'][i];
+        if (task[taskcategory] == status) {
+            taskCount++;
+        }
+    }
+    document.getElementById(containerID).innerHTML = countTask;
 }
 
 
 //------------------------------------------------------------------------------//
-//------------------------------fill Urgend Tasks-------------------------------//
+//-------------------------------Count all Tasks--------------------------------//
 //------------------------------------------------------------------------------//
 
-function fillUrgendTasks(user) {
-    let urgendCount = document.getElementById('urgend_count');
-    let urgendDueDate = document.getElementById('urgend_date');
-}
-
-
-//------------------------------------------------------------------------------//
-//-----------------------------fill Task Progress-------------------------------//
-//------------------------------------------------------------------------------//
-
-function fillTaskProgress(user) {
-    let totalTaskBoard = document.getElementById('task_board_count');
-    let taskProgress = document.getElementById('task_progress_count');
-    let awaitFeedback = document.getElementById('task_feedback_count');
-
-    totalTaskBoard.innerHTML = user.tasks.length;
+function countBoardTasks(user, containerID) {
+    for (let i = 0; i < user['tasks'].length; i++) {
+        taskAtBoard++
+    }
+    document.getElementById(containerID).innerHTML = taskAtBoard;
 }
