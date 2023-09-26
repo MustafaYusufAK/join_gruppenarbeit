@@ -2,6 +2,10 @@
     background-color: rgb(9, 25, 49);
 }
 
+.summary-background:hover {
+    background-color: rgb(9, 25, 49);
+}
+
 .contacts-background {
     background-color: unset;
 }

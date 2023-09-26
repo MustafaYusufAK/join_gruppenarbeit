@@ -46,7 +46,7 @@ function getUserName() {
 
 async function loadUsers() {
     try {
-        users = JSON.parse(await getItem('users'));
+        let users = JSON.parse(await getItem('users'));
     } catch (e) {
         console.error('Loading error:', e);
     }

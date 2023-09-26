@@ -136,7 +136,7 @@ function playSummaryGreetingAnimation() {
         greetingUser.style.animation = 'reduceGreeting 2s ease-in-out forwards'
         greetingBackground.style.animation = 'reduceGreetingBg 2s ease-in-out forwards'
     }, 500)
-
+    
 }
 
 
