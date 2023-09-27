@@ -1,5 +1,5 @@
 let contacts = [
-    {
+    /*{
         "name": "Anja Schulz",
         "email": "schulz@hotmail.com",
         "phone": "+49 151 1234 5678",
@@ -34,10 +34,11 @@ let contacts = [
         "email": "emmanuelmae@gmail.com",
         "phone": "+49 162 1111 2222",
         "color": getRandomColor()
-    }
+    }*/
 ];
 
-function initContacts() {
+async function initContacts() {
+    await loadContacts()
     generateSideBar();
     showContacts();
 }
@@ -160,12 +161,14 @@ function createContact(name, email, phone, color) {
     return { "name": name, "email": email, "phone": phone, "color": color };
 }
 
-function addContactAndUpdateUI(contact) {
+async function addContactAndUpdateUI(contact) {
     contacts.push(contact);
     sortContacts();
     generateFirstLettersAndUpdateSidebar();
     hideOverlay();
     emptyInput();
+    await saveContacts();
+    showContacts();
 }
 
 function generateFirstLettersAndUpdateSidebar() {
@@ -259,11 +262,13 @@ function hideOverlayEdit() {
     overlay.classList.remove('show-overlay');
 }
 
-function deleteContact(i) {
+async function deleteContact(i) {
     contacts.splice(i, 1);
     generateSideBar();
     document.getElementById('show-contact').innerHTML = '';
     hideOverlayEdit();
+    await saveContacts();
+    showContacts();
 }
 
 function getRandomColor() {

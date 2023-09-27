@@ -109,7 +109,7 @@ async function saveContacts() {
 
 
 //------------------------------------------------------------------------------//
-//--------------------------load Contacts fromBackend---------------------------//
+//--------------------------load Contacts from Backend--------------------------//
 //------------------------------------------------------------------------------//
 
 async function loadContacts() {
@@ -117,7 +117,12 @@ async function loadContacts() {
     let userName = getUserName();
 
     let userIndex = users.findIndex(u => u.name === userName);
-    contacts = users[userIndex].contacts
+    let userContacts = users[userIndex].contacts
+    if (userContacts == undefined) {
+        contacts = []
+    } else {
+        contacts = userContacts
+    }
 }
 
 
