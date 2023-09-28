@@ -37,11 +37,6 @@ let contacts = [
     }
 ];
 
-function initContacts() {
-    generateSideBar();
-    showContacts();
-}
-
 function showContacts() {
     const contactContent = document.getElementById('new-contacts');
     contactContent.innerHTML = '';
@@ -341,7 +336,9 @@ function highlightContact(index) {
     if (selectedContact) {
         selectedContact.parentElement.classList.add('selected-contact');
     }
-}
+}//clam(20px, 20%, 200px)
+
+
 
 
 

@@ -99,7 +99,8 @@ footer {
     }
 
     .add-button {
-        width: 300px;
+        width: 352px;
+        margin-left: 10px;
     }
 
     .headline-flex-box {
@@ -188,7 +189,7 @@ footer {
 
 @media (max-width: 1050px) {
     nav {
-        height: 10%;
+        height: 12%;
         width: 100%;
         bottom: 0;
         z-index: 2;
@@ -201,7 +202,7 @@ footer {
 
     .contact-menu {
         margin-left: 0px;
-        max-height: 76%;
+        max-height: 73%;
     }
 
     .headline-flex-box {
@@ -230,12 +231,21 @@ footer {
         flex: 1;
         padding: 10px;
         border-radius: 20px;
+        margin: 0;
     }
 
     .contacts-background {
         padding: 10px;
         flex: 1;
         flex-direction: column;
+    }
+
+    .logo-mobile {
+        background-image: url('../assets/img/Logo for Favicon.png');
+        height: 100px;
+        width: 100px;
+        background-repeat: no-repeat;
+        background-position: center;
     }
 
 }
@@ -246,13 +256,13 @@ footer {
     }
 
     .add-button {
-        width: 290px;
-        margin-left: 11px;
+        width: 276px;
+        margin-left: 8px;
         font-size: 18px;
     }
 
     .new-contact-box {
-        width: 290px;
+        width: 276px;
     }
 
     .small-contact-icon {
@@ -348,5 +358,51 @@ footer {
 
     .overlay-buttons {
         margin-top: 30px;
+    }
+}
+
+@media (max-width: 750px) {
+    #contacts-box {
+        display: none;
+    }
+
+    .flex-box-contacts {
+        display: flex;
+        justify-content: center;
+    }
+
+    .header-text {
+        display: none;
+    }
+
+    .add-button {
+        display: none;
+    }
+
+    .button-background {
+        display: none;
+    }
+
+    .add-button-mobile {
+        background-image: url(../assets/img/mobile-person-icon.svg);
+        background-repeat: no-repeat;
+        width: 64px;
+        height: 64px;
+        position: absolute;
+        bottom: 5%;
+        right: 5%;
+        cursor: pointer;
+    }
+
+    .new-contact-box {
+        width: 260px;
+    }
+
+    .separate-contacts {
+        width: 270px;
+    }
+
+    .first-letter {
+        margin-right: 186px;
     }
 }

@@ -19,6 +19,7 @@ function generateSideBar() {
         </div>
     </nav>`;
     generateHeader(menu, userName);
+    showContacts();
 }
 
 function generateHeader(menu, userName) {
@@ -27,6 +28,7 @@ function generateHeader(menu, userName) {
 
     menu.innerHTML += /*html*/ `
         <header>
+            <div class="logo-mobile"></div>
             <span class="header-text">Kanban Project Management Tool</span>
             <div class="header-icons">
                 <img src="../assets/img/help.svg" class="help-icon">

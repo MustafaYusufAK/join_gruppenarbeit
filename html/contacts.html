@@ -15,23 +15,26 @@
     <title>Contacts</title>
 </head>
 
-<body onload="initContacts()">
+<body onload="generateSideBar()">
     <div class="hide-overflow">
         <div id="content"></div>
-        <div class="contact-menu">
-            <div class="button-background">
-                <div class="add-button" onclick="showOverlay()">
-                    Add new contact <img src="../assets/img/person_add.svg" class="img-add-contact">
+        <div class="flex-box-contacts">
+            <div class="contact-menu">
+                <div class="button-background">
+                    <div class="add-button" onclick="showOverlay()">
+                        Add new contact <img src="../assets/img/person_add.svg" class="img-add-contact">
+                    </div>
                 </div>
+                <div class="add-button-mobile"  onclick="showOverlay()"></div>
+                <div id="new-contacts"></div>
             </div>
-            <div id="new-contacts"></div>
         </div>
-        <div class="headline-flex-box">
+        <div id="contacts-box"><div class="headline-flex-box">
             <h1 class="headline-contacts">Contacts</h1>
             <div class="separator"></div>
             <h2 class="subheadline">Better with a team</h2>
         </div>
-        <div id="show-contact"></div>
+        <div id="show-contact"></div></div>
         <div id="overlay-add-contact">
             <div class="add-contact-left-container">
                 <img src="../assets/img/Capa 1.svg" class="overlay-logo" alt="logo-image">
@@ -42,7 +45,8 @@
             <div class="flex-box-overlay">
                 <img src="../assets/img/Frame 79.svg" alt="person-image" class="over-logo-person">
             </div>
-            <div class="close-button" onclick="hideOverlay()"><img src="../assets/img/Close.svg" alt="close-button"></div>
+            <div class="close-button" onclick="hideOverlay()"><img src="../assets/img/Close.svg" alt="close-button">
+            </div>
             <div class="input-fields">
                 <form>
                     <input class="input person-icon" id="add-name" type="text" placeholder="Name" required>
@@ -69,7 +73,8 @@
             <div class="flex-box-overlay">
                 <div id="change-color-icon"></div>
             </div>
-            <div class="close-button" onclick="hideOverlayEdit()"><img src="../assets/img/close.svg" alt="close-button"></div>
+            <div class="close-button" onclick="hideOverlayEdit()"><img src="../assets/img/close.svg" alt="close-button">
+            </div>
             <div class="input-fields">
                 <form action="onsubmit">
                     <input class="input person-icon" type="text" id="edit-name" placeholder="Name" required>
@@ -88,7 +93,7 @@
         </div>
     </div>
     <footer>
-        
+
     </footer>
 </body>
 

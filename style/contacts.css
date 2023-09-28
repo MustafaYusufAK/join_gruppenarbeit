@@ -57,7 +57,7 @@
 .headline-flex-box {
     display: flex;
     align-items: center;
-    margin-top: 50px;
+    margin-top: 25px;
     margin-left: 720px;
 }
 
@@ -78,7 +78,6 @@
 .subheadline {
     color: #2A3647;
     font-size: 27px;
-    margin-top: 4px;
     padding: 30px;
 }
 

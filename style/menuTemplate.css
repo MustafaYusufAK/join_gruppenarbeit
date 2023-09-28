@@ -66,12 +66,6 @@ nav {
     color: rgb(205, 205, 205);
 }
 
-.nav-bottom a:hover {
-    background-color: #2A3D59;
-    color: white;
-    cursor: pointer;
-}
-
 .nav-flex-box {
     display: flex;
     flex-direction: column;
