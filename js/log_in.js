@@ -3,6 +3,9 @@
 //----------------------initialize first Steps for the Page---------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * initialize first Steps for the Page
+ */
 function init() {
     loadUsersFromLocalStorage();
     loadLoakalUser();
@@ -14,6 +17,9 @@ function init() {
 //----------------------load remind User from local Storage---------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * load remind User from local Storage
+ */
 function loadLoakalUser() {
     if (lokalUsers.length > 0) {
         document.getElementById('email_log_in').value = lokalUsers[0]['email'];
@@ -27,6 +33,11 @@ function loadLoakalUser() {
 //---------------------------Log In for User and Guest--------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * Log In for User and Guest
+ * @param {guest Log In} guest 
+ * @returns 
+ */
 async function logIn(guest) {
     let email = document.getElementById('email_log_in');
     let password1 = document.getElementById('password1_input');
@@ -47,9 +58,12 @@ async function logIn(guest) {
 
 
 //------------------------------------------------------------------------------//
-//---------------------------Change the Event Listener--------------------------//
+//-----------------------------Change Event Listener----------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * Change Event Listener
+ */
 function saveHandler() {
     saveUserToLocalStorage();
 }
@@ -66,9 +80,12 @@ function removeClickHandler() {
 
 
 //------------------------------------------------------------------------------//
-//-------------------------Change the chop for the Form-------------------------//
+//------------------------Changes the hook for the form-------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * Changes the hook for the form
+ */
 function checkBtnLogIn() {
     let logInCheckBtn = document.getElementById('check_btn');
     if (logInCheckBtn.src.includes('checkbuttonchecked')) {
@@ -85,6 +102,12 @@ function checkBtnLogIn() {
 //-----------------------------Show the worng Input-----------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * Show the worng Input
+ * @param {current User} users 
+ * @param {email Input} emailValue 
+ * @param {password Input} passwordValue 
+ */
 function wrongEnter(users, emailValue, passwordValue) {
     let emailInput = document.getElementById('email')
     let passwordInput = document.getElementById('password1')
@@ -110,6 +133,10 @@ function wrongEnter(users, emailValue, passwordValue) {
 //-----------------------------Reset the worng Input----------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * Reset the worng Input
+ * @param {ID} id 
+ */
 function resetWrongEnter(id) {
     if (id) {
         document.getElementById(id).classList.remove('log-in-wrong');
@@ -121,6 +148,10 @@ function resetWrongEnter(id) {
 //-------------------------Change Img for Password Input------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * Change Img for Password Input
+ * @param {first or second Passowrdsection} password 
+ */
 function showPasswordIcon(password) {
     let password1 = document.getElementById('input_icon_password1')
     let password2 = document.getElementById('input_icon_password2')
@@ -139,6 +170,11 @@ function showPasswordIcon(password) {
 //--------------Change Img for Password Input and Show the Password-------------//
 //------------------------------------------------------------------------------//
 
+
+/**
+ * Change Img for Password Input and Show the Password
+ * @param {first or second Passowrdsection} password 
+ */
 function showPassword(password) {
     let password1 = document.getElementById('input_icon_password1')
     let password2 = document.getElementById('input_icon_password2')
@@ -158,6 +194,10 @@ function showPassword(password) {
 //-------------Change Img for Password Input and hide the Password--------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * Change Img for Password Input and hide the Password
+ * @param {first or second Passowrdsection} password 
+ */
 function hidePassword(password) {
     let password1 = document.getElementById('input_icon_password1')
     let password2 = document.getElementById('input_icon_password2')
@@ -178,6 +218,14 @@ function hidePassword(password) {
 //---------------------------------Reset Inputs---------------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * Reset Inputs
+ * @param {*} id 
+ * @param {*} email 
+ * @param {*} password1 
+ * @param {*} password2 
+ * @param {*} name 
+ */
 function resetForm(id, email, password1, password2, name) {
     if (id == 'signup') {
         name.value = '';
@@ -195,6 +243,9 @@ function resetForm(id, email, password1, password2, name) {
 //------------play Keyframes-------------//
 //---------------------------------------//
 
+/**
+ * play Keyframes
+ */
 function playAnimation() {
     let logo = document.getElementById('join_logo');
     let startscreenLogo = document.getElementById('startscreen_logo');

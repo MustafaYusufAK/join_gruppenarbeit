@@ -46,7 +46,8 @@ function getUserName() {
 
 async function loadUsers() {
     try {
-        users = JSON.parse(await getItem('users'));
+        let users = JSON.parse(await getItem('users'));
+        return users
     } catch (e) {
         console.error('Loading error:', e);
     }
@@ -108,6 +109,24 @@ async function saveContacts() {
 
 
 //------------------------------------------------------------------------------//
+//--------------------------load Contacts from Backend--------------------------//
+//------------------------------------------------------------------------------//
+
+async function loadContacts() {
+    let users = JSON.parse(await getItem('users'));
+    let userName = getUserName();
+
+    let userIndex = users.findIndex(u => u.name === userName);
+    let userContacts = users[userIndex].contacts
+    if (userContacts == undefined) {
+        contacts = []
+    } else {
+        contacts = userContacts
+    }
+}
+
+
+//------------------------------------------------------------------------------//
 //-----------------------------save Tasks at Backend----------------------------//
 //------------------------------------------------------------------------------//
 
@@ -118,4 +137,22 @@ async function saveTasks() {
     let userIndex = users.findIndex(u => u.name === userName);
     users[userIndex].tasks = allTasks; 
     await setItem('users', JSON.stringify(users));
+}
+
+
+//------------------------------------------------------------------------------//
+//-----------------------------save Tasks at Backend----------------------------//
+//------------------------------------------------------------------------------//
+
+async function loadTasks() {
+    let users = JSON.parse(await getItem('users'));
+    let userName = getUserName();
+
+    let userIndex = users.findIndex(u => u.name === userName);
+    let userTasks = users[userIndex].tasks
+    if (userTasks == undefined) {
+        allTasks = []
+    } else {
+        allTasks = userTasks
+    }
 }

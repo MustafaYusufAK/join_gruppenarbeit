@@ -1,5 +1,5 @@
 let contacts = [
-    {
+    /*{
         "name": "Anja Schulz",
         "email": "schulz@hotmail.com",
         "phone": "+49 151 1234 5678",
@@ -34,9 +34,18 @@ let contacts = [
         "email": "emmanuelmae@gmail.com",
         "phone": "+49 162 1111 2222",
         "color": getRandomColor()
-    }
+    }*/
 ];
 
+<<<<<<< HEAD
+=======
+async function initContacts() {
+    await loadContacts()
+    generateSideBar();
+    showContacts();
+}
+
+>>>>>>> 905a5da67762c95e547927dab6a5fc6ca47d50be
 function showContacts() {
     const contactContent = document.getElementById('new-contacts');
     contactContent.innerHTML = '';
@@ -336,7 +345,7 @@ function highlightContact(index) {
     if (selectedContact) {
         selectedContact.parentElement.classList.add('selected-contact');
     }
-}//clam(20px, 20%, 200px)
+}
 
 
 
