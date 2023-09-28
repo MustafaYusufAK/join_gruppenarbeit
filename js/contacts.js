@@ -37,6 +37,12 @@ let contacts = [
     }
 ];
 
+async function initContacts() {
+    await loadContacts()
+    generateSideBar();
+    showContacts();
+}
+
 function showContacts() {
     const contactContent = document.getElementById('new-contacts');
     contactContent.innerHTML = '';
@@ -315,13 +321,17 @@ function generateFirstLetters() {
     const firstLettersMap = new Map();
 
     contacts.forEach((contact, i) => {
-        const [firstName] = contact.name.split(' ').map(part => part[0].toUpperCase());
-        firstLettersMap.set(firstName, [...(firstLettersMap.get(firstName) || []), i]);
+        const nameParts = contact.name.split(' ');
+        if (nameParts.length > 0) {
+            const firstName = nameParts[0][0].toUpperCase(); // Nur den ersten Buchstaben des ersten Namens teilen
+            firstLettersMap.set(firstName, [...(firstLettersMap.get(firstName) || []), i]);
+        }
     });
 
     const sortedFirstLetters = [...firstLettersMap.keys()].sort();
     return { sortedFirstLetters, firstLettersMap };
 }
+
 
 
 function highlightContact(index) {

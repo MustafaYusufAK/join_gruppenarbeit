@@ -15,11 +15,11 @@
     <title>Contacts</title>
 </head>
 
-<body onload="generateSideBar()">
+<body onload="initContacts()">
     <div class="hide-overflow">
         <div id="content"></div>
         <div class="flex-box-contacts">
-            <div class="contact-menu">
+            <div class="contact-menu" id="contact-menu">
                 <div class="button-background">
                     <div class="add-button" onclick="showOverlay()">
                         Add new contact <img src="../assets/img/person_add.svg" class="img-add-contact">
@@ -67,7 +67,6 @@
             <div class="add-contact-left-container">
                 <img src="../assets/img/Capa 1.svg" class="overlay-logo" alt="logo-image">
                 <h2 class="overlay-headline">Edit contact</h2>
-                <span class="overlay-text">Tasks are better with a team</span>
                 <div class="dash"></div>
             </div>
             <div class="flex-box-overlay">
@@ -92,9 +91,6 @@
             </div>
         </div>
     </div>
-    <footer>
-
-    </footer>
 </body>
 
 </html>

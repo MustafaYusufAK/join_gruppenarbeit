@@ -1,12 +1,15 @@
+.hide-overflow {
+    overflow: hidden;
+}
+
 .contact-menu {
     display: flex;
     flex-direction: column;
     margin-left: 240px;
     width: 456px;
-    max-height: 86%;
+    max-height: 89%;
     background-color: white;
     position: fixed;
-    border-top: 4px solid rgba(0, 0, 0, 0.07);
 }
 
 #new-contacts::-webkit-scrollbar {
@@ -211,7 +214,7 @@
 }
 
 #overlay-add-contact {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(100%, -50%);
@@ -223,7 +226,7 @@
 }
 
 #overlay-edit-contact {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(100%, -50%);
@@ -295,6 +298,9 @@
     text-align: center;
     padding-top: 2px;
     border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .close-button:hover {
@@ -400,4 +406,12 @@
 .create-image {
     height: 22px;
     width: 22px;
+}
+
+.d-none {
+    display: none;
+}
+
+.d-block {
+    display: block;
 }

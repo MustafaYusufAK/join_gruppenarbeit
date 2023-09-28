@@ -189,7 +189,7 @@ footer {
 
 @media (max-width: 1050px) {
     nav {
-        height: 12%;
+        height: 80px;
         width: 100%;
         bottom: 0;
         z-index: 2;
@@ -202,7 +202,7 @@ footer {
 
     .contact-menu {
         margin-left: 0px;
-        max-height: 73%;
+        max-height: 80%;
     }
 
     .headline-flex-box {
@@ -320,24 +320,27 @@ footer {
 
     #overlay-edit-contact {
         width: 500px;
-        height: 570px;
+        height: 650px;
         display: flex;
         flex-direction: column;
+        z-index: 2;
     }
 
     .flex-box-overlay {
         height: auto;
         margin: 0;
-        left: 220px;
+        left: 210px;
         top: 255px;
     }
 
     .close-button {
         background-image: url(../assets/img/close-white.svg);
         background-repeat: no-repeat;
+        background-position: center;
         border-radius: unset;
-        right: 5px;
+        right: 20px;
         top: 20px;
+        border-radius: 50%;
     }
 
     .close-button img {
@@ -345,7 +348,7 @@ footer {
     }
 
     .close-button:hover {
-        background-color: #2A3647;
+        background-color: #29ABE2;
     }
 
     .buttons-margin-left {
@@ -358,6 +361,7 @@ footer {
 
     .overlay-buttons {
         margin-top: 30px;
+        margin-left: 124px;
     }
 }
 
@@ -389,7 +393,7 @@ footer {
         width: 64px;
         height: 64px;
         position: absolute;
-        bottom: 5%;
+        bottom: 60px;
         right: 5%;
         cursor: pointer;
     }
@@ -404,5 +408,43 @@ footer {
 
     .first-letter {
         margin-right: 186px;
+    }
+}
+
+@media (max-width: 550px) {
+    #overlay-add-contact {
+        width: 334px;
+    }
+
+    .overlay-text {
+        font-size: 22px;
+    }
+
+    .input-fields {
+        padding-left: 30px;
+    }
+
+    .flex-box-overlay {
+        left: 124px;
+    }
+
+    .buttons-margin-left {
+        margin-left: 70px !important;
+    }
+
+    #overlay-edit-contact {
+        width: 334px;
+    }
+
+    .overlay-buttons {
+        margin-left: 32px;
+    }
+
+    .flex-box-mobile {
+        gap: 5px;
+    }
+
+    .nav-sub {
+        padding: 5px;
     }
 }
