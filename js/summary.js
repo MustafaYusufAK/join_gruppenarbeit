@@ -124,16 +124,12 @@ function playSummaryGreetingAnimation() {
     setTimeout(function () {
         let greetingUser = document.getElementById('greeting_user');
         let greetingBackground = document.getElementById('greeting_background');
+        let greetingUserBackground = document.getElementById('greeting_user_background');
 
         greetingUser.style.animation = 'reduceGreeting 2s ease-in-out forwards'
         greetingBackground.style.animation = 'reduceGreetingBg 2s ease-in-out forwards'
+        greetingUserBackground.style.animation = 'reduceGreeting 2s ease-in-out forwards'
     }, 500)
-
-    /* setTimeout(function () {
-         document.getElementById('greeting_user_background').classList.add('d-none')
-     }, 500)*/
-
-
 }
 
 

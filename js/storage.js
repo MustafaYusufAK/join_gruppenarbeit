@@ -138,3 +138,21 @@ async function saveTasks() {
     users[userIndex].tasks = allTasks; 
     await setItem('users', JSON.stringify(users));
 }
+
+
+//------------------------------------------------------------------------------//
+//-----------------------------save Tasks at Backend----------------------------//
+//------------------------------------------------------------------------------//
+
+async function loadTasks() {
+    let users = JSON.parse(await getItem('users'));
+    let userName = getUserName();
+
+    let userIndex = users.findIndex(u => u.name === userName);
+    let userTasks = users[userIndex].tasks
+    if (userTasks == undefined) {
+        allTasks = []
+    } else {
+        allTasks = userTasks
+    }
+}
