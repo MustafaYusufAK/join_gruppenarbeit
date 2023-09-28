@@ -300,7 +300,7 @@ function addTask() {
     allTasks.assignedToValues = assignedToValuesArray;
     allTasks.assignedToColors = assignedToColorsArray;
 
-
+    saveTasks();
 
 }
 
@@ -419,12 +419,12 @@ function addSubtask() {
         // Erstelle das Edit-Icon und füge es zum Listenelement hinzu
         const editIcon = document.createElement('div');
         editIcon.classList.add('pencil_icon_div');
-        editIcon.innerHTML = `<img class="addSubTaskIcons icon pencil" src="assets/img/pencil-32.png" alt="" onclick="editSubtask(event)">`;
+        editIcon.innerHTML = `<img class="addSubTaskIcons icon pencil" src="../assets/img/pencil-32.png" alt="" onclick="editSubtask(event)">`;
 
         // Erstelle das Delete-Icon und füge es zum Listenelement hinzu
         const deleteIcon = document.createElement('div');
         deleteIcon.classList.add('delete_icon_div');
-        deleteIcon.innerHTML = `<img class="addSubTaskIcons icon delete" src="assets/img/delete-32.png" alt="" onclick="deleteSubtask(event)">`;
+        deleteIcon.innerHTML = `<img class="addSubTaskIcons icon delete" src="../assets/img/delete-32.png" alt="" onclick="deleteSubtask(event)">`;
 
         // Füge Icons zum Listenelement hinzu
         listItem.appendChild(editIcon);
@@ -453,7 +453,7 @@ function editSubtask(event) {
     // Erstellen des Checkmark-Icons
     const checkmarkIcon = document.createElement('img');
     checkmarkIcon.classList.add('addSubTaskIcons', 'icon', 'checkmark');
-    checkmarkIcon.src = 'assets/img/check-mark-3-32.png';
+    checkmarkIcon.src = '../assets/img/check-mark-3-32.png';
     checkmarkIcon.alt = 'Apply Changes';
     checkmarkIcon.onclick = applyChanges;
 
@@ -491,7 +491,7 @@ function applyChanges(event) {
         // Füge das Delete-Icon wieder hinzu
         const deleteIcon = document.createElement('div');
         deleteIcon.classList.add('delete_icon_div');
-        deleteIcon.innerHTML = `<img class="addSubTaskIcons icon delete" src="assets/img/delete-32.png" alt="" onclick="deleteSubtask(event)">`;
+        deleteIcon.innerHTML = `<img class="addSubTaskIcons icon delete" src="assets/img/pencil-32.png" alt="" onclick="deleteSubtask(event)">`;
         subtaskItem.appendChild(deleteIcon);
     }
 }
@@ -505,7 +505,7 @@ function createEditIcon() {
 
     const editIcon = document.createElement('img');
     editIcon.classList.add('addSubTaskIcons', 'icon', 'pencil');
-    editIcon.src = 'assets/img/pencil-32.png';
+    editIcon.src = '../assets/img/pencil-32.png';
     editIcon.alt = '';
     editIcon.onclick = editSubtask;
 
@@ -520,7 +520,7 @@ function createDeleteIcon() {
 
     const deleteIcon = document.createElement('img');
     deleteIcon.classList.add('addSubTaskIcons', 'icon', 'delete');
-    deleteIcon.src = 'assets/img/delete-32.png';
+    deleteIcon.src = '../assets/img/delete-32.png';
     deleteIcon.alt = '';
     deleteIcon.onclick = deleteSubtask;
 
@@ -688,23 +688,6 @@ function clearFields() {
     enableContactsForAssignedTo();
 }
 
-function openCategoryDropdown() {
-    document.getElementById('categoryDropdown').classList.remove('d-none');
-    document.getElementById('category').style.cssText = `
-        border-bottom-left-radius: 0px;
-        border-bottom-right-radius: 0px;
-        border-bottom: none;
-    `;
-    document.getElementById('category').onclick = closeCategoryDropdown;
-}
-
-function newCategory() {
-    closeCategoryDropdown();
-    document.getElementById('newCategoryContainer').classList.remove('d-none');
-    document.getElementById('newCategoryColors').classList.remove('d-none');
-    document.getElementById('category').style.display = 'none';
-}
-
 function closeCategoryDropdown() {
     document.getElementById('categoryDropdown').classList.add('d-none');
     document.getElementById('category').style.cssText = `
@@ -798,4 +781,277 @@ function selectedCategoryOverlay(category, color) {
         <div class="categoryColor" style="background-color: ${color}; margin-left: 10px"></div>
     `;
     closeCategoryDropdownOverlay();
+}
+
+function generateContentLeftAndRightContainerOverlay() {
+    return /*html*/ `
+        <div class="contentLeftAndRight contentLeftAndRightOverlay">
+            <div class="contentLeft">
+                <div class="titleAndInput">
+                    <span>Title</span>
+                    <input id="title" type="text" required placeholder="Enter a title">
+                </div>
+
+                <div class="descriptionAndTextarea">
+                    <span>Description</span>
+                    <textarea id="description" type="text" required placeholder="Enter a Description"></textarea>
+                </div>
+
+                <div class="categoryAndSelect">
+                    <span>Category</span>
+                    
+                    <div class="newCategoryContainer d-none" id="newCategoryContainerOverlay">
+                        <input placeholder="New category name" id="newCategoryInputOverlay">
+                        <div class="newCategoryColorContainer">
+                            <div class="categoryColor" id="newCategoryColorOverlay"></div>
+                        </div>
+                        <button type="button" class="cancelButton" onclick="cancelNewCategoryOverlay()">
+                            <img src="assets/img/Vector (2).svg">
+                        </button>
+                        <button type="button" class="checkButton" onclick="confirmNewCategoryOverlay()">
+                            <img src="assets/img/add.svg">
+                        </button>
+                    </div>
+
+                    <div class="newCategoryColors d-none" id="newCategoryColorsOverlay">
+                        <p class="categoryColor" style="background-color: red" onclick="addColorToNewCategoryOverlay('red')"></p>
+                        <p class="categoryColor" style="background-color: orange" onclick="addColorToNewCategoryOverlay('orange')"></p>
+                        <p class="categoryColor" style="background-color: pink" onclick="addColorToNewCategoryOverlay('pink')"></p>
+                        <p class="categoryColor" style="background-color: turquoise" onclick="addColorToNewCategoryOverlay('turquoise')"></p>
+                        <p class="categoryColor" style="background-color: goldenrod" onclick="addColorToNewCategoryOverlay('goldenrod')"></p>
+                        <p class="categoryColor" style="background-color: blue" onclick="addColorToNewCategoryOverlay('blue')"></p>
+                    </div>
+                    
+                    <div id="categoryOverlay" onclick="openCategoryDropdownOverlay()">Select task category</div>
+                    <div id="categoryDropdownOverlay" class="categoryDropdown d-none">
+                        <div class="categoryOption" onclick="newCategoryOverlay()">
+                            New category
+                        </div>
+
+                        <div class="categoryOption" value="development" onclick="selectedCategoryOverlay('development', 'red')">
+                            Development
+                            <div class="categoryColor" style="background-color: red"></div>
+                        </div>
+
+                        <div class="categoryOption" value="design" onclick="selectedCategoryOverlay('design', 'orange')">
+                            Design
+                            <div class="categoryColor" style="background-color: orange"></div>
+                        </div>
+
+                        <div class="categoryOption" value="sales" onclick="selectedCategoryOverlay('sales', 'pink')">
+                            Sales
+                            <div class="categoryColor" style="background-color: pink"></div>
+                        </div>
+
+                        <div class="categoryOption" value="backoffice" onclick="selectedCategoryOverlay('backoffice', 'turquoise')">
+                            Backoffice
+                            <div class="categoryColor" style="background-color: turquoise"></div>
+                        </div>
+
+                        <div class="categoryOption" value="media" onclick="selectedCategoryOverlay('media', 'goldenrod')">
+                            Media
+                            <div class="categoryColor" style="background-color: goldenrod"></div>
+                        </div>
+
+                        <div class="categoryOption" value="marketing" onclick="selectedCategoryOverlay('marketing', 'blue')">
+                            Marketing
+                            <div class="categoryColor" style="background-color: blue"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="assignedToAndSelect">
+                    <span>Assigned to</span>
+                    <select id="assignedToOverlay" required> 
+                        <option value="" disabled selected>Select contacts to assign</option>
+                    </select>
+                </div>
+
+                <div class="assignedToList" id="assignedToListOverlay">
+
+                </div>
+            </div>
+
+            <div class="borderlineOverlay"></div>
+
+            <div class="contentRight">
+                <div class="dueDateAndInput">
+                    <span>Due Date</span>
+                    <input type="date" id="dateOverlay" required placeholder="dd/mm/yyyy" onchange="pushDateOverlay()">
+                </div>
+
+                <div class="prio">
+                    <span>Prio</span>
+                    <div class="prioButtons">
+                        <button type="button" id="urgentOverlay" value="urgent">
+                            Urgent
+                            <img id="urgentIconOverlay" src="./img/urgentIcon.png">
+                        </button>
+
+                        <button type="button" id="mediumOverlay" value="medium">
+                            Medium
+                            <img id="mediumIconOverlay" src="./img/mediumIcon.png">
+                        </button>
+
+                        <button type="button" id="lowOverlay" value="low">
+                            Low
+                            <img id="lowIconOverlay" src="./img/lowIcon.png">
+                        </button>
+                    </div>
+                </div>
+
+                <div class="subtasksAndInput">
+                    <span>Subtasks</span>
+
+                    <div class="inputAndButton">
+                        <input id="subtasks" placeholder="Add new subtask">
+                        <button type="button" onclick="newSubtask()">
+                            <img src="./img/subtaskIcon.png">
+                        </button>
+                    </div>
+                </div>
+
+                <div class="subtasksList" id="subtasksList">
+
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+
+function generateContentLeftAndRightContainer() {
+    return /*html*/ `
+        <div class="contentLeftAndRight">
+            <div class="contentLeft">
+                <div class="titleAndInput">
+                    <span>Title</span>
+                    <input id="title" type="text" required placeholder="Enter a title">
+                </div>
+
+                <div class="descriptionAndTextarea">
+                    <span>Description</span>
+                    <textarea id="description" type="text" required placeholder="Enter a Description"></textarea>
+                </div>
+
+                <div class="categoryAndSelect">
+                    <span>Category</span>
+                    
+                    <div class="newCategoryContainer d-none" id="newCategoryContainer">
+                        <input placeholder="New category name" id="newCategoryInput">
+                        <div class="newCategoryColorContainer">
+                            <div class="categoryColor" id="newCategoryColor"></div>
+                        </div>
+                        <button type="button" class="cancelButton" onclick="cancelNewCategory()">
+                            <img src="assets/img/Vector (2).svg">
+                        </button>
+                        <button type="button" class="checkButton" onclick="confirmNewCategory()">
+                            <img src="./img/blackCheckIcon.png">
+                        </button>
+                    </div>
+
+                    <div class="newCategoryColors d-none" id="newCategoryColors">
+                        <p class="categoryColor" style="background-color: red" onclick="addColorToNewCategory('red')"></p>
+                        <p class="categoryColor" style="background-color: orange" onclick="addColorToNewCategory('orange')"></p>
+                        <p class="categoryColor" style="background-color: pink" onclick="addColorToNewCategory('pink')"></p>
+                        <p class="categoryColor" style="background-color: turquoise" onclick="addColorToNewCategory('turquoise')"></p>
+                        <p class="categoryColor" style="background-color: goldenrod" onclick="addColorToNewCategory('goldenrod')"></p>
+                        <p class="categoryColor" style="background-color: blue" onclick="addColorToNewCategory('blue')"></p>
+                    </div>
+                    
+                    <div class="category" id="category" onclick="openCategoryDropdown()">Select task category</div>
+                    <div id="categoryDropdown" class="categoryDropdown d-none">
+                        <div class="categoryOption" onclick="newCategory()">
+                            New category
+                        </div>
+
+                        <div class="categoryOption" value="development" onclick="selectedCategory('development', 'red')">
+                            Development
+                            <div class="categoryColor" style="background-color: red"></div>
+                        </div>
+
+                        <div class="categoryOption" value="design" onclick="selectedCategory('design', 'orange')">
+                            Design
+                            <div class="categoryColor" style="background-color: orange"></div>
+                        </div>
+
+                        <div class="categoryOption" value="sales" onclick="selectedCategory('sales', 'pink')">
+                            Sales
+                            <div class="categoryColor" style="background-color: pink"></div>
+                        </div>
+
+                        <div class="categoryOption" value="backoffice" onclick="selectedCategory('backoffice', 'turquoise')">
+                            Backoffice
+                            <div class="categoryColor" style="background-color: turquoise"></div>
+                        </div>
+
+                        <div class="categoryOption" value="media" onclick="selectedCategory('media', 'goldenrod')">
+                            Media
+                            <div class="categoryColor" style="background-color: goldenrod"></div>
+                        </div>
+
+                        <div class="categoryOption" value="marketing" onclick="selectedCategory('marketing', 'blue')">
+                            Marketing
+                            <div class="categoryColor" style="background-color: blue"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="assignedToAndSelect">
+                    <span>Assigned to</span>
+                    <select id="assignedTo" required> 
+                        <option value="" disabled selected>Select contacts to assign</option>
+                    </select>
+                </div>
+
+                <div class="assignedToList" id="assignedToList">
+
+                </div>
+            </div>
+
+            <div class="borderline"></div>
+
+            <div class="contentRight">
+                <div class="dueDateAndInput">
+                    <span>Due Date</span>
+                    <input type="date" id="date" required placeholder="dd/mm/yyyy" onchange="pushDate()">
+                </div>
+
+                <div class="prio">
+                    <span>Prio</span>
+                    <div class="prioButtons">
+                        <button type="button" id="urgent" value="urgent">
+                            Urgent
+                            <img id="urgentIcon" src="./img/urgentIcon.png">
+                        </button>
+
+                        <button type="button" id="medium" value="medium">
+                            Medium
+                            <img id="mediumIcon" src="./img/mediumIcon.png">
+                        </button>
+
+                        <button type="button" id="low" value="low">
+                            Low
+                            <img id="lowIcon" src="./img/lowIcon.png">
+                        </button>
+                    </div>
+                </div>
+
+                <div class="subtasksAndInput">
+                    <span>Subtasks</span>
+
+                    <div class="inputAndButton">
+                        <input id="subtasks" placeholder="Add new subtask">
+                        <button type="button" onclick="newSubtask()">
+                            <img src="./img/subtaskIcon.png">
+                        </button>
+                    </div>
+                </div>
+
+                <div class="subtasksList" id="subtasksList">
+
+                </div>
+            </div>
+        </div>
+    `;
 }

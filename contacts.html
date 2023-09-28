@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./font/fonts.css">
+    <link rel="icon" type="image/x-icon" href="./assets/img/Logo for Favicon construction.svg">
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/contacts.css">
+    <link rel="stylesheet" href="./css/contacts2.css">
+    <script src="./js/contacts.js"></script>
+    <title>Contacts</title>
+</head>
+
+<body onload="generateSideBar()">
+    <div class="hide-overflow">
+        <div id="content"></div>
+        <div class="contact-menu">
+            <div class="button-background">
+                <div class="add-button" onclick="showOverlay()">
+                    Add new contact <img src="./assets/img/person_add.svg" class="img-add-contact">
+                </div>
+            </div>
+            <div id="new-contacts"></div>
+        </div>
+        <div class="headline-flex-box">
+            <h1 class="headline-contacts">Contacts</h1>
+            <div class="separator"></div>
+            <h2 class="subheadline">Better with a team</h2>
+        </div>
+        <div id="show-contact"></div>
+        <div id="overlay-add-contact">
+            <div class="add-contact-left-container">
+                <img src="./assets/img/Capa 1.svg" class="overlay-logo" alt="logo-image">
+                <h2 class="overlay-headline">Add contact</h2>
+                <span class="overlay-text">Tasks are better with a team</span>
+                <div class="dash"></div>
+            </div>
+            <div class="flex-box-overlay">
+                <img src="./assets/img/Frame 79.svg" alt="person-image" class="over-logo-person">
+            </div>
+            <div class="close-button" onclick="hideOverlay()"><img src="./assets/img/Close.svg" alt="close-button"></div>
+            <div class="input-fields">
+                <form>
+                    <input class="input person-icon" id="add-name" type="text" placeholder="Name" required>
+                    <input class="input email-icon" id="add-email" type="email" placeholder="Email" required>
+                    <input class="input phone-icon" id="add-phone" type="tel" placeholder="Phone" required>
+                </form>
+            </div>
+            <div class="overlay-buttons buttons-margin-left">
+                <div onclick="hideOverlay()" class="cancel-button">
+                    Cancel
+                </div>
+                <div class="create-button" onclick="addNewContact()">
+                    Create contact
+                </div>
+            </div>
+        </div>
+        <div id="overlay-edit-contact">
+            <div class="add-contact-left-container">
+                <img src="./assets/img/Capa 1.svg" class="overlay-logo" alt="logo-image">
+                <h2 class="overlay-headline">Edit contact</h2>
+                <span class="overlay-text">Tasks are better with a team</span>
+                <div class="dash"></div>
+            </div>
+            <div class="flex-box-overlay">
+                <div id="change-color-icon"></div>
+            </div>
+            <div class="close-button" onclick="hideOverlayEdit()"><img src="./assets/img/Close.svg" alt="close-button"></div>
+            <div class="input-fields">
+                <form action="onsubmit">
+                    <input class="input person-icon" type="text" id="edit-name" placeholder="Name" required>
+                    <input class="input email-icon" type="email" id="edit-email" placeholder="Email" required>
+                    <input class="input phone-icon" type="tel" id="edit-phone" placeholder="Phone" required>
+                </form>
+            </div>
+            <div class="overlay-buttons">
+                <div onclick="deleteContact()" class="delete-button">
+                    Delete
+                </div>
+                <div class="save-button">
+                    save <img src="./assets/img/check.svg" alt="checkmark-image">
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        
+    </footer>
+</body>
+
+</html>
