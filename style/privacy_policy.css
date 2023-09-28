@@ -8,6 +8,18 @@ font-size: 16px;
 font-weight: 400;
 }
 
+.privacy-policy-background {
+    background-color: rgb(9, 25, 49);
+}
+
+.privacy-policy-background:hover {
+    background-color: rgb(9, 25, 49);
+}
+
+.contacts-background {
+    background-color: unset;
+}
+
 @media (max-width: 1050px) {
     .container {
         margin-left: 0px;

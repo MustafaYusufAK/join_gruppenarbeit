@@ -13,12 +13,13 @@ function generateSideBar() {
                 <a href="./contacts.html?msg=Welcomme to Join, ${userName}" class="nav-sub contacts-background"><img src="../assets/img/Icons (3).svg">Contacs</a>
             </div>
             <div class="nav-bottom">
-                <a href="#" class="nav-bottom-a">Privacy Policy</a>
-                <a href="#" class="nav-bottom-a">Legal Notice</a>
+                <a href="../html/privacy_policy.html" class="nav-bottom-a privacy-policy-background" target= "_blank">Privacy Policy</a>
+                <a href="../html/legal_notice.html" class="nav-bottom-a legal-notice-background" target= "_blank">Legal Notice</a>
             </div>
         </div>
     </nav>`;
     generateHeader(menu, userName);
+    showContacts();
 }
 
 function generateHeader(menu, userName) {
@@ -27,6 +28,7 @@ function generateHeader(menu, userName) {
 
     menu.innerHTML += /*html*/ `
         <header>
+            <div class="logo-mobile"></div>
             <span class="header-text">Kanban Project Management Tool</span>
             <div class="header-icons">
                 <img src="../assets/img/help.svg" class="help-icon">
