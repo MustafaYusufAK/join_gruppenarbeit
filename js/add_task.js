@@ -38,6 +38,38 @@ let contacts = [
 ];
 
 
+
+
+
+// PS: Ich habe im menuTemplate.js die "showContacts();" auskommentiert, da ich meine addTask Seite die benutzen konnte. Fixen wir aber noch
+[
+    {
+        "id": "_qz0tt3nyt", // Die individuelle Id der Aufgabe
+        "title": "Hier ist der Titel", // Titel der Aufgabe
+        "description_text": "Hier ist die Description", // die Beschreibung der Aufgabe
+        "task_category": "Development", // Zu weöcher Kategorie die Aufgabe eingeteilt wurd
+        "which_assigned_contact": "AS", // Die Kürzel der eingetragenen Person
+        "createdAt": "2023-09-30", // Hier ist das Datum
+        "priority": [
+            "urgent" // Hier steht die Priorität des Tasks
+        ],
+        "assignedToValues": [
+            "Anja Schulz" // Der Name der Person
+        ],
+        "assignedToColors": [
+            "rgb(227, 9, 1)" // Hier steht die Farbe der eingetragenen Person
+        ]
+    }
+]
+
+
+
+
+
+
+
+
+
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
     let color = '#';

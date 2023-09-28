@@ -19,7 +19,7 @@ function generateSideBar() {
         </div>
     </nav>`;
     generateHeader(menu, userName);
-    showContacts();
+    // showContacts();
 }
 
 function generateHeader(menu, userName) {
