@@ -1,9 +1,10 @@
-let taskAtBoard = 0;
 
-function initSummary() {
-    generateSideBar()
-    generateUserName()
-    fillSummary()
+
+async function initSummary() {
+    loadTasks();
+    generateSideBar();
+    generateUserName();
+    fillSummary();
 }
 
 //------------------------------------------------------------------------------//
@@ -196,8 +197,8 @@ async function fillSummary() {
     countTasks(user, 'task_category', 'Done', 'done_count');
 
     //urgend//
-    countTasks(user, 'priority', 'urgend', 'urgend_count');
-
+    countTasks(user, 'priority', 'urgent', 'urgend_count');
+    findDueDate(user);
     //Task Progress//
     countTasks(user, 'task_category', 'TaskProgess', 'task_progress_count');
 
@@ -221,7 +222,7 @@ function countTasks(user, taskcategory, status, containerID) {
             taskCount++;
         }
     }
-    document.getElementById(containerID).innerHTML = countTask;
+    document.getElementById(containerID).innerHTML = taskCount;
 }
 
 
@@ -230,8 +231,28 @@ function countTasks(user, taskcategory, status, containerID) {
 //------------------------------------------------------------------------------//
 
 function countBoardTasks(user, containerID) {
+    let taskAtBoard = 0;
     for (let i = 0; i < user['tasks'].length; i++) {
         taskAtBoard++
     }
     document.getElementById(containerID).innerHTML = taskAtBoard;
 }
+
+
+//------------------------------------------------------------------------------//
+//--------------------------------Find Due Date---------------------------------//
+//------------------------------------------------------------------------------//
+
+function findDueDate(user) {
+    let urgendDate = document.getElementById('urgend_date');
+    let closestDate = Infinity;
+    let tasks = user['tasks']
+    for (let i = 0; i < tasks.length; i++) {
+        let task = new Date(tasks[i]['createdAt']);
+        if (task < closestDate || closestDate === null) {
+            closestDate = task;
+        }
+    }
+    urgendDate.innerHTML = closestDate.toLocaleDateString();
+}
+
