@@ -39,10 +39,6 @@ nav {
     margin: 0;
 }
 
-.contacts-background {
-    background-color: rgb(9, 25, 49);
-}
-
 .nav-sub:hover {
     background-color: #2A3D59;
     color: white;
@@ -495,7 +491,7 @@ header {
 }
 
 .create-button:hover {
-    background-color:#29ABE2;
+    background-color: #29ABE2;
 }
 
 .close-image {

@@ -253,4 +253,47 @@
     }
 }
 
-@media (max-width: 920px) {}
+
+@media (max-width: 1050px) {
+
+    .header-text {
+        margin-left: 0px;
+        font-weight: 500;
+    }
+
+    .contentSection {
+        margin-top: 12px;
+        margin-left: 12px;
+        position: fixed;
+        top: 89px;
+        left: 0px;
+        bottom: 0;
+        right: 0;
+    }
+
+    .clear_and_create_task_position {
+        margin-bottom: 100px;
+    }
+
+}
+
+
+@media (max-width: 750px) {
+    .header_div h1 {
+        font-size: 46px;
+        margin-top: 0px;
+        margin-bottom: 0;
+        width: 100%;
+        font-weight: bold;
+    }
+
+    .clear_and_create_task_btn {
+        flex-direction: column-reverse;
+    }
+
+    .create_task_button {
+        margin-left: 0px;
+        margin-bottom: 10px;
+    }
+
+}

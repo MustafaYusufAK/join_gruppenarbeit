@@ -54,6 +54,36 @@ span {
     background-color: unset;
 }
 
+.nav-sub {
+    display: flex;
+    align-items: center;
+    padding: 10px 0px 10px 65px;
+    color: rgb(205, 205, 205);
+    gap: 10px;
+    font-size: 16px;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.nav-sub:hover {
+    background-color: #2A3D59;
+    color: white;
+    cursor: pointer;
+}
+
+.contacts-background {
+    display: flex;
+    align-items: center;
+    padding: 10px 0px 10px 65px;
+    color: rgb(205, 205, 205);
+    gap: 10px;
+    font-size: 16px;
+    margin: 0;
+}
+
+
+
+
 .add-task-background:hover {
     background-color: rgb(9, 25, 49);
 }
