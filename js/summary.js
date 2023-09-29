@@ -253,6 +253,10 @@ function findDueDate(user) {
             closestDate = task;
         }
     }
-    urgendDate.innerHTML = closestDate.toLocaleDateString();
+    if(closestDate == Infinity) {
+        return;
+    } else {
+        urgendDate.innerHTML = closestDate.toLocaleDateString();
+    }
 }
 

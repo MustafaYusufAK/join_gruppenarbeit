@@ -150,10 +150,11 @@ async function loadTasks() {
     let userName = getUserName();
 
     let userIndex = users.findIndex(u => u.name === userName);
-    let userTasks = users[userIndex].tasks
+    let userTasks = users[userIndex].tasks;
     if (userTasks == undefined) {
-        allTasks = []
+        allTasks = [];
+        saveTasks();
     } else {
-        allTasks = userTasks
+        allTasks = userTasks;
     }
 }
