@@ -1,47 +1,9 @@
-let contacts = [
-    {
-        "name": "Anja Schulz",
-        "email": "schulz@hotmail.com",
-        "phone": "+49 151 1234 5678",
-        "color": getRandomColor()
-    },
-    {
-        "name": "Benedikt Ziegler",
-        "email": "benedikt@gmail.com",
-        "phone": "+49 172 9876 5432",
-        "color": getRandomColor()
-    },
-    {
-        "name": "David Eisenberg",
-        "email": "davidberg@gmail.com",
-        "phone": "+49 160 5555 9999",
-        "color": getRandomColor()
-    },
-    {
-        "name": "Eva Fischer",
-        "email": "eva@gmail.com",
-        "phone": "+49 157 4444 3333",
-        "color": getRandomColor()
-    },
-    {
-        "name": "Marcel Bauer",
-        "email": "bauer@gmail.com",
-        "phone": "+49 176 8765 4321",
-        "color": getRandomColor()
-    },
-    {
-        "name": "Emmanuel Mauer",
-        "email": "emmanuelmae@gmail.com",
-        "phone": "+49 162 1111 2222",
-        "color": getRandomColor()
-    }
-];
 
 
 
 
 
-// PS: Ich habe im menuTemplate.js die "showContacts();" auskommentiert, da ich meine addTask Seite die benutzen konnte. Fixen wir aber noch
+
 [
     {
         "id": "_qz0tt3nyt", // Die individuelle Id der Aufgabe
