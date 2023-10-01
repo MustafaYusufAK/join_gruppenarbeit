@@ -5,6 +5,8 @@ async function initSummary() {
     fillSummary();
 }
 
+
+
 //------------------------------------------------------------------------------//
 //---------------------------------on Mouse over--------------------------------//
 //------------------------------------------------------------------------------//
@@ -196,7 +198,7 @@ async function fillSummary() {
 
     //urgend//
     countTasks(user, 'priority', 'urgent', 'urgend_count');
-    findDueDate(user);
+    
     //Task Progress//
     countTasks(user, 'task_category', 'TaskProgess', 'task_progress_count');
 
@@ -218,6 +220,9 @@ function countTasks(user, taskcategory, status, containerID) {
         const task = user['tasks'][i];
         if (task[taskcategory] == status) {
             taskCount++;
+            if (status == 'urgent') {
+                findDueDate(user);
+            }
         }
     }
     document.getElementById(containerID).innerHTML = taskCount;
