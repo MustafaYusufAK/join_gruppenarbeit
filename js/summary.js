@@ -1,5 +1,3 @@
-
-
 async function initSummary() {
     loadTasks();
     generateSideBar();
