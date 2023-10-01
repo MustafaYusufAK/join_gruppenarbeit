@@ -105,13 +105,11 @@ function createAssigneeBall(contact) {
     // Füge die Anfangsbuchstaben hinzu
     assigneeContainer.innerHTML = `${firstName.charAt(0)}${lastName ? lastName.charAt(0) : ''}`;
 
+    let option;  // Definition der option-Variablen
+
     // Event-Listener, um den Ball zu entfernen und die zugehörige Option freizugeben
     assigneeContainer.addEventListener('click', () => {
         assigneeContainer.remove();
-
-        // Suche die zugehörige Option im Dropdown
-        let option = Array.from(document.getElementById('which_assigned_contact').options)
-            .find(option => option.value === contact.name);
 
         // Freigebe die Option, indem das `disabled`-Attribut entfernt wird
         if (option) {
@@ -124,22 +122,26 @@ function createAssigneeBall(contact) {
         }
     });
 
-    // Event-Listener, um die ausgewählte Farbe zu speichern
+    // Füge Event-Listener hinzu, um die Option hinzuzufügen bzw. zu entfernen
     assigneeContainer.addEventListener('click', () => {
-        const selectedColor = assigneeContainer.style.backgroundColor;  // Ändere dies
-
-        // Füge die Farbe dem Array hinzu
-        assignedToColorsArray.push(selectedColor);
-
-        // Entferne die 'selected'-Klasse von allen AssigneeContainern
-        document.querySelectorAll('.assigneeContainer').forEach(container => {
-            container.classList.remove('selected');
-        });
-
-        // Füge die 'selected'-Klasse nur dem ausgewählten Container hinzu
-        assigneeContainer.classList.add('selected');
-        option.classList.remove('not_selected');  // Entferne die Klasse 'not_selected'
+        if (option) {
+            if (assigneeContainer.classList.contains('selected')) {
+                // Wenn der Container bereits ausgewählt ist, entferne ihn und füge die Option wieder hinzu
+                assigneeContainer.remove();
+                option.disabled = false;
+                option.classList.remove('not_selected');
+            } else {
+                // Wenn der Container nicht ausgewählt ist, füge die Option hinzu und deaktiviere sie
+                assignedToList.appendChild(assigneeContainer);
+                option.disabled = true;
+                option.classList.add('not_selected');
+            }
+        }
     });
+
+    // Suche die zugehörige Option im Dropdown
+    option = Array.from(document.getElementById('which_assigned_contact').options)
+        .find(opt => opt.value === contact.name);
 
     assignedToList.appendChild(assigneeContainer);
 }
@@ -159,7 +161,8 @@ function createAssigneeBall(contact) {
 
 
 
-let allTasks = [];
+
+
 
 let selectedPrioButton = null;
 let titlesArray = [];
@@ -235,7 +238,9 @@ function addTask() {
         createdAt: createdAt,
         priority: priorityArray, // Add priority to the task
         assignedToValues: [selectedOption.value],
-        assignedToColors: [assignedToColor]
+        assignedToColors: [assignedToColor],
+        subtasks: subtasksArray,
+        categoryColors: categoryColorArray
     };
 
 
@@ -259,24 +264,64 @@ function addTask() {
 
 
     // Reset the input fields
+    createdAtInput.value = '';
     titleInput.value = '';
     descriptionInput.value = '';
     subtaskInput.value = '';
-    createdAtInput.value = '';
+    which_assigned_contact.value = '';
+    // Annahme: "subtaskItems" ist die Klasse der Elemente, die du löschen möchtest
+    let subtaskItems = document.getElementsByClassName('subtask-item');
+    for (let i = 0; i < subtaskItems.length; i++) {
+        subtaskItems[i].innerHTML = ''; // Hier wird der Inhalt jedes Elements geleert
+    }
 
-    // Update the localStorage with the updated task list
-    localStorage.setItem('allTasks', JSON.stringify(allTasks));
-    // Füge das aktualisierte Titel-Array dem allTasks-Objekt hinzu
-    allTasks.titles = titlesArray;
-    allTasks.descriptions = descriptionsArray;
-    allTasks.createdAt = createdAtArray;
-    allTasks.priority = priorityArray;
-    allTasks.category = categoryArray;
-    allTasks.categoryColors = categoryColorArray;
-    allTasks.subtasks = subtasksArray;
-    // Füge das aktualisierte zugewiesene Werte- und Farben-Array dem allTasks-Objekt hinzu
-    allTasks.assignedToValues = assignedToValuesArray;
-    allTasks.assignedToColors = assignedToColorsArray;
+    // Setze die Prioritätsbuttons zurück
+    const urgentBtn = document.getElementById('normal_urgent_btn');
+    const mediumBtn = document.getElementById('normal_medium_btn');
+    const lowBtn = document.getElementById('normal_low_btn');
+
+    if (urgentBtn) {
+        urgentBtn.classList.remove('d-none');
+    }
+
+    if (mediumBtn) {
+        mediumBtn.classList.remove('d-none');
+    }
+
+    if (lowBtn) {
+        lowBtn.classList.remove('d-none');
+    }
+
+    // Setze die Prioritätsbuttons zurück
+    const clickedUrgentBtn = document.getElementById('clicked_urgent_btn');
+    const clickedMediumBtn = document.getElementById('clicked_medium_btn');
+    const clickedLowBtn = document.getElementById('clicked_low_btn');
+
+    if (clickedUrgentBtn) {
+        clickedUrgentBtn.classList.add('d-none');
+    }
+
+    if (clickedMediumBtn) {
+        clickedMediumBtn.classList.add('d-none');
+    }
+
+    if (clickedLowBtn) {
+        clickedLowBtn.classList.add('d-none');
+    }
+
+
+
+    // Füge die gewünschte Option zum Select-Element hinzu
+    const whichAssignedContactSelect = document.getElementById('which_assigned_contact');
+    const newOption = document.createElement('option');
+    newOption.value = 'Select contacts to assign';
+    newOption.setAttribute('data-id', '_igorovhy5');
+    newOption.setAttribute('data-color', '');
+    newOption.innerText = 'Select contacts to assign';
+
+    // Füge die neue Option hinzu
+    whichAssignedContactSelect.add(newOption);
+
 
     saveTasks();
 
@@ -310,7 +355,8 @@ function clickEventlisteners() {
 
 
 
-function init() {
+async function init() {
+    await loadTasks()
     generateSideBar();
     clickEventlisteners();
     openDatepicker();
@@ -392,6 +438,7 @@ function addSubtask() {
         // Erstelle ein neues Listenelement
         const listItem = document.createElement('li');
         listItem.classList.add('subtask-item');  // Füge Klasse hinzu
+        listItem.id = 'listElementId';
         listItem.textContent = subtaskText;  // Setze den Text des Listenelements basierend auf der Eingabe
 
         // Erstelle das Edit-Icon und füge es zum Listenelement hinzu

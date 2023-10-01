@@ -15,7 +15,7 @@
     <title>Board</title>
 </head>
 
-<body onload="generateSideBar()">
+<body onload="init()">
     <div id="content"></div>
     <div class="topic">
         <h1 class="heading">Board</h1>
@@ -44,10 +44,14 @@
 
     </div>
     <div class="added-task-container">
+        <div class="drag-area" id="open" ondrop="moveTo('open')" ondragleave="removeHighlight('open')"
+            ondragover="allowDrop(event); highlight('open')"></div>
         <div class="added-tasks" id="to-do-tasks"></div>
         <div class="added-tasks" id="in-progress-tasks"></div>
         <div class="added-tasks" id="await-feedback-tasks"></div>
         <div class="added-tasks" id="done-tasks"></div>
+        <div class="added-tasks" id="closed" ondrop="moveTo('closed')" ondragleave="removeHighlight('closed')"
+            ondragover="allowDrop(event); highlight('closed')"></div>
     </div>
 
 </body>
