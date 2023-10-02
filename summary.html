@@ -4,19 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../assets/img/Logo for Favicon construction.svg" type="image/x-icon">
-    <link rel="stylesheet" href="../style/menuTemplate.css">
-    <link rel="stylesheet" href="../style/summary.css">
-    <link rel="stylesheet" href="../font/fonts.css">
-    <link rel="stylesheet" href="../style/generalclasses.css">
-    <link rel="stylesheet" href="../style/contacts2.css">
-    <script src="../js/storage.js"></script>
-    <script src="../js/menuTemplate.js"></script>
-    <script src="../js/summary.js"></script>
+    <link rel="shortcut icon" href="./assets/img/Logo for Favicon construction.svg" type="image/x-icon">
+    <link rel="stylesheet" href="./css/board.css">
+    <link rel="stylesheet" href="./style/summary.css">
+    <link rel="stylesheet" href="./font/fonts.css">
+    <link rel="stylesheet" href="./style/generalclasses.css">
+    <script src="./js/storage.js"></script>
+    <script src="./js/board.js"></script>
+    <script src="./js/summary.js"></script>
     <title>Summary</title>
 </head>
 
-<body onload="initSummary()" class="background-color-F6F7F8">
+<body onload="generateSideBar(); playSummaryGreetingAnimation()" class="background-color-F6F7F8">
     <div id="content"></div>
     <div class="summary-content">
         <div class="summary-board">
@@ -31,79 +30,89 @@
             <div class="tasks-and-greeting">
                 <div id="task_summary" class="task-summary">
                     <div class="to-do-and-done">
+
                         <div id="to_do" class="summary-progress summary-progress-none-hover to-do-and-done-taskarea"
                             onmouseover="hoverOverSummaryTasks('to_do', 'to_do_and_done', 'pen')"
-                            onmouseleave="hoverLeaveSummaryTasks('to_do', 'to_do_and_done', 'pen')"
-                            onclick="openTaskBoard()">
-                            <img id="to_do_img" src="../assets/img/summary_pen.svg" alt="">
+                            onmouseleave="hoverLeaveSummaryTasks('to_do', 'to_do_and_done', 'pen')">
+                            <img id="to_do_img" src="./assets/img/summary_pen.svg" alt="">
                             <div class="summary-progress-count">
-                                <span id="to_do_count" class="fontSize-64-600 color-000000">0</span>
+                                <span id="to_do_count" class="fontSize-64-600 color-000000">1</span>
                                 <span id="to_do_section" class="fontSize-20-400 color-2A3647">To-do</span>
                             </div>
                         </div>
+
+
+
                         <div id="done" class="summary-progress summary-progress-none-hover to-do-and-done-taskarea"
                             onmouseover="hoverOverSummaryTasks('done', 'to_do_and_done', 'check')"
-                            onmouseleave="hoverLeaveSummaryTasks('done', 'to_do_and_done', 'check')"
-                            onclick="openTaskBoard()">
-                            <img id="done_img" src="../assets/img/summary_check.svg" alt="">
+                            onmouseleave="hoverLeaveSummaryTasks('done', 'to_do_and_done', 'check')">
+                            <img id="done_img" src="./assets/img/summary_check.svg" alt="">
                             <div class="summary-progress-count">
-                                <span id="done_count" class="fontSize-64-600 color-000000">0</span>
+                                <span id="done_count" class="fontSize-64-600 color-000000">1</span>
                                 <span id="done_section" class="fontSize-20-400 color-2A3647">Done</span>
                             </div>
                         </div>
+
                     </div>
+
                     <div id="urgend" class="summary-progress summary-progress-none-hover"
                         onmouseover="hoverOverSummaryTasks('urgend', 'urgend-tasks')"
-                        onmouseleave="hoverLeaveSummaryTasks('urgend', 'urgend-tasks')" onclick="openTaskBoard()">
+                        onmouseleave="hoverLeaveSummaryTasks('urgend', 'urgend-tasks')">
+
                         <div id="urgend_taskfield" class="urgend-tasks summary-urgend">
                             <div class="urgend-count">
-                                <img src="../assets/img/urgend.svg" alt="">
+                                <img src="./assets/img/urgend.svg" alt="">
                                 <div class="summary-progress-count">
-                                    <span id="urgend_count" class="fontSize-64-600 color-000000">0</span>
+                                    <span id="urgend_count" class="fontSize-64-600 color-000000">1</span>
                                     <span id="urgend_section" class="fontSize-20-400 color-2A3647">Urgend</span>
                                 </div>
                             </div>
+
+
                             <div class="urgend-task-border"></div>
                             <div class="urgend-deadline">
-                                <span id="urgend_date" class="fontSize-21-700 color-2A3647">Due Date</span>
+                                <span id="urgend_date" class="fontSize-21-700 color-2A3647">October 16, 2022</span>
                                 <span id="urgend_deadline" class="fontSize-16-400 color-2A3647">Upcoming Deadline</span>
                             </div>
+
                         </div>
+
                     </div>
+
+
                     <div class="text-center summary-task-board">
                         <div class="summary-task-board-container">
                             <div id="task_board" class="urgent-task-overview summary-tasks summary-progress-none-hover"
                                 onmouseover="hoverOverSummaryTasks('task_board', 'summary-task-board')"
-                                onmouseleave="hoverLeaveSummaryTasks('task_board', 'summary-task-board')"
-                                onclick="openTaskBoard()">
+                                onmouseleave="hoverLeaveSummaryTasks('task_board', 'summary-task-board')">
 
-                                <span id="task_board_count" class="fontSize-64-600 color-000000">0</span>
+                                <span id="task_board_count" class="fontSize-64-600 color-000000">10</span>
                                 <span id="task_board_section"
                                     class="padding-left-right-25 fontSize-20-400 color-2A3647">Tasks in Board</span>
 
                             </div>
                         </div>
+
                         <div class="summary-task-board-container">
                             <div id="task_progress"
                                 class="urgent-task-overview summary-tasks summary-progress-none-hover"
                                 onmouseover="hoverOverSummaryTasks('task_progress', 'summary-task-board')"
-                                onmouseleave="hoverLeaveSummaryTasks('task_progress', 'summary-task-board')"
-                                onclick="openTaskBoard()">
+                                onmouseleave="hoverLeaveSummaryTasks('task_progress', 'summary-task-board')">
 
-                                <span id="task_progress_count" class="fontSize-64-600 color-000000">0</span>
+                                <span id="task_progress_count" class="fontSize-64-600 color-000000">10</span>
                                 <span id="task_progress_section"
                                     class="padding-left-right-16 fontSize-20-400 color-2A3647">Tasks in Progress</span>
 
                             </div>
                         </div>
+
                         <div class="summary-task-board-container">
                             <div id="task_feedback"
                                 class="urgent-task-overview summary-tasks summary-progress-none-hover"
                                 onmouseover="hoverOverSummaryTasks('task_feedback', 'summary-task-board')"
-                                onmouseleave="hoverLeaveSummaryTasks('task_feedback', 'summary-task-board')"
-                                onclick="openTaskBoard()">
+                                onmouseleave="hoverLeaveSummaryTasks('task_feedback', 'summary-task-board')">
 
-                                <span id="task_feedback_count" class="fontSize-64-600 color-000000">0</span>
+                                <span id="task_feedback_count" class="fontSize-64-600 color-000000">10</span>
                                 <span id="task_feedback_section"
                                     class="padding-left-right-16 fontSize-20-400 color-2A3647">Awaiting Feedback</span>
 
@@ -114,16 +123,18 @@
                 <div id="greeting_background" class="greeting-background"></div>
                 <div id="greeting_user_background" class="greeting-user-background">
                     <div id="greeting_user" class="greeting-user">
-                        <span id="user_greeting" class="fontSize-47-500 color-2A3647">Good morning,</span>
-                        <span id="user_name" class="fontSize-64-700 color-29ABE2">Guest</span>
+                        <span class="fontSize-47-500 color-2A3647">Good morning,</span>
+                        <span class="fontSize-64-700 color-29ABE2">Sofia Müller</span>
                     </div>
                 </div>
+
+
             </div>
         </div>
+
+
+
     </div>
-
-    
-
 
 </body>
 

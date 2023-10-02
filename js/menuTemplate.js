@@ -35,6 +35,15 @@ function generateHeader(menu, userName) {
                     <span>${userInitial}</span>
                 </div>
             </div>
+            <div id="template_menu_pop_up" class="template-menu-pop-up-bg d-none" onclick="hideTemplatePopUp()">
+                <div class="template-menu-pop-up">
+                    <a href="../html/privacy_policy.html" class="nav-bottom-a privacy-policy-background" target="_blank">Privacy
+                        Policy</a>
+                    <a href="../html/legal_notice.html" class="nav-bottom-a legal-notice-background" target="_blank">Legal
+                        Notice</a>
+                    <a href="../html/index.html" class="nav-bottom-a legal-notice-background">Log out</a>
+                </div>
+            </div>
         </header>`;
 }
 
@@ -49,4 +58,14 @@ function getInitials(userName) {
         return `${firstInitial}`;
     }
 
+}
+
+function showTemplatePopUp() {
+let menuPopUp = document.getElementById('template_menu_pop_up');
+menuPopUp.classList.remove('d-none')
+}
+
+function hideTemplatePopUp() {
+    let menuPopUp = document.getElementById('template_menu_pop_up');
+    menuPopUp.classList.add('d-none')
 }

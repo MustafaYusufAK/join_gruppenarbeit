@@ -2,6 +2,7 @@ const STORAGE_TOKEN = '6JWGFSP8ZA4Y8JE2FOVSN7ZO8Z67IFY8GHNHPA6B'
 const STORAGE_URL = 'https://remote-storage.developerakademie.org/item'
 
 let lokalUsers = [];
+let allTasks = [];
 
 //------------------------------------------------------------------------------//
 //-----------------------------save User at Backend-----------------------------//
@@ -141,7 +142,7 @@ async function saveTasks() {
 
 
 //------------------------------------------------------------------------------//
-//-----------------------------save Tasks at Backend----------------------------//
+//-----------------------------load Tasks at Backend----------------------------//
 //------------------------------------------------------------------------------//
 
 async function loadTasks() {
@@ -149,10 +150,11 @@ async function loadTasks() {
     let userName = getUserName();
 
     let userIndex = users.findIndex(u => u.name === userName);
-    let userTasks = users[userIndex].tasks
+    let userTasks = users[userIndex].tasks;
     if (userTasks == undefined) {
-        allTasks = []
+        allTasks = [];
+        saveTasks();
     } else {
-        allTasks = userTasks
+        allTasks = userTasks;
     }
 }

@@ -138,3 +138,47 @@ header {
     font-size: 27px;
     font-weight: 700;
 }
+
+
+.template-menu-pop-up-bg {
+    z-index: 99;
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.template-menu-pop-up {
+    width: 150px;
+    height: 158px;
+    position: absolute;
+    top: 100px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #2A3647;
+    padding: 10px;
+    border-radius: 20px 0px 20px 20px;
+}
+
+.template-menu-pop-up a {
+    color: #CDCDCD;
+    font-size: 16px;
+    font-weight: 400;
+    width: 130px;
+    height: 46px;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    
+}
+
+.template-menu-pop-up a:hover {
+    background-color: #2A3D59;
+}

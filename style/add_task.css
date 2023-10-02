@@ -1,5 +1,44 @@
 .formclass {
+    overflow-y: auto;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.contentSectionAddTask {
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contentSection {
+    margin-top: 12px;
+    margin-left: 12px;
+    position: fixed;
+    top: 89px;
+    left: 232px;
+    bottom: 0;
+    right: 0;
+}
+
+.borderline {
+    border: 1px solid #D1D1D1;
+    margin-right: 50px;
+    margin-left: 50px;
+}
+
+.title_description_div {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+span {
+    font-size: 21px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .d-none {
@@ -15,31 +54,73 @@
     background-color: unset;
 }
 
+.nav-sub {
+    display: flex;
+    align-items: center;
+    padding: 10px 0px 10px 65px;
+    color: rgb(205, 205, 205);
+    gap: 10px;
+    font-size: 16px;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.nav-sub:hover {
+    background-color: #2A3D59;
+    color: white;
+    cursor: pointer;
+}
+
+.contacts-background {
+    display: flex;
+    align-items: center;
+    padding: 10px 0px 10px 65px;
+    color: rgb(205, 205, 205);
+    gap: 10px;
+    font-size: 16px;
+    margin: 0;
+}
+
+
+
+
 .add-task-background:hover {
     background-color: rgb(9, 25, 49);
 }
 
+.header_div h1 {
+    font-size: 56px;
+    margin-top: 0px;
+    margin-bottom: 0;
+    width: 100%;
+    font-weight: bold;
+}
+
+.header_div {
+    font-size: 56px;
+    margin-top: 0px;
+    width: 100%;
+}
+
+
+.header_add_task {
+    font-size: 61px;
+}
+
 .add_title_section {
-    padding-left: 310px;
-    padding-right: 100px;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
-    margin-bottom: 50px;
 }
 
 .add_description_section {
-    padding-left: 310px;
-    padding-right: 100px;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
-    margin-bottom: 50px;
+    margin-bottom: 24px;
 }
 
 .assigned_to_section {
-    padding-left: 310px;
-    padding-right: 100px;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
@@ -47,13 +128,9 @@
 
 .category_section {
     height: 100px;
-    padding-left: 100px;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
-    border-left: solid;
-    border-left-color: #D1D1D1;
-    border-width: 0.75px;
 }
 
 .subtask_section {
@@ -64,28 +141,28 @@
 }
 
 .assigned_to_inputfield {
-    padding-left: 12px;
-    width: 385px;
+    width: 375px;
+    padding-left: 8px;
     height: 36px;
     outline: none;
     border-radius: 10px;
-    border: 1px solid #DADADA;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     text-indent: 1px;
     text-overflow: '';
+    border: 1px solid #DADADA;
+}
+
+#which_assigned_contact {
+    background: white url("http://gruppe-691.developerakademie.net/arrow_drop_down.svg") no-repeat right 10px center;
 }
 
 .add_date_section {
     height: 115px;
-    padding-left: 100px;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
-    border-left: solid;
-    border-left-color: #D1D1D1;
-    border-width: 0.75px;
 }
 
 ::placeholder {
@@ -94,42 +171,38 @@
 }
 
 .title_inputfield {
-    width: 385px;
+    width: 370px;
     height: 36px;
     outline: none;
-    padding: 8px 8px;
+    padding-left: 8px;
     border-radius: 10px;
     border: 1px solid #DADADA;
 
 }
 
 .description_inputfield {
+    width: 370px;
     height: 118px;
     border-radius: 8px;
-    width: 385px;
     outline: none;
-    padding: 8px;
+    padding-left: 8px;
     border: 1px solid #DADADA;
 }
 
 .date_inputfield {
-    width: 385px;
+    padding-right: 10px;
+    width: 370px;
     height: 36px;
     outline: none;
-    padding: 12px;
+    padding-left: 8px;
     border-radius: 10px;
     border: 1px solid #DADADA;
 }
 
 .add_Prio_section {
     height: 115px;
-    padding-left: 100px;
     display: flex;
-    justify-content: flex-start;
     flex-direction: column;
-    border-left: solid;
-    border-left-color: #D1D1D1;
-    border-width: 0.75px;
 }
 
 .test {
@@ -273,24 +346,20 @@
 
 
 .task-container {
-    padding-left: 100px;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
-    border-left: solid;
-    border-left-color: #D1D1D1;
-    border-width: 0.75px;
 }
 
 #subtaskInput {
-    padding: 10px;
+    padding-left: 8px;
     border: 1px solid #ccc;
     border-radius: 10px 0 0 10px;
     border-right-color: #ffffff;
 }
 
 .subtaskInputfield {
-    width: 349px;
+    width: 334px;
     height: 36px;
     outline: none;
     text-indent: 1px;
@@ -298,14 +367,22 @@
 }
 
 .subtaskButton {
+    justify-content: center;
+    align-items: center;
     display: flex;
-    width: 36px;
-    padding: 10px;
+    width: 46px;
     height: 36px;
     border: 1px solid #ccc;
     border-left-color: #ffffff;
     background-color: #ffffff;
     border-radius: 0 10px 10px 0;
+    border-left: 1px solid #D1D1D1;
+}
+
+.subtask_img {
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
 }
 
 .subtask_img:hover {
@@ -314,16 +391,13 @@
 }
 
 .taskContainerItemsPosition {
+    align-items: center;
     display: flex;
     margin-bottom: 10px;
 }
 
 button:hover {
     cursor: pointer;
-}
-
-.subtask-item .icon {
-    /*display: none;*/
 }
 
 .subtask-item:hover .icon {
@@ -335,6 +409,18 @@ button:hover {
     justify-content: flex-start;
     display: flex;
     margin: 5px;
+}
+
+.subtask-item input {
+    height: 36px;
+    outline: none;
+    padding-left: 8px;
+    border-radius: 10px;
+    border: 1px solid #DADADA;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
 }
 
 .addSubTaskIcons {
@@ -367,9 +453,13 @@ button:hover {
 }
 
 .clear_and_create_task_position {
+    width: 100%;
     display: flex;
-    justify-content: flex-end;
-    margin-top: 30px;
+    justify-content: end;
+    padding: 0px;
+    gap: 25px;
+    padding-bottom: 30px;
+    padding-right: 5px;
 }
 
 .clear_and_create_task_btn {
@@ -445,19 +535,12 @@ button:hover {
     cursor: pointer;
 }
 
-.date_inputfield {
-    padding-right: 30px;
-    /* Add padding to accommodate the calendar icon */
-}
+
 
 .categoryAndSelect {
-    height: 115px;
-    padding-left: 100px;
+    width: 375px;
     display: flex;
     justify-content: flex-start;
-    border-left: solid;
-    border-left-color: #D1D1D1;
-    border-width: 0.75px;
     flex-direction: column;
 }
 
@@ -510,12 +593,6 @@ button:hover {
     border-bottom: 1px solid #D1D1D1;
 }
 
-.categoryColor {
-    height: 13px;
-    width: 13px;
-    border: 2px solid white;
-    border-radius: 100%;
-}
 
 #categoryOverlay {
     box-sizing: border-box;
@@ -535,24 +612,26 @@ button:hover {
 #category {
     box-sizing: border-box;
     padding: 5px 10px;
-    width: 385px;
     height: 36px;
     border: 1px solid #D1D1D1;
     border-radius: 10px;
     display: flex;
     align-items: center;
-    background: white url("assets/img/arrow_drop_down.svg") no-repeat right 10px center;
-    cursor: pointer;
+    background: white url("http://gruppe-691.developerakademie.net/arrow_drop_down.svg") no-repeat right 10px center;
+}
+
+.categoryContainer {
+    display: flex;
+    align-items: center;
 }
 
 
 .categoryDropdown {
-    width: 420.5px;
     border: 1px solid #D1D1D1;
     border-top: none;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    height: 140px;
+    height: 105px;
     overflow-y: auto;
 }
 
@@ -564,10 +643,6 @@ button:hover {
 .categoryDropdown::-webkit-scrollbar-track {
     margin-top: 10px;
     margin-bottom: 10px;
-}
-
-.categoryDropdown {
-    width: calc(100% - 1.5px);
 }
 
 
@@ -609,6 +684,11 @@ button:hover {
     transition: ease-in-out 125ms;
 }
 
+.newCategoryContainer button:hover {
+    background-color: lightgray;
+    transition: ease-in-out 125ms;
+}
+
 .assignedToList {
     margin-top: 5px;
     margin-right: 5px;
@@ -636,4 +716,21 @@ button:hover {
     cursor: pointer;
     transform: scale(0.9);
     transition: ease-in-out 125ms;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #FFFFFF;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: #FFFFFF;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #A8A8A8;
 }
