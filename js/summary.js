@@ -1,5 +1,13 @@
+//------------------------------------------------------------------------------//
+//----------------------initialize first Steps for the Page---------------------//
+//------------------------------------------------------------------------------//
+
+/**
+ * initialize first Steps for the Page
+ * @async
+ */
 async function initSummary() {
-    loadTasks();
+    await loadTasks();
     generateSideBar();
     generateUserName();
     fillSummary();
@@ -11,6 +19,12 @@ async function initSummary() {
 //---------------------------------on Mouse over--------------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * on Mouse over
+ * @param {string} id 
+ * @param {string} section 
+ * @param {string} imgSrc 
+ */
 function hoverOverSummaryTasks(id, section, imgSrc) {
     document.getElementById(`${id}`).classList.remove('summary-progress-none-hover');
     document.getElementById(`${id}_count`).classList.remove('color-000000');
@@ -35,14 +49,21 @@ function hoverOverSummaryTasks(id, section, imgSrc) {
     };
 }
 
-
+/**
+ * 
+ * @param {string} id 
+ * @param {string} imgSrc 
+ */
 function hoverOverToDoAndDone(id, imgSrc) {
     document.getElementById(`${id}`).classList.remove('to-do-and-done-taskarea');
     document.getElementById(`${id}`).classList.add('to-do-and-done-taskarea-hover');
     document.getElementById(`${id}_img`).src = `../assets/img/summary_${imgSrc}_hover.svg`;
 }
 
-
+/**
+ * 
+ * @param {string} id 
+ */
 function hoverOverUrgendTask(id) {
     document.getElementById(`${id}_taskfield`).classList.remove('summary-urgend');
     document.getElementById(`${id}_date`).classList.remove('color-2A3647');
@@ -53,7 +74,10 @@ function hoverOverUrgendTask(id) {
     document.getElementById(`${id}_deadline`).classList.add('color-FFFFFF');
 }
 
-
+/**
+ * 
+ * @param {string} id 
+ */
 function hoverOverTaskCounts(id) {
     document.getElementById(`${id}`).classList.remove('urgent-task-overview');
     document.getElementById(`${id}`).classList.add('urgent-task-overview-hover');
@@ -63,6 +87,12 @@ function hoverOverTaskCounts(id) {
 //---------------------------------on Mouse leave-------------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * on Mouse leave
+ * @param {string} id 
+ * @param {string} section 
+ * @param {string} imgSrc 
+ */
 function hoverLeaveSummaryTasks(id, section, imgSrc) {
     document.getElementById(`${id}`).classList.remove('summary-progress-hover');
     document.getElementById(`${id}_count`).classList.remove('color-FFFFFF');
@@ -90,6 +120,11 @@ function hoverLeaveSummaryTasks(id, section, imgSrc) {
 //--------------------------------Leave To and Done-----------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * Leave To and Done
+ * @param {string} id 
+ * @param {string} imgSrc 
+ */
 function hoverLeaveToDoAndDone(id, imgSrc) {
     document.getElementById(`${id}`).classList.remove('to-do-and-done-taskarea-hover');
     document.getElementById(`${id}`).classList.add('to-do-and-done-taskarea');
@@ -101,6 +136,10 @@ function hoverLeaveToDoAndDone(id, imgSrc) {
 //--------------------------------Leave Urgend Tasks----------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * Leave Urgend Tasks
+ * @param {string} id 
+ */
 function hoverLeaveUrgendTask(id) {
     document.getElementById(`${id}_taskfield`).classList.remove('summary-urgend-hover');
     document.getElementById(`${id}_date`).classList.remove('color-FFFFFF');
@@ -111,6 +150,10 @@ function hoverLeaveUrgendTask(id) {
     document.getElementById(`${id}_deadline`).classList.add('color-2A3647');
 }
 
+/**
+ * 
+ * @param {string} id 
+ */
 function hoverLeaveTaskCounts(id) {
     document.getElementById(`${id}`).classList.remove('urgent-task-overview-hover');
     document.getElementById(`${id}`).classList.add('urgent-task-overview');
@@ -121,6 +164,9 @@ function hoverLeaveTaskCounts(id) {
 //---------------------------------Summary Animation----------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * Summary Animation
+ */
 function playSummaryGreetingAnimation() {
     setTimeout(function () {
         let greetingUser = document.getElementById('greeting_user');
@@ -138,6 +184,9 @@ function playSummaryGreetingAnimation() {
 //------------------------generate Name for greeting----------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * generate Name for greeting
+ */
 function generateUserName() {
     let userName = getUserName()
     let greeting = getGreeting();
@@ -152,6 +201,10 @@ function generateUserName() {
 //-----------------------------generate Greeting--------------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * generate Greeting
+ * @returns 
+ */
 function getGreeting() {
     const now = new Date();
     const currentHour = now.getHours();
@@ -170,6 +223,9 @@ function getGreeting() {
 //---------------------------------open Board-----------------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * open Board
+ */
 function openTaskBoard() {
     let userName = getUserName();
     window.location.href = `board.html?msg=Welcomme to Join, ${userName}`;
@@ -180,6 +236,10 @@ function openTaskBoard() {
 //--------------------------------fill Summary----------------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * fill Summary
+ * @async
+ */
 async function fillSummary() {
     let userName = getUserName();
     console.log('userName:', userName);
@@ -214,6 +274,13 @@ async function fillSummary() {
 //---------------------------Count Tasks for Summary----------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * Count Tasks for Summary
+ * @param {string} user 
+ * @param {string} taskcategory 
+ * @param {string} status 
+ * @param {string} containerID 
+ */
 function countTasks(user, taskcategory, status, containerID) {
     let taskCount = 0;
     for (let i = 0; i < user['tasks'].length; i++) {
@@ -233,6 +300,11 @@ function countTasks(user, taskcategory, status, containerID) {
 //-------------------------------Count all Tasks--------------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * Count all Tasks
+ * @param {string} user 
+ * @param {string} containerID 
+ */
 function countBoardTasks(user, containerID) {
     let taskAtBoard = 0;
     for (let i = 0; i < user['tasks'].length; i++) {
@@ -246,6 +318,11 @@ function countBoardTasks(user, containerID) {
 //--------------------------------Find Due Date---------------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * Find Due Date
+ * @param {string} user 
+ * @returns 
+ */
 function findDueDate(user) {
     let urgendDate = document.getElementById('urgend_date');
     let closestDate = Infinity;

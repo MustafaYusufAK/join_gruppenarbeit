@@ -1,3 +1,11 @@
+//------------------------------------------------------------------------------//
+//--------------------------Show send E-Mail succesfull-------------------------//
+//------------------------------------------------------------------------------//
+
+/**
+ * Show send E-Mail succesfull
+ * @async
+ */
 async function sendMail() {
     let forgotPasswordSuccesfully = document.getElementById('forgot_password_succesfully');
     let forgotPasswordEmail = document.getElementById('email_password_forgot');
@@ -16,6 +24,15 @@ async function sendMail() {
     }
 }
 
+
+//------------------------------------------------------------------------------//
+//----------------------------Send E-Mail at Address----------------------------//
+//------------------------------------------------------------------------------//
+
+/**
+ * Send E-Mail at Address
+ * @async
+ */
 async function sendEmail() {
     let email = document.getElementById('email_password_forgot').value;
     let users = JSON.parse(await getItem('users'));
@@ -28,12 +45,12 @@ async function sendEmail() {
 
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            // Antwort vom Server
+            // Response from Server
             console.log(xhr.responseText);
         }
     }
 
-    // Sende E-Mail und Benutzernamen
+    // Send E-Mail and Username
     xhr.send('email=' + email + '&username=' + username);
     sendMail();
 }
