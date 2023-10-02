@@ -37,12 +37,19 @@ let contacts = [
     }
 ];
 
+/**
+ * Function to initialize contacts.
+ * @returns {Promise<void>}
+ */
 async function initContacts() {
     await loadContacts()
     generateSideBar();
     showContacts();
 }
 
+/**
+ * Function to display contacts.
+ */
 function showContacts() {
     const contactContent = document.getElementById('new-contacts');
     contactContent.innerHTML = '';
@@ -58,15 +65,30 @@ function showContacts() {
     });
 }
 
+/**
+ * Function to add the first letter to the contact list.
+ * @param {HTMLElement} contactContent - The element where the letter is added.
+ * @param {string} letter - The letter to be added.
+ */
 function addFirstLetter(contactContent, letter) {
     contactContent.innerHTML += `<div class="first-letter">${letter}</div>`;
 }
 
+/**
+ * Function to add a separate contact div.
+ * @param {HTMLElement} contactContent - The element where the div is added.
+ * @param {number[]} contactIndices - The indices of contacts belonging to the separate div.
+ */
 function addSeparateContactsDiv(contactContent, contactIndices) {
     const divId = `div-separate-contacts-${contactIndices[0]}`;
     contactContent.innerHTML += `<div class="separate-contacts" id="${divId}"></div>`;
 }
 
+/**
+ * Function to add contacts to the contact list.
+ * @param {HTMLElement} contactContent - The element where contacts are added.
+ * @param {number[]} contactIndices - The indices of contacts to be added.
+ */
 function addContacts(contactContent, contactIndices) {
     contactIndices.forEach(index => {
         const contact = contacts[index];
@@ -81,6 +103,15 @@ function addContacts(contactContent, contactIndices) {
     });
 }
 
+/**
+ * Function to create the HTML template for a contact.
+ * @param {Object} contact - The contact.
+ * @param {number} index - The index of the contact.
+ * @param {string} randomColor - The random background color of the contact.
+ * @param {string} initials - The initials of the contact.
+ * @param {string} id - The ID of the contact element.
+ * @returns {string} - The HTML template for the contact.
+ */
 function contactContentTemplate(contact, index, randomColor, initials, id) {
     return /*html*/ `<div class="new-contact-box" onclick="openContact('${contact['name']}', '${contact['email']}', '${index}', '${randomColor}')">
         <span class="small-contact-icon" id="${id}">${initials}</span>
@@ -91,13 +122,54 @@ function contactContentTemplate(contact, index, randomColor, initials, id) {
     </div>`;
 }
 
-function openContact(contactName, contactEmail, i, randomColor) {
+/**
+ * Function to check if the screen is wide.
+ * @returns {boolean} - True if the screen is wide, otherwise false.
+ */
+function isWideScreen() {
+    return window.innerWidth <= 750;
+}
+
+/**
+ * Function to toggle the display of contacts on mobile devices.
+ * @param {boolean} showContacts - True to display contacts, otherwise false.
+ */
+function toggleContactsMobile(showContacts) {
+    let hideContacts = document.getElementById('contact-menu');
+    let contactsBox = document.getElementById('contacts-box');
+
+    if (showContacts) {
+        hideContacts.classList.add('d-none');
+        contactsBox.classList.add('d-block');
+    } else {
+        hideContacts.classList.remove('d-none');
+        contactsBox.classList.remove('d-block');
+        document.querySelectorAll('.new-contact-box').forEach(contact => contact.classList.remove('selected-contact'));
+    }
+}
+
+/**
+ * Changes the background color of the selected contact and highlights it.
+ *
+ * @param {number} i - The index of the contact to be selected.
+ */
+function changeBackground(i) {
     const selectedContact = document.querySelector(`#contact-icon-${i}`);
     if (selectedContact) {
         document.querySelectorAll('.new-contact-box').forEach(contact => contact.classList.remove('selected-contact'));
         selectedContact.parentElement.classList.add('selected-contact');
     }
+}
 
+/**
+ * Function to open a contact dialog.
+ * @param {string} contactName - The name of the contact.
+ * @param {string} contactEmail - The email address of the contact.
+ * @param {number} i - The index of the contact.
+ * @param {string} randomColor - The random background color of the contact.
+ */
+function openContact(contactName, contactEmail, i, randomColor) {
+    changeBackground(i);
     let showContact = document.getElementById('show-contact');
     const initials = generateInitials(contactName);
     showContact.innerHTML = '';
@@ -105,8 +177,22 @@ function openContact(contactName, contactEmail, i, randomColor) {
     document.getElementById('change-color-icon').innerHTML = /*html*/ `<div class="big-contact-icon" id="color-icon-change-${i}"></div>`
     const bigContactIcon = document.getElementById(`big-contact-icon-${i}`);
     bigContactIcon.style.backgroundColor = randomColor;
+    const element = document.getElementById(`contact-icon-${i}`);
+    if (isWideScreen()) {
+        element.onclick = toggleContactsMobile(showContacts);
+        } 
 }
 
+/**
+ * Generates the HTML template for displaying contact information.
+ *
+ * @param {string} contactName - The name of the contact.
+ * @param {string} contactEmail - The email address of the contact.
+ * @param {number} i - The index of the contact.
+ * @param {string} randomColor - The random background color for the contact.
+ * @param {string} initials - The initials of the contact's name.
+ * @returns {string} - The HTML template for the contact information.
+ */
 function showContactTemplate(contactName, contactEmail, i, randomColor, initials) {
     return /*html*/ `<div class="flex-box"><span class="big-contact-icon margin-left" id="big-contact-icon-${i}">${initials}</span>
     <div class="flex-box-contact"><div class="name-contact">${contactName}</div><div class="edit-box"><div class="edit-image" onclick="showOverlayEdit('${i}', '${randomColor}', '${initials}')">
@@ -115,6 +201,9 @@ function showContactTemplate(contactName, contactEmail, i, randomColor, initials
     <b class="margin-left">Phone</b><p class="margin-left">${contacts[i]['phone']}</p>`;
 }
 
+/**
+ * Adds a new contact to the contacts list and updates the UI.
+ */
 function addNewContact() {
     const nameInput = document.getElementById('add-name');
     const emailInput = document.getElementById('add-email');
@@ -133,6 +222,12 @@ function addNewContact() {
     addContactAndUpdateUI(newContact);
 }
 
+/**
+ * Validates a contact's name.
+ *
+ * @param {string} name - The name to be validated.
+ * @returns {boolean} - True if the name is valid; otherwise, false.
+ */
 function validateName(name) {
     if (!/^[A-Za-z\s\-ÄÜÖäüö]+$/.test(name)) {
         alert("Name should contain only letters, spaces, hyphens, and umlauts.");
@@ -141,6 +236,12 @@ function validateName(name) {
     return true;
 }
 
+/**
+ * Validates a contact's email address.
+ *
+ * @param {string} email - The email address to be validated.
+ * @returns {boolean} - True if the email address is valid; otherwise, false.
+ */
 function validateEmail(email) {
     if (!email || email.indexOf('@') === -1) {
         alert("A valid email address is needed.");
@@ -149,6 +250,12 @@ function validateEmail(email) {
     return true;
 }
 
+/**
+ * Validates a contact's phone number.
+ *
+ * @param {string} phone - The phone number to be validated.
+ * @returns {boolean} - True if the phone number is valid; otherwise, false.
+ */
 function validatePhone(phone) {
     if (!/^\+?\d+(\s\d+)*$/.test(phone)) {
         alert("Phone number should contain digits with optional spaces and can start with '+'.");
@@ -157,18 +264,36 @@ function validatePhone(phone) {
     return true;
 }
 
+/**
+ * Creates a new contact object.
+ *
+ * @param {string} name - The name of the contact.
+ * @param {string} email - The email address of the contact.
+ * @param {string} phone - The phone number of the contact.
+ * @param {string} color - The background color of the contact.
+ * @returns {object} - The new contact object.
+ */
 function createContact(name, email, phone, color) {
     return { "name": name, "email": email, "phone": phone, "color": color };
 }
 
+/**
+ * Adds a contact to the contacts list and updates the UI.
+ *
+ * @param {object} contact - The contact object to be added.
+ */
 function addContactAndUpdateUI(contact) {
     contacts.push(contact);
     sortContacts();
     generateFirstLettersAndUpdateSidebar();
-    hideOverlay();
+    toggleOverlay();
     emptyInput();
 }
 
+/**
+ * Generates the first letters of contact names and updates the sidebar with them.
+ * Also, generates the sidebar content and displays contacts.
+ */
 function generateFirstLettersAndUpdateSidebar() {
     generateFirstLetters().sortedFirstLetters.forEach((letter, index) => {
         const letterElement = document.getElementById(`first-letter-${index}`);
@@ -178,14 +303,23 @@ function generateFirstLettersAndUpdateSidebar() {
     });
 
     generateSideBar();
+    showContacts();
 }
 
+/**
+ * Clears the input fields for adding a new contact.
+ */
 function emptyInput() {
     document.getElementById('add-name').value = '';
     document.getElementById('add-email').value = '';
     document.getElementById('add-phone').value = '';
 }
 
+/**
+ * Edits an existing contact with the provided index.
+ *
+ * @param {number} i - The index of the contact to be edited.
+ */
 function EditContact(i) {
     if (i < 0 || i >= contacts.length) return alert('Ungültiger Index');
     const editNameInput = document.getElementById('edit-name');
@@ -203,10 +337,17 @@ function EditContact(i) {
     const currentColor = contacts[i].color;
     contacts[i] = createContact(editName, editEmail, editPhone, currentColor);
     generateSideBar();
+    showContacts();
     hideOverlayEdit();
     openContact(contacts[i].name, contacts[i].email, i, currentColor);
 }
 
+/**
+ * Validates a phone number, checking for invalid characters and the '+' prefix.
+ *
+ * @param {string} phone - The phone number to be validated.
+ * @returns {boolean} - True if the phone number is valid; otherwise, false.
+ */
 function validatePhone(phone) {
     // Überprüfe, ob die Telefonnummer ungültige Zeichen (Buchstaben) enthält oder nicht mit '+' beginnt
     if (!/^\+?\d+(\s\d+)*$/.test(phone)) {
@@ -216,18 +357,27 @@ function validatePhone(phone) {
     return true;
 }
 
-
-
-function showOverlay() {
+/**
+ * Shows or hides the overlay for adding contacts.
+ *
+ * @param {boolean} show - If true, the overlay is shown; if false, it is hidden.
+ */
+function toggleOverlay(show = false) {
     let overlay = document.getElementById('overlay-add-contact');
-    overlay.classList.add('show-overlay');
+    if (show) {
+        overlay.classList.add('show-overlay');
+    } else {
+        overlay.classList.remove('show-overlay');
+    }
 }
 
-function hideOverlay() {
-    let overlay = document.getElementById('overlay-add-contact');
-    overlay.classList.remove('show-overlay');
-}
-
+/**
+ * Shows the overlay for editing a contact with the specified index.
+ *
+ * @param {number} i - The index of the contact to be edited.
+ * @param {string} randomColor - The random background color for the contact.
+ * @param {string} initials - The initials of the contact's name.
+ */
 function showOverlayEdit(i, randomColor, initials) {
     const bigContactIcon = document.getElementById(`color-icon-change-${i}`);
     bigContactIcon.innerHTML = initials;
@@ -242,7 +392,11 @@ function showOverlayEdit(i, randomColor, initials) {
     deleteButton.onclick = () => deleteContact(i); // Füge diese Zeile hinzu
 }
 
-
+/**
+ * Populates the edit contact form with the details of the contact at the specified index.
+ *
+ * @param {number} i - The index of the contact to be displayed in the form.
+ */
 function showContactValue(i) {
     const selectedContact = contacts[i];
     const editNameInput = document.getElementById('edit-name');
@@ -254,19 +408,35 @@ function showContactValue(i) {
     editPhoneInput.value = selectedContact.phone;
 }
 
-
+/**
+ * Hides the overlay for editing a contact.
+ */
 function hideOverlayEdit() {
     let overlay = document.getElementById('overlay-edit-contact');
     overlay.classList.remove('show-overlay');
 }
 
+/**
+ * Deletes a contact with the specified index from the contacts list and updates the UI.
+ *
+ * @param {number} i - The index of the contact to be deleted.
+ */
 function deleteContact(i) {
     contacts.splice(i, 1);
     generateSideBar();
+    showContacts();
     document.getElementById('show-contact').innerHTML = '';
     hideOverlayEdit();
+    if (isWideScreen()) {
+        toggleContactsMobile();
+        }
 }
 
+/**
+ * Generates a random hexadecimal color code.
+ *
+ * @returns {string} A random hexadecimal color code.
+ */
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -282,6 +452,12 @@ function getRandomColor() {
     return color;
 }
 
+/**
+ * Checks if a color is too light based on its brightness.
+ *
+ * @param {string} color - The hexadecimal color code to check.
+ * @returns {boolean} True if the color is too light; otherwise, false.
+ */
 function isTooLight(color) {
     // Berechne die Helligkeit der Farbe (YIQ-Berechnung)
     const hex = color.substring(1); // Entferne das führende #
@@ -294,6 +470,9 @@ function isTooLight(color) {
     return yiq > 128;
 }
 
+/**
+ * Sorts the contacts array alphabetically by first name.
+ */
 function sortContacts() {
     contacts.sort((a, b) => {
         const firstNameA = a.name.split(' ')[0];
@@ -301,54 +480,6 @@ function sortContacts() {
         return firstNameA.localeCompare(firstNameB);
     });
 }
-
-function generateInitials(name) {
-    const nameParts = name.split(' ');
-    const firstName = nameParts[0] || '';
-    const lastName = nameParts.length > 1 ? nameParts[1] : ''; // Hier prüfen, ob es einen Nachnamen gibt
-    let initials = (firstName[0] || '') + (lastName[0] || ''); // Entferne das 'X' für den Nachnamen
-
-    // Falls keine Initials erstellt wurden, setze einen Standardbuchstaben (z.B. 'X')
-    if (initials.length === 0) {
-        initials = 'X';
-    }
-
-    return initials;
-}
-
-
-function generateFirstLetters() {
-    const firstLettersMap = new Map();
-
-    contacts.forEach((contact, i) => {
-        const nameParts = contact.name.split(' ');
-        if (nameParts.length > 0) {
-            const firstName = nameParts[0][0].toUpperCase(); // Nur den ersten Buchstaben des ersten Namens teilen
-            firstLettersMap.set(firstName, [...(firstLettersMap.get(firstName) || []), i]);
-        }
-    });
-
-    const sortedFirstLetters = [...firstLettersMap.keys()].sort();
-    return { sortedFirstLetters, firstLettersMap };
-}
-
-
-
-function highlightContact(index) {
-    // Entferne die Hervorhebung von allen Kontakten
-    const allContacts = document.querySelectorAll('.new-contact-box');
-    allContacts.forEach(contact => {
-        contact.classList.remove('selected-contact');
-    });
-
-    // Füge die Hervorhebung zum ausgewählten Kontakt hinzu
-    const selectedContact = document.querySelector(`#contact-icon-${index}`);
-    if (selectedContact) {
-        selectedContact.parentElement.classList.add('selected-contact');
-    }
-}
-
-
 
 
 

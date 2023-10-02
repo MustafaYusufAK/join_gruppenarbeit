@@ -19,7 +19,6 @@ function generateSideBar() {
         </div>
     </nav>`;
     generateHeader(menu, userName);
-    showContacts();
 }
 
 function generateHeader(menu, userName) {
@@ -31,7 +30,7 @@ function generateHeader(menu, userName) {
             <div class="logo-mobile"></div>
             <span class="header-text">Kanban Project Management Tool</span>
             <div class="header-icons">
-                <img src="../assets/img/help.svg" class="help-icon">
+                <a href="../html/help.html"><img src="../assets/img/help.svg" class="help-icon"></a>
                 <div class="group-icon">
                     <span>${userInitial}</span>
                 </div>
