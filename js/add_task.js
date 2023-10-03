@@ -366,6 +366,19 @@ async function init() {
 }
 
 
+async function initForBoard() {
+    await loadTasks();
+    updateHTML()
+    generateSideBar();
+    showTasks();
+    clickEventlisteners();
+    openDatepicker();
+    createContactDropdown();
+    getRandomColor();
+    assignOptionIDs();
+}
+
+
 function clearInputFields() {
     // Reset title and description input fields
     const titleInput = document.getElementById('title');
