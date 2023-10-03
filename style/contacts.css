@@ -7,7 +7,7 @@
     flex-direction: column;
     margin-left: 240px;
     width: 456px;
-    max-height: 89%;
+    max-height: 86%;
     background-color: white;
     position: fixed;
 }
@@ -27,7 +27,7 @@
     padding: 10px;
     color: white;
     margin-top: 20px;
-    margin-left: 50px;
+    margin-left: 38px;
     width: 352px;
     border-radius: 8px;
     position: absolute;
@@ -78,10 +78,24 @@
     border-radius: 4px;
 }
 
+.separator-mobile {
+    display: none;
+}
+
 .subheadline {
     color: #2A3647;
     font-size: 27px;
     padding: 30px;
+}
+
+.arrow {
+    margin-left: 40px;
+    display: none;
+    cursor: pointer;
+}
+
+.arrow-mobile {
+    display: none;
 }
 
 .separate-contacts {
@@ -413,5 +427,74 @@
 }
 
 .d-block {
-    display: block;
+    display: block !important;
+}
+
+.delete-button {
+    padding: 10px 25px 10px 25px;
+    border: 1px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 21px;
+}
+
+.delete-button:hover {
+    color: #29ABE2;
+    border: 1px solid #29ABE2;
+}
+
+.save-button {
+    color: white;
+    font-weight: 600px;
+    background-color: #2A3647;
+    padding: 10px 25px 10px 25px;
+    font-size: 21px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.save-button:hover {
+    background-color: #29ABE2;
+}
+
+.first-letter {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    margin-right: 250px;
+}
+
+.selected-contact {
+    background-color: rgb(42, 54, 71);
+    color: white;
+}
+
+.selected-contact:hover {
+    background-color: rgb(42, 54, 71);
+}
+
+footer {
+    display: absolute;
+}
+
+@media (max-width: 1320px) {
+    .headline-contacts {
+        font-size: 50px;
+        padding: 30px 10px 30px 30px;
+    }
+
+    .subheadline {
+        font-size: 24px;
+        padding: 30px 0px 30px 10px;
+    }
+
+    .big-contact-icon {
+        font-size: 40px;
+    }
+
+    .name-contact {
+        font-size: 40px;
+    }
 }

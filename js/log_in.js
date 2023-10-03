@@ -35,7 +35,8 @@ function loadLoakalUser() {
 
 /**
  * Log In for User and Guest
- * @param {guest Log In} guest 
+ * @async
+ * @param {string} guest 
  * @returns 
  */
 async function logIn(guest) {
@@ -91,6 +92,7 @@ function checkBtnLogIn() {
     if (logInCheckBtn.src.includes('checkbuttonchecked')) {
         logInCheckBtn.src = '../assets/img/checkbutton.svg';
         removeClickHandler();
+        clearLocalStorage();
     } else {
         logInCheckBtn.src = '../assets/img/checkbuttonchecked.svg';
         addClickHandler();
@@ -104,9 +106,9 @@ function checkBtnLogIn() {
 
 /**
  * Show the worng Input
- * @param {current User} users 
- * @param {email Input} emailValue 
- * @param {password Input} passwordValue 
+ * @param {string} users 
+ * @param {string} emailValue 
+ * @param {string} passwordValue 
  */
 function wrongEnter(users, emailValue, passwordValue) {
     let emailInput = document.getElementById('email')
@@ -135,7 +137,7 @@ function wrongEnter(users, emailValue, passwordValue) {
 
 /**
  * Reset the worng Input
- * @param {ID} id 
+ * @param {string} id 
  */
 function resetWrongEnter(id) {
     if (id) {
@@ -150,7 +152,7 @@ function resetWrongEnter(id) {
 
 /**
  * Change Img for Password Input
- * @param {first or second Passowrdsection} password 
+ * @param {string} password 
  */
 function showPasswordIcon(password) {
     let password1 = document.getElementById('input_icon_password1')
@@ -173,7 +175,7 @@ function showPasswordIcon(password) {
 
 /**
  * Change Img for Password Input and Show the Password
- * @param {first or second Passowrdsection} password 
+ * @param {string} password 
  */
 function showPassword(password) {
     let password1 = document.getElementById('input_icon_password1')
@@ -196,7 +198,7 @@ function showPassword(password) {
 
 /**
  * Change Img for Password Input and hide the Password
- * @param {first or second Passowrdsection} password 
+ * @param {string} password 
  */
 function hidePassword(password) {
     let password1 = document.getElementById('input_icon_password1')
@@ -220,11 +222,11 @@ function hidePassword(password) {
 
 /**
  * Reset Inputs
- * @param {*} id 
- * @param {*} email 
- * @param {*} password1 
- * @param {*} password2 
- * @param {*} name 
+ * @param {string} id 
+ * @param {string} email 
+ * @param {string} password1 
+ * @param {string} password2 
+ * @param {string} name 
  */
 function resetForm(id, email, password1, password2, name) {
     if (id == 'signup') {

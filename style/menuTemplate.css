@@ -66,6 +66,11 @@ nav {
     color: rgb(205, 205, 205);
 }
 
+.nav-bottom-a:hover {
+    color: #29ABE2;
+    cursor: pointer;
+}
+
 .nav-flex-box {
     display: flex;
     flex-direction: column;
@@ -89,17 +94,25 @@ header {
 }
 
 .header-text {
-    margin-left: 150px;
+    margin-left: 95px;
     font-weight: 500;
+    display: flex;
+    flex: 1;
 }
 
 .help-icon {
-    padding: 20px;
     cursor: pointer;
+}
+
+.help-icon:hover {
+    width: 25px;
+    height: 25px;
 }
 
 .header-icons {
     display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
 .group-icon {

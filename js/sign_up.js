@@ -2,6 +2,10 @@
 //---------------------------------Register User--------------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * Register User
+ * @async
+ */
 async function signUp() {
     document.getElementById('sign_up_btn').disabled = true;
     let name = document.getElementById('name_sign_up');
@@ -39,6 +43,10 @@ async function signUp() {
 //-----------------------------Check Btn vor Sign Up----------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * Check Btn vor Sign Up
+ * @param {string} check 
+ */
 function checkBtnSignUp(check) {
     let signUpCheckBtn = document.getElementById('checkbox_container');
     if (check == 'nonecheck') {

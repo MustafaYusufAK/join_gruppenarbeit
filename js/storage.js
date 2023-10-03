@@ -8,6 +8,13 @@ let allTasks = [];
 //-----------------------------save User at Backend-----------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * save User at Backend
+ * @async
+ * @param {string} key 
+ * @param {string} value 
+ * @returns 
+ */
 async function setItem(key, value){
     const payload = {key, value, token: STORAGE_TOKEN};
     return fetch(STORAGE_URL, {method: 'POST', body: JSON.stringify(payload)})
@@ -19,6 +26,12 @@ async function setItem(key, value){
 //-----------------------------get User from Backend----------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * get User from Backend
+ * @async
+ * @param {string} key 
+ * @returns 
+ */
 async function getItem(key){
     const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
     return fetch(url).then(res => res.json().then(res => res.data.value));
@@ -29,6 +42,10 @@ async function getItem(key){
 //-----------------------------get Username from URL----------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * get Username from URL
+ * @returns 
+ */
 function getUserName() {
     const urlParams = new URLSearchParams(window.location.search);
     const msg = urlParams.get('msg');
@@ -45,6 +62,11 @@ function getUserName() {
 //----------------------------load User from Backend----------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * load User from Backend
+ * @async
+ * @returns 
+ */
 async function loadUsers() {
     try {
         let users = JSON.parse(await getItem('users'));
@@ -59,6 +81,10 @@ async function loadUsers() {
 //-------------------------load User from local Storage-------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * load User from local Storage
+ * @returns 
+ */
 function loadUsersFromLocalStorage() {
     return lokalUsers = JSON.parse(localStorage.getItem('users')) || [];
 }
@@ -68,6 +94,10 @@ function loadUsersFromLocalStorage() {
 //--------------------------save User at local Storage--------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * save User at local Storage
+ * @async
+ */
 async function saveUserToLocalStorage() {
     let emailValue = document.getElementById('email_log_in')
     let users = JSON.parse(await getItem('users'));
@@ -83,11 +113,27 @@ async function saveUserToLocalStorage() {
     localStorage.setItem('users', JSON.stringify(lokalUsers));
 }
 
+//------------------------------------------------------------------------------//
+//-------------------------delete User at local Storage-------------------------//
+//------------------------------------------------------------------------------//
+
+/**
+ * delete User at local Storage
+ */
+function clearLocalStorage() {
+    localStorage.removeItem('users');
+}
+
 
 //------------------------------------------------------------------------------//
 //----------------------------------delete User---------------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * delete User
+ * @async
+ * @param {string} email 
+ */
 async function deleteUser(email) {
     let users = JSON.parse(await getItem('users'));
     users = users.filter(u => u.email !== email.toLowerCase());
@@ -99,6 +145,10 @@ async function deleteUser(email) {
 //---------------------------save Contacts at Backend---------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * save Contacts at Backend
+ * @async
+ */
 async function saveContacts() {
     let users = JSON.parse(await getItem('users'));
     let userName = getUserName();
@@ -113,6 +163,10 @@ async function saveContacts() {
 //--------------------------load Contacts from Backend--------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * load Contacts from Backend
+ * @async
+ */
 async function loadContacts() {
     let users = JSON.parse(await getItem('users'));
     let userName = getUserName();
@@ -131,6 +185,10 @@ async function loadContacts() {
 //-----------------------------save Tasks at Backend----------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * save Tasks at Backend
+ * @async
+ */
 async function saveTasks() {
     let users = JSON.parse(await getItem('users'));
     let userName = getUserName();
@@ -145,6 +203,10 @@ async function saveTasks() {
 //-----------------------------load Tasks at Backend----------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * load Tasks at Backend
+ * @async
+ */
 async function loadTasks() {
     let users = JSON.parse(await getItem('users'));
     let userName = getUserName();

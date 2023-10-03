@@ -2,6 +2,10 @@
 //---------------------------------Reset Password-------------------------------//
 //------------------------------------------------------------------------------//
 
+/**
+ * Reset Password
+ * @async
+ */
 async function resetPassword() {
     let password1 = document.getElementById('password1_input');
     let password2 = document.getElementById('password2_input');
@@ -16,7 +20,9 @@ async function resetPassword() {
         setItem('users', JSON.stringify(users));
         resetPasswordSuccesfully.classList.remove('d-none');
         resetPasswordSuccesfully.style.animation = 'signUpSuccesfull 125ms ease-in-out forwards';
+
         setTimeout(function () { window.location.href = `forgotmypassword.html?msg=${msg}` }, 800)
+        
     } else if (password1.value != password2.value) {
         document.getElementById('password2').classList.add('log-in-wrong');
     }
