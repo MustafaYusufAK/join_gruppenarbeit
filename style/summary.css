@@ -10,6 +10,10 @@
     background-color: unset;
 }
 
+.contacts-background:hover {
+    background-color: #2A3D59;
+}
+
 .summary-hoverd {
     background-color: rgb(9, 25, 49);
     color: white;
@@ -171,6 +175,7 @@
     width: 184px;
     height: 184px;
 }
+
 /*---------------------Greeting User-------------------*/
 
 #greeting_user {
@@ -269,7 +274,7 @@
             opacity: 0;
             display: none;
         }
-    }    
+    }
 }
 
 @media (max-width: 1050px) {
