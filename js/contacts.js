@@ -204,7 +204,7 @@ function showContactTemplate(contactName, contactEmail, i, randomColor, initials
 /**
  * Adds a new contact to the contacts list and updates the UI.
  */
-function addNewContact() {
+async function addNewContact() {
     const nameInput = document.getElementById('add-name');
     const emailInput = document.getElementById('add-email');
     let phoneInput = document.getElementById('add-phone');
@@ -220,6 +220,7 @@ function addNewContact() {
     const randomColor = getRandomColor();
     const newContact = createContact(name, email, phone, randomColor);
     addContactAndUpdateUI(newContact);
+    await saveContacts();
 }
 
 /**
@@ -320,7 +321,7 @@ function emptyInput() {
  *
  * @param {number} i - The index of the contact to be edited.
  */
-function EditContact(i) {
+async function EditContact(i) {
     if (i < 0 || i >= contacts.length) return alert('Ungültiger Index');
     const editNameInput = document.getElementById('edit-name');
     const editEmailInput = document.getElementById('edit-email');
@@ -340,6 +341,7 @@ function EditContact(i) {
     showContacts();
     hideOverlayEdit();
     openContact(contacts[i].name, contacts[i].email, i, currentColor);
+    await saveContacts();
 }
 
 /**
@@ -421,7 +423,7 @@ function hideOverlayEdit() {
  *
  * @param {number} i - The index of the contact to be deleted.
  */
-function deleteContact(i) {
+async function deleteContact(i) {
     contacts.splice(i, 1);
     generateSideBar();
     showContacts();
@@ -430,6 +432,7 @@ function deleteContact(i) {
     if (isWideScreen()) {
         toggleContactsMobile();
         }
+        await saveContacts();
 }
 
 /**

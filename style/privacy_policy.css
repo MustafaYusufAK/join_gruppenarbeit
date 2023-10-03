@@ -8,8 +8,12 @@ font-size: 16px;
 font-weight: 400;
 }
 
-.privacy-policy-background:hover {
+.privacy-policy-background {
     background-color: rgb(9, 25, 49);
+}
+
+.contacts-background:hover {
+    background-color: #2A3D59;
 }
 
 .contacts-background {
