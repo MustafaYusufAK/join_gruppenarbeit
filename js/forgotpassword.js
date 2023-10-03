@@ -37,21 +37,24 @@ async function sendEmail() {
     let email = document.getElementById('email_password_forgot').value;
     let users = JSON.parse(await getItem('users'));
     let user = users.find(u => u.email == email.toLowerCase())
-    let username = user.name;
+    if (user == undefined) {
+        document.getElementById('email').classList.add('log-in-wrong');
+    } else {
+        let username = user.name;
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://jan-horstmann.developerakademie.net/join_gruppenarbeit/sendmail.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://jan-horstmann.developerakademie.net/join_gruppenarbeit/sendmail.php', true);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            // Response from Server
-            console.log(xhr.responseText);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                // Response from Server
+                console.log(xhr.responseText);
+            }
         }
-    }
 
-    // Send E-Mail and Username
-    xhr.send('email=' + email + '&username=' + username);
-    sendMail();
+        // Send E-Mail and Username
+        xhr.send('email=' + email + '&username=' + username);
+        sendMail();
+    }
 }
 
