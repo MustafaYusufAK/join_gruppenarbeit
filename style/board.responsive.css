@@ -257,16 +257,16 @@
 @media (max-width: 1050px) {
 
     .add-task-overlay {
-        height: 85vh;
-        /* top: 10%; */
+        max-height: 85vh;
+        top: inherit;
+        margin-top: -80px;
         background-color: white;
         border-radius: 20px;
-        width: 75%;
+        width: 920px;
         padding: 30px;
+        margin: 20px;
         overflow-y: auto;
-        right: -100%;
-        transition: right 0.5s ease-in-out;
-        position: fixed;
+        transition: transform 800ms ease-in-out;
     }
 
     .header-text {
