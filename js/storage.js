@@ -113,6 +113,17 @@ async function saveUserToLocalStorage() {
     localStorage.setItem('users', JSON.stringify(lokalUsers));
 }
 
+//------------------------------------------------------------------------------//
+//-------------------------delete User at local Storage-------------------------//
+//------------------------------------------------------------------------------//
+
+/**
+ * delete User at local Storage
+ */
+function clearLocalStorage() {
+    localStorage.removeItem('users');
+}
+
 
 //------------------------------------------------------------------------------//
 //----------------------------------delete User---------------------------------//

@@ -92,6 +92,7 @@ function checkBtnLogIn() {
     if (logInCheckBtn.src.includes('checkbuttonchecked')) {
         logInCheckBtn.src = '../assets/img/checkbutton.svg';
         removeClickHandler();
+        clearLocalStorage();
     } else {
         logInCheckBtn.src = '../assets/img/checkbuttonchecked.svg';
         addClickHandler();
