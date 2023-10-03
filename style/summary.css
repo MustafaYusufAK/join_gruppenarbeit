@@ -171,7 +171,6 @@
     width: 184px;
     height: 184px;
 }
-
 /*---------------------Greeting User-------------------*/
 
 #greeting_user {
@@ -461,6 +460,7 @@
 
     .task-summary {
         width: 350px;
+        gap: 10px;
     }
 
     .to-do-and-done-taskarea {
