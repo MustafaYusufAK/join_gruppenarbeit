@@ -8,10 +8,6 @@ font-size: 16px;
 font-weight: 400;
 }
 
-.legal-notice-background {
-    background-color: rgb(9, 25, 49);
-}
-
 .legal-notice-background:hover {
     background-color: rgb(9, 25, 49);
 }

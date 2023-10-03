@@ -31,7 +31,7 @@ function generateHeader(menu, userName) {
             <span class="header-text">Kanban Project Management Tool</span>
             <div class="header-icons">
                 <a href="../html/help.html"><img src="../assets/img/help.svg" class="help-icon"></a>
-                <div class="group-icon">
+                <div class="group-icon" onclick="showTemplatePopUp()">
                     <span>${userInitial}</span>
                 </div>
             </div>
