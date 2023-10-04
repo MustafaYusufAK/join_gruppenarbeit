@@ -8,6 +8,10 @@ font-size: 16px;
 font-weight: 400;
 }
 
+.log-out-background:hover {
+    background-color: #2A3D59;
+}
+
 .privacy-policy-background {
     background-color: rgb(9, 25, 49);
 }

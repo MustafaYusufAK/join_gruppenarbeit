@@ -41,7 +41,7 @@ function generateHeader(menu, userName) {
                         Policy</a>
                     <a href="../html/legal_notice.html" class="nav-bottom-a legal-notice-background" target="_blank">Legal
                         Notice</a>
-                    <a href="../html/index.html" class="nav-bottom-a legal-notice-background">Log out</a>
+                    <a href="../html/index.html" class="nav-bottom-a log-out-background">Log out</a>
                 </div>
             </div>
         </header>`;
