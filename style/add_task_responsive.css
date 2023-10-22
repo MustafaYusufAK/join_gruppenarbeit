@@ -1,5 +1,7 @@
 @media (max-width: 1200px) {
 
+    #prio_notification {}
+
     .header_div {
         font-size: 56px;
         margin-top: 20px;

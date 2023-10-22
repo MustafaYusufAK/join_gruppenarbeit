@@ -11,7 +11,28 @@ h3 {
     overflow: hidden;
 }
 
+.board-background {
+    background-color: rgb(9, 25, 49);
+}
 
+.board-background:hover {
+    background-color: rgb(9, 25, 49) !important;
+}
+
+.add-task-background {
+    background-color: unset !important;
+}
+
+.add-task-background:hover {
+    background-color: #2A3D59 !important;
+}
+
+
+.nav-sub:hover {
+    background-color: #2A3D59;
+    color: white;
+    cursor: pointer;
+}
 
 .board-to-do-container {
     display: flex;
@@ -72,6 +93,9 @@ h3 {
 .to-do-container {
     margin-left: 240px;
     display: flex;
+    flex-wrap: wrap;
+    overflow-x: hidden;
+    height: 618px;
 }
 
 .table-gaps {
@@ -99,6 +123,8 @@ h3 {
     margin-left: 40px;
     color: rgb(42, 54, 71);
     font-weight: bold;
+    overflow-x: hidden;
+    height: 450px;
 }
 
 .pinned-task-container {
@@ -122,7 +148,7 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: space-around;
-
+    margin-top: 50px;
 }
 
 
@@ -152,18 +178,19 @@ h3 {
 }
 
 .taskPopUpAssignmentsList {
+    width: 50%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     height: auto;
     gap: 25px;
-    overflow-y: auto;
+    /* overflow-y: auto; */
 }
 
 .taskPopUpSingleAssignmentContainer {
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: 15px;
     margin-bottom: 15px;
 }
 
@@ -213,12 +240,17 @@ h3 {
 }
 
 .leftBtn {
+    border-right: none;
+    height: 65px;
+    width: 65px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
-    cursor: pointer;
+    cursor: pointer
 }
 
 .rightBtn {
+    height: 65px;
+    width: 65px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     cursor: pointer;
@@ -349,6 +381,8 @@ h3 {
     color: #2A3647;
 }
 
+.taskPopUpNameContainer {}
+
 .taskPopUpDiscription {
     height: 50px;
     font-family: 'Inter';
@@ -379,53 +413,63 @@ h3 {
     padding: 4px 18px;
     gap: 10px;
     border-radius: 10px;
-    width: 131px;
-    height: 33px;
+    width: 150px;
+    height: 45px;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
 }
 
 #modifymedium {
     color: white;
-    background-color: rgb(255, 168, 0) !important;
+    background-color: #FFB62A !important;
     font-weight: bold;
+    font-size: large;
+}
+
+#modifymediumIcon {
+    background-image: url('../assets/img/Prio media-white.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 19px;
+    width: 24px;
 }
 
 #modifylow {
     color: white;
-    background-color: rgb(122, 226, 41) !important;
+    background-color: #7de32e !important;
     font-weight: bold;
+    font-size: large;
+}
+
+#modifylowIcon {
+    background-image: url('../assets/img/Prio baja-white.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 19px;
+    width: 24px;
+}
+
+#modifyurgent {
+    color: white;
+    background-color: #FF3E01 !important;
+    font-weight: bold;
+    font-size: large;
+}
+
+#modifyurgentIcon {
+    background-image: url('../assets/img/Prio alta-white.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 19px;
+    width: 24px;
 }
 
 
-
-
-
-
-@media (max-width: 850px) {
-
-    header {
-        margin-left: 0;
-        height: 80px;
-    }
-
-    nav {
-        height: 80px;
-        width: 100%;
-        bottom: 0;
-        display: flex;
-        justify-content: space-around;
-    }
-
-    .logo {
-        display: none;
-    }
-
-    .nav-sub {
-        flex-direction: column;
-        padding: 10px;
-    }
-
-    .nav-bottom {
-        display: none;
-    }
+.boardContentContainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 0px;
+    margin-top: 80px;
+    margin-bottom: 80px;
 }
