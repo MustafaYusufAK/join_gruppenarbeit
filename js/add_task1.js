@@ -114,6 +114,7 @@ function createAssigneeBall(contactName, contactValue) {
 
 
 
+<<<<<<< HEAD
 
 
 
@@ -121,6 +122,193 @@ function createAssigneeBall(contactName, contactValue) {
 
 
 
+=======
+function priorityPush() {
+    const priorityButtons = document.querySelectorAll('.prio_btn_characteristics');
+    for (const button of priorityButtons) {
+        if (!button.classList.contains('d-none')) {
+            let priority = button.value;
+
+
+
+            // Füge den letzten gefundenen Wert hinzu, wenn vorhanden
+            if (priority) {
+                priorityArray.push(priority);
+            }
+        }
+    }
+}
+
+
+function showFinalNotification() {
+    if (window.innerWidth <= 1200) {
+        return; // Ignoriere die Anzeige der Benachrichtigung bei Bildschirmbreiten unter oder gleich 1200px
+    }
+
+    const notificationBackground = document.getElementById('show_final_notification_background');
+    const notification = document.getElementById('show_final_notification');
+    notificationBackground.style.display = 'flex';
+    notification.style.display = 'flex';
+    setTimeout(() => {
+        notificationBackground.style.opacity = '1';
+        notification.style.opacity = '1';
+    }, 100);
+    setTimeout(() => {
+        HideShowFinalNotification();
+    }, 3000);  // Benachrichtigung verschwindet nach 2 Sekunden
+}
+
+
+function HideShowFinalNotification() {
+    const notificationBackground = document.getElementById('show_final_notification_background');
+    const notification = document.getElementById('show_final_notification');
+    notificationBackground.style.opacity = '0';
+    notification.style.opacity = '0';
+    setTimeout(() => {
+        notificationBackground.style.display = 'none';
+        notification.style.display = 'none';
+    }, 500);  // Fade-Effekt-Dauer: 0,5 Sekunden
+}
+
+function mustHaveNotification() {
+    if (window.innerWidth <= 1200) {
+        return; // Ignoriere die Anzeige der Benachrichtigung bei Bildschirmbreiten unter oder gleich 1200px
+    }
+
+    const notification = document.getElementById('must_have_notification');
+    notification.style.display = 'block';
+    setTimeout(() => {
+        notification.style.opacity = '1';
+    }, 100);
+    setTimeout(() => {
+        mustHaveHideNotification();
+    }, 3000);  // Benachrichtigung verschwindet nach 2 Sekunden
+}
+
+function mustHaveHideNotification() {
+    const notification = document.getElementById('must_have_notification');
+    notification.style.opacity = '0';
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 500);  // Fade-Effekt-Dauer: 0,5 Sekunden
+}
+
+function showDateNotification() {
+    if (window.innerWidth <= 1200) {
+        return; // Ignoriere die Anzeige der Benachrichtigung bei Bildschirmbreiten unter oder gleich 1200px
+    }
+
+    const notification = document.getElementById('date_notification');
+    notification.style.display = 'block';
+    setTimeout(() => {
+        notification.style.opacity = '1';
+    }, 100);
+    setTimeout(() => {
+        dateHideNotification();
+    }, 3000);  // Benachrichtigung verschwindet nach 2 Sekunden
+}
+
+function dateHideNotification() {
+    const notification = document.getElementById('date_notification');
+    notification.style.opacity = '0';
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 500);  // Fade-Effekt-Dauer: 0,5 Sekunden
+}
+
+function showDescriptionNotification() {
+    if (window.innerWidth <= 1200) {
+        return; // Ignoriere die Anzeige der Benachrichtigung bei Bildschirmbreiten unter oder gleich 1200px
+    }
+
+    const notification = document.getElementById('description_notification');
+    notification.style.display = 'block';
+    setTimeout(() => {
+        notification.style.opacity = '1';
+    }, 100);
+    setTimeout(() => {
+        descriptionHideNotification();
+    }, 3000);  // Benachrichtigung verschwindet nach 2 Sekunden
+}
+
+function descriptionHideNotification() {
+    const notification = document.getElementById('description_notification');
+    notification.style.opacity = '0';
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 500);  // Fade-Effekt-Dauer: 0,5 Sekunden
+}
+
+function showTitleNotification() {
+    if (window.innerWidth <= 1200) {
+        return; // Ignoriere die Anzeige der Benachrichtigung bei Bildschirmbreiten unter oder gleich 1200px
+    }
+
+    const notification = document.getElementById('title_notification');
+    notification.style.display = 'block';
+    setTimeout(() => {
+        notification.style.opacity = '1';
+    }, 100);
+    setTimeout(() => {
+        titleHideNotification();
+    }, 3000);  // Benachrichtigung verschwindet nach 2 Sekunden
+}
+
+function titleHideNotification() {
+    const notification = document.getElementById('title_notification');
+    notification.style.opacity = '0';
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 500);  // Fade-Effekt-Dauer: 0,5 Sekunden
+}
+
+function showPrioNotification() {
+    if (window.innerWidth <= 1200) {
+        return; // Ignoriere die Anzeige der Benachrichtigung bei Bildschirmbreiten unter oder gleich 1200px
+    }
+
+    const notification = document.getElementById('prio_notification');
+    notification.style.display = 'block';
+    setTimeout(() => {
+        notification.style.opacity = '1';
+    }, 100);
+    setTimeout(() => {
+        prioHideNotification();
+    }, 3000);  // Benachrichtigung verschwindet nach 2 Sekunden
+}
+
+function prioHideNotification() {
+    const notification = document.getElementById('prio_notification');
+    notification.style.opacity = '0';
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 500);  // Fade-Effekt-Dauer: 0,5 Sekunden
+}
+
+
+function showContactsNotification() {
+    if (window.innerWidth <= 1200) {
+        return; // Ignoriere die Anzeige der Benachrichtigung bei Bildschirmbreiten unter oder gleich 1200px
+    }
+
+    const notification = document.getElementById('contacts_notification');
+    notification.style.display = 'block';
+    setTimeout(() => {
+        notification.style.opacity = '1';
+    }, 100);
+    setTimeout(() => {
+        contactsHideNotification();
+    }, 3000);  // Benachrichtigung verschwindet nach 2 Sekunden
+}
+
+function contactsHideNotification() {
+    const notification = document.getElementById('contacts_notification');
+    notification.style.opacity = '0';
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 500);  // Fade-Effekt-Dauer: 0,5 Sekunden
+}
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
 
 
 

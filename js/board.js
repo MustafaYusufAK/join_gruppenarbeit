@@ -3,6 +3,11 @@
 
 async function initForBoard() {
     await loadTasks();
+<<<<<<< HEAD
+=======
+    clickEventlisteners();
+    updateHTML()
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     generateSideBar();
     showTasks();
     restoreTasksFromLocalStorage();
@@ -15,6 +20,7 @@ async function initForBoard() {
 }
 
 
+<<<<<<< HEAD
 function setMinDateForBoard() {
     // Erstelle ein Date-Objekt für das heutige Datum
     const today = new Date();
@@ -63,6 +69,22 @@ function fillEmptyCategory() {
         categoryColorArray.push(defaultCategoryColor);
     }
 }
+=======
+async function initForBoard() {
+    await loadTasks();
+    updateHTML()
+    generateSideBar();
+    showTasks();
+    addTaskOverlayClickEventlisteners()
+    createContactDropdown();
+    getRandomColor();
+    assignOptionIDs();
+    restoreTaskPositions();
+    setMinDate();
+}
+
+
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
 
 
 function addTaskFromOverlay() {
@@ -115,6 +137,7 @@ function addTaskFromOverlay() {
         description_text: description,
         task_category: category,
         createdAt: createdAt,
+<<<<<<< HEAD
         priority: priorityArray,
         subtasks: subtasksArray,
         categoryColors: categoryColorArray,
@@ -123,12 +146,23 @@ function addTaskFromOverlay() {
         assignedShortValues: assignedShortValues,
         // Hier erfolgt die Überprüfung, ob das inWhichContainer Array Werte enthält
         inWhichContainer: inWhichContainer.length > 0 ? inWhichContainer : ''
+=======
+        priority: priorityArray, // Add priority to the task
+        subtasks: subtasksArray,
+        categoryColors: categoryColorArray,
+        assignedToValues: assignedToValuesArray,  // Füge die Werte hinzu
+        assignedToColors: assignedToColorsArray,  // Füge die Farben hinzu
+        assignedShortValues: assignedShortValues  // Füge die Texte hinzu
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     };
 
 
     // Überprüfe, ob die erforderlichen Felder gefüllt sind
     if (title && description && createdAt && priorityArray.length > 0 && assignedToValuesArray.length > 0) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
         // Wenn alles erforderliche gefüllt ist und das priorityArray nicht leer ist
         titlesArray.push(title);
         descriptionsArray.push(description);
@@ -186,6 +220,7 @@ function addTaskFromOverlay() {
             clickedLowBtn.classList.add('d-none');
         }
 
+<<<<<<< HEAD
         showBoardFinalNotification();
         // Führe die Weiterleitung nach einer kurzen Verzögerung aus
         setTimeout(() => {
@@ -217,6 +252,23 @@ function addTaskFromOverlay() {
         } else {
             // Wenn alle Arrays gefüllt sind, können Sie hier eine abschließende Benachrichtigung anzeigen.
             showBoardFinalNotification();
+=======
+        showFinalNotification();
+        // Führe die Weiterleitung nach einer kurzen Verzögerung aus
+
+
+        clearInputFields();
+
+    } else {
+        if (assignedToValuesArray.length === 0) {
+            showContactsNotification();
+        } else if (priorityArray.length === 0) {
+            showPrioNotification();
+        } else {
+            // Wenn alle Arrays gefüllt sind, können Sie hier eine abschließende Benachrichtigung anzeigen.
+            showFinalNotification();
+            submitFormManually();
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
         }
 
 
@@ -234,6 +286,19 @@ function addTaskFromOverlay() {
 }
 
 
+<<<<<<< HEAD
+=======
+function submitFormManually() {
+    // Hier kannst du den Code für das manuelle Abschicken des Formulars hinzufügen.
+    // Zum Beispiel, die Daten an den Server senden oder weitere Aktionen durchführen.
+
+    // Wenn die Verarbeitung abgeschlossen ist, kannst du zur Weiterleitung beispielsweise die folgende Zeile hinzufügen:
+    // window.location.href = "URL zur Weiterleitung";
+    setTimeout(() => {
+        redirectToBoard();
+    }, 3000); // Hier können Sie die Zeit in Millisekunden anpassen
+}
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
 
 
 
@@ -257,6 +322,7 @@ function findTask() {
 
 
 
+<<<<<<< HEAD
 let tasksToDo = [];
 let tasksInProgress = [];
 let tasksAwaitFeedback = [];
@@ -299,24 +365,40 @@ function sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeed
     });
 }
 
+=======
+
+
+let currentDraggedElement;
+let globalAssignedToOptions = ''; // Deklaration der globalen Variable
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
 
 
 
 function showTasks() {
+<<<<<<< HEAD
     const taskContainer = document.getElementById('target-to-do-table');
     const feedbackTaskContainer = document.getElementById('target-await-feedback-table');
     const inProgressContainer = document.getElementById('target-in-progress-table');
     const targetDoneTable = document.getElementById('target-done-table');
+=======
+    const taskContainer = document.getElementById('to-do-table');
+    const feedbackTaskContainer = document.getElementById('await-feedback-table');
+    const inProgressContainer = document.getElementById('in-progress-table');
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
 
     // Leere die Container, bevor wir die Aufgaben hinzufügen
     taskContainer.innerHTML = '';
     feedbackTaskContainer.innerHTML = '';
     inProgressContainer.innerHTML = '';
+<<<<<<< HEAD
     targetDoneTable.innerHTML = '';
+=======
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
 
     allTasks.forEach(task => {
         const taskDiv = document.createElement('div');
         taskDiv.classList.add('task-item');
+<<<<<<< HEAD
         taskDiv.setAttribute('id', `task-${task.id}`);
         taskDiv.setAttribute('draggable', true); // Fügen Sie das Drag-and-Drop-Attribut hinzu
         taskDiv.addEventListener('dragstart', onDragStart);
@@ -342,7 +424,30 @@ function showTasks() {
                 targetContainer = feedbackTaskContainer;
             }
         }
+=======
+        taskDiv.setAttribute('id', `task-${task.id}`); // Eindeutige ID für das Task-div
 
+        // ... (bestehender Code)
+
+        // Füge Drag-and-Drop-Event-Listener hinzu
+        taskDiv.setAttribute('draggable', true);
+        taskDiv.addEventListener('dragstart', onDragStart);
+        taskDiv.addEventListener('drag', onDrag);
+        taskDiv.addEventListener('dragend', onDragEnd);
+
+        taskContainer.appendChild(taskDiv);
+
+        const categorybackgroundColor = task.categoryColors[0]; // Hier nehme ich die erste Farbe im Array
+        let targetContainer = taskContainer; // Zielcontainer (Standard)
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
+
+        if (categorybackgroundColor === 'blueviolet') {
+            targetContainer = inProgressContainer; // Ändere den Zielcontainer, wenn die Farbe darkmagenta ist
+        }
+
+        if (categorybackgroundColor === 'darkmagenta') {
+            targetContainer = feedbackTaskContainer; // Ändere den Zielcontainer, wenn die Farbe darkmagenta ist
+        }
         // Überprüfe die Priorität und setze das entsprechende Bild
         let priorityImageSrc = '';
         if (task.priority.includes('low')) {
@@ -395,6 +500,7 @@ function showTasks() {
                 <h3 class="pinned-task-headline">${task.title}</h3>
                 <p class="pinned-task-discription">${task.description_text}</p>
                 <div id="ball-and-prio-img-div" class="ball-and-prio-img-div">
+<<<<<<< HEAD
                 <div class="pinnedAssigneBallPosition">
                     ${assignePinnedTaskBall}
                     </div>
@@ -402,6 +508,11 @@ function showTasks() {
                     <div>
                         <img class="pinnedPrioImg" src="${priorityImageSrc}" alt="Priority Image">
                     </div>
+=======
+                    ${assignePinnedTaskBall}
+                    <div>
+                        <img src="${priorityImageSrc}" alt="Priority Image">
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
                     </div>
                 </div>
             </div>`;
@@ -417,6 +528,7 @@ function showTasks() {
         container.addEventListener('drop', onDrop);
         container.addEventListener('dragover', allowDrop);
     });
+<<<<<<< HEAD
 
     restoreTasksFromLocalStorage();
     sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
@@ -532,6 +644,11 @@ function showTaskFromArray() {
 
 
 
+=======
+}
+
+
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
 function onDrag(event) {
     event.target.style.transform = 'rotate(10deg)';
 }
@@ -541,6 +658,21 @@ function onDragEnd(event) {
 
 }
 
+
+// Wiederherstellen der Aufgabenposition beim Laden der Seite
+function restoreTaskPositions() {
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.startsWith('taskPosition_')) {
+            const taskId = key.split('_')[1];
+            const targetContainerId = localStorage.getItem(key);
+            // Verschiebe die Aufgabe in den entsprechenden Container
+            moveTo(taskId, targetContainerId);
+        }
+    }
+}
+
+// Aufrufen der Wiederherstellungsfunktion beim Laden der Seite
 
 
 
@@ -563,14 +695,36 @@ function onDragEnd(event) {
 
 
 function moveTo(taskId, targetContainerId) {
+<<<<<<< HEAD
+=======
+
+    // Finde den Task basierend auf der ID
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     const taskDiv = document.getElementById(taskId);
     const targetContainer = document.getElementById(targetContainerId);
+    // Speichern der Aufgabenposition im Local Storage
+    localStorage.setItem('taskPosition_' + taskId, targetContainerId);
+
 
     if (taskDiv && targetContainer) {
         targetContainer.appendChild(taskDiv);
 
+<<<<<<< HEAD
         // Aktualisieren Sie den Status der verschobenen Aufgabe im localStorage
         updateTaskStatusInLocalStorage(taskId, targetContainerId);
+=======
+    // Ändere den Container des Tasks
+    const task = allTasks.find(task => task.id === parseInt(taskId));
+    // Überprüfe, ob es sich um einen validen Container handelt
+    if (
+        targetContainerId !== 'target-to-do-table' &&
+        targetContainerId !== 'target-in-progress-table' &&
+        targetContainerId !== 'target-await-feedback-table' &&
+        targetContainerId !== 'target-done-table'
+    ) {
+        console.error('Invalid target container:', targetContainerId);
+        return;
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     }
     // Vor jedem Aufruf der Funktion die Arrays leeren
     sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
@@ -640,6 +794,12 @@ function clearAllTasks() {
     saveTasks();  // Speichere die leeren Tasks (optional)
 }
 
+function clearAllTasks() {
+    allTasks = [];  // Leere das Array
+    // Hier kannst du weitere Aktionen ausführen, z.B. UI aktualisieren
+    // ...
+    saveTasks();  // Speichere die leeren Tasks (optional)
+}
 
 
 
@@ -655,6 +815,7 @@ function deleteTask(taskId) {
     // Finde den Index des Tasks basierend auf der ID
     const taskIndex = allTasks.findIndex(task => task.id === taskId);
 
+<<<<<<< HEAD
     if (taskIndex !== -1) {
         // Entferne den Task aus dem Array
         allTasks.splice(taskIndex, 1);
@@ -722,6 +883,131 @@ function showTasksInOverViev(taskId) {
 
             // Schließe die ungeordnete Liste (ul)
             subTasksHTML += '</ul>';
+=======
+        if (task.container && task.container === 'target-to-do-table') {
+            taskContainer = document.getElementById('target-to-do-table');
+        } else if (task.container && task.container === 'target-in-progress-table') {
+            taskContainer = document.getElementById('target-in-progress-table');
+        } else if (task.container && task.container === 'target-await-feedback-table') {
+            taskContainer = document.getElementById('target-await-feedback-table');
+        } else if (task.container && task.container === 'target-done-table') {
+            taskContainer = document.getElementById('target-done-table');
+        } else {
+            console.error('Invalid task container:', task.container);
+            return;  // Bei ungültigem Container abbrechen
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
+        }
+
+
+        let taskPopUpSingleAssignmentContainer = ''; // Deklariere die Variable außerhalb der if-Bedingung
+
+        const colorValues = colorOfAssignedment.toString().split(',');
+
+        // Entferne die Leerzeichen und schließende Klammern von den Werten
+        const cleanedColors = colorValues.map(color => color.replace(/\s/g, '').replace(')', ''));
+
+        if (assignedTo && assignedTo.length > 0) {
+
+
+<<<<<<< HEAD
+            task.assignedToValues.forEach((assignment, index) => {
+                const nameParts = assignment.trim().split(' ');
+                const initials = nameParts.map(part => part[0]).join('');
+=======
+function deleteTask(taskId) {
+    const taskElement = document.getElementById('task-' + taskId);
+    if (taskElement) {
+        // Entferne das HTML-Element des Tasks
+        taskElement.remove();
+    } else {
+        console.error('HTML Task element not found for deletion');
+    }
+
+    // Finde den Index des Tasks basierend auf der ID
+    const taskIndex = allTasks.findIndex(task => task.id === taskId);
+
+    if (taskIndex !== -1) {
+        // Entferne den Task aus dem Array
+        allTasks.splice(taskIndex, 1);
+
+        // Hier kannst du weitere Aktionen ausführen, z.B. UI aktualisieren
+        // ...
+
+        // Schließe das Overlay oder aktualisiere die Ansicht
+        hideOverlay();
+    } else {
+        console.error('Task not found for deletion');
+    }
+
+    saveTasks();
+}
+
+
+
+function hideOverlay() {
+    const overlaySection = document.getElementById('overlaySection');
+    overlaySection.classList.add('d-none');
+}
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
+
+                // Hier können Sie die Farbe aus dem separaten Array verwenden
+                const color = task.assignedToColors[index]; // Farbe für diese Zuweisung
+
+<<<<<<< HEAD
+                const assignmentHTML = `
+                    <div class="taskPopUpSingleAssignmentContainer">
+                        <div class="assigne-ball" style="background-color:${color}">
+                            ${initials}
+                        </div>
+                        <div class="taskPopUpNameContainer">${assignment}</div>
+                    </div>
+                `;
+=======
+function showTasksInOverViev(taskId) {
+    const taskOverviewPopUp = document.getElementById('taskOverviewPopUp');
+    const overlaySection = document.getElementById('overlaySection');
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
+
+                taskPopUpSingleAssignmentContainer += assignmentHTML;
+            });
+
+<<<<<<< HEAD
+=======
+
+    // Entferne die Klasse "d-none" aus dem overlaySection
+    overlaySection.classList.remove('d-none');
+    taskOverviewPopUp.innerHTML = '';  // Leere den Container, bevor neue Einträge hinzugefügt werden
+
+    // Finde den Task basierend auf der ID
+    const task = allTasks.find(task => task.id === taskId);
+
+    if (task) {
+        const currentId = task.id;
+        const categorybackgroundColor = task.categoryColors[0];
+        const category = task.task_category;
+        const title = task.title;
+        const description = task.description_text;
+        const date = task.createdAt;
+        const priority = task.priority.join(', ');
+        const assignedTo = task.assignedToValues.join(', ');
+        const colorOfAssignedment = task.assignedToColors;
+        const subTasks = task.subtasks;
+        // Extrahiere die Initialen aus dem Namen
+
+
+        let subTasksHTML = '';  // Hier werden die HTML-Elemente für die Subtasks gesammelt
+
+        if (subTasks && subTasks.length > 0) {
+            // Erstelle eine ungeordnete Liste (ul) für die Subtasks
+            subTasksHTML += '<ul>';
+
+            subTasks.forEach(subTask => {
+                // Füge jeden Subtask als Listenelement (li) hinzu
+                subTasksHTML += `<li>${subTask}</li>`;
+            });
+
+            // Schließe die ungeordnete Liste (ul)
+            subTasksHTML += '</ul>';
         }
 
 
@@ -754,6 +1040,7 @@ function showTasksInOverViev(taskId) {
                 taskPopUpSingleAssignmentContainer += assignmentHTML;
             });
 
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
         }
 
 
@@ -767,7 +1054,11 @@ function showTasksInOverViev(taskId) {
         <div class="wholeTaskOverview" id="wholeTaskOverview">
         <div class="categoryHeaderDiv">
         <div class="categoryHeaderPosition">
+<<<<<<< HEAD
         <img class="vector-class" src="../assets/img/Vector (1).svg" alt="" onclick="closeTaskOverviewPopUp()"><div class="categoryOvervievPopUp" style="background-color: ${categorybackgroundColor}">
+=======
+        <img class="vector-class" src="../assets/img/Vector (1).svg" alt="" onclick="closeTaskOverviewPopUp()"><div class="category-background-color" style="background-color: ${categorybackgroundColor}">
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
         
             <div class="category">${task.task_category}</div>
             
@@ -807,6 +1098,10 @@ function showTasksInOverViev(taskId) {
                 </div>
 
                 <div class="taskPopUpButton rightBtn btn-bg" onclick="editingShowTask('${currentId}')">
+<<<<<<< HEAD
+=======
+                    <img class="popUpPen" src="./img/pen.png" alt="">
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
                     <img class="popUpPenTriangel" src="../assets/img/pencil-32.png" alt="">
                 </div>
             </div>
@@ -832,6 +1127,7 @@ function ballForBoardOverlay(assignedToColors, assignedToValues, assignedToList)
             const assigneeContainer = document.createElement('div');
             assigneeContainer.classList.add('assigneeContainer');
             assigneeContainer.style.backgroundColor = color;
+<<<<<<< HEAD
 
             const [firstName, lastName] = contactName.split(' ');
             assigneeContainer.innerHTML = `${firstName.charAt(0)}${lastName ? lastName.charAt(0) : ''}`;
@@ -888,6 +1184,79 @@ function editingShowTask() {
     taskOverviewPopUp.innerHTML = '';
     const task = allTasks.find(task => task.id === currentShowedTaskId);
     currentTaskId = currentShowedTaskId;
+=======
+
+            const [firstName, lastName] = contactName.split(' ');
+            assigneeContainer.innerHTML = `${firstName.charAt(0)}${lastName ? lastName.charAt(0) : ''}`;
+
+            // Setze den Wert als data-Attribut
+            assigneeContainer.setAttribute('value', contactName);
+
+            // Event-Listener für den Hover-Effekt
+            assigneeContainer.addEventListener('mouseover', () => {
+                const value = assigneeContainer.getAttribute('value');
+                if (value) {
+                    // Zeige den Value als Tooltip an
+                    assigneeContainer.setAttribute('title', value);
+                }
+            });
+
+            // Event-Listener, um den Tooltip zu entfernen
+            assigneeContainer.addEventListener('mouseout', () => {
+                assigneeContainer.removeAttribute('title');
+            });
+
+            // Event-Listener, um den Ball zu löschen
+            assigneeContainer.addEventListener('click', () => {
+                // Entferne den Ball
+                assigneeContainer.remove();
+
+                // Extrahiere den Kontaktwert
+                const contactValue = assigneeContainer.getAttribute('value');
+
+                // Finde die entsprechende Option im Dropdown
+                const dropdown = document.getElementById('boardOverlayContact');
+                const option = [...dropdown.options].find(opt => opt.value === contactValue);
+
+                if (option) {
+                    // Entferne die 'd-none'-Klasse von der Option
+                    option.classList.remove('d-none');
+                }
+            });
+
+            assignedToList.appendChild(assigneeContainer);
+        } else {
+            console.error('Kontakt nicht gefunden für Wert:', contactName);
+        }
+    }
+}
+
+function setMinDate() {
+    // Erstelle ein Date-Objekt für das heutige Datum
+    const today = new Date();
+
+    // Holen Sie das Jahr, den Monat und den Tag
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Monat ist 0-basiert, daher +1
+    const day = String(today.getDate()).padStart(2, '0');
+
+    // Formatieren Sie das Datum im richtigen Format (YYYY-MM-DD)
+    const currentDate = `${year}-${month}-${day}`;
+
+    // Setze das "min"-Attribut des Date-Elements auf das heutige Datum
+    document.getElementById('createdAt').min = currentDate;
+}
+
+
+function editingShowTask(taskId) {
+    const taskOverviewPopUp = document.getElementById('taskOverviewPopUp');
+    const wholeTaskOverview = document.getElementById('wholeTaskOverview');
+    wholeTaskOverview.classList.remove('d-none');
+    taskOverviewPopUp.innerHTML = '';
+
+    const task = allTasks.find(task => task.id === taskId);
+    const taskIdForBoardConfirm = getTaskId(task);
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
 
     if (!task) {
         console.error(`Task mit der ID "${taskId}" wurde nicht gefunden.`);
@@ -904,14 +1273,21 @@ function editingShowTask() {
     }).join('');
     const priority = task.priority;
     const subtasksList = task.subtasks.map(subtask => {
+<<<<<<< HEAD
         return `<li class="subtask-item">${subtask}<div class="pencil_icon_div"><img class="addSubTaskIcons icon pencil" src="../assets/img/pencil-32.png" alt="" onclick="editSubtask(event)"></div>
+=======
+        return `<li class="subtask-item">• ${subtask}<div class="pencil_icon_div"><img class="addSubTaskIcons icon pencil" src="../assets/img/pencil-32.png" alt="" onclick="editSubtask(event)"></div>
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
         <div class="delete_icon_div"><img class="addSubTaskIcons icon delete" src="../assets/img/delete-32.png" alt="" onclick="deleteSubtask(event)"></div></li>`;
     }).join('');
 
 
 
     taskOverviewPopUp.innerHTML = `
+<<<<<<< HEAD
     <form class="taskOverviewForm" onsubmit="event.preventDefault(); boardConfirm();">
+=======
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     <div class="board-vector-position"><img class="board-vector-class" src="../assets/img/Vector (1).svg" alt="" onclick="closeBoardTaskOverviewPopUp()"></div>
         <div class="add_title_section">
             <span>Title</span>
@@ -933,7 +1309,11 @@ function editingShowTask() {
         <div class="date_Prio_div">
             <div class="add_date_section">
                 <span class="">Due date</span>
+<<<<<<< HEAD
                 <input required="" type="date" Value="${idDateValue}"  class="date_inputfield" id="editedCreatedAt" placeholder="dd/mm/yy">
+=======
+                <input required="" type="date" Value="${idDateValue}"  class="date_inputfield" id="createdAt" placeholder="dd/mm/yy">
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
             </div>
 
             <div class="add_Prio_section">
@@ -994,11 +1374,16 @@ function editingShowTask() {
                     </div>
                 </div>
 
+<<<<<<< HEAD
                 <ul id="boardSubtaskList" class="boardSubtaskList">
+=======
+                <ul id="boardSubtaskList">
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
                     ${subtasksList}
                 </ul>
             </div>
         </div>
+<<<<<<< HEAD
     <div class="board-confirm-div">
         <button type="submit" class="board-confirm-btn">
             <span>Ok</span>
@@ -1006,17 +1391,31 @@ function editingShowTask() {
         </button>
     </div>
     </form>`;
+=======
+    <div class="board-confirm-div" onclick="boardConfirm()">
+        <div class="board-confirm-btn">
+            <span>Ok</span>
+            <img src="../assets/img/check.svg" alt="">
+        </div>
+    </div>
+    `;
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     boardOverlayContactDropdown(assignedToOptions);
     // Aufruf der Funktion, um den Ball hinzuzufügen
     const assignedToList = document.getElementById('ballAssignedToList');
     ballForBoardOverlay(task.assignedToColors, task.assignedToValues, assignedToList);
     clearBoardInputFields();
     boardClickEventlisteners();
+<<<<<<< HEAD
     setMinDate();
+=======
+
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
 }
 
 
 function boardConfirm() {
+<<<<<<< HEAD
     event.preventDefault();
     const taskId = currentTaskId;
     const title = document.getElementById('boardOverlayTitle').value;
@@ -1076,6 +1475,40 @@ function boardConfirm() {
         console.error(`Task mit der ID "${taskId}" wurde nicht im allTasks-Array gefunden.`);
         return;
     }
+=======
+    const taskId = getTaskId(); // Hier musst du die ID der aktuellen Aufgabe abrufen.
+    const title = document.getElementById('boardOverlayTitle').value;
+    const descriptionText = document.getElementById('boardOverlaydescriptionText').value;
+    const assignedTo = document.getElementById('boardOverlayContact').value;
+    const dueDate = document.getElementById('createdAt').value;
+    const priority = getSelectedPriority();
+
+    // Finde die Aufgabe im allTasks-Array basierend auf der taskId
+    const task = allTasks.find(task => task.id === taskId);
+
+    if (task) {
+        // Aktualisiere die Werte der Aufgabe
+        task.title = title;
+        task.description_text = descriptionText;
+        task.assignedTo = assignedTo;
+        task.createdAt = dueDate;
+        task.priority = priority;
+    } else {
+        console.error(`Task mit der ID "${taskId}" wurde nicht gefunden.`);
+        return;
+    }
+
+    // Aktualisiere die Benutzeroberfläche (UI) mit den neuen Aufgabendetails
+    updateTaskDetailsInUI(task);
+
+    // Schließe das taskOverviewPopUp
+    closeBoardTaskOverviewPopUp();
+}
+
+function getTaskId(task) {
+    // Verwende den übergebenen Task und extrahiere die ID
+    return task.id;
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
 }
 
 
@@ -1159,7 +1592,64 @@ function forClearAddTaskWithBtn() {
     }
 
 
+function clearAddTaskFields() {
+    // Reset title and description input fields
+    const titleInput = document.getElementById('title');
+    const descriptionInput = document.getElementById('description_text');
+    titleInput.value = '';
+    descriptionInput.value = '';
 
+    // Reset assigned to dropdown
+    const assignedToSelect = document.getElementById('which_assigned_contact');
+    assignedToSelect.selectedIndex = 0;
+
+    // Reset due date input
+    const dueDateInput = document.getElementById('createdAt');
+    dueDateInput.value = '';
+
+    // Reset priority buttons
+    // Reset priority buttons
+    const urgentBtn = document.getElementById('addTask_overlay_urgent_btn');
+    const mediumBtn = document.getElementById('addTask_overlay_medium_btn');
+    const lowBtn = document.getElementById('addTask_overlay_low_btn');
+
+    const urgentBtnClicked = document.getElementById('addTask_overlay_clicked_urgent_btn');
+    const mediumBtnClicked = document.getElementById('addTask_overlay_clicked_medium_btn');
+    const lowBtnClicked = document.getElementById('addTask_overlay_clicked_low_btn');
+
+    urgentBtn.classList.remove('d-none');
+    mediumBtn.classList.remove('d-none');
+    lowBtn.classList.remove('d-none');
+
+    urgentBtnClicked.classList.add('d-none')
+    mediumBtnClicked.classList.add('d-none')
+    lowBtnClicked.classList.add('d-none')
+
+
+    // Reset category dropdown
+    const categorySelect = document.getElementById('category');
+    categorySelect.selectedIndex = 0;
+
+    // Reset subtask input and list
+    const subtaskInput = document.getElementById('subtaskInput');
+    const subtaskList = document.getElementById('subtaskList');
+    subtaskInput.value = '';
+    subtaskList.innerHTML = '';
+
+    resetAssignedField();
+}
+
+
+
+function changeClearBtnIconToDefault(IdHover, IdDefault) {
+    document.getElementById(IdHover).classList.add('d-none');
+    document.getElementById(IdDefault).classList.remove('d-none');
+}
+
+function changeClearBtnIconToHover(IdDefault, IdHover) {
+    document.getElementById(IdDefault).classList.add('d-none');
+    document.getElementById(IdHover).classList.remove('d-none');
+}
 
     // Reset subtask input and list
     const subtaskInput = document.getElementById('subtaskInput');

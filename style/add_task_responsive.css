@@ -1,5 +1,6 @@
 @media (max-width: 1200px) {
 
+<<<<<<< HEAD
     .newCategoryContainer input {
         width: 100% !important;
     }
@@ -8,6 +9,8 @@
         width: 100% !important;
     }
 
+=======
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     #prio_notification {}
 
     .header_div {

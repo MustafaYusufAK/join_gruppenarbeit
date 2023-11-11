@@ -17,8 +17,11 @@ function addTaskOverlayClickEventlisteners() {
 
 
 function handleBoardPrioButtonClick(prio) {
+<<<<<<< HEAD
     priorityArray = [];
 
+=======
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     const normalButtonId = `addTask_overlay_${prio}_btn`;
     const clickedButtonId = `addTask_overlay_clicked_${prio}_btn`;
 

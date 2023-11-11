@@ -12,11 +12,16 @@ function confirmNewCategory() {
     let newCategoryColor = document.getElementById('newCategoryColor').style.backgroundColor;
     let newCategoryInput = document.getElementById('newCategoryInput');
 
+<<<<<<< HEAD
     if (newCategoryInput.value === '') {
         newCategoryInput.focus();
         showBoardCategoryNotification();
     } else if (newCategoryColor === '') {
         categoryColorNotification();
+=======
+    if (newCategoryInput.value == '') {
+        newCategoryInput.focus();
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     } else {
         selectedCategory(newCategory, newCategoryColor);
         document.getElementById('newCategoryInput').value = '';
@@ -27,7 +32,10 @@ function confirmNewCategory() {
     }
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
 function openCategoryDropdown() {
     document.getElementById('categoryDropdown').classList.remove('d-none');
     document.getElementById('category').style.cssText = `
