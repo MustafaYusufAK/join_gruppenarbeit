@@ -1,3 +1,18 @@
+.contacts-background:hover {
+    background-color: rgb(9, 25, 49);
+}
+
+.contacts-background {
+    display: flex;
+    align-items: center;
+    padding: 10px 0px 10px 65px;
+    color: rgb(205, 205, 205);
+    gap: 10px;
+    font-size: 16px;
+    margin: 0;
+    background-color: rgb(9, 25, 49);
+}
+
 .hide-overflow {
     overflow: hidden;
 }
@@ -13,13 +28,14 @@
 }
 
 ::-webkit-scrollbar-track {
-    background-color: transparent; 
+    background-color: transparent;
 }
 
 /* Breite und Farbe des Scrollbalkens festlegen */
 ::-webkit-scrollbar {
     width: 10px;
-    background-color: transparent; /* Hintergrund transparent setzen */
+    background-color: transparent;
+    /* Hintergrund transparent setzen */
 }
 
 /* Scrollbalken-Daumen anpassen */
@@ -416,7 +432,7 @@
 }
 
 .create-button:hover {
-    background-color:#29ABE2;
+    background-color: #29ABE2;
 }
 
 .close-image {

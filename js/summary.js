@@ -258,7 +258,7 @@ async function fillSummary() {
 
     //urgend//
     countTasks(user, 'priority', 'urgent', 'urgend_count');
-    
+
     //Task Progress//
     countTasks(user, 'task_category', 'TaskProgess', 'task_progress_count');
 
@@ -333,10 +333,9 @@ function findDueDate(user) {
             closestDate = task;
         }
     }
-    if(closestDate == Infinity) {
+    if (closestDate == Infinity) {
         return;
     } else {
         urgendDate.innerHTML = closestDate.toLocaleDateString();
     }
 }
-

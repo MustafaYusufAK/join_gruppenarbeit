@@ -13,10 +13,18 @@
     <link rel="stylesheet" href="../style/add_task.css">
     <link rel="stylesheet" href="../style/add_task_responsive.css">
     <link rel="stylesheet" href="../style/contacts2.css">
+    <link rel="stylesheet" href="../style/add_task1.css">
+    <link rel="stylesheet" href="../style/add_task2.css">
+    <link rel="stylesheet" href="../style/add_task_template.css">
     <script src="../js/storage.js"></script>
     <script src="../js/contacts.js"></script>
     <script src="../js/menuTemplate.js"></script>
     <script src="../js/add_task.js"></script>
+    <script src="../js/add_task1.js"></script>
+    <script src="../js/add_task2.js"></script>
+    <script src="../js/add_task_templates.js"></script>
+    <script src="../js/notifications.js"></script>
+
     <title>addtask</title>
 </head>
 
@@ -26,245 +34,248 @@
 
     <div class="contentSection contentSectionAddTask">
 
-        <form id="formclass" class="responsive_formclass" onsubmit="addTask()">
-            <div class="header_div">
-                <div>
-                    <h1>Add Task</h1>
+        <div id="show_final_notification_background" class="show_final_notification_background">
+            <div class="show_final_notification_div">
+                <div id="show_final_notification" class="show_final_notification">
+                    <img class="task_added" src="../assets/img/Frame 73.svg" alt="added-task-Icon"
+                        onclick="HideShowFinalNotification()">
                 </div>
             </div>
-            <div class="contentSectionAddTask">
-                <div class="title_description_div">
-                    <div class="add_title_section">
-                        <span>Title</span>
-                        <input required type="text" class="title_inputfield" id="title" placeholder="Enter a title">
+        </div>
+        <div id="prio_notification" class="prio_notification">
+            Please select a priority.
+            <button onclick="prioHideNotification()">Understood</button>
+        </div>
+        <div id="contacts_notification" class="contacts_notification">
+            Please select a contact.
+            <button onclick="contactsHideNotification()">Understood</button>
+        </div>
+        <div id="board_category_notification" class="board_category_notification">
+            Please write your category.
+            <button id="category_board_btn" onclick="showBoardCategoryNotification()">Understood</button>
+        </div>
+        <div id="category_color_notification" class="category_color_notification">
+            Please select a color.
+            <button id="category_color_btn" onclick="categoryColorNotification()">Understood</button>
+        </div>
 
-                        <div class="add_description_section">
-                            <span>Description</span>
-                            <textarea required type="text" class="description_inputfield" id="description_text"
-                                placeholder="Enter a Description"></textarea>
+        <form id="addTaskFormClass" class="responsive_formclass" onsubmit="event.preventDefault(); addTask();">
+            <div>
+                <div class="header_div">
+                    <div>
+                        <h1>Add Task</h1>
+                    </div>
+                </div>
 
-                            <div class="assigned_to_section">
-                                <span>Assigned to</span>
-                                <label for="Select contacts to assign"></label>
-                                <select required class="assigned_to_inputfield" name="contacts"
-                                    id="which_assigned_contact">
-                                    <option value="Select contacts to assign">Select contacts to assign</option>
-                                    <option id="rgb(91,61,94)" value="Augustus Arndt">Augustus Arndt</option>
+                <div class="contentSectionAddTask">
+                    <div class="title_description_div">
+                        <div class="add_title_section">
+                            <span>Title</span>
+                            <input required type="text" class="title_inputfield" id="title" placeholder="Enter a title">
 
-                                    <option id="" value="Johannes Diether">Johannes Diether</option>
+                            <div class="add_description_section">
+                                <span>Description</span>
+                                <textarea required type="text" class="description_inputfield" id="description_text"
+                                    placeholder="Enter a Description"></textarea>
 
-                                    <option id="" value="Connell Sky">Connell Sky</option>
-
-                                    <option id="" value="Paquito Marlowe">Paquito Marlowe</option>
-
-                                    <option id="" value="Curt Jordin">Curt Jordin</option>
-
-                                    <option id="" value="Thomas Grahame">Thomas Grahame</option>
-
-                                    <option id="" value="Dale Coy">Dale Coy</option>
-
-                                    <option id="" value="Maximilian Mustermann">Maximilian Mustermann</option>
-
-                                    <option id="" value="Hubertus Arsenio">Hubertus Arsenio</option>
-
-                                    <option id="" value="Jed Lindy">Jed Lindy</option>
-
-                                    <option id="" value="Otto Warwick">Otto Warwick</option>
-
-                                    <option id="" value="Gyles Owen">Gyles Owen</option>
-
-                                    <option id="" value="Shanon Kerry">Shanon Kerry</option>
-
-                                    <option id="" value="Justin Devyn">Justin Devyn</option>
-
-                                    <option id="" value="Ewald Ross">Ewald Ross</option>
-                                </select>
-                                <div class="assignedToList" id="assignedToList"></div>
-                            </div>
-                            <div class="categoryAndSelect">
-                                <span>Category</span>
-
-                                <div class="newCategoryContainer d-none" id="newCategoryContainer">
-                                    <input placeholder="New category name" id="newCategoryInput">
-                                    <div class="newCategoryColorContainer">
-                                        <div class="categoryColor" id="newCategoryColor"></div>
-                                    </div>
-                                    <button type="button" class="cancelButton" onclick="cancelNewCategory()">
-                                        <img src="../assets/img/Vector (2).svg">
-                                    </button>
-                                    <button type="button" class="checkButton" onclick="confirmNewCategory()">
-                                        <img src="../assets/img/add.svg">
-                                    </button>
+                                <div class="assigned_to_section">
+                                    <span>Assigned to</span>
+                                    <select required class="assigned_to_inputfield" name="contacts"
+                                        id="which_assigned_contact">
+                                        <option value="Select contacts to assign">Select contacts to assign</option>
+                                    </select>
+                                    <div class="assignedToList" id="assignedToList"></div>
                                 </div>
+                                <div class="categoryAndSelect">
+                                    <span>Category</span>
 
-                                <div class="newCategoryColors d-none" id="newCategoryColors">
-                                    <p class="categoryColor" style="background-color: red"
-                                        onclick="addColorToNewCategory('red')"></p>
-                                    <p class="categoryColor" style="background-color: orange"
-                                        onclick="addColorToNewCategory('orange')"></p>
-                                    <p class="categoryColor" style="background-color: pink"
-                                        onclick="addColorToNewCategory('pink')"></p>
-                                    <p class="categoryColor" style="background-color: turquoise"
-                                        onclick="addColorToNewCategory('turquoise')"></p>
-                                    <p class="categoryColor" style="background-color: goldenrod"
-                                        onclick="addColorToNewCategory('goldenrod')"></p>
-                                    <p class="categoryColor" style="background-color: blue"
-                                        onclick="addColorToNewCategory('blue')"></p>
-                                </div>
-
-                                <div class="category" id="category" onclick="openCategoryDropdown()"
-                                    style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; border-bottom: 1px solid rgb(209, 209, 209);">
-                                    Development
-                                    <div class="categoryColor" style="background-color: red; margin-left: 10px"></div>
-                                </div>
-                                <div id="categoryDropdown" class="categoryDropdown d-none">
-                                    <div class="categoryOption" onclick="newCategory()">
-                                        New category
+                                    <div class="newCategoryContainer d-none" id="newCategoryContainer">
+                                        <input placeholder="New category name" id="newCategoryInput">
+                                        <div class="newCategoryColorContainer">
+                                            <div class="categoryColor" id="newCategoryColor"></div>
+                                        </div>
+                                        <button type="button" class="cancelButton" onclick="cancelNewCategory()">
+                                            <img src="../assets/img/Vector (2).svg">
+                                        </button>
+                                        <button type="button" class="checkButton" onclick="confirmNewCategory()">
+                                            <img src="../assets/img/add.svg">
+                                        </button>
                                     </div>
 
-                                    <div class="categoryOption" value="development"
-                                        onclick="selectedCategory('development', 'red')">
+                                    <div class="newCategoryColors d-none" id="newCategoryColors">
+                                        <p class="categoryColor" style="background-color: red"
+                                            onclick="addColorToNewCategory('red')"></p>
+                                        <p class="categoryColor" style="background-color: orange"
+                                            onclick="addColorToNewCategory('orange')"></p>
+                                        <p class="categoryColor" style="background-color: pink"
+                                            onclick="addColorToNewCategory('pink')"></p>
+                                        <p class="categoryColor" style="background-color: turquoise"
+                                            onclick="addColorToNewCategory('turquoise')"></p>
+                                        <p class="categoryColor" style="background-color: goldenrod"
+                                            onclick="addColorToNewCategory('goldenrod')"></p>
+                                        <p class="categoryColor" style="background-color: blue"
+                                            onclick="addColorToNewCategory('blue')"></p>
+                                    </div>
+
+                                    <div class="category" id="category" onclick="openCategoryDropdown()"
+                                        style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; border-bottom: 1px solid rgb(209, 209, 209);">
                                         Development
-                                        <div class="categoryColor" style="background-color: red"></div>
+                                        <div class="categoryColor" style="background-color: red; margin-left: 10px">
+                                        </div>
                                     </div>
+                                    <div id="categoryDropdown" class="categoryDropdown d-none">
+                                        <div class="categoryOption" onclick="newCategory()">
+                                            New category
+                                        </div>
 
-                                    <div class="categoryOption" value="design"
-                                        onclick="selectedCategory('design', 'orange')">
-                                        Design
-                                        <div class="categoryColor" style="background-color: orange"></div>
-                                    </div>
+                                        <div class="categoryOption" value="development"
+                                            onclick="selectedCategory('development', 'red')">
+                                            Development
+                                            <div class="categoryColor" style="background-color: red"></div>
+                                        </div>
 
-                                    <div class="categoryOption" value="sales"
-                                        onclick="selectedCategory('sales', 'pink')">
-                                        Sales
-                                        <div class="categoryColor" style="background-color: pink"></div>
-                                    </div>
+                                        <div class="categoryOption" value="design"
+                                            onclick="selectedCategory('design', 'orange')">
+                                            Design
+                                            <div class="categoryColor" style="background-color: orange"></div>
+                                        </div>
 
-                                    <div class="categoryOption" value="backoffice"
-                                        onclick="selectedCategory('backoffice', 'turquoise')">
-                                        Backoffice
-                                        <div class="categoryColor" style="background-color: turquoise"></div>
-                                    </div>
+                                        <div class="categoryOption" value="sales"
+                                            onclick="selectedCategory('sales', 'pink')">
+                                            Sales
+                                            <div class="categoryColor" style="background-color: pink"></div>
+                                        </div>
 
-                                    <div class="categoryOption" value="media"
-                                        onclick="selectedCategory('media', 'goldenrod')">
-                                        Media
-                                        <div class="categoryColor" style="background-color: goldenrod"></div>
-                                    </div>
+                                        <div class="categoryOption" value="backoffice"
+                                            onclick="selectedCategory('backoffice', 'turquoise')">
+                                            Backoffice
+                                            <div class="categoryColor" style="background-color: turquoise"></div>
+                                        </div>
 
-                                    <div class="categoryOption" value="marketing"
-                                        onclick="selectedCategory('marketing', 'blue')">
-                                        Marketing
-                                        <div class="categoryColor" style="background-color: blue"></div>
+                                        <div class="categoryOption" value="media"
+                                            onclick="selectedCategory('media', 'goldenrod')">
+                                            Media
+                                            <div class="categoryColor" style="background-color: goldenrod"></div>
+                                        </div>
+
+                                        <div class="categoryOption" value="marketing"
+                                            onclick="selectedCategory('marketing', 'blue')">
+                                            Marketing
+                                            <div class="categoryColor" style="background-color: blue"></div>
+                                        </div>
+
+                                        <div class="categoryOption" value="marketing"
+                                            onclick="selectedCategory('In Progress', 'blueviolet')">
+                                            In Progress
+                                            <div class="categoryColor" style="background-color: blueviolet">
+                                            </div>
+                                        </div>
+
+                                        <div class="categoryOption" value="marketing"
+                                            onclick="selectedCategory('Await Feedback', 'darkmagenta')">
+                                            Await Feedback
+                                            <div class="categoryColor" style="background-color: darkmagenta">
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
+                        <div class="borderline"></div>
 
-                    <div class="borderline"></div>
-
-
-                    <div class="date_Prio_div">
-                        <div class="add_date_section">
-                            <span class="">Due date</span>
-                            <input required type="text" class="date_inputfield" id="createdAt" placeholder="dd/mm/yy">
-                        </div>
-
-
-
-
-                        <div class="add_Prio_section">
-                            <span>Prio</span>
-                            <div class="prio_btn_position">
-                                <button id="normal_urgent_btn" class="urgent_prio_btn_characteristics">
-                                    <div class="prio_btn_text_icon">
-                                        <h6 class="prio_btn_text_position">Urgent</h6>
-                                        <img class="prio_icon_position" src="../assets/img/Prio alta.svg"
-                                            alt="High-Prio-Icon">
-                                    </div>
-                                </button>
-                                <button type="button" value="urgent" id="clicked_urgent_btn"
-                                    class="urgent_prio_btn_characteristics_onclick d-none">
-                                    <div class="prio_btn_text_icon">
-                                        <h6 class="prio_btn_text_position">Urgent</h6>
-                                        <img class="prio_icon_position" src="../assets/img/Prio alta-white.svg"
-                                            alt="High-Prio-Icon">
-                                    </div>
-                                </button>
-                                <button id="normal_medium_btn" class="medium_prio_btn_characteristics">
-                                    <div class="prio_btn_text_icon">
-                                        <h6 class="prio_btn_text_position">Medium</h6>
-                                        <img class="prio_icon_position" src="../assets/img/Prio media.svg"
-                                            alt="Medium-Prio-Icon">
-                                    </div>
-                                </button>
-                                <button type="button" value="medium" id="clicked_medium_btn"
-                                    class="medium_prio_btn_characteristics_onclick d-none">
-                                    <div class="prio_btn_text_icon">
-                                        <h6 class="prio_btn_text_position">Medium</h6>
-                                        <img class="prio_icon_position" src="../assets/img/Prio media-white.svg"
-                                            alt="Medium-Prio-Icon">
-                                    </div>
-                                </button>
-                                <button id="normal_low_btn" class="low_prio_btn_characteristics">
-                                    <div class="prio_btn_text_icon">
-                                        <h6 class="prio_btn_text_position">Low</h6>
-                                        <img class="prio_icon_position" src="../assets/img/Prio baja.svg"
-                                            alt="Low-Prio-Icon">
-                                    </div>
-                                </button>
-                                <button type="button" value="low" id="clicked_low_btn"
-                                    class="low_prio_btn_characteristics_onclick d-none">
-                                    <div class="prio_btn_text_icon">
-                                        <h6 class="prio_btn_text_position">Low</h6>
-                                        <img class="prio_icon_position" src="../assets/img/Prio baja-white.svg"
-                                            alt="Low-Prio-Icon">
-                                    </div>
-                                </button>
+                        <div class="date_Prio_div">
+                            <div class="add_date_section">
+                                <span class="">Due date</span>
+                                <input required="" type="date" class="date_inputfield" id="createdAt"
+                                    placeholder="dd/mm/yy">
                             </div>
-                        </div>
 
-
-
-
-
-                        <div class="task-container">
-                            <div class="taskContainerItemsPosition">
-                                <input class="subtaskInputfield" type="text" id="subtaskInput"
-                                    placeholder="Add new subtask">
-                                <div class="subtaskButton">
-                                    <img class="subtask_img" src="../assets/img/add.svg" alt="" onclick="addSubtask()">
+                            <div class="add_Prio_section">
+                                <span>Prio</span>
+                                <div class="prio_btn_position">
+                                    <button id="normal_urgent_btn" class="urgent_prio_btn_characteristics">
+                                        <div class="prio_btn_text_icon">
+                                            <h6 class="prio_btn_text_position">Urgent</h6>
+                                            <img class="prio_icon_position" src="../assets/img/Prio alta.svg"
+                                                alt="High-Prio-Icon">
+                                        </div>
+                                    </button>
+                                    <button type="button" value="urgent" id="clicked_urgent_btn"
+                                        class="urgent_prio_btn_characteristics_onclick d-none">
+                                        <div class="prio_btn_text_icon">
+                                            <h6 class="prio_btn_text_position">Urgent</h6>
+                                            <img class="prio_icon_position" src="../assets/img/Prio alta-white.svg"
+                                                alt="High-Prio-Icon">
+                                        </div>
+                                    </button>
+                                    <button id="normal_medium_btn" class="medium_prio_btn_characteristics">
+                                        <div class="prio_btn_text_icon">
+                                            <h6 class="prio_btn_text_position">Medium</h6>
+                                            <img class="prio_icon_position" src="../assets/img/Prio media.svg"
+                                                alt="Medium-Prio-Icon">
+                                        </div>
+                                    </button>
+                                    <button type="button" value="medium" id="clicked_medium_btn"
+                                        class="medium_prio_btn_characteristics_onclick d-none">
+                                        <div class="prio_btn_text_icon">
+                                            <h6 class="prio_btn_text_position">Medium</h6>
+                                            <img class="prio_icon_position" src="../assets/img/Prio media-white.svg"
+                                                alt="Medium-Prio-Icon">
+                                        </div>
+                                    </button>
+                                    <button id="normal_low_btn" class="low_prio_btn_characteristics">
+                                        <div class="prio_btn_text_icon">
+                                            <h6 class="prio_btn_text_position">Low</h6>
+                                            <img class="prio_icon_position" src="../assets/img/Prio baja.svg"
+                                                alt="Low-Prio-Icon">
+                                        </div>
+                                    </button>
+                                    <button type="button" value="low" id="clicked_low_btn"
+                                        class="low_prio_btn_characteristics_onclick d-none">
+                                        <div class="prio_btn_text_icon">
+                                            <h6 class="prio_btn_text_position">Low</h6>
+                                            <img class="prio_icon_position" src="../assets/img/Prio baja-white.svg"
+                                                alt="Low-Prio-Icon">
+                                        </div>
+                                    </button>
                                 </div>
                             </div>
 
-                            <ul id="subtaskList"></ul>
+                            <div class="task-container">
+                                <div class="taskContainerItemsPosition">
+                                    <input class="subtaskInputfield" type="text" id="subtaskInput"
+                                        placeholder="Add new subtask">
+                                    <div class="subtaskButton">
+                                        <img class="subtask_img" src="../assets/img/add.svg" alt=""
+                                            onclick="addSubtask()">
+                                    </div>
+                                </div>
+
+                                <ul id="subtaskList" class="subtaskList"></ul>
+                            </div>
+
                         </div>
-
-
                     </div>
                 </div>
-            </div>
 
+                <div class="clear_and_create_task_position">
+                    <div class="clear_and_create_task_btn" id="twoButtonsContainer">
+                        <div class="clear_and_create_task_btn">
+                            <button id="reset" type="reset" class="clear_button" onclick="clearInputFields()"
+                                onmouseover="changeClearBtnIconToHover('clearIconDefault', 'clearIconHover')"
+                                onmouseout="changeClearBtnIconToDefault('clearIconHover', 'clearIconDefault')">
+                                Clear
+                                <img src="../assets/img/Vector (2).svg" id="clearIconDefault" class="">
+                                <img src="../assets/img/Vector blue.svg" id="clearIconHover" class="d-none">
+                            </button>
 
-
-
-            <div class="clear_and_create_task_position">
-                <div class="clear_and_create_task_btn" id="twoButtonsContainer">
-                    <div class="clear_and_create_task_btn">
-                        <button id="reset" type="reset" class="clear_button" onclick="clearInputFields()"
-                            onmouseover="changeClearBtnIconToHover('clearIconDefault', 'clearIconHover')"
-                            onmouseout="changeClearBtnIconToDefault('clearIconHover', 'clearIconDefault')">
-                            Clear
-                            <img src="../assets/img/Vector (2).svg" id="clearIconDefault" class="">
-                            <img src="../assets/img/Vector blue.svg" id="clearIconHover" class="d-none">
-                        </button>
-
-                        <button type="submit" class="create_task_button" id="createTask" onclick="addTask()">
-                            Create Task
-                            <img src="../assets/img/check.svg">
-                        </button>
+                            <button type="submit" class="create_task_button" id="createTask">
+                                Create Task
+                                <img src="../assets/img/check.svg">
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

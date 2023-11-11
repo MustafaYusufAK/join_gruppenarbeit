@@ -1,5 +1,225 @@
 @media (max-width: 1200px) {
 
+    .board_title_inputfield {
+        width: auto;
+        height: 36px;
+        outline: none;
+        padding-left: 8px;
+        border-radius: 10px;
+        border: 1px solid #DADADA;
+    }
+
+    .board_description_inputfield {
+        width: auto;
+        height: 118px;
+        border-radius: 8px;
+        outline: none;
+        padding-left: 8px;
+        border: 1px solid #DADADA;
+    }
+
+}
+
+
+
+@media (max-width: 1050px) {
+
+    .categoryOvervievPopUp {
+        font-size: 18px;
+        width: 152px;
+        height: 50px;
+    }
+
+    .to-do-container {
+        margin-left: 8%;
+        display: flex;
+        flex-wrap: wrap;
+        overflow-x: hidden;
+        height: 618px;
+    }
+
+    .topic {
+        margin-left: 75px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+
+@media (max-width: 750px) {
+
+    .categoryOvervievPopUp {
+        font-size: 16px;
+        width: 132px;
+        height: 45px;
+    }
+
+    .taskPopUpDiscription {
+        font-size: 30px;
+    }
+
+    .taskPopUpHeadline {
+        font-size: 48px;
+    }
+
+    .topic {
+        flex-direction: column;
+        margin-left: 0px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+    }
+
+    .to-do-container {
+        justify-content: center;
+        margin-left: 0px;
+        display: flex;
+        flex-wrap: wrap;
+        overflow-x: hidden;
+        height: 575px;
+    }
+
+    .flex-box {
+        display: flex;
+        margin-right: 0px;
+    }
+
+    .pinned-task-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 18px 19px;
+        gap: 10px;
+        width: 275px;
+        height: fit-content;
+        background: #FFFFFF;
+        box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
+        border-radius: 30px;
+        cursor: pointer;
+    }
+
+    .table-heading {
+        flex-direction: column;
+        display: flex;
+        justify-content: space-between;
+        width: 300px;
+        margin-left: 40px;
+        margin-right: 0px;
+        color: rgb(42, 54, 71);
+        font-weight: bold;
+        overflow-x: unset;
+        min-height: 20vh;
+        height: fit-content;
+    }
+
+    .table-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        margin-top: 50px;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .categoryOvervievPopUp {
+        font-size: 16px;
+        width: 132px;
+        height: 42px;
+    }
+
+    .taskPopUpDiscription {
+        font-size: 24px;
+    }
+
+    .taskPopUpHeadline {
+        font-size: 32px;
+    }
+
+    .flex-box {
+        align-items: center;
+        flex-direction: column;
+        display: flex;
+        margin-right: 0px;
+    }
+
+    .add-task-button {
+        justify-content: center;
+        align-items: center;
+        margin-top: 15px;
+        width: 50%;
+        background-color: rgb(42, 54, 71);
+        color: white;
+        padding: 0px 10px 4px 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        display: flex;
+    }
+
+    .search {
+        border-radius: 8px;
+        border-color: rgba(0, 0, 0, 0.4);
+        background-repeat: no-repeat;
+        background-position: 190px 0px;
+        padding: 5px;
+        margin-right: 0px;
+        cursor: pointer;
+    }
+
+    .add-task-button {
+        justify-content: center;
+        align-items: center;
+        margin-top: 15px;
+        width: 50%;
+        background-color: rgb(42, 54, 71);
+        color: white;
+        padding: 0px 10px 4px 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        display: flex;
+    }
+
+    .table-heading {
+        flex-direction: column;
+        display: flex;
+        justify-content: space-between;
+        width: 300px;
+        margin-left: 40px;
+        color: rgb(42, 54, 71);
+        font-weight: bold;
+        overflow-x: unset;
+        min-height: 20vh;
+        height: fit-content;
+    }
+
+    .to-do-container {
+        justify-content: center;
+        margin-left: 0px;
+        display: flex;
+        flex-wrap: wrap;
+        overflow-x: hidden;
+        height: 512px;
+    }
+}
+
+@media (max-width: 1200px) {
+
+    .add-task-overlay {
+        max-height: 75vh;
+        background-color: white;
+        border-radius: 20px;
+        width: 920px;
+        padding: 30px;
+        margin: 20px;
+        overflow-y: auto;
+        transition: transform 800ms ease-in-out;
+    }
+
     .header_div {
         font-size: 56px;
         margin-top: 20px;
@@ -195,7 +415,6 @@
     }
 
     .assigned_to_inputfield {
-        margin-bottom: 12px;
         width: auto;
         padding-left: 8px;
         height: 36px;
@@ -257,9 +476,7 @@
 @media (max-width: 1050px) {
 
     .add-task-overlay {
-        max-height: 85vh;
-        top: inherit;
-        margin-top: -80px;
+        max-height: 75vh;
         background-color: white;
         border-radius: 20px;
         width: 920px;
@@ -291,6 +508,7 @@
 }
 
 
+
 @media (max-width: 750px) {
     .header_div h1 {
         font-size: 46px;
@@ -309,4 +527,44 @@
         margin-bottom: 10px;
     }
 
+    .add-task-overlay {
+        margin: 0px;
+        width: 100%;
+    }
+
+}
+
+@media (max-width: 450px) {
+
+    h6 {
+        font-size: small;
+    }
+
+    .prio_btn_position {
+        display: flex;
+        justify-content: center;
+    }
+
+    .low_prio_btn_characteristics {
+        width: 33% !important;
+        margin-right: 0px !important;
+    }
+
+    .medium_prio_btn_characteristics {
+        width: 33% !important;
+    }
+
+    .urgent_prio_btn_characteristics {
+        width: 33% !important;
+    }
+
+    .prio_icon_position {
+        height: 18px;
+        width: 18px;
+    }
+
+    .prio_btn_position {
+        display: flex !important;
+        justify-content: center !important;
+    }
 }

@@ -1,18 +1,20 @@
+.assigned_to_inputfield {
+    width: 100% !important;
+}
+
 .add-task-overlay {
     max-height: 85vh;
     top: inherit;
     margin-top: -80px;
     background-color: white;
     border-radius: 20px;
-    width: 920px;
+    width: 980px;
     padding: 30px;
     margin: 20px;
     overflow-y: auto;
     transition: transform 800ms ease-in-out;
     animation: slideIn 0.8s ease-in-out;
 }
-
-
 
 .overlay-section {
     display: flex;
@@ -28,15 +30,12 @@
 }
 
 .slide-in {
-    transform: translate(100%, -50%);
+    transform: translate(0%, 0%);
 }
-
-
-
 
 @keyframes slide-in-animation {
     from {
-        transform: translateY(-100%) translateX(-50%);
+        transform: translateY(0%) translateX(100%);
     }
 
     to {
@@ -45,18 +44,12 @@
 }
 
 .slide-in {
-    animation: slide-in-animation 0.5s forwards;
+    animation: slide-in-animation 0.8s forwards;
 }
 
-
-
-
-
-
-
-
-
-
+#boardOverlayContact {
+    background: white url("http://gruppe-691.developerakademie.net/arrow_drop_down.svg") no-repeat right 10px center;
+}
 
 .content-Section {
     display: contents;
@@ -69,7 +62,11 @@
     right: 0;
 }
 
-.contentSectionAddTask {
+.contentSectionAddTaskForBoard {
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -111,49 +108,6 @@ span {
 
 .d-none {
     display: none;
-}
-
-.add-task-background {
-    background-color: rgb(9, 25, 49);
-
-}
-
-.contacts-background {
-    background-color: unset;
-}
-
-.nav-sub {
-    display: flex;
-    align-items: center;
-    padding: 10px 0px 10px 65px;
-    color: rgb(205, 205, 205);
-    gap: 10px;
-    font-size: 16px;
-    margin: 0;
-    margin-bottom: 10px;
-}
-
-.nav-sub:hover {
-    background-color: #2A3D59;
-    color: white;
-    cursor: pointer;
-}
-
-.contacts-background {
-    display: flex;
-    align-items: center;
-    padding: 10px 0px 10px 65px;
-    color: rgb(205, 205, 205);
-    gap: 10px;
-    font-size: 16px;
-    margin: 0;
-}
-
-
-
-
-.add-task-background:hover {
-    background-color: rgb(9, 25, 49);
 }
 
 .header_div h1 {
@@ -208,20 +162,6 @@ span {
     flex-direction: column;
 }
 
-.assigned_to_inputfield {
-    width: 375px;
-    padding-left: 8px;
-    height: 36px;
-    outline: none;
-    border-radius: 10px;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    text-indent: 1px;
-    text-overflow: '';
-    border: 1px solid #DADADA;
-}
-
 #which_assigned_contact {
     background: white url("http://gruppe-691.developerakademie.net/arrow_drop_down.svg") no-repeat right 10px center;
 }
@@ -239,27 +179,28 @@ span {
 }
 
 .title_inputfield {
-    width: 370px;
+    width: auto !important;
     height: 36px;
     outline: none;
     padding-left: 8px;
     border-radius: 10px;
     border: 1px solid #DADADA;
-
+    margin-bottom: 15px;
 }
 
 .description_inputfield {
-    width: 370px;
+    width: auto !important;
     height: 118px;
     border-radius: 8px;
     outline: none;
     padding-left: 8px;
     border: 1px solid #DADADA;
+    margin-bottom: 15px;
 }
 
 .date_inputfield {
     padding-right: 10px;
-    width: 370px;
+    width: auto !important;
     height: 36px;
     outline: none;
     padding-left: 8px;
@@ -411,8 +352,6 @@ span {
     margin-left: 5px;
 }
 
-
-
 .task-container {
     display: flex;
     justify-content: flex-start;
@@ -472,11 +411,24 @@ button:hover {
     display: inline;
 }
 
+.boardSubtaskList {}
+
+.boardSubtaskList ul {
+    list-style-type: circle;
+    /* Aufzählungszeichen für die Liste */
+}
+
+.boardSubtaskList li::before {
+    content: "•";
+    /* Benutzerdefiniertes Aufzählungszeichen */
+    margin-right: 0.5em;
+}
 
 .subtask-item {
     justify-content: flex-start;
     display: flex;
     margin: 5px;
+    list-style-type: circle;
 }
 
 .subtask-item input {
@@ -502,12 +454,14 @@ button:hover {
     width: 36px;
     height: 30px;
     margin-left: 10px;
+    cursor: pointer;
 }
 
 .delete_icon_div {
     width: 36px;
     height: 30px;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .delete_icon_div:hover {
@@ -518,305 +472,4 @@ button:hover {
 .pencil_icon_div:hover {
     border: 1px solid #ccc;
     border-radius: 10px;
-}
-
-.clear_and_create_task_position {
-    width: 100%;
-    display: flex;
-    justify-content: end;
-    padding: 0px;
-    gap: 25px;
-    padding-bottom: 30px;
-    padding-right: 5px;
-}
-
-.clear_and_create_task_btn {
-    display: flex;
-    justify-content: center;
-}
-
-.clear_button {
-    background: white;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 18px 10px;
-    gap: 10px;
-    width: 136px;
-    height: 55px;
-    border: 1px solid #2A3647;
-    border-radius: 10px;
-    transition: ease-in-out 125ms;
-    margin-right: 5px;
-}
-
-.clear_button:hover {
-    cursor: pointer;
-    color: rgb(83, 168, 223);
-    border: 1.5px solid rgb(83, 168, 223);
-    transform: scale(1.02);
-    box-shadow: 0px 3px 6px rgb(190, 190, 190);
-    transition: ease-in-out 125ms;
-}
-
-.clear_button_characteristics {}
-
-.clear_button_characteristics:hover {}
-
-.create_task_button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 18px 15px;
-    gap: 10px;
-    font-weight: 700;
-    color: #FFFFFF;
-    width: 187px;
-    height: 55px;
-    background: #2A3647;
-    border: none;
-    border-radius: 10px;
-    transition: ease-in-out 125ms;
-    margin-left: 5px;
-}
-
-.create_task_button:hover {
-    cursor: pointer;
-    background-color: rgb(83, 168, 223);
-    transform: scale(1.02);
-    box-shadow: 0px 3px 6px rgb(190, 190, 190);
-    transition: ease-in-out 125ms;
-}
-
-.create_task_characteristics:hover {}
-
-.date_input_wrapper {
-    position: relative;
-}
-
-.calendar_icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-}
-
-
-
-.categoryAndSelect {
-    width: 375px;
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-}
-
-.newCategoryContainer {
-    width: 422px;
-    display: flex;
-}
-
-.d-none {
-    display: none;
-}
-
-.categoryColor {
-    height: 13px;
-    width: 13px;
-    border: 2px solid white;
-    border-radius: 100%;
-}
-
-.cancelButton {}
-
-.checkButton {
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
-.newCategoryColors {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-    padding-left: 5px;
-}
-
-.newCategoryColors p {
-    cursor: pointer;
-    transition: ease-in-out 125ms;
-}
-
-.newCategoryColors p:hover {
-    transform: scale(1.2);
-    transition: ease-in-out 125ms;
-}
-
-.newCategoryColorContainer {
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-top: 1px solid #D1D1D1;
-    border-bottom: 1px solid #D1D1D1;
-}
-
-
-#categoryOverlay {
-    box-sizing: border-box;
-    padding: 5px 10px;
-    width: 422px;
-    height: 51px;
-    border: 1px solid #D1D1D1;
-    border-radius: 10px;
-    font-weight: 400;
-    font-size: 21px;
-    display: flex;
-    align-items: center;
-    background: white url("../../img/dropdownArrow.png") no-repeat right 10px center;
-    cursor: pointer;
-}
-
-#category {
-    box-sizing: border-box;
-    padding: 5px 10px;
-    height: 36px;
-    border: 1px solid #D1D1D1;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    background: white url("http://gruppe-691.developerakademie.net/arrow_drop_down.svg") no-repeat right 10px center;
-}
-
-.categoryContainer {
-    display: flex;
-    align-items: center;
-}
-
-
-.categoryDropdown {
-    border: 1px solid #D1D1D1;
-    border-top: none;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    height: 105px;
-    overflow-y: auto;
-}
-
-.categoryDropdown::-webkit-scrollbar {
-    width: 5px;
-    background-color: transparent;
-}
-
-.categoryDropdown::-webkit-scrollbar-track {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-
-.categoryOption {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 5px 8px;
-    cursor: pointer;
-    transition: all ease-in-out 125ms;
-}
-
-.categoryOption:hover {
-    background-color: lightgray;
-    transition: all ease-in-out 125ms;
-}
-
-.newCategoryContainer input {
-    border-right: none;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
-    padding-right: 0;
-    padding-left: 12px;
-    width: 303px;
-    height: 36px;
-    outline: none;
-    border-radius: 10px 0px 0px 10px;
-    border: 1px solid #DADADA
-}
-
-.newCategoryContainer button {
-    cursor: pointer;
-    width: 36px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #FFFFFF;
-    border: 1px solid #D1D1D1;
-    transition: ease-in-out 125ms;
-}
-
-.newCategoryContainer button:hover {
-    background-color: lightgray;
-    transition: ease-in-out 125ms;
-}
-
-.assignedToList {
-    margin-top: 5px;
-    margin-right: 5px;
-    margin-left: 5px;
-    display: flex;
-    flex-wrap: wrap;
-    max-height: 44px;
-    overflow-y: auto;
-}
-
-.assigneeContainer {
-    cursor: pointer;
-    color: white;
-    height: 40px;
-    width: 40px;
-    border-radius: 100%;
-    margin: 2px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: ease-in-out 125ms;
-}
-
-.assigneeContainer:hover {
-    cursor: pointer;
-    transform: scale(0.9);
-    transition: ease-in-out 125ms;
-}
-
-::-webkit-scrollbar-track {
-    background-color: transparent;
-}
-
-
-::-webkit-scrollbar {
-    width: 10px;
-    background-color: transparent;
-}
-
-
-::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #A8A8A8;
-}
-
-.header-vector {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.vector-class {
-    height: 20px;
-    width: 20px;
-    transition: ease-in-out 125ms;
-}
-
-.vector-class:hover {
-    cursor: pointer;
-    transform: scale(1.2);
-    transition: ease-in-out 125ms;
 }

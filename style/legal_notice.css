@@ -1,11 +1,15 @@
+.contacts-background {
+    background-color: transparent !important;
+}
+
 .container {
     margin-left: 270px;
     padding: 30px;
 }
 
 .container p {
-font-size: 16px;
-font-weight: 400;
+    font-size: 16px;
+    font-weight: 400;
 }
 
 .legal-notice-background {
