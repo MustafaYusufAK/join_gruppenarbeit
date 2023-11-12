@@ -217,10 +217,6 @@ h3 {
     justify-content: flex-start;
     display: flex;
     align-items: center;
-<<<<<<< HEAD
-=======
-    gap: 15px;
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     margin-bottom: 15px;
 }
 
@@ -417,13 +413,9 @@ h3 {
     color: #2A3647;
 }
 
-<<<<<<< HEAD
 .taskPopUpNameContainer {
     margin-left: 15px;
 }
-=======
-.taskPopUpNameContainer {}
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
 
 .taskPopUpDiscription {
     height: 50px;
@@ -471,11 +463,7 @@ h3 {
     background-image: url('../assets/img/Prio media-white.svg');
     background-size: contain;
     background-repeat: no-repeat;
-<<<<<<< HEAD
     height: 10px;
-=======
-    height: 19px;
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     width: 24px;
 }
 
@@ -518,7 +506,6 @@ h3 {
     padding: 0px;
     margin-top: 80px;
     margin-bottom: 80px;
-<<<<<<< HEAD
 }
 
 .edit-subTask {
@@ -570,6 +557,4 @@ ul {
     outline: none;
     padding-left: 8px;
     border: 1px solid #DADADA;
-=======
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
 }

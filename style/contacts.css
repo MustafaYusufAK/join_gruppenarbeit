@@ -260,7 +260,6 @@
     height: 510px;
     background-color: white;
     border-radius: 30px;
-    display: none;
 }
 
 #overlay-edit-contact {
@@ -273,7 +272,6 @@
     height: 510px;
     background-color: white;
     border-radius: 30px;
-    display: none;
 }
 
 .add-contact-left-container {
@@ -288,35 +286,8 @@
     position: fixed;
 }
 
-.slide-in {
-    transform: translate(-50%, -50%);
-    animation: slide-in-animation 0.5s forwards;
-    display: block !important;
-}
-
-@keyframes slide-in-animation {
-    from {
-        transform: translateY(-50%) translateX(100%);
-    }
-
-    to {
-        transform: translateY(-50%) translateX(-50%);
-    }
-}
-
-.slide-out {
-    transform: translate(100%, -50%);
-    animation: slide-out-animation 0.5s backwards;
-}
-
-@keyframes slide-out-animation {
-    from {
-        transform: translateY(-50%) translateX(-50%);
-    }
-
-    to {
-        transform: translateY(-50%) translateX(100%);
-    }
+.show-overlay {
+    transform: translate(-50%, -50%) !important;
 }
 
 .overlay-logo {

@@ -149,10 +149,7 @@ function boardClickEventlisteners() {
         event.preventDefault();
         handleBoardOverlayPrioButtonClick('low');
     });
-<<<<<<< HEAD
 
-=======
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
 }
 
 
@@ -206,11 +203,7 @@ function addSubtaskToBoard() {
         listItem.id = 'listElementId';
 
         // Setze den Text des Listenelements basierend auf der Eingabe
-<<<<<<< HEAD
         listItem.textContent = subtaskText;
-=======
-        listItem.textContent = '• ' + subtaskText; // • steht für das Aufzählungszeichen
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
 
         // Erstelle das Edit-Icon und füge es zum Listenelement hinzu
         const editIcon = document.createElement('div');
@@ -283,11 +276,7 @@ function addTaskFromBoardOverlay() {
     let createdAtInput = document.getElementById('createdAt');
 
     // Extrahiere assignedToValues aus den div-Containern mit der ID "ballAssignedToList"
-<<<<<<< HEAD
     let assignedToValues = [];
-=======
-    const assignedToValues = [];
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     const assignedToDivs = document.querySelectorAll('#ballAssignedToList .assigneeContainer');
     assignedToDivs.forEach(div => {
         const assignedValue = div.getAttribute('value');
@@ -435,7 +424,6 @@ function addTaskFromBoardOverlay() {
 
     saveTasks();
 
-<<<<<<< HEAD
 }
 
 
@@ -460,6 +448,4 @@ function setMinDate() {
 
     // Setze das "min"-Attribut des Date-Elements auf das heutige Datum
     document.getElementById('editedCreatedAt').min = currentDate;
-=======
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
 }

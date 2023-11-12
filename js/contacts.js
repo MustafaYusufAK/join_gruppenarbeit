@@ -208,12 +208,15 @@ async function addNewContact() {
     const nameInput = document.getElementById('add-name');
     const emailInput = document.getElementById('add-email');
     let phoneInput = document.getElementById('add-phone');
+    
     const name = nameInput.value;
     const email = emailInput.value;
     let phone = phoneInput.value;
+
     if (!validateName(name) || !validateEmail(email) || !validatePhone(phone)) {
         return;
     }
+    
     const randomColor = getRandomColor();
     const newContact = createContact(name, email, phone, randomColor);
     addContactAndUpdateUI(newContact);
@@ -323,13 +326,20 @@ async function EditContact(i) {
     const editNameInput = document.getElementById('edit-name');
     const editEmailInput = document.getElementById('edit-email');
     const editPhoneInput = document.getElementById('edit-phone');
-    const editName = editNameInput.value; const editEmail = editEmailInput.value; const editPhone = editPhoneInput.value;
+    const editName = editNameInput.value;
+    const editEmail = editEmailInput.value;
+    const editPhone = editPhoneInput.value;
+
+    // Überprüfe, ob der Name, die E-Mail und die Telefonnummer gültig sind
     if (!validateName(editName) || !validateEmail(editEmail) || !validatePhone(editPhone)) {
         return;
     }
+
     const currentColor = contacts[i].color;
     contacts[i] = createContact(editName, editEmail, editPhone, currentColor);
-    generateSideBar(); showContacts(); hideOverlayEdit();
+    generateSideBar();
+    showContacts();
+    hideOverlayEdit();
     openContact(contacts[i].name, contacts[i].email, i, currentColor);
     await saveContacts();
 }
@@ -357,14 +367,9 @@ function validatePhone(phone) {
 function toggleOverlay(show = false) {
     let overlay = document.getElementById('overlay-add-contact');
     if (show) {
-        overlay.classList.remove('slide-out');
-        overlay.classList.add('slide-in');
+        overlay.classList.add('show-overlay');
     } else {
-        overlay.classList.add('slide-out');
-        setTimeout(() => {
-            overlay.classList.remove('slide-in');
-            overlay.classList.remove('slide-out');
-        }, 300); 
+        overlay.classList.remove('show-overlay');
     }
 }
 
@@ -380,8 +385,7 @@ function showOverlayEdit(i, randomColor, initials) {
     bigContactIcon.innerHTML = initials;
     bigContactIcon.style.backgroundColor = randomColor;
     let overlay = document.getElementById('overlay-edit-contact');
-    overlay.classList.add('slide-in');
-    overlay.classList.remove('slide-out');
+    overlay.classList.add('show-overlay');
     showContactValue(i);
     const saveButton = document.querySelector('.save-button');
     saveButton.onclick = () => EditContact(i);
@@ -411,11 +415,7 @@ function showContactValue(i) {
  */
 function hideOverlayEdit() {
     let overlay = document.getElementById('overlay-edit-contact');
-    overlay.classList.add('slide-out');
-    setTimeout(() => {
-        overlay.classList.remove('slide-in');
-        overlay.classList.remove('slide-out');
-    }, 300);
+    overlay.classList.remove('show-overlay');
 }
 
 /**

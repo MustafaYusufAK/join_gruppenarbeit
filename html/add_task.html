@@ -20,6 +20,11 @@
     <script src="../js/contacts.js"></script>
     <script src="../js/menuTemplate.js"></script>
     <script src="../js/add_task.js"></script>
+    <script src="../js/add_task1.js"></script>
+    <script src="../js/add_task2.js"></script>
+    <script src="../js/add_task_templates.js"></script>
+    <script src="../js/notifications.js"></script>
+
     <title>addtask</title>
 </head>
 
@@ -29,17 +34,44 @@
 
     <div class="contentSection contentSectionAddTask">
 
-        <form id="formclass" class="responsive_formclass" onsubmit="addTask()">
-            <div class="header_div">
-                <div>
-                    <h1>Add Task</h1>
+        <div id="show_final_notification_background" class="show_final_notification_background">
+            <div class="show_final_notification_div">
+                <div id="show_final_notification" class="show_final_notification">
+                    <img class="task_added" src="../assets/img/Frame 73.svg" alt="added-task-Icon"
+                        onclick="HideShowFinalNotification()">
                 </div>
             </div>
-            <div class="contentSectionAddTask">
-                <div class="title_description_div">
-                    <div class="add_title_section">
-                        <span>Title</span>
-                        <input required type="text" class="title_inputfield" id="title" placeholder="Enter a title">
+        </div>
+        <div id="prio_notification" class="prio_notification">
+            Please select a priority.
+            <button onclick="prioHideNotification()">Understood</button>
+        </div>
+        <div id="contacts_notification" class="contacts_notification">
+            Please select a contact.
+            <button onclick="contactsHideNotification()">Understood</button>
+        </div>
+        <div id="board_category_notification" class="board_category_notification">
+            Please write your category.
+            <button id="category_board_btn" onclick="showBoardCategoryNotification()">Understood</button>
+        </div>
+        <div id="category_color_notification" class="category_color_notification">
+            Please select a color.
+            <button id="category_color_btn" onclick="categoryColorNotification()">Understood</button>
+        </div>
+
+        <form id="addTaskFormClass" class="responsive_formclass" onsubmit="event.preventDefault(); addTask();">
+            <div>
+                <div class="header_div">
+                    <div>
+                        <h1>Add Task</h1>
+                    </div>
+                </div>
+
+                <div class="contentSectionAddTask">
+                    <div class="title_description_div">
+                        <div class="add_title_section">
+                            <span>Title</span>
+                            <input required type="text" class="title_inputfield" id="title" placeholder="Enter a title">
 
                             <div class="add_description_section">
                                 <span>Description</span>
@@ -220,6 +252,8 @@
                                             onclick="addSubtask()">
                                     </div>
                                 </div>
+
+                                <ul id="subtaskList" class="subtaskList"></ul>
                             </div>
 
                         </div>

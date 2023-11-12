@@ -1,8 +1,5 @@
 .subtask-item {
-<<<<<<< HEAD
     align-items: center;
-=======
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     justify-content: flex-start;
     display: flex;
     margin: 5px;
@@ -129,11 +126,7 @@
 
 
 .categoryAndSelect {
-<<<<<<< HEAD
     width: auto;
-=======
-    width: 375px;
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
@@ -169,9 +162,6 @@
 }
 
 ::-webkit-scrollbar-track {
-<<<<<<< HEAD
     margin-top: 10px;
-=======
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     background-color: transparent;
 }

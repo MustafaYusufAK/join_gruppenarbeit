@@ -110,7 +110,6 @@ function boardHideShowFinalNotification() {
 }
 
 function categoryColorNotification() {
-    const noteWindow = document.getElementById('noteWindow');
     const notification = document.getElementById('category_color_notification');
     const button = document.getElementById('category_color_btn');
     if (window.innerWidth <= 850) {
@@ -119,7 +118,6 @@ function categoryColorNotification() {
     if (window.innerWidth > 850) {
         button.style.display = 'flex'
     }
-    noteWindow.style.display = 'flex';
     notification.style.display = 'flex';
     notification.style.alignItems = 'center'; // Füge align-items: center hinzu
     notification.style.justifyContent = 'center'; // Füge align-items: center hinzu
@@ -132,11 +130,9 @@ function categoryColorNotification() {
 }
 
 function categoryColorHideNotification() {
-    const noteWindow = document.getElementById('noteWindow');
     const notification = document.getElementById('category_color_notification');
     notification.style.opacity = '0';
     setTimeout(() => {
-        noteWindow.style.display = 'none';
         notification.style.display = 'none';
     }, 500);  // Fade-Effekt-Dauer: 0,5 Sekunden
 
@@ -146,7 +142,6 @@ function categoryColorHideNotification() {
 }
 
 function showBoardCategoryNotification() {
-    const noteWindow = document.getElementById('noteWindow');
     const notification = document.getElementById('board_category_notification');
     const button = document.getElementById('category_board_btn');
     if (window.innerWidth <= 850) {
@@ -155,7 +150,6 @@ function showBoardCategoryNotification() {
     if (window.innerWidth > 850) {
         button.style.display = 'flex'
     }
-    noteWindow.style.display = 'flex';
     notification.style.display = 'flex';
     notification.style.alignItems = 'center'; // Füge align-items: center hinzu
     notification.style.justifyContent = 'center'; // Füge align-items: center hinzu
@@ -168,11 +162,9 @@ function showBoardCategoryNotification() {
 }
 
 function categoryBoardHideNotification() {
-    const noteWindow = document.getElementById('noteWindow');
     const notification = document.getElementById('board_category_notification');
     notification.style.opacity = '0';
     setTimeout(() => {
-        noteWindow.style.display = 'none';
         notification.style.display = 'none';
     }, 500);  // Fade-Effekt-Dauer: 0,5 Sekunden
 
@@ -182,7 +174,6 @@ function categoryBoardHideNotification() {
 }
 
 function showBoardPrioNotification() {
-    const noteWindow = document.getElementById('noteWindow');
     const notification = document.getElementById('prio_board_notification');
     const button = document.getElementById('prio_board_btn');
     if (window.innerWidth <= 850) {
@@ -191,7 +182,6 @@ function showBoardPrioNotification() {
     if (window.innerWidth > 850) {
         button.style.display = 'flex'
     }
-    noteWindow.style.display = 'flex';
     notification.style.display = 'flex';
     notification.style.alignItems = 'center'; // Füge align-items: center hinzu
     notification.style.justifyContent = 'center'; // Füge align-items: center hinzu

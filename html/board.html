@@ -31,15 +31,11 @@
     <script src="../js/add_task1.js"></script>
     <script src="../js/add_task2.js"></script>
     <script src="../js/add_task_templates.js"></script>
-<<<<<<< HEAD
     <script src="../js/notifications.js"></script>
-=======
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     <title>Board</title>
 </head>
 
 <body onload="initForBoard()">
-<<<<<<< HEAD
 
 
     <div class="overflow-hidden">
@@ -76,51 +72,6 @@
                 onsubmit="event.preventDefault(); addTaskFromOverlay();">
 
                 <form id="formclass" class="responsive_formclass">
-=======
-    <div id="show_final_notification_background" class="show_final_notification_background">
-        <div class="show_final_notification_div">
-            <div id="show_final_notification" class="show_final_notification">
-                <img class="task_added" src="../assets/img/Frame 73.svg" alt="" onclick="HideShowFinalNotification()">
-            </div>
-        </div>
-    </div>
-    <div id="prio_notification" class="prio_notification">
-        Bitte wählen Sie eine Priorität aus.
-        <button onclick="prioHideNotification()">Verstanden</button>
-    </div>
-    <div id="contacts_notification" class="contacts_notification">
-        Bitte wählen Sie einen Kontakt aus.
-        <button onclick="contactsHideNotification()">Verstanden</button>
-    </div>
-    <div id="date_notification" class="date_notification">
-        Bitte schreiben Sie das gewünschte Datum.
-        <button onclick="dateHideNotification()">Verstanden</button>
-    </div>
-    <div id="description_notification" class="description_notification">
-        Bitte beschreiben Sie ihren Task.
-        <button onclick="descriptionHideNotification()">Verstanden</button>
-    </div>
-    <div id="title_notification" class="title_notification">
-        Schreiben Sie bitte einen Titel.
-        <button onclick="titelHideNotification()">Verstanden</button>
-    </div>
-    <div id="must_have_notification" class="must_have_notification">
-        Bitte füllen Sie alle nötigen Felder aus.
-        <button onclick="mustHaveHideNotification()">Verstanden</button>
-    </div>
-
-    <div class="overflow-hidden">
-        <div id="notification" class="notification d-none">
-            Bitte füllen Sie alle Felder aus.
-            <button onclick="hideNotification()">OK</button>
-        </div>
-
-        <div class="addTaskOverlaySection d-none" id="addTaskOverlaySection" onclick="closeTaskOverviewPopUp()">
-            <form class="add-task-overlay" id="add-task-form" onclick="doNotClose(event)">
-
-                <form id="formclass" class="responsive_formclass"
-                    onsubmit="event.preventDefault(); addTaskFromOverlay();">
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
                     <div class="header_div">
                         <div class="header-vector">
                             <h1>Add Task</h1>
@@ -132,22 +83,13 @@
                         <div class="title_description_div">
                             <div class="add_title_section">
                                 <span>Title</span>
-<<<<<<< HEAD
                                 <input required type="text" class="board_title_inputfield" id="title"
-=======
-                                <input required type="text" class="title_inputfield" id="title"
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
                                     placeholder="Enter a title">
 
                                 <div class="add_description_section">
                                     <span>Description</span>
-<<<<<<< HEAD
                                     <textarea required type="text" class="board_description_inputfield"
                                         id="description_text" placeholder="Enter a Description"></textarea>
-=======
-                                    <textarea required type="text" class="description_inputfield" id="description_text"
-                                        placeholder="Enter a Description"></textarea>
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
 
                                     <div class="assigned_to_section">
                                         <span>Assigned to</span>
@@ -331,11 +273,7 @@
                                         </div>
                                     </div>
 
-<<<<<<< HEAD
                                     <ul id="subtaskList" class="subtaskList"></ul>
-=======
-                                    <ul id="subtaskList"></ul>
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
                                 </div>
 
                             </div>
@@ -345,11 +283,7 @@
                     <div class="clear_and_create_task_position">
                         <div class="clear_and_create_task_btn" id="twoButtonsContainer">
                             <div class="clear_and_create_task_btn">
-<<<<<<< HEAD
                                 <button id="reset" type="reset" class="clear_button" onclick="forClearAddTaskWithBtn()"
-=======
-                                <button id="reset" type="reset" class="clear_button" onclick="clearAddTaskFields()"
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
                                     onmouseover="changeClearBtnIconToHover('clearIconDefault', 'clearIconHover')"
                                     onmouseout="changeClearBtnIconToDefault('clearIconHover', 'clearIconDefault')">
                                     Clear
@@ -418,21 +352,11 @@
                         <h3>To Do</h3>
                     </div>
                     <div>
-<<<<<<< HEAD
                         <img onclick="addTaskForToDo()" src="../assets/img/Property 1=Variant3.svg" alt="+icon"
                             class="add-icon">
                     </div>
                 </div>
                 <div id="target-to-do-table" class="table-heading drop-container task-container">
-=======
-                        <img onclick="openOverlay()" src="../assets/img/Property 1=Variant3.svg" alt="+icon"
-                            class="add-icon">
-                    </div>
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
-                </div>
-                <div id="target-to-do-table" class="table-heading">
-
-                    <div id="to-do-table" class="table-gaps drop-container task-container"></div>
                 </div>
             </div>
 
@@ -442,20 +366,11 @@
                         <h3>In Progress</h3>
                     </div>
                     <div>
-<<<<<<< HEAD
                         <img onclick="addTaskForInProgress()" src="../assets/img/Property 1=Variant3.svg" alt="+icon"
-=======
-                        <img onclick="openOverlay()" src="../assets/img/Property 1=Variant3.svg" alt="+icon"
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
                             class="add-icon">
                     </div>
                 </div>
                 <div id="target-in-progress-table" class="table-heading drop-container task-container">
-<<<<<<< HEAD
-=======
-
-                    <div id="in-progress-table" class="table-gaps drop-container task-container"></div>
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
                 </div>
             </div>
 
@@ -465,7 +380,6 @@
                         <h3>Await Feedback</h3>
                     </div>
                     <div>
-<<<<<<< HEAD
                         <img onclick="addTaskForAwaitFeedback()" src="../assets/img/Property 1=Variant3.svg" alt="+icon"
                             class="add-icon">
                     </div>
@@ -480,23 +394,6 @@
                     </div>
                 </div>
                 <div id="target-done-table" class="table-heading drop-container task-container" id="done-table">
-=======
-                        <img onclick="openOverlay()" src="../assets/img/Property 1=Variant3.svg" alt="+icon"
-                            class="add-icon">
-                    </div>
-                </div>
-                <div id="target-await-feedback-table" class="table-heading drop-container task-container">
-
-                    <div id="await-feedback-table" class="table-gaps drop-container task-container"></div>
-                </div>
-            </div>
-
-            <div>
-                <div id="target-done-table" class="table-heading drop-container task-container" id="done-table">
-                    <div class="table-header">
-                        <h3>Done</h3>
-                    </div>
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
                 </div>
             </div>
         </div>

@@ -12,10 +12,7 @@
 
 /* CSS für die Benachrichtigung */
 .contacts_notification {
-<<<<<<< HEAD
     text-align: center;
-=======
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     display: none;
     position: absolute;
     top: 20px;
@@ -46,10 +43,7 @@
 }
 
 .prio_notification {
-<<<<<<< HEAD
     text-align: center;
-=======
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     display: none;
     position: absolute;
     top: 20px;
@@ -78,12 +72,8 @@
     border-radius: 5px;
 }
 
-<<<<<<< HEAD
 .board_category_notification {
     text-align: center;
-=======
-.title_notification {
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     display: none;
     position: absolute;
     top: 20px;
@@ -98,11 +88,7 @@
     transition: opacity 0.5s;
 }
 
-<<<<<<< HEAD
 .board_category_notification button {
-=======
-.title_notification button {
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     background: #007BFF;
     color: white;
     border: none;
@@ -117,10 +103,7 @@
 }
 
 .description_notification {
-<<<<<<< HEAD
     text-align: center;
-=======
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     display: none;
     position: absolute;
     top: 20px;
@@ -150,10 +133,7 @@
 }
 
 .date_notification {
-<<<<<<< HEAD
     text-align: center;
-=======
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     display: none;
     position: absolute;
     top: 20px;
@@ -182,12 +162,8 @@
     border-radius: 5px;
 }
 
-<<<<<<< HEAD
 .category_color_notification {
     text-align: center;
-=======
-.must_have_notification {
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     display: none;
     position: absolute;
     top: 20px;
@@ -202,11 +178,7 @@
     transition: opacity 0.5s;
 }
 
-<<<<<<< HEAD
 .category_color_notification button {
-=======
-.must_have_notification button {
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     background: #007BFF;
     color: white;
     border: none;
@@ -221,10 +193,7 @@
 }
 
 .show_final_notification {
-<<<<<<< HEAD
     text-align: center;
-=======
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
     display: none;
     position: relative;
     flex-direction: column;
@@ -273,16 +242,11 @@
     align-items: flex-start;
     height: 100%;
     width: 100%;
-<<<<<<< HEAD
     display: flex;
-=======
-    display: flex
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
 }
 
 .task_added {
     cursor: pointer;
-<<<<<<< HEAD
 }
 
 .noteWindow {
@@ -334,6 +298,4 @@
         top: 8%;
     }
 
-=======
->>>>>>> 39d36ac64bdf993867c60fee9b0cca582612aa7d
 }
