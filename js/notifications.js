@@ -174,6 +174,7 @@ function categoryBoardHideNotification() {
 }
 
 function showBoardPrioNotification() {
+    const noteWindow = document.getElementById('noteWindow');
     const notification = document.getElementById('prio_board_notification');
     const button = document.getElementById('prio_board_btn');
     if (window.innerWidth <= 850) {
@@ -182,6 +183,7 @@ function showBoardPrioNotification() {
     if (window.innerWidth > 850) {
         button.style.display = 'flex'
     }
+    noteWindow.style.display = 'flex';
     notification.style.display = 'flex';
     notification.style.alignItems = 'center'; // Füge align-items: center hinzu
     notification.style.justifyContent = 'center'; // Füge align-items: center hinzu

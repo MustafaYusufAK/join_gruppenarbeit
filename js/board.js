@@ -1068,6 +1068,7 @@ function boardConfirm() {
 
         saveTasks();
         priorityArray = [];
+        currentTaskId = [];
         closeTaskOverviewPopUp();
         showTasks();
         restoreTasksFromLocalStorage();
