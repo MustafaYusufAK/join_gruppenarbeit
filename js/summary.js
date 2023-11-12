@@ -242,13 +242,10 @@ function openTaskBoard() {
  */
 async function fillSummary() {
     let userName = getUserName();
-    console.log('userName:', userName);
 
     let users = JSON.parse(await getItem('users'));
-    console.log('users:', users);
 
     let user = users.find(u => u.name == userName);
-    console.log('user:', user);
 
     //ToDo//
     countTasks(user,'to_do_count', 'toDo');
@@ -343,9 +340,11 @@ function findDueDate(user) {
     let closestDate = Infinity;
     let tasks = user['tasks']
     for (let i = 0; i < tasks.length; i++) {
-        let task = new Date(tasks[i]['createdAt']);
-        if (task < closestDate || closestDate === null) {
-            closestDate = task;
+        if (tasks[i]['priority'] == 'urgent') {            
+            let task = new Date(tasks[i]['createdAt']);
+            if (task < closestDate || closestDate === null) {
+                closestDate = task;
+            }
         }
     }
     if (closestDate == Infinity) {

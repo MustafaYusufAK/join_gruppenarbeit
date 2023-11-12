@@ -1074,10 +1074,12 @@ function boardConfirm() {
 
         saveTasks();
         priorityArray = [];
+        currentTaskId = [];
         closeTaskOverviewPopUp();
         showTasks();
         restoreTasksFromLocalStorage();
         sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
+        // initForBoard();
     } else {
         console.error(`Task mit der ID "${taskId}" wurde nicht im allTasks-Array gefunden.`);
         return;
