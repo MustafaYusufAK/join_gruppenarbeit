@@ -15,7 +15,7 @@ async function resetPassword() {
     const msg = urlParams.get('msg');
 
     if (password1.value == password2.value) {
-        let user = users.find(u => u.email === msg);
+        let user = users.find(u => u.email === msg.toLowerCase());
         user.password = password1.value;
         setItem('users', JSON.stringify(users));
         resetPasswordSuccesfully.classList.remove('d-none');

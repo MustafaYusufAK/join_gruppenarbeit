@@ -251,22 +251,22 @@ async function fillSummary() {
     console.log('user:', user);
 
     //ToDo//
-    countTasks(user, 'task_category', 'ToDo', 'to_do_count');
+    countTasks(user,'to_do_count', 'toDo');
 
     //Done//
-    countTasks(user, 'task_category', 'Done', 'done_count');
+    countTasks(user, 'done_count', 'done');
 
     //urgend//
-    countTasks(user, 'priority', 'urgent', 'urgend_count');
+    countPriority(user, 'priority', 'urgent', 'urgend_count');
 
     //Task Progress//
-    countTasks(user, 'task_category', 'TaskProgess', 'task_progress_count');
+    countTasks(user, 'task_progress_count', 'progress');
 
     //Task Await Feedback//
-    countTasks(user, 'task_category', 'TaskFeedback', 'task_feedback_count');
+    countTasks(user, 'task_feedback_count', 'feedback');
 
     //Tasks at Board//
-    countBoardTasks(user, 'task_board_count');
+    countBoardTasks(user, 'task_board_count', 'tasks');
 }
 
 
@@ -281,7 +281,7 @@ async function fillSummary() {
  * @param {string} status 
  * @param {string} containerID 
  */
-function countTasks(user, taskcategory, status, containerID) {
+function countPriority(user, taskcategory, status, containerID) {
     let taskCount = 0;
     for (let i = 0; i < user['tasks'].length; i++) {
         const task = user['tasks'][i];
@@ -295,6 +295,21 @@ function countTasks(user, taskcategory, status, containerID) {
     document.getElementById(containerID).innerHTML = taskCount;
 }
 
+//------------------------------------------------------------------------------//
+//-----------------------------Count Task Category------------------------------//
+//------------------------------------------------------------------------------//
+
+/**
+ * Count Task Category
+ * @param {string} user 
+ * @param {string} containerID 
+ * @param {string} category 
+ */
+function countTasks(user, containerID, category) {
+let taskCounter =  user.sortTasks[category];
+document.getElementById(containerID).innerHTML = taskCounter.length;
+}
+
 
 //------------------------------------------------------------------------------//
 //-------------------------------Count all Tasks--------------------------------//
@@ -305,9 +320,9 @@ function countTasks(user, taskcategory, status, containerID) {
  * @param {string} user 
  * @param {string} containerID 
  */
-function countBoardTasks(user, containerID) {
+function countBoardTasks(user, containerID, taskarray) {
     let taskAtBoard = 0;
-    for (let i = 0; i < user['tasks'].length; i++) {
+    for (let i = 0; i < user[taskarray].length; i++) {
         taskAtBoard++
     }
     document.getElementById(containerID).innerHTML = taskAtBoard;

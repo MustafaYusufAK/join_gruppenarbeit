@@ -198,6 +198,15 @@ async function saveTasks() {
     await setItem('users', JSON.stringify(users));
 }
 
+async function saveTasksCategory() {
+    let users = JSON.parse(await getItem('users'));
+    let userName = getUserName();
+
+    let userIndex = users.findIndex(u => u.name === userName);
+    users[userIndex].sortTasks = task_category; 
+    await setItem('users', JSON.stringify(users));
+}
+
 
 //------------------------------------------------------------------------------//
 //-----------------------------load Tasks at Backend----------------------------//
