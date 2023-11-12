@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"]; // Benutzername aus dem POST-Daten erhalten
 
     $message = str_replace('{{reset_user}}', $username, $message);
-    $message = str_replace('{{reset_link}}', 'https://jan-horstmann.developerakademie.net/join_gruppenarbeit/resetpassword.html?msg=' . $_POST["email"], $message);
+    $message = str_replace('{{reset_link}}', 'gruppe-691.developerakademie.net/join_gruppenarbeit/resetpassword.html?msg=' . $_POST["email"], $message);
 
     $headers = "From: webmaster@example.com\r\n";
     $headers .= "MIME-Version: 1.0\r\n";

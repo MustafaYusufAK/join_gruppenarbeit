@@ -255,7 +255,7 @@ function findTask() {
     });
 }
 
-
+let task_category = {};
 
 let tasksToDo = [];
 let tasksInProgress = [];
@@ -297,6 +297,12 @@ function sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeed
             }
         }
     });
+
+task_category.toDo = tasksToDo;
+task_category.progress= tasksInProgress;
+task_category.feedback= tasksAwaitFeedback;
+task_category.done= tasksDone;
+saveTasksCategory();
 }
 
 
@@ -1073,6 +1079,7 @@ function boardConfirm() {
         showTasks();
         restoreTasksFromLocalStorage();
         sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
+        // initForBoard();
     } else {
         console.error(`Task mit der ID "${taskId}" wurde nicht im allTasks-Array gefunden.`);
         return;
