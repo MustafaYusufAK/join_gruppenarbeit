@@ -21,8 +21,8 @@
 }
 
 .summary-content {
-    height: calc(100vh - 105px);
     display: flex;
+    margin-bottom: 100px;
 }
 
 .summary-board {
@@ -31,8 +31,8 @@
 }
 
 .task-summary {
-    width: 560px;
-    height: 562px;
+    width: 90%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -61,25 +61,26 @@
 .tasks-and-greeting {
     display: flex;
     align-items: center;
-    height: 65vh;
+    height: 450px;
+
 }
 
 .to-do-and-done {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    width: 560px;
-    height: 184px;
+    width: 100%;
+    height: 30%;
 }
 
 .to-do-and-done-taskarea {
-    width: 264px;
-    height: 168px;
+    width: 40%;
+    height: 85%;
 }
 
 .to-do-and-done-taskarea-hover {
-    width: 280px;
-    height: 184px;
+    width: 45%;
+    height: 90%;
 }
 
 .summary-progress {
@@ -112,11 +113,15 @@
 }
 
 .summary-urgend {
-    height: 168px;
+    height: 90%;
 }
 
 .summary-urgend-hover {
-    height: 184px;
+    height: 100%;
+}
+
+.urgend {
+    height: 30%;
 }
 
 .urgend-count {
@@ -128,14 +133,14 @@
 .urgend-tasks {
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     gap: 61px;
 }
 
 .urgend-task-border {
     border: 2px solid #D1D1D1;
-    height: 102px;
+    height: 80%;
 }
 
 .urgend-deadline {
@@ -146,14 +151,14 @@
 
 .summary-task-board {
     width: 100%;
-    height: 184px;
     display: flex;
     justify-content: space-between;
 }
 
 .summary-task-board-container {
-    width: 184px;
-    height: 184px;
+    width: 30%;
+    height: 100%;
+    padding: 10px;
 }
 
 .summary-tasks {
@@ -167,13 +172,11 @@
 }
 
 .urgent-task-overview {
-    width: 168px;
-    height: 168px;
+    height: 90%;
 }
 
 .urgent-task-overview-hover {
-    width: 184px;
-    height: 184px;
+    height: 100%;
 }
 
 /*---------------------Greeting User-------------------*/
@@ -290,18 +293,17 @@
     }
 
     .summary-content {
-        height: calc(100vh - 180px);
         justify-content: center;
         align-items: center;
     }
 
     .summary-board {
         margin-left: 0px;
+        
     }
 
 }
 
-@media (max-width: 950px) {}
 
 @media (max-width: 850px) {
     .summary-board {
@@ -310,10 +312,10 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-    }
+    margin-bottom: 100px;
+}
 }
 
-@media (max-width: 750px) {}
 
 @media (max-width: 600px) {
 
@@ -333,60 +335,10 @@
         display: none;
     }
 
-    .task-summary {
-        width: 500px;
-        height: 480px;
-    }
-
-    .to-do-and-done {
-        width: 500px;
-        height: 154px;
-    }
-
-    .to-do-and-done-taskarea {
-        width: 234px;
-        height: 138px;
-    }
-
-    .to-do-and-done-taskarea-hover {
-        width: 250px;
-        height: 154px;
-    }
-
-    .summary-urgend {
-        height: 138px;
-    }
-
-    .summary-urgend-hover {
-        height: 154px;
-    }
-
-    .urgent-task-overview {
-        width: 138px;
-        height: 138px;
-    }
-
-    .urgent-task-overview-hover {
-        width: 154px;
-        height: 154px;
-    }
-
-    .summary-task-board-container {
-        width: 154px;
-        height: 154px;
-    }
-
-    .summary-task-board {
-        height: 154px;
-    }
 
     .summary-progress img {
         width: 50px;
         height: 50px;
-    }
-
-    .urgend-task-border {
-        height: 86px;
     }
 }
 
@@ -397,102 +349,12 @@
     }
 
     .tasks-and-greeting {
-        height: 55vh;
+        height: 450px;
     }
 
-    .task-summary {
-        width: 388px;
-        height: 80%;
-    }
-
-    .to-do-and-done {
-        width: 100%;
-        height: 120px;
-    }
-
-    .to-do-and-done-taskarea {
-        width: 186px;
-        height: 110px;
-    }
-
-    .to-do-and-done-taskarea-hover {
-        width: 194px;
-        height: 120px;
-    }
-
-    .summary-urgend {
-        height: 110px;
-    }
-
-    .summary-urgend-hover {
-        height: 120px;
-    }
-
-    .urgend-tasks {
-        gap: 20px;
-    }
-
-    .urgent-task-overview {
-        width: 116px;
-        height: 116px;
-    }
-
-    .urgent-task-overview-hover {
-        width: 124px;
-        height: 124px;
-    }
-
-    .summary-task-board-container {
-        width: 124px;
-        height: 124px;
-    }
-
-    .summary-task-board {
-        height: 124px;
-    }
 
     .summary-progress img {
         width: 40px;
         height: 40px;
-    }
-
-    .urgend-task-border {
-        height: 68px;
-    }
-}
-
-@media (max-width: 400px) {
-
-    .task-summary {
-        width: 350px;
-        gap: 10px;
-    }
-
-    .to-do-and-done-taskarea {
-        width: 167px;
-        height: 110px;
-    }
-
-    .to-do-and-done-taskarea-hover {
-        width: 175px;
-        height: 120px;
-    }
-
-    .summary-urgend {
-        height: 100px;
-    }
-
-    .summary-urgend-hover {
-        height: 110px;
-    }
-
-    .urgent-task-overview {
-        width: 108px;
-        height: 108px;
-    }
-
-    .urgent-task-overview-hover {
-        width: 116px;
-        height: 116px;
     }
 }

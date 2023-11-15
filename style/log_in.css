@@ -1,3 +1,7 @@
+body {
+    padding: 20px;
+}
+
 .header-logo {
     height: 89px;
     display: flex;
@@ -170,7 +174,7 @@ a:hover {
 
 .content-log-in {
     width: 100%;
-    height: 100vh;
+    height: clamp(600px, calc(100vh - 60px), calc(100vh - 60px));
     display: flex;
     justify-content: center;
     align-items: center;
@@ -182,8 +186,8 @@ a:hover {
     align-items: center;
     justify-content: space-between;
     background-color: #FFFFFF;
-    width: 652px;
-    height: 505px;
+    width: 60%;
+    height: clamp(500px, 60%, 60%);
     padding: 48px 115px;
     border-radius: 30px;
 }
@@ -196,7 +200,7 @@ a:hover {
     align-items: center;
 }
 
-.arrow-left-line img{
+.arrow-left-line img {
     cursor: pointer;
     height: 35px;
 }
@@ -206,7 +210,6 @@ a:hover {
 }
 
 .logo-input {
-    /*width: 100%;*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -281,7 +284,7 @@ a:hover {
     justify-content: space-between;
     background-color: #FFFFFF;
     width: 598px;
-    height: 630px;
+    height: clamp(595px, 60%, 60%);
     padding: 48px 88px;
     border-radius: 30px;
 }
@@ -385,7 +388,7 @@ a:hover {
 }
 
 .forgot-password-logo {
-    gap: 15px;
+    gap: 0;
     margin-right: 32px;
 }
 
@@ -499,7 +502,7 @@ a:hover {
     }
 
     /*---------------------Log In-------------------*/
-    
+
     @keyframes reduceLogo {
         0% {
             width: 100px;
@@ -540,7 +543,6 @@ a:hover {
 
     .log-in {
         width: 90%;
-        height: 550px;
         padding: 32px 0px;
     }
 
@@ -573,10 +575,7 @@ a:hover {
     }
 
     .rigister-user-login {
-        top: unset;
-        right: 0;
-        left: 0;
-        bottom: 5px;
+        position: unset;
         justify-content: center;
     }
 
@@ -595,8 +594,7 @@ a:hover {
     }
 
     .sign-up {
-        width: 396px;
-        height: 595px;
+        width: 60%;
         padding: 32px 0px;
     }
 
@@ -634,7 +632,19 @@ a:hover {
 
 }
 
+@media (max-width: 700px) {
+
+    .log-in {
+        height: 500px;
+    }
+}
+
 @media (max-width: 650px) {
+
+    .log-in {
+        height: 500px;
+    }
+
     .header-logo {
         text-wrap: wrap;
         text-align: center;
@@ -719,16 +729,12 @@ a:hover {
 
     /*----------------Forgot Pasword----------------*/
 
-    
+
 }
 
 @media (max-width: 400px) {
 
     /*--------------------Log In--------------------*/
-
-    /*.startscreen-logo {
-        display: none;
-    }*/
 
     @keyframes reduceLogo {
         0% {
@@ -745,7 +751,7 @@ a:hover {
         0% {
             opacity: 1;
         }
-    
+
         100% {
             opacity: 0;
             display: none;
