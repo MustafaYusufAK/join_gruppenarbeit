@@ -1,5 +1,6 @@
 async function init() {
-    await loadTasks()
+    await loadTasks();
+    await loadContacts();
     generateSideBar();
     clickEventlisteners();
     createContactDropdown();

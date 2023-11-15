@@ -100,12 +100,6 @@
     justify-content: flex-start;
 }
 
-span {
-    font-size: 21px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
 .d-none {
     display: none;
 }
@@ -411,8 +405,6 @@ button:hover {
     display: inline;
 }
 
-.boardSubtaskList {}
-
 .boardSubtaskList ul {
     list-style-type: circle;
     /* Aufzählungszeichen für die Liste */
@@ -455,6 +447,8 @@ button:hover {
     height: 30px;
     margin-left: 10px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .delete_icon_div {
@@ -462,6 +456,8 @@ button:hover {
     height: 30px;
     border-radius: 10px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .delete_icon_div:hover {

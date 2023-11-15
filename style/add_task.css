@@ -36,12 +36,6 @@
     justify-content: space-between;
 }
 
-span {
-    font-size: 21px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
 .d-none {
     display: none;
 }
@@ -388,7 +382,10 @@ button:hover {
     display: inline;
 }
 
-.subtaskList {}
+.subtaskList {
+    max-height: 70px;
+    overflow-y: scroll;
+}
 
 .subtaskList li::before {
     content: "•";
