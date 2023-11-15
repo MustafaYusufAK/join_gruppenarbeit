@@ -8,14 +8,11 @@
 function generateInitials(name) {
     const nameParts = name.split(' ');
     const firstName = nameParts[0] || '';
-    const lastName = nameParts.length > 1 ? nameParts[1] : ''; // Hier prüfen, ob es einen Nachnamen gibt
-    let initials = (firstName[0] || '') + (lastName[0] || ''); // Entferne das 'X' für den Nachnamen
-
-    // Falls keine Initials erstellt wurden, setze einen Standardbuchstaben (z.B. 'X')
+    const lastName = nameParts.length > 1 ? nameParts[1] : '';
+    let initials = (firstName[0] || '') + (lastName[0] || '');
     if (initials.length === 0) {
         initials = 'X';
     }
-
     return initials;
 }
 
@@ -30,7 +27,7 @@ function generateFirstLetters() {
     contacts.forEach((contact, i) => {
         const nameParts = contact.name.split(' ');
         if (nameParts.length > 0) {
-            const firstName = nameParts[0][0].toUpperCase(); // Nur den ersten Buchstaben des ersten Namens teilen
+            const firstName = nameParts[0][0].toUpperCase();
             firstLettersMap.set(firstName, [...(firstLettersMap.get(firstName) || []), i]);
         }
     });
@@ -45,13 +42,10 @@ function generateFirstLetters() {
  * @param {number} index - The index of the contact to highlight.
  */
 function highlightContact(index) {
-    // Entferne die Hervorhebung von allen Kontakten
     const allContacts = document.querySelectorAll('.new-contact-box');
     allContacts.forEach(contact => {
         contact.classList.remove('selected-contact');
     });
-
-    // Füge die Hervorhebung zum ausgewählten Kontakt hinzu
     const selectedContact = document.querySelector(`#contact-icon-${index}`);
     if (selectedContact) {
         selectedContact.parentElement.classList.add('selected-contact');

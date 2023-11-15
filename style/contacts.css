@@ -45,6 +45,10 @@
     background-color: #A8A8A8;
 }
 
+.d-none {
+    display: none !important;
+} 
+
 .add-button {
     background-color: rgb(42, 54, 71);
     padding: 10px;
@@ -260,6 +264,7 @@
     height: 510px;
     background-color: white;
     border-radius: 30px;
+    z-index: 3;
 }
 
 #overlay-edit-contact {
@@ -272,6 +277,7 @@
     height: 510px;
     background-color: white;
     border-radius: 30px;
+    z-index: 3;
 }
 
 .add-contact-left-container {
@@ -385,7 +391,6 @@
 
 .overlay-buttons {
     display: flex;
-    margin-left: 650px;
     margin-top: 20px;
     gap: 20px;
 }
@@ -399,11 +404,11 @@
     cursor: pointer;
     width: 110px;
     align-items: center;
-    height: 60px;
+    height: 48px;
     gap: 10px;
     background-image: url(../assets/img/close.svg);
     background-repeat: no-repeat;
-    background-position: 90px 24px;
+    background-position: 90px 18px;
 }
 
 .cancel-button:hover {
@@ -411,28 +416,26 @@
     border: 1px solid #29ABE2;
     background-image: url('../assets/img/cancel-blue.svg');
     background-repeat: no-repeat;
-    background-position: 85px 18px;
+    background-position: 84px 12px;
 }
 
 .create-button {
     cursor: pointer;
-    height: 60px;
+    height: 49.6px;
     color: white;
     font-size: 21px;
     background-color: #2A3647;
     border-radius: 10px;
-    padding-left: 10px;
-    background-image: url('../assets/img/check.svg');
+    padding-right: 20px;
+    background-image: url(../assets/img/check.svg);
     background-repeat: no-repeat;
-    background-position: 164px 18px;
-    width: 186px;
-    display: flex;
-    align-items: center;
-
+    background-position: 150px 11px;
+    width: 178px;
 }
 
 .create-button:hover {
     background-color: #29ABE2;
+    border-color: #29ABE2;
 }
 
 .close-image {
@@ -481,6 +484,7 @@
 
 .save-button:hover {
     background-color: #29ABE2;
+    border-color: #29ABE2;
 }
 
 .first-letter {

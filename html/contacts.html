@@ -27,18 +27,22 @@
                         Add new contact <img src="../assets/img/person_add.svg" class="img-add-contact">
                     </div>
                 </div>
-                <div class="add-button-mobile"  onclick="toggleOverlay(true)"></div>
                 <div id="new-contacts"></div>
             </div>
+            <div id="add-button-mobile" onclick="toggleOverlay(true)"></div>
         </div>
-        <div id="contacts-box"><div class="headline-flex-box">
-            <h1 class="headline-contacts">Contacts <img src="../assets/img/arrow.svg" class="arrow-mobile" onclick="toggleContactsMobile()"></h1>
-            <div class="separator"></div>
-            <h2 class="subheadline">Better with a team</h2>
-            <div class="separator-mobile"></div>
-            <img src="../assets/img/arrow.svg" alt="blue-arrow-image" class="arrow" onclick="toggleContactsMobile()">
+        <div id="contacts-box">
+            <div class="headline-flex-box">
+                <h1 class="headline-contacts">Contacts <img src="../assets/img/arrow.svg" class="arrow-mobile"
+                        onclick="toggleContactsMobile()"></h1>
+                <div class="separator"></div>
+                <h2 class="subheadline">Better with a team</h2>
+                <div class="separator-mobile"></div>
+                <img src="../assets/img/arrow.svg" alt="blue-arrow-image" class="arrow"
+                    onclick="toggleContactsMobile()">
+            </div>
+            <div id="show-contact"></div>
         </div>
-        <div id="show-contact"></div></div>
         <div id="overlay-add-contact">
             <div class="add-contact-left-container">
                 <img src="../assets/img/Capa 1.svg" class="overlay-logo" alt="logo-image">
@@ -52,20 +56,21 @@
             <div class="close-button" onclick="toggleOverlay()"><img src="../assets/img/close.svg" alt="close-button">
             </div>
             <div class="input-fields">
-                <form>
-                    <input class="input person-icon" id="add-name" type="text" placeholder="Name" required>
-                    <input class="input email-icon" id="add-email" type="email" placeholder="Email" required>
-                    <input class="input phone-icon" id="add-phone" type="tel" placeholder="Phone" required>
+                <form onsubmit="addNewContact(event)">
+                    <input required class="input person-icon" id="add-name" type="text" placeholder="Name" pattern="[A-Za-zÄäÖöÜüß ]+" maxlength="23">
+                    <input required class="input email-icon" id="add-email" type="email" placeholder="Email" maxlength="23">
+                    <input required class="input phone-icon" type="tel" id="add-phone" placeholder="Phone" pattern="[0-9+\s ]*" maxlength="24">
+                    <div class="overlay-buttons buttons-margin-left">
+                        <div onclick="toggleOverlay()" class="cancel-button">
+                            Cancel
+                        </div>
+                        <button class="create-button" type="submit">
+                            Create contact
+                        </button>
+                    </div>
                 </form>
             </div>
-            <div class="overlay-buttons buttons-margin-left">
-                <div onclick="toggleOverlay()" class="cancel-button">
-                    Cancel
-                </div>
-                <div class="create-button" onclick="addNewContact()">
-                    Create contact
-                </div>
-            </div>
+
         </div>
         <div id="overlay-edit-contact">
             <div class="add-contact-left-container">
@@ -79,22 +84,9 @@
             <div class="close-button" onclick="hideOverlayEdit()"><img src="../assets/img/close.svg" alt="close-button">
             </div>
             <div class="input-fields">
-                <form action="onsubmit">
-                    <input class="input person-icon" type="text" id="edit-name" placeholder="Name" required>
-                    <input class="input email-icon" type="email" id="edit-email" placeholder="Email" required>
-                    <input class="input phone-icon" type="tel" id="edit-phone" placeholder="Phone" required>
-                </form>
-            </div>
-            <div class="overlay-buttons">
-                <div onclick="deleteContact()" class="delete-button">
-                    Delete
-                </div>
-                <div class="save-button">
-                    save <img src="../assets/img/check.svg" alt="checkmark-image">
-                </div>
+                <div id="edit-input-fields"></div>
             </div>
         </div>
-    </div>
 </body>
 
 </html>

@@ -10,7 +10,7 @@ function generateSideBar() {
                 <a href="./summary.html?msg=Welcomme to Join, ${userName}" class="nav-sub summary-background"><img src="../assets/img/Icons.svg">Summary</a>
                 <a href="./add_task.html?msg=Welcomme to Join, ${userName}" class="nav-sub add-task-background"><img src="../assets/img/Icons (1).svg">Add Task</a>
                 <a href="./board.html?msg=Welcomme to Join, ${userName}" class="nav-sub board-background"><img src="../assets/img/Icons (2).svg">Board</a>
-                <a href="./contacts.html?msg=Welcomme to Join, ${userName}" class="nav-sub contacts-background"><img src="../assets/img/Icons (3).svg">Contacs</a>
+                <a href="./contacts.html?msg=Welcomme to Join, ${userName}" class="nav-sub contacts-background"><img src="../assets/img/Icons (3).svg">Contacts</a>
             </div>
             <div class="nav-bottom">
                 <a href="../html/privacy_policy.html" class="nav-bottom-a privacy-policy-background" target= "_blank">Privacy Policy</a>

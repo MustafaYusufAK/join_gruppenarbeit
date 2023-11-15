@@ -37,6 +37,8 @@
 
     .big-contact-icon {
         font-size: 28px;
+        width: 90px;
+        height: 90px;
     }
 
     .name-contact {
@@ -46,11 +48,6 @@
     .contact-info {
         font-size: 18px;
 
-    }
-
-    .big-contact-icon {
-        width: 90px;
-        height: 90px;
     }
 
     .contact-menu {
@@ -76,9 +73,7 @@
 
     .overlay-buttons {
         display: flex;
-        margin-left: 490px;
         margin-top: 0px;
-        gap: 20px;
     }
 
     .overlay-logo {
@@ -112,7 +107,7 @@
     }
 
     .input-fields {
-        margin-left: 480px;
+        margin-left: 473px;
     }
 
     #overlay-add-contact {
@@ -123,10 +118,6 @@
     .over-logo-person {
         width: 90px;
         height: 90px;
-    }
-
-    .buttons-margin-left {
-        margin-left: 450px;
     }
 
     .input {
@@ -310,17 +301,9 @@
         background-color: #29ABE2;
     }
 
-    .buttons-margin-left {
-        margin-left: 165px;
-    }
-
-    .cancel-button {
-        display: none;
-    }
-
     .overlay-buttons {
-        margin-top: 30px;
-        margin-left: 124px;
+        margin-top: 20px;
+        gap: 10px;
     }
 
     .create-button {
@@ -350,14 +333,14 @@
         display: none;
     }
 
-    .add-button-mobile {
+    #add-button-mobile {
         background-image: url(../assets/img/mobile-person-icon.svg);
         background-repeat: no-repeat;
         width: 64px;
         height: 64px;
         position: absolute;
-        bottom: 60px;
-        right: 8%;
+        bottom: 90px;
+        right: 30%;
         cursor: pointer;
     }
 
@@ -402,17 +385,9 @@
     .flex-box-overlay {
         left: 124px;
     }
-
-    .buttons-margin-left {
-        margin-left: 70px !important;
-    }
-
+    
     #overlay-edit-contact {
         width: 334px;
-    }
-
-    .overlay-buttons {
-        margin-left: 32px;
     }
 
     .flex-box-mobile {
@@ -426,72 +401,30 @@
     .create-button {
         margin: 0;
     }
-}
 
-@media (max-width: 450px) {
-
-    .headline-flex-box {
-        flex-direction: column;
-        align-items: flex-start;
+    #add-button-mobile {
+        right: 23%;
     }
 
-    .headline-contacts {
-        display: flex;
-        gap: 100px;
-        padding: 0 10px;
+    .overlay-buttons {
+        gap: 9px;
     }
 
-    .subheadline {
-        padding: 0 10px;
-        margin: 5px 0px 8px 0px;
+    .cancel-button {
+        width: 92px;
+        background-position: 83px 18px;
     }
 
-    .separator {
-        display: none;
-    }
-
-    .separator-mobile {
-        display: block;
-        width: 90px;
-        border: 3px solid rgba(0, 0, 0, 0.1);
-        background-color: #29ABE2;
-        border-radius: 4px;
-        margin-left: 10px;
-        margin-bottom: 40px;
-    }
-
-    .arrow {
-        display: none;
-    }
-
-    .arrow-mobile {
-        display: block;
-        cursor: pointer;
-    }
-
-    .contact-info {
-        margin: 20px 0px 20px 10px;
-    }
-
-    .email-headline {
-        margin-left: 10px;
-    }
-
-    .margin-left {
-        margin-left: 10px;
+    .cancel-button:hover {
+        background-position: 77px 12px;
     }
 
     .big-contact-icon {
-        width: 65px;
-        height: 65px;
-        margin-right: 10px;
+        width: 70px;
+        height: 70px;
     }
 
     .name-contact {
-        font-weight: 600;
-    }
-
-    .edit-image {
-        margin-right: 0;
+        font-size: 22px;
     }
 }

@@ -96,10 +96,11 @@ function addContacts(contactContent, contactIndices) {
         const randomColor = contact.color;
         const initials = generateInitials(contact.name);
 
-        contactContent.innerHTML += contactContentTemplate(contact, index,  randomColor, initials, id);
+        contactContent.innerHTML += contactContentTemplate(contact, index, randomColor, initials, id);
 
         const element = document.getElementById(id);
         element.style.backgroundColor = randomColor;
+
     });
 }
 
@@ -130,6 +131,10 @@ function isWideScreen() {
     return window.innerWidth <= 750;
 }
 
+function isHeightScreen() {
+    return window.innerHeight <= 600;
+}
+
 /**
  * Function to toggle the display of contacts on mobile devices.
  * @param {boolean} showContacts - True to display contacts, otherwise false.
@@ -137,6 +142,8 @@ function isWideScreen() {
 function toggleContactsMobile(showContacts) {
     let hideContacts = document.getElementById('contact-menu');
     let contactsBox = document.getElementById('contacts-box');
+    let mobileContactIcon = document.getElementById('add-button-mobile');
+    mobileContactIcon.classList.remove('d-none');
 
     if (showContacts) {
         hideContacts.classList.add('d-none');
@@ -178,9 +185,34 @@ function openContact(contactName, contactEmail, i, randomColor) {
     const bigContactIcon = document.getElementById(`big-contact-icon-${i}`);
     bigContactIcon.style.backgroundColor = randomColor;
     const element = document.getElementById(`contact-icon-${i}`);
-    if (isWideScreen()) {
+    if (isWideScreen() || isHeightScreen())
         element.onclick = toggleContactsMobile(showContacts);
-        } 
+    let mobileContactIcon = document.getElementById('add-button-mobile');
+    mobileContactIcon.classList.add('d-none');
+    let editInputFields = document.getElementById('edit-input-fields');
+    editInputFields.innerHTML = editContactTemplate(i);
+}
+
+/**
+ * Generates an HTML template for editing a contact.
+ *
+ * @param {number} i - The index of the contact.
+ * @returns {string} - The HTML template for editing a contact.
+ */
+function editContactTemplate(i) {
+    return /*html*/ `<form onsubmit="editContact(${i})">
+        <input required class="input person-icon" type="text" id="edit-name" placeholder="Name" pattern="[A-Za-zÄäÖöÜüß ]+" maxlength="23">
+        <input required class="input email-icon" type="email" id="edit-email" placeholder="Email" maxlength="23">
+        <input required class="input phone-icon" type="tel" id="edit-phone" placeholder="Phone" pattern="[0-9+\s ]*" maxlength="24">
+        <div class="overlay-buttons">
+            <div onclick="deleteContact()" class="delete-button">
+                Delete
+            </div>
+            <button class="save-button" type="submit">
+                Save <img src="../assets/img/check.svg" alt="checkmark-image">
+            </button>
+        </div>
+    </form>`
 }
 
 /**
@@ -197,26 +229,21 @@ function showContactTemplate(contactName, contactEmail, i, randomColor, initials
     return /*html*/ `<div class="flex-box"><span class="big-contact-icon margin-left" id="big-contact-icon-${i}">${initials}</span>
     <div class="flex-box-contact"><div class="name-contact">${contactName}</div><div class="edit-box"><div class="edit-image" onclick="showOverlayEdit('${i}', '${randomColor}', '${initials}')">
     </div><div class="delete-image" onclick="deleteContact(${i})"></div>
-    </div></div></div><p class="contact-info">Contact Information</p><b class="email-headline">Email</b><p class="email margin-left">${contactEmail}</p>
-    <b class="margin-left">Phone</b><p class="margin-left">${contacts[i]['phone']}</p>`;
+    </div></div></div><p class="contact-info">Contact Information</p><div class="landscape-flex"><div><b class="email-headline">Email</b><p class="email margin-left">${contactEmail}</p></div>
+    <div><b class="margin-left">Phone</b><p class="margin-left">${contacts[i]['phone']}</p></div></div>`;
 }
 
 /**
  * Adds a new contact to the contacts list and updates the UI.
  */
-async function addNewContact() {
+async function addNewContact(event) {
+    event.preventDefault();
     const nameInput = document.getElementById('add-name');
     const emailInput = document.getElementById('add-email');
     let phoneInput = document.getElementById('add-phone');
-    
     const name = nameInput.value;
     const email = emailInput.value;
     let phone = phoneInput.value;
-
-    if (!validateName(name) || !validateEmail(email) || !validatePhone(phone)) {
-        return;
-    }
-    
     const randomColor = getRandomColor();
     const newContact = createContact(name, email, phone, randomColor);
     addContactAndUpdateUI(newContact);
@@ -321,7 +348,7 @@ function emptyInput() {
  *
  * @param {number} i - The index of the contact to be edited.
  */
-async function EditContact(i) {
+async function editContact(i) {
     if (i < 0 || i >= contacts.length) return alert('Ungültiger Index');
     const editNameInput = document.getElementById('edit-name');
     const editEmailInput = document.getElementById('edit-email');
@@ -329,12 +356,6 @@ async function EditContact(i) {
     const editName = editNameInput.value;
     const editEmail = editEmailInput.value;
     const editPhone = editPhoneInput.value;
-
-    // Überprüfe, ob der Name, die E-Mail und die Telefonnummer gültig sind
-    if (!validateName(editName) || !validateEmail(editEmail) || !validatePhone(editPhone)) {
-        return;
-    }
-
     const currentColor = contacts[i].color;
     contacts[i] = createContact(editName, editEmail, editPhone, currentColor);
     generateSideBar();
@@ -387,9 +408,6 @@ function showOverlayEdit(i, randomColor, initials) {
     let overlay = document.getElementById('overlay-edit-contact');
     overlay.classList.add('show-overlay');
     showContactValue(i);
-    const saveButton = document.querySelector('.save-button');
-    saveButton.onclick = () => EditContact(i);
-
     const deleteButton = document.querySelector('.delete-button'); // Füge diese Zeile hinzu
     deleteButton.onclick = () => deleteContact(i); // Füge diese Zeile hinzu
 }
@@ -404,7 +422,6 @@ function showContactValue(i) {
     const editNameInput = document.getElementById('edit-name');
     const editEmailInput = document.getElementById('edit-email');
     const editPhoneInput = document.getElementById('edit-phone');
-
     editNameInput.value = selectedContact.name;
     editEmailInput.value = selectedContact.email;
     editPhoneInput.value = selectedContact.phone;
@@ -429,10 +446,10 @@ async function deleteContact(i) {
     showContacts();
     document.getElementById('show-contact').innerHTML = '';
     hideOverlayEdit();
-    if (isWideScreen()) {
+    if (isWideScreen() || isHeightScreen()) {
         toggleContactsMobile();
-        }
-        await saveContacts();
+    }
+    await saveContacts();
 }
 
 /**
@@ -445,12 +462,12 @@ function getRandomColor() {
     let color = '#';
 
     do {
-        color = '#'; 
+        color = '#';
         for (let i = 0; i < 6; i++) {
             const randomLetter = letters[Math.floor(Math.random() * 16)];
             color += randomLetter;
         }
-    } while (isTooLight(color)); // Überprüfe, ob die Farbe zu hell ist
+    } while (isTooLight(color));
 
     return color;
 }
@@ -462,14 +479,11 @@ function getRandomColor() {
  * @returns {boolean} True if the color is too light; otherwise, false.
  */
 function isTooLight(color) {
-    // Berechne die Helligkeit der Farbe (YIQ-Berechnung)
-    const hex = color.substring(1); // Entferne das führende #
+    const hex = color.substring(1);
     const r = parseInt(hex.slice(0, 2), 16);
     const g = parseInt(hex.slice(2, 4), 16);
     const b = parseInt(hex.slice(4, 6), 16);
     const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-
-    // Eine Farbe ist zu hell, wenn ihre Helligkeit über einem bestimmten Schwellenwert liegt
     return yiq > 128;
 }
 
