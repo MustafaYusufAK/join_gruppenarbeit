@@ -222,10 +222,21 @@ async function loadTasks() {
 
     let userIndex = users.findIndex(u => u.name === userName);
     let userTasks = users[userIndex].tasks;
+    let usersortTasks = users[userIndex].sortTasks;
     if (userTasks == undefined) {
-        allTasks = [];
-        saveTasks();
+        allTasks = [];        
+        await saveTasks();   
+    }
+    if(usersortTasks == undefined) {
+        task_category = {
+            'toDo': '',
+            'progress': '',
+            'feedback': '',
+            'done': '',
+        };
+        await saveTasksCategory();
     } else {
         allTasks = userTasks;
+        sortTasks = usersortTasks;
     }
 }
