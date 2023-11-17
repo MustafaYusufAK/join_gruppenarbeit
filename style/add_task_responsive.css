@@ -8,8 +8,6 @@
         width: 100% !important;
     }
 
-    #prio_notification {}
-
     .header_div {
         font-size: 56px;
         margin-top: 20px;
@@ -136,7 +134,7 @@
 
     .subtaskInputfield {
         width: 95%;
-        height: 36px;
+        height: 34px;
         outline: none;
         text-indent: 1px;
         appearance: none;

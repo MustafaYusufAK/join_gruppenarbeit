@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="../assets/img/Logo for Favicon construction.svg">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../style/board.css">
     <link rel="stylesheet" href="../style/board.overlay1.css">
     <link rel="stylesheet" href="../style/board.overlay.css">
@@ -355,6 +356,7 @@
                     </div>
                 </div>
                 <div id="target-to-do-table" class="table-heading drop-container task-container">
+                    <div class="empty-task">No Tasks To do</div>
                 </div>
             </div>
 
@@ -369,6 +371,7 @@
                     </div>
                 </div>
                 <div id="target-in-progress-table" class="table-heading drop-container task-container">
+                    <div class="empty-task">No tasks In progress</div>
                 </div>
             </div>
 
@@ -382,7 +385,9 @@
                             class="add-icon">
                     </div>
                 </div>
-                <div id="target-await-feedback-table" class="table-heading drop-container task-container"></div>
+                <div id="target-await-feedback-table" class="table-heading drop-container task-container">
+                    <div class="empty-task">No tasks Await feedback</div>
+                </div>
             </div>
 
             <div>
@@ -392,6 +397,7 @@
                     </div>
                 </div>
                 <div id="target-done-table" class="table-heading drop-container task-container" id="done-table">
+                    <div class="empty-task">No tasks Done</div>
                 </div>
             </div>
         </div>

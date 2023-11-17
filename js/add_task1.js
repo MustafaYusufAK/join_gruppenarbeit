@@ -8,7 +8,7 @@ function getRandomColor() {
             const randomLetter = letters[Math.floor(Math.random() * 16)];
             color += randomLetter;
         }
-    } while (isTooLight(color)); // Überprüfe, ob die Farbe zu hell ist
+    } while (isTooLight(color));
 
     return color;
 }
@@ -59,8 +59,6 @@ function createContactDropdown() {
     });
 }
 
-
-
 function createAssigneeBall(contactName, contactValue) {
     let assignedToList = document.getElementById('assignedToList');
     let assigneeContainer = document.createElement('div');
@@ -109,21 +107,6 @@ function createAssigneeBall(contactName, contactValue) {
     assignedToList.appendChild(assigneeContainer);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function checkCreatedAt() {
     const mustHaveArrays = [
         createdAtArray,
@@ -138,8 +121,6 @@ function checkCreatedAt() {
 
     return true;
 }
-
-
 
 function checkMustHaveEntriesText() {
     const mustHaveArrays = [
@@ -173,9 +154,6 @@ function redirectToBoard() {
     window.location.href = link;
 
 }
-
-
-
 
 function checkMustHaveEntries() {
     console.log('Checking must have entries...');

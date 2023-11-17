@@ -81,7 +81,7 @@ function showTaskFromArray() {
                 <div class="category-div-text">${task.task_category}</div>
             </div>
             <h3 class="pinned-task-headline">${task.title}</h3>
-            <p class="pinned-task-discription">${task.description_text}</p>
+            <p class="pinned-task-description">${task.description_text}</p>
             <div id="ball-and-prio-img-div" class="ball-and-prio-img-div">
                 ${assignePinnedTaskBall}
                 <div>

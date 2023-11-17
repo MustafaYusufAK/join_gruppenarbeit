@@ -5,6 +5,8 @@ body {
 
 h3 {
     font-size: larger;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .overflow-hidden {
@@ -56,7 +58,7 @@ h3 {
 .search {
     border-radius: 8px;
     border-color: rgba(0, 0, 0, 0.4);
-    background-image: url("/assets/img/Property 1=Default.svg");
+    background-image: url("../assets/img/Property 1=Default.svg");
     background-repeat: no-repeat;
     background-position: 185px 3px;
     padding: 5px;
@@ -68,7 +70,7 @@ h3 {
 }
 
 .heading {
-    margin-left: 40px;
+    margin-left: 35px;
 }
 
 .add-task-button {
@@ -83,8 +85,26 @@ h3 {
     font-size: 18px;
 }
 
+.empty-task {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed lightgrey;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #E7E7E7;
+    width: 185px;
+    position: absolute;
+    margin-left: 5px;
+    top: 10px;
+    z-index: 0;
+    color: #B0B0B0;
+    font-weight: 300;
+}
+
 .add-task-button:hover {
-    background-color: rgb(9, 25, 49);
+    background-color: #29ABE2;
+    box-shadow: 0px 4px rgba(0, 0, 0, 0.06);
 }
 
 .add-symbol {
@@ -112,7 +132,8 @@ h3 {
 }
 
 .task-item {
-    margin-bottom: 50px;
+    margin-bottom: 10px;
+    z-index: 0;
 }
 
 .ball-and-prio-img-div {
@@ -130,8 +151,9 @@ h3 {
     margin-right: 35px;
     color: rgb(42, 54, 71);
     font-weight: bold;
-    overflow-x: hidden;
+    overflow-y: scroll;
     height: 450px;
+    position: relative;
 }
 
 .pinned-task-container {
@@ -141,7 +163,7 @@ h3 {
     align-items: flex-start;
     padding: 18px 19px;
     gap: 10px;
-    width: 190px;
+    width: 180px;
     height: fit-content;
     background: #FFFFFF;
     box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
@@ -149,11 +171,19 @@ h3 {
     cursor: pointer;
 }
 
+.pinned-task-description {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 .table-header {
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
     margin-top: 0px;
+    width: 226px;
+    margin-bottom: 10px;
+    margin-left: 35px;
 }
 
 .pinnedPrioPosition {
