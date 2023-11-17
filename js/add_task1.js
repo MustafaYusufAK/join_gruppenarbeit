@@ -168,7 +168,8 @@ function containsLetter(array) {
 
 
 function redirectToBoard() {
-    const link = "./board.html?msg=Welcome%20to%20Join,%20Guest";
+    let userName = getUserName();
+    const link = `./board.html?msg=Welcomme to Join, ${userName}`;
     window.location.href = link;
 
 }

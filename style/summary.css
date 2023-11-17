@@ -22,7 +22,7 @@
 
 .summary-content {
     display: flex;
-    margin-bottom: 100px;
+    margin-bottom: 85px;
 }
 
 .summary-board {
@@ -210,12 +210,13 @@
 }
 
 .greeting-background {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    width: 100%;
-    height: 100%;
+    bottom: 0;
+    /* width: 100%;
+    height: 100%; */
     background-color: rgba(246, 247, 248, 1)
 }
 
@@ -299,7 +300,7 @@
 
     .summary-board {
         margin-left: 0px;
-        
+
     }
 
 }
@@ -312,8 +313,8 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-    margin-bottom: 100px;
-}
+        margin-bottom: 85px;
+    }
 }
 
 
