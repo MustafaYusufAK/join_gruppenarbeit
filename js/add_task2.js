@@ -1,10 +1,14 @@
-function cancelNewCategory() {
+function cancelNewCategory(selectTask) {
     document.getElementById('newCategoryInput').value = '';
     document.getElementById('newCategoryColor').style.backgroundColor = '';
     document.getElementById('newCategoryContainer').classList.add('d-none');
     document.getElementById('newCategoryColors').classList.add('d-none');
     document.getElementById('category').style.display = 'flex';
-    document.getElementById('category').innerHTML = 'Select task category';
+    if (selectTask == undefined) {
+        document.getElementById('category').innerHTML = 'Select task category';
+    } else {
+
+    }
 }
 
 function confirmNewCategory() {
@@ -19,11 +23,7 @@ function confirmNewCategory() {
         categoryColorNotification();
     } else {
         selectedCategory(newCategory, newCategoryColor);
-        document.getElementById('newCategoryInput').value = '';
-        document.getElementById('newCategoryColor').style.backgroundColor = '';
-        document.getElementById('newCategoryContainer').classList.add('d-none');
-        document.getElementById('newCategoryColors').classList.add('d-none');
-        document.getElementById('category').style.display = 'flex';
+        cancelNewCategory('taskCategorySelected')
     }
 }
 
@@ -77,11 +77,8 @@ function selectedCategory(category, color) {
         <div id="_xak1l2uph" class="categoryContainer">
             ${category}
             <div class="categoryColor" style="background-color: ${color}; margin-left: 10px"></div>
-        </div>
-    `;
+        </div>`;
     closeCategoryDropdown();
-
-    // Return the selected color
     return color;
 }
 
@@ -93,7 +90,6 @@ function confirmNewCategoryOverlay() {
     let newCategory = document.getElementById('newCategoryInputOverlay').value;
     let newCategoryColor = document.getElementById('newCategoryColorOverlay').style.backgroundColor;
     let newCategoryInput = document.getElementById('newCategoryInputOverlay');
-
     if (newCategoryInput.value == '') {
         newCategoryInput.focus();
     } else {
@@ -113,16 +109,10 @@ function addColorToNewCategoryOverlay(color) {
 function assignOptionIDs() {
     const selectElement = document.getElementById('which_assigned_contact');
     const options = selectElement.getElementsByTagName('option');
-
-    // Loop through options and assign IDs and colors
     for (let i = 0; i < options.length; i++) {
         const option = options[i];
-        const color = option.style.backgroundColor; // Get the color
-
-        // Generate a unique ID for the option
+        const color = option.style.backgroundColor;
         const optionID = generateUniqueID();
-
-        // Set the ID and color as data attributes
         option.setAttribute('data-id', optionID);
         option.setAttribute('data-color', color);
     }

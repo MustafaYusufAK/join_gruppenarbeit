@@ -16,41 +16,51 @@ let assignedToValuesArray = [];
 let assignedToColorsArray = [];
 let createdAtArray = [];
 let priorityArray = [];
-let categoryArray = [];  // Array für die Kategorien
-let categoryColorArray = [];  // Array für die Kategoriefarben
-let subtasksArray = [];  // Array für Subtasks
+let categoryArray = [];
+let categoryColorArray = [];
+let subtasksArray = [];
 let assignedToIDsArray = [];
 let assignedShortValues = [];
 
+/**
+ * add new Task to Contacts
+ */
 function addTask() {
     event.preventDefault();
     const titleInput = document.getElementById('title');
     const descriptionInput = document.getElementById('description_text');
-    const categorySelect = document.getElementById('category');
     const createdAtInput = document.getElementById('createdAt');
     const subtaskInput = document.getElementById('subtaskInput');
     const subtaskList = document.getElementById('subtaskList');
-
-    const categoryColor = categorySelect ? categorySelect.querySelector('.categoryColor').style.backgroundColor : '';
     const title = titleInput.value;
     const description = descriptionInput.value;
-    const category = categorySelect ? categorySelect.innerText : '';
-    const createdAt = createdAtInput.value;
+    const createdAt = createdAtInput.value;    
     getValueForTaskContacts();
-
-    // Überprüfe, ob die erforderlichen Felder gefüllt sind
     if (title && description && createdAt && priorityArray.length > 0 && assignedToValuesArray.length > 0) {
-        createTask(title, description, createdAt, category, categoryColor, createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskList);
+        createTask(title, description, createdAt, createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskList);
 
     } else {
         showNotification();
-        // Zurücksetzen der Arrays
         resetTaskInformation()
     }
 
-} // end of addTask
+}
 
-function createTask(title, description, createdAt, category, categoryColor, createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskList) {
+/**
+ * generate a task
+ * @param {title value} title 
+ * @param {description value} description 
+ * @param {due date of task} createdAt
+ * @param {ID Element of due date} createdAtInput 
+ * @param {title of task} titleInput 
+ * @param {description of task} descriptionInput 
+ * @param {ID Element of subtask input} subtaskInput 
+ * @param {ID Element of subtask list} subtaskList 
+ */
+function createTask(title, description, createdAt, createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskList) {
+    const categorySelect = document.getElementById('category');
+    const categoryColor = categorySelect ? categorySelect.querySelector('.categoryColor').style.backgroundColor : '';
+    const category = categorySelect ? categorySelect.innerText : '';
     pushAndSaveTaskToUser(title, description, createdAt, category, categoryColor);
     resetInputFields(createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskList);
     resetSubTaskItems()
@@ -63,6 +73,9 @@ function createTask(title, description, createdAt, category, categoryColor, crea
     clearInputFields();
 }
 
+/**
+ * value of assignee Contacts
+ */
 function getValueForTaskContacts() {
     const assignedToDiv = document.getElementById('assignedToList');
     const assigneeContainers = assignedToDiv.getElementsByClassName('assigneeContainer');
@@ -77,6 +90,14 @@ function getValueForTaskContacts() {
     }
 }
 
+/**
+ * set stats of task
+ * @param {title value} title 
+ * @param {description value} description 
+ * @param {category for task} category 
+ * @param {due date of task} createdAt 
+ * @returns 
+ */
 function createTaskArray(title, description, category, createdAt) {
     const id = generateUniqueID();
     let task = {
@@ -85,16 +106,24 @@ function createTaskArray(title, description, category, createdAt) {
         description_text: description,
         task_category: category,
         createdAt: createdAt,
-        priority: priorityArray, // Add priority to the task
+        priority: priorityArray,
         subtasks: subtasksArray,
         categoryColors: categoryColorArray,
-        assignedToValues: assignedToValuesArray,  // Füge die Werte hinzu
-        assignedToColors: assignedToColorsArray,  // Füge die Farben hinzu
-        assignedShortValues: assignedShortValues  // Füge die Texte hinzu
+        assignedToValues: assignedToValuesArray,
+        assignedToColors: assignedToColorsArray,
+        assignedShortValues: assignedShortValues,
     };
     return task;
 }
 
+/**
+ * push and save task for user
+ * @param {title value} title 
+ * @param {description value} description 
+ * @param {due date of task} createdAt 
+ * @param {category for task} category 
+ * @param {color of category} categoryColor 
+ */
 function pushAndSaveTaskToUser(title, description, createdAt, category, categoryColor) {
     let task = createTaskArray(title, description, category, createdAt);
     titlesArray.push(title);
@@ -106,6 +135,14 @@ function pushAndSaveTaskToUser(title, description, createdAt, category, category
     saveTasks();
 }
 
+/**
+ * reset inputfields
+ * @param {ID Element of due date} createdAtInput 
+ * @param {ID Element of title} titleInput 
+ * @param {ID Element of description} descriptionInput 
+ * @param {ID Element of subtask input} subtaskInput 
+ * @param {ID Element of subtask list} subtaskList 
+ */
 function resetInputFields(createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskList) {
     createdAtInput.value = '';
     titleInput.value = '';
@@ -114,6 +151,9 @@ function resetInputFields(createdAtInput, titleInput, descriptionInput, subtaskI
     subtaskList.innerHTML = '';
 }
 
+/**
+ * reset Subtasks
+ */
 function resetSubTaskItems() {
     let subtaskItems = document.getElementsByClassName('subtask-item');
     for (let i = 0; i < subtaskItems.length; i++) {
@@ -121,6 +161,9 @@ function resetSubTaskItems() {
     }
 }
 
+/**
+ * reset style from prirorty Button
+ */
 function removeStylefromPrirorityButton() {
     const urgentBtn = document.getElementById('normal_urgent_btn');
     const mediumBtn = document.getElementById('normal_medium_btn');
@@ -136,6 +179,9 @@ function removeStylefromPrirorityButton() {
     }
 }
 
+/**
+ * add style from prirorty Button
+ */
 function addStylefromPrirorityButton() {
     const clickedUrgentBtn = document.getElementById('clicked_urgent_btn');
     const clickedMediumBtn = document.getElementById('clicked_medium_btn');
@@ -151,17 +197,22 @@ function addStylefromPrirorityButton() {
     }
 }
 
+/**
+ * notfication of emptyinput
+ */
 function showNotification() {
     if (assignedToValuesArray.length === 0) {
         showContactsNotification();
     } else if (priorityArray.length === 0) {
         showPrioNotification();
     } else {
-        // Wenn alle Arrays gefüllt sind, können Sie hier eine abschließende Benachrichtigung anzeigen.
         showFinalNotification();
     }
 }
 
+/**
+ * reset Task Information
+ */
 function resetTaskInformation() {
     subtasksArray = [];
     categoryArray = [];
@@ -172,7 +223,10 @@ function resetTaskInformation() {
     createdAtArray = [];
 }
 
-// Hilfsfunktion zur Generierung einer eindeutigen ID (hier als Beispiel)
+/**
+ * generate a unique ID
+ * @returns random ID
+ */
 function generateUniqueID() {
     return '_' + Math.random().toString(36).substr(2, 9);
 }
@@ -182,18 +236,19 @@ function clickEventlisteners() {
         event.preventDefault();
         handlePrioButtonClick('urgent');
     });
-
     document.getElementById('normal_medium_btn').addEventListener('click', (event) => {
         event.preventDefault();
         handlePrioButtonClick('medium');
     });
-
     document.getElementById('normal_low_btn').addEventListener('click', (event) => {
         event.preventDefault();
         handlePrioButtonClick('low');
     });
 }
 
+/**
+ * Setting a minimum selectable date
+ */
 function setMinDate() {
     const today = new Date();
     const year = today.getFullYear();
@@ -202,6 +257,7 @@ function setMinDate() {
     const currentDate = `${year}-${month}-${day}`;
     document.getElementById('createdAt').min = currentDate;
 }
+
 
 function resetAssignedField() {
     const assignedToList = document.getElementById('assignedToList');
@@ -269,7 +325,7 @@ function addSubtask() {
 }
 
 function createListItem(listItem, subtaskText) {
-    listItem.classList.add('subtask-item');  // Füge Klasse hinzu
+    listItem.classList.add('subtask-item');
     listItem.id = 'listElementId';
     listItem.textContent = subtaskText;
 }
