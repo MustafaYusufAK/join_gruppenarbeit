@@ -1,355 +1,297 @@
+let currentShowedTaskId;
+/**
+ * Shows a task from the array by creating a task div, determining the target container, and adding content.
+ */
 function showTaskFromArray() {
-    const task = allTasks[allTasks.length - 1]; // Holt die zuletzt hinzugefügte Aufgabe
-
+    const task = allTasks[allTasks.length - 1];
     const taskContainer = document.getElementById('target-to-do-table');
     const feedbackTaskContainer = document.getElementById('target-await-feedback-table');
     const inProgressContainer = document.getElementById('target-in-progress-table');
-
-    let targetContainer = taskContainer; // Standard-Zielcontainer
-    const categorybackgroundColor = task.categoryColors[0];
-    const inWhichContainer = task.inWhichContainer;
-
-    if (inWhichContainer && inWhichContainer.includes('for-To-Do-Container')) {
-        targetContainer = taskContainer;
-    } else if (inWhichContainer && inWhichContainer.includes('in-Progress-Container')) {
-        targetContainer = inProgressContainer;
-    } else if (inWhichContainer && inWhichContainer.includes('for-Await-Feedback-Container')) {
-        targetContainer = feedbackTaskContainer;
-    } else {
-        const categorybackgroundColor = task.categoryColors[0];
-
-        if (categorybackgroundColor === 'blueviolet') {
-            targetContainer = inProgressContainer;
-        }
-
-        if (categorybackgroundColor === 'darkmagenta') {
-            targetContainer = feedbackTaskContainer;
-        }
-    }
-
-    const taskDiv = document.createElement('div');
-    taskDiv.classList.add('task-item');
-    taskDiv.setAttribute('id', `task-${task.id}`);
-    taskDiv.setAttribute('draggable', true);
-    taskDiv.addEventListener('dragstart', onDragStart);
-
-    // Überprüfe die Priorität und setze das entsprechende Bild
-    let priorityImageSrc = '';
-    if (task.priority.includes('low')) {
-        priorityImageSrc = '../assets/img/Prio baja.svg';
-    } else if (task.priority.includes('medium')) {
-        priorityImageSrc = '../assets/img/Prio media.svg';
-    } else if (task.priority.includes('urgent')) {
-        priorityImageSrc = '../assets/img/Prio alta.svg';
-    }
-
-    let assignePinnedTaskBall = ''; // Hier sammeln wir die Zuweisungen
-
-    if (task.assignedToValues && task.assignedToValues.length > 0) {
-        const maxAssignmentsToShow = 3;
-        const assignmentsToDisplay = task.assignedToValues.slice(0, maxAssignmentsToShow);
-        let additionalAssignmentsCount = task.assignedToValues.length - maxAssignmentsToShow;
-
-        assignmentsToDisplay.forEach((assignment, index) => {
-            const nameParts = assignment.trim().split(' ');
-            const initials = nameParts.map(part => part[0]).join('');
-            const color = task.assignedToColors[index]; // Farbe für diese Zuweisung
-
-            const assignmentHTML = `
-                <div class="assigne-ball" style="background-color: ${color}">
-                    <div>${initials}</div>
-                </div>
-            `;
-
-            assignePinnedTaskBall += assignmentHTML;
-        });
-
-        if (additionalAssignmentsCount > 0) {
-            // Fügen Sie den zusätzlichen Ball für "+X" hinzu
-            assignePinnedTaskBall += `
-                <div class="assigne-ball" style="background-color: rgb(0, 0, 0)">
-                    +${additionalAssignmentsCount}
-                </div>
-            `;
-        }
-    }
-
-    // Füge den Inhalt zur Aufgabe hinzu
-    taskDiv.innerHTML = `
-        <div class="pinned-task-container" onclick="showTasksInOverViev('${task.id}')">
-            <div class="category-background-color" style="background-color: ${categorybackgroundColor}">
-                <div class="category-div-text">${task.task_category}</div>
-            </div>
-            <h3 class="pinned-task-headline">${task.title}</h3>
-            <p class="pinned-task-description">${task.description_text}</p>
-            <div id="ball-and-prio-img-div" class="ball-and-prio-img-div">
-                ${assignePinnedTaskBall}
-                <div>
-                    <img src="${priorityImageSrc}" alt="Priority Image">
-                </div>
-            </div>
-        </div>`;
-
-    // Füge das Div-Element zum richtigen Zielcontainer hinzu
+    const targetContainer = determineTargetContainer(task, taskContainer, inProgressContainer, feedbackTaskContainer);
+    const taskDiv = createTaskDiv(task);
+    const priorityImageSrc = getPriorityImageSrc(task.priority);
+    const assignePinnedTaskBall = createAssignmentBalls(task);
+    addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc);
     targetContainer.appendChild(taskDiv);
-
-    // Annahme: Die Zielcontainer haben die Klassen "drop-container"
-    const dropContainers = document.querySelectorAll('.drop-container');
-
-    dropContainers.forEach(container => {
-        container.addEventListener('drop', onDrop);
-        container.addEventListener('dragover', allowDrop);
-    });
+    initializeDragAndDrop();
 }
 
+/**
+ * Rotates the element by 10 degrees on drag start.
+ * @param {Event} event - The drag event.
+ */
 function onDrag(event) {
     event.target.style.transform = 'rotate(10deg)';
 }
 
+/**
+ * Resets the rotation to zero degrees on drag end.
+ * @param {Event} event - The drag event.
+ */
 function onDragEnd(event) {
-    event.target.style.transform = ''; // Zurücksetzen der Transformation nach dem Ziehen
-
+    event.target.style.transform = '';
 }
 
-function onDrag(event) {
-    event.target.style.transform = 'rotate(10deg)';
-}
-
-function onDragEnd(event) {
-    event.target.style.transform = ''; // Zurücksetzen der Transformation nach dem Ziehen
-
-}
-
+/**
+ * Moves a task to a target container.
+ * Updates the task status in local storage and sorts tasks into arrays.
+ * @param {string} taskId - The task ID.
+ * @param {string} targetContainerId - The target container ID.
+ */
 function moveTo(taskId, targetContainerId) {
     const taskDiv = document.getElementById(taskId);
     const targetContainer = document.getElementById(targetContainerId);
-
     if (taskDiv && targetContainer) {
         targetContainer.appendChild(taskDiv);
-
-        // Aktualisieren Sie den Status der verschobenen Aufgabe im localStorage
         updateTaskStatusInLocalStorage(taskId, targetContainerId);
     }
-    // Vor jedem Aufruf der Funktion die Arrays leeren
     sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
 }
 
+/**
+ * Updates the task status in local storage.
+ * @param {string} taskId - The task ID.
+ * @param {string} targetContainerId - The target container ID.
+ */
 function updateTaskStatusInLocalStorage(taskId, targetContainerId) {
     tasksToDo = [];
     tasksInProgress = [];
     tasksAwaitFeedback = [];
     tasksDone = [];
-    // Holen Sie die aktuellen Aufgabenstatus aus localStorage (falls vorhanden)
     let tasksStatus = JSON.parse(localStorage.getItem('tasksStatus')) || {};
-
-    // Aktualisieren Sie den Aufgabenstatus mit dem neuen Container
     tasksStatus[taskId] = targetContainerId;
-
-    // Speichern Sie den aktualisierten Aufgabenstatus in localStorage
     localStorage.setItem('tasksStatus', JSON.stringify(tasksStatus));
-
-    // Aktualisieren Sie die Arrays basierend auf dem neuen Container
 }
 
-// Diese Funktion wird aufgerufen, um die Aufgaben beim Laden der Seite aus dem localStorage wiederherzustellen
+/**
+ * Restores tasks from local storage.
+ */
 function restoreTasksFromLocalStorage() {
     const tasksStatus = JSON.parse(localStorage.getItem('tasksStatus'));
-
     if (tasksStatus) {
         for (const taskId in tasksStatus) {
             const targetContainerId = tasksStatus[taskId];
-            moveTo(taskId, targetContainerId); // Bewegen Sie den Div-Container
+            moveTo(taskId, targetContainerId);
         }
     }
 }
 
-// Event-Handler für den Start des Dragging
+/**
+ * Sets the data format on drag start.
+ * @param {Event} event - The drag event.
+ */
 function onDragStart(event) {
     event.dataTransfer.setData('text/plain', event.target.id);
 }
 
+/**
+ * Prevents the default behavior and moves the task to the target container on drop.
+ * @param {Event} event - The drop event.
+ */
 function onDrop(event) {
     event.preventDefault();
     const targetContainer = event.target.closest('.drop-container');
-
     if (targetContainer) {
         const taskId = event.dataTransfer.getData('text/plain');
         const targetContainerId = targetContainer.id;
         moveTo(taskId, targetContainerId);
     }
-    event.target.classList.remove('drag-over'); // Zurücksetzen des visuellen Feedbacks
+    event.target.classList.remove('drag-over');
 }
 
+/**
+ * Allows dropping elements and highlights the target container during drag over.
+ * @param {Event} event - The dragover event.
+ */
 function allowDrop(event) {
     event.preventDefault();
     if (event.target.classList.contains('drop-container')) {
-        event.target.classList.add('drag-over'); // Visual Feedback für gültige Ziele
+        event.target.classList.add('drag-over');
     }
 }
 
-function clearAllTasks() {
-    allTasks = [];  // Leere das Array
-    // Hier kannst du weitere Aktionen ausführen, z.B. UI aktualisieren
-    // ...
-    saveTasks();  // Speichere die leeren Tasks (optional)
+/**
+ * Clears all tasks.
+ */
+async function clearAllTasks() {
+    allTasks = [];
+    await saveTasks();
 }
 
-function deleteTask(taskId) {
+/**
+ * Deletes a task based on its ID.
+ * @param {string} taskId - The ID of the task to delete.
+ */
+async function deleteTask(taskId) {
     const taskElement = document.getElementById('task-' + taskId);
-    if (taskElement) {
-        // Entferne das HTML-Element des Tasks
+    if (taskElement)
         taskElement.remove();
-    } else {
+    else
         console.error('HTML Task element not found for deletion');
-    }
-
-    // Finde den Index des Tasks basierend auf der ID
     const taskIndex = allTasks.findIndex(task => task.id === taskId);
-
     if (taskIndex !== -1) {
-        // Entferne den Task aus dem Array
         allTasks.splice(taskIndex, 1);
-
-        // Hier kannst du weitere Aktionen ausführen, z.B. UI aktualisieren
-        // ...
-
-        // Schließe das Overlay oder aktualisiere die Ansicht
         hideOverlay();
-    } else {
+    } else
         console.error('Task not found for deletion');
-    }
-
-    saveTasks();
+    await saveTasks();
 }
 
+/**
+ * Hides the overlay.
+ */
 function hideOverlay() {
     const overlaySection = document.getElementById('overlaySection');
     overlaySection.classList.add('d-none');
 }
 
-let currentShowedTaskId;
-
+/**
+ * Shows details of a task in the overview.
+ * @param {string} taskId - The ID of the task to show.
+ */
 function showTasksInOverViev(taskId) {
     currentShowedTaskId = [];
     const taskOverviewPopUp = document.getElementById('taskOverviewPopUp');
     const overlaySection = document.getElementById('overlaySection');
-
-    // Entferne die Klasse "d-none" aus dem overlaySection
     overlaySection.classList.remove('d-none');
-    taskOverviewPopUp.innerHTML = '';  // Leere den Container, bevor neue Einträge hinzugefügt werden
-
-    // Finde den Task basierend auf der ID
+    taskOverviewPopUp.innerHTML = '';
     const task = allTasks.find(task => task.id === taskId);
     currentShowedTaskId = taskId;
-
     if (task) {
-        const currentId = task.id;
-        const categorybackgroundColor = task.categoryColors[0];
-        const category = task.task_category;
-        const title = task.title;
-        const description = task.description_text;
-        const date = task.createdAt;
-        const priority = task.priority.join(', ');
-        const assignedTo = task.assignedToValues.join(', ');
-        const colorOfAssignedment = task.assignedToColors;
-        const subTasks = task.subtasks;
-        // Extrahiere die Initialen aus dem Namen
+        displayTaskOverview(task);
+    }
+}
 
+/**
+ * Displays the overview details of a task.
+ * @param {Object} task - The task.
+ */
+function displayTaskOverview(task) {
+    const taskOverviewPopUp = document.getElementById('taskOverviewPopUp');
+    const categorybackgroundColor = task.categoryColors[0];
+    const currentId = task.id;
+    const title = task.title;
+    const description = task.description_text;
+    const date = task.createdAt;
+    const priority = task.priority.join(', ');
+    const subTasks = task.subtasks;
+    let subTasksHTML = createSubTasksHTML(subTasks);
+    let taskPopUpSingleAssignmentContainer = createAssignmentContainerHTML(task);
+    taskOverviewTemplate(taskOverviewPopUp, task, categorybackgroundColor, title, description, date, priority, taskPopUpSingleAssignmentContainer,  subTasksHTML, currentId); 
+}
 
-        let subTasksHTML = '';  // Hier werden die HTML-Elemente für die Subtasks gesammelt
+/**
+ * Creates the HTML code for subtasks.
+ * @param {Array} subTasks - The array of subtasks.
+ * @returns {string} The HTML code for subtasks.
+ */
+function createSubTasksHTML(subTasks) {
+    let subTasksHTML = '';
+    if (subTasks && subTasks.length > 0) {
+        subTasksHTML += '<ul class="edit-subTask">';
+        subTasks.forEach(subTask => {
+            subTasksHTML += `<li>${subTask}</li>`;
+        });
+        subTasksHTML += '</ul>';
+    }
+    return subTasksHTML;
+}
 
-        if (subTasks && subTasks.length > 0) {
-            // Erstelle eine ungeordnete Liste (ul) für die Subtasks
-            subTasksHTML += '<ul class="edit-subTask">';
-
-            subTasks.forEach(subTask => {
-                // Füge jeden Subtask als Listenelement (li) hinzu
-                subTasksHTML += `<li>${subTask}</li>`;
-            });
-
-            // Schließe die ungeordnete Liste (ul)
-            subTasksHTML += '</ul>';
-        }
-
-        let taskPopUpSingleAssignmentContainer = ''; // Deklariere die Variable außerhalb der if-Bedingung
-
-        const colorValues = colorOfAssignedment.toString().split(',');
-
-        // Entferne die Leerzeichen und schließende Klammern von den Werten
-        const cleanedColors = colorValues.map(color => color.replace(/\s/g, '').replace(')', ''));
-
-        if (assignedTo && assignedTo.length > 0) {
-
-
-            task.assignedToValues.forEach((assignment, index) => {
-                const nameParts = assignment.trim().split(' ');
-                const initials = nameParts.map(part => part[0]).join('');
-
-                // Hier können Sie die Farbe aus dem separaten Array verwenden
-                const color = task.assignedToColors[index]; // Farbe für diese Zuweisung
-
-                const assignmentHTML = `
-                    <div class="taskPopUpSingleAssignmentContainer">
-                        <div class="assigne-ball" style="background-color:${color}">
-                            ${initials}
-                        </div>
-                        <div class="taskPopUpNameContainer">${assignment}</div>
-                    </div>
-                `;
-
-                taskPopUpSingleAssignmentContainer += assignmentHTML;
-            });
-
-        }
-        // Zeige die Details des angeklickten Containers im taskOverviewPopUp an
-        taskOverviewPopUp.innerHTML = /*html*/ `
+/**
+ * Generates and sets the HTML content for the task overview popup.
+ *
+ * @param {HTMLElement} taskOverviewPopUp - The container for the task overview.
+ * @param {Object} task - The task object containing details.
+ * @param {string} categorybackgroundColor - The background color for the category.
+ * @param {string} title - The title of the task.
+ * @param {string} description - The description of the task.
+ * @param {string} date - The due date of the task.
+ * @param {string} priority - The priority of the task.
+ * @param {string} taskPopUpSingleAssignmentContainer - The HTML content for assigned persons.
+ * @param {string} subTasksHTML - The HTML content for subtasks.
+ * @param {string} currentId - The ID of the current task.
+ */
+function taskOverviewTemplate(taskOverviewPopUp, task, categorybackgroundColor, title, description, date, priority, taskPopUpSingleAssignmentContainer,  subTasksHTML, currentId) {
+    taskOverviewPopUp.innerHTML = /*html*/ `
         <div class="wholeTaskOverview" id="wholeTaskOverview">
-        <div class="categoryHeaderDiv">
-        <div class="categoryHeaderPosition">
-        <img class="vector-class" src="../assets/img/Vector (1).svg" alt="" onclick="closeTaskOverviewPopUp()"><div class="categoryOvervievPopUp" style="background-color: ${categorybackgroundColor}">
-        
-            <div class="category">${task.task_category}</div>
-            
-        </div>
-        </div>
+            <div class="categoryHeaderDiv">
+                <div class="categoryHeaderPosition">
+                    <img class="vector-class" src="../assets/img/Vector (1).svg" alt="" onclick="closeTaskOverviewPopUp()">
+                    <div class="categoryOvervievPopUp" style="background-color: ${categorybackgroundColor}">
+                        <div class="category">${task.task_category}</div>      
+                    </div>
+                </div>
             </div>
-            <div class="taskPopUpHeadline"> ${title}</div>
-            <div class="taskPopUpDiscription"> ${description}</div>
+            <div class="taskPopUpHeadline">${title}</div>
+            <div class="taskPopUpDiscription">${description}</div>
             <div class="taskPopUpRow">
-            <div class="taskPopUpLeftTd"><b>Due Date:</b></div>
-            <div class="taskPopUpRightTd">${date}</div>
+                <div class="taskPopUpLeftTd"><b>Due Date:</b></div>
+                <div class="taskPopUpRightTd">${date}</div>
             </div>
             <div class="taskPopUpRow">
-            <div class="taskPopUpLeftTd"><b>Priority:</b></div>
-            <div id="modify${priority}" class="prioContainer">
-                ${priority} <div id="modify${priority}Icon"></div>
-            </div>
+                <div class="taskPopUpLeftTd"><b>Priority:</b></div>
+                <div id="modify${priority}" class="prioContainer">
+                    ${priority} <div id="modify${priority}Icon"></div>
+                </div>
             </div>
             <div class="taskPopUpAssignments" id="taskPopUpAssignments">
-            <div class="assignedToHeadline"><b>Assigned to:</b></div>
-            
+                <div class="assignedToHeadline"><b>Assigned to:</b></div>
             </div>
             <div id="taskPopUpAssignmentsList" class="taskPopUpAssignmentsList">
                 ${taskPopUpSingleAssignmentContainer}
-        </div>
+            </div>
             <div class="subtasksOverview" id="subtasksOverview">
-            <div class="edit-subTask-titel"><b>Subtasks</b></div>
-            <div id="overViewAssignedToList" class="subTaskContainer">
-                ${subTasksHTML}
-            </div>
-        </div>
-
-        <div class="overviewButtons">
-            <div class="popUpButtonsContainer">
-                <div class="taskPopUpButton leftBtn btn-border" onclick="deleteTask('${currentId}') ">
-                    <img class="" id="deleteTask-Img" src="../assets/img/delete-32.png" alt="">
-                </div>
-
-                <div class="taskPopUpButton rightBtn btn-bg" onclick="editingShowTask('${currentId}')">
-                    <img class="popUpPenTriangel" src="../assets/img/pencil-32.png" alt="">
+                <div class="edit-subTask-titel"><b>Subtasks</b></div>
+                <div id="overViewAssignedToList" class="subTaskContainer">
+                    ${subTasksHTML}
                 </div>
             </div>
-        </div>
-    </div>`;
+            <div class="overviewButtons">
+                <div class="popUpButtonsContainer">
+                    <div class="taskPopUpButton leftBtn btn-border" onclick="deleteTask('${currentId}')">
+                        <img class="" id="deleteTask-Img" src="../assets/img/delete-32.png" alt="">
+                    </div>
+                    <div class="taskPopUpButton rightBtn btn-bg" onclick="editingShowTask('${currentId}')">
+                        <img class="popUpPenTriangel" src="../assets/img/pencil-32.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>`;
+}
+
+/**
+ * Creates the HTML code for assignments.
+ * @param {Object} task - The task.
+ * @returns {string} The HTML code for assignments.
+ */
+function createAssignmentContainerHTML(task) {
+    let taskPopUpSingleAssignmentContainer = '';
+    if (task.assignedToValues && task.assignedToValues.length > 0) {
+        task.assignedToValues.forEach((assignment, index) => {
+            const nameParts = assignment.trim().split(' ');
+            const initials = nameParts.map(part => part[0]).join('');
+            const color = task.assignedToColors[index];
+            const assignmentHTML = assignmentHTMLTemplate(color, initials, assignment);
+            taskPopUpSingleAssignmentContainer += assignmentHTML;
+        });
     }
+    return taskPopUpSingleAssignmentContainer;
+}
+
+/**
+ * Creates the HTML code for an assignment.
+ * @param {string} color - The background color of the assignment.
+ * @param {string} initials - The initials of the assigned person.
+ * @param {string} assignment - The assigned person.
+ * @returns {string} The HTML code for an assignment.
+ */
+function assignmentHTMLTemplate(color, initials, assignment) {
+    return /*html*/ `
+    <div class="taskPopUpSingleAssignmentContainer">
+        <div class="assigne-ball" style="background-color:${color}">
+            ${initials}
+        </div>
+        <div class="taskPopUpNameContainer">${assignment}</div>
+    </div>
+`;
 }
