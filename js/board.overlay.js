@@ -2,59 +2,52 @@ const assignedValuesSet = new Set();
 
 function boardOverlayContactDropdown(assignedToOptions) {
     let dropdown = document.getElementById('boardOverlayContact');
-
-    // Füge Optionen für jeden Kontakt hinzu
-    contacts.forEach(contact => {
-        // Überprüfe, ob der Kontakt bereits im Dropdown vorhanden ist
-        let isContactInDropdown = [...dropdown.options].some(option => option.value === contact.name);
-
-        // Überprüfe, ob der Kontakt bereits von editingShowTask übergeben wurde
-        let isContactAssigned = assignedValuesSet.has(contact.name);
-
-        let option = document.createElement('option');
-        option.value = contact.name;
-        option.textContent = contact.name;
-        option.classList.add(isContactAssigned ? 'd-none' : 'not_selected');  // Füge die Klasse hinzu
-        option.disabled = isContactInDropdown;  // Deaktiviere, wenn bereits im Dropdown
-
-        // Überprüfe, ob dieser Kontakt auch in assignedToOptions vorkommt
-        if (assignedToOptions.includes(contact.name)) {
-            option.classList.add('d-none');
-        }
-
-        option.disabled = isContactInDropdown;  // Deaktiviere, wenn bereits im Dropdown
-
-        dropdown.appendChild(option);
-    });
-
-    // Füge eine Standardoption hinzu
     let defaultOption = document.createElement('option');
-    defaultOption.value = 'Select contacts to assign';
-    defaultOption.textContent = 'Select contacts to assign';
-    defaultOption.selected = true;  // Wähle diese Option aus
-    dropdown.insertBefore(defaultOption, dropdown.firstChild); // Füge vor dem ersten Element ein
-
-    // Hinzufügen eines Event-Listeners, um die Option zu deaktivieren und aus dem Dropdown zu entfernen
+    generateContactsForBoardOverlay(assignedToOptions, dropdown);
+    generateOptionValueDropdown(dropdown, defaultOption);
     dropdown.addEventListener('change', (event) => {
         let selectedContact = contacts.find(contact => contact.name === event.target.value);
         if (selectedContact) {
-            // Hier wird die generateBallForBoardOverlay-Funktion aufgerufen
             generateBallForBoardOverlay(selectedContact);
-
-            // Speichere den ausgewählten Wert
-            let selectedValue = event.target.value;
-
-            // Füge der ausgewählten Option die Klasse "d-none" hinzu
-            let selectedOption = dropdown.querySelector(`option[value="${selectedValue}"]`);
-            selectedOption.classList.add('d-none');
-
-            // Aktualisiere den Dropdown-Text mit der zuletzt ausgewählten Option
-            defaultOption.textContent = selectedValue;
-
-            // Füge den übergebenen Wert zum Set hinzu
-            assignedValuesSet.add(selectedValue);
+            generateSelectValueForBoardOverlay(defaultOption, dropdown);
         }
     });
+}
+
+async function generateContactsForBoardOverlay(assignedToOptions, dropdown) {
+    contacts.forEach(contact => {
+        let isContactInDropdown = [...dropdown.options].some(option => option.value === contact.name);
+        let option = document.createElement('option');
+        fillOptionDropdownForBoardOverlay(option, contact, isContactInDropdown);
+        if (assignedToOptions.includes(contact.name)) {
+            option.classList.add('d-none');
+        }
+        option.disabled = isContactInDropdown;
+        dropdown.appendChild(option, contact);
+    });
+}
+
+function fillOptionDropdownForBoardOverlay(option, contact, isContactInDropdown) {
+    let isContactAssigned = assignedValuesSet.has(contact.name);
+    option.value = contact.name;
+    option.textContent = contact.name;
+    option.classList.add(isContactAssigned ? 'd-none' : 'not_selected');
+    option.disabled = isContactInDropdown;
+}
+
+function generateOptionValueDropdown(dropdown, defaultOption) {
+    defaultOption.value = 'Select contacts to assign';
+    defaultOption.textContent = 'Select contacts to assign';
+    defaultOption.selected = true;
+    dropdown.insertBefore(defaultOption, dropdown.firstChild);
+}
+
+function generateSelectValueForBoardOverlay(defaultOption, dropdown) {
+    let selectedValue = event.target.value;
+    let selectedOption = dropdown.querySelector(`option[value="${selectedValue}"]`);
+    selectedOption.classList.add('d-none');
+    defaultOption.textContent = selectedValue;
+    assignedValuesSet.add(selectedValue);
 }
 
 
