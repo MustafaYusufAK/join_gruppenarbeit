@@ -51,7 +51,7 @@ body {
 
 /*--------Headlines--------*/
 h1 {
-    font-size: 55px;
+    font-size: 61px;
     font-weight: 700;
 }
 
@@ -129,6 +129,12 @@ h2 {
 
 .color-29ABE2 {
     color: #29ABE2;
+}
+
+@media (max-width: 1000px) {
+    h1 {
+        font-size: 47px;
+    }
 }
 
 @media (max-width: 600px) {

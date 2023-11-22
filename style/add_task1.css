@@ -10,8 +10,10 @@
     background-color: #A8A8A8;
 }
 
-/* CSS für die Benachrichtigung */
-.contacts_notification {
+
+
+
+.write_category_notification {
     text-align: center;
     display: none;
     position: absolute;
@@ -27,8 +29,127 @@
     transition: opacity 0.5s;
 }
 
-/* CSS für den OK-Button */
-.contacts_notification button {
+.write_category_notification button {
+    background: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.category_notification {
+    text-align: center;
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f1f1f1;
+    color: black;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.category_notification button {
+    background: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.board_select_category_notification {
+    text-align: center;
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f1f1f1;
+    color: black;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.board_select_category_notification button {
+    background: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.select_category_notification {
+    text-align: center;
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f1f1f1;
+    color: black;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.select_category_notification button {
+    background: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.confirm_category_notification {
+    text-align: center;
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f1f1f1;
+    color: black;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.confirm_category_notification button {
     background: #007BFF;
     color: white;
     border: none;
@@ -72,7 +193,7 @@
     border-radius: 5px;
 }
 
-.board_category_notification {
+.board_confirm_category_notification {
     text-align: center;
     display: none;
     position: absolute;
@@ -88,7 +209,67 @@
     transition: opacity 0.5s;
 }
 
-.board_category_notification button {
+.board_confirm_category_notification button {
+    background: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.board_category_color_notification {
+    text-align: center;
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f1f1f1;
+    color: black;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.board_category_color_notification button {
+    background: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.category_notification {
+    text-align: center;
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f1f1f1;
+    color: black;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.category_notification button {
     background: #007BFF;
     color: white;
     border: none;
@@ -266,36 +447,4 @@
     margin-bottom: 0px;
     margin-right: 5px;
     margin-left: 5px;
-}
-
-@media (max-width: 850px) {
-
-    .contacts_notification {
-        top: 8%;
-    }
-
-    .prio_notification {
-        top: 8%;
-    }
-
-    .title_notification {
-        top: 8%;
-    }
-
-    .description_notification {
-        top: 8%;
-    }
-
-    .date_notification {
-        top: 8%;
-    }
-
-    .must_have_notification {
-        top: 8%;
-    }
-
-    .show_final_notification {
-        top: 8%;
-    }
-
 }

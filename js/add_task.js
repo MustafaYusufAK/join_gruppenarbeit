@@ -21,7 +21,8 @@ let categoryColorArray = [];
 let subtasksArray = [];
 let assignedToIDsArray = [];
 let assignedShortValues = [];
-
+let subtaskTextsArray = [];
+let subtaskIdsArray = [];
 /**
  * add new Task to Contacts
  */
@@ -32,19 +33,62 @@ function addTask() {
     const createdAtInput = document.getElementById('createdAt');
     const subtaskInput = document.getElementById('subtaskInput');
     const subtaskList = document.getElementById('subtaskList');
+    const newCategoryContainer = document.getElementById('newCategoryContainer');
+    const newCategoryInput = document.getElementById('newCategoryInput');
+    const newCategoryColor = document.getElementById('newCategoryColor');
     const title = titleInput.value;
     const description = descriptionInput.value;
-    const createdAt = createdAtInput.value;    
+    const createdAt = createdAtInput.value;
+    if (!newCategoryContainer.classList.contains('d-none')) {
+        if (newCategoryInput && !newCategoryInput.value.trim()) {
+            categoryNotification();
+            return; // Beende die Funktion, um das Hinzufügen der Aufgabe zu verhindern
+        }
+        if (newCategoryColor && !newCategoryColor.style.backgroundColor) {
+            categoryColorNotification();
+            return; // Beende die Funktion, um das Hinzufügen der Aufgabe zu verhindern
+        }
+        if (newCategoryInput && newCategoryInput.value.trim() && newCategoryColor && newCategoryColor.style.backgroundColor) {
+            confirmCategoryNotification();
+            return; // Beende die Funktion, um das Hinzufügen der Aufgabe zu verhindern oder führe andere erforderliche Aktionen aus
+        }
+    }
     getValueForTaskContacts();
     if (title && description && createdAt && priorityArray.length > 0 && assignedToValuesArray.length > 0) {
         createTask(title, description, createdAt, createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskList);
-
+        checkUpNewCategory();
     } else {
         showNotification();
         resetTaskInformation()
     }
 
 }
+
+
+function checkUpNewCategory() {
+    // Überprüfe, ob der Div-Container "newCategoryContainer" nicht die Klasse "d-none" hat
+    if (!newCategoryContainer.classList.contains('d-none')) {
+        // Überprüfe, ob im Input-Feld "newCategoryInput" etwas vorhanden ist
+        if (newCategoryInput && !newCategoryInput.value.trim()) {
+            categoryNotification();
+            return; // Beende die Funktion, um das Hinzufügen der Aufgabe zu verhindern
+        }
+
+        // Überprüfe, ob "style="background-color:"" im Div-Container "newCategoryColor" vorhanden ist
+        if (newCategoryColor && !newCategoryColor.style.backgroundColor) {
+            categoryColorNotification();
+            return; // Beende die Funktion, um das Hinzufügen der Aufgabe zu verhindern
+        }
+
+        // Überprüfe, ob sowohl "newCategoryInput" als auch "newCategoryColor" einen Inhalt haben
+        if (newCategoryInput && newCategoryInput.value.trim() && newCategoryColor && newCategoryColor.style.backgroundColor) {
+            confirmCategoryNotification();
+            return; // Beende die Funktion, um das Hinzufügen der Aufgabe zu verhindern oder führe andere erforderliche Aktionen aus
+        }
+    }
+}
+
+
 
 /**
  * generate a task
@@ -60,7 +104,11 @@ function addTask() {
 function createTask(title, description, createdAt, createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskList) {
     const categorySelect = document.getElementById('category');
     const categoryColor = categorySelect ? categorySelect.querySelector('.categoryColor').style.backgroundColor : '';
-    const category = categorySelect ? categorySelect.innerText : '';
+    const category = categorySelect ? categorySelect.innerText.trim() : '';
+    if (category === 'Select task category') {
+        selectCategoryNotification();
+        return; // Beende die Funktion, um das Hinzufügen der Aufgabe zu verhindern
+    }
     pushAndSaveTaskToUser(title, description, createdAt, category, categoryColor);
     resetInputFields(createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskList);
     resetSubTaskItems()
@@ -107,7 +155,8 @@ function createTaskArray(title, description, category, createdAt) {
         task_category: category,
         createdAt: createdAt,
         priority: priorityArray,
-        subtasks: subtasksArray,
+        subtasks: subtaskTextsArray,
+        subtasksId: subtaskIdsArray,
         categoryColors: categoryColorArray,
         assignedToValues: assignedToValuesArray,
         assignedToColors: assignedToColorsArray,
@@ -125,14 +174,16 @@ function createTaskArray(title, description, category, createdAt) {
  * @param {color of category} categoryColor 
  */
 function pushAndSaveTaskToUser(title, description, createdAt, category, categoryColor) {
-    let task = createTaskArray(title, description, category, createdAt);
-    titlesArray.push(title);
-    descriptionsArray.push(description);
-    createdAtArray.push(createdAt);
-    categoryArray.push(category);
-    categoryColorArray.push(categoryColor);
-    allTasks.push(task);
-    saveTasks();
+    if (title && description && createdAt && priorityArray.length > 0) {
+        let task = createTaskArray(title, description, category, createdAt);
+        titlesArray.push(title);
+        descriptionsArray.push(description);
+        createdAtArray.push(createdAt);
+        categoryArray.push(category);
+        categoryColorArray.push(categoryColor);
+        allTasks.push(task);
+        saveTasks();
+    }
 }
 
 /**
@@ -201,9 +252,7 @@ function addStylefromPrirorityButton() {
  * notfication of emptyinput
  */
 function showNotification() {
-    if (assignedToValuesArray.length === 0) {
-        showContactsNotification();
-    } else if (priorityArray.length === 0) {
+    if (priorityArray.length === 0) {
         showPrioNotification();
     } else {
         showFinalNotification();
@@ -244,6 +293,14 @@ function clickEventlisteners() {
         event.preventDefault();
         handlePrioButtonClick('low');
     });
+    document.getElementById('category').onclick = closeCategoryDropdown;
+    document.addEventListener('click', function (event) {
+        var categoryDiv = document.getElementById('category');
+        var targetElement = event.target;
+        if (targetElement !== categoryDiv && !categoryDiv.contains(targetElement)) {
+            closeCategoryDropdown(); // Funktion wird aufgerufen, wenn außerhalb des categoryDiv geklickt wird
+        }
+    });
 }
 
 /**
@@ -269,6 +326,8 @@ function resetAssignedField() {
 }
 
 function clearInputFields() {
+    cancelNewCategory();
+    closeCategoryDropdown();
     resetTaskInformation();
     const titleInput = document.getElementById('title');
     const descriptionInput = document.getElementById('description_text');
@@ -311,24 +370,42 @@ function changeClearBtnIconToHover(IdDefault, IdHover) {
 
 function addSubtask() {
     const subtaskInput = document.getElementById('subtaskInput');
-    const subtaskText = subtaskInput.value.trim();
-    if (subtaskText !== '') {
-        const subtaskList = document.getElementById('subtaskList');
-        const listItem = document.createElement('li');
-        const editIcon = document.createElement('div');
-        const deleteIcon = document.createElement('div');
-        createListItem(listItem, subtaskText);
-        buildEditIcon(editIcon);
-        buildDeleteIcon(deleteIcon);
-        createAppendChildElement(listItem, editIcon, deleteIcon, subtaskList, subtaskInput, subtaskText);
-    }
+    const subtaskItems = document.querySelectorAll('.subtask-item');
+    subtaskItems.forEach(subtask => {
+        const subtaskText = subtask.textContent.trim(); // Text der Unteraufgabe
+        const subtaskId = subtask.id; // ID des li-Elements
+
+        // Hinzufügen der Texte und IDs zu den entsprechenden Arrays, wenn sie vorhanden sind
+        if (subtaskText && subtaskId) {
+            subtaskTextsArray.push(subtaskText);
+            subtaskIdsArray.push(subtaskId);
+        }
+
+        if (subtaskText !== '') {
+            const subtaskList = document.getElementById('subtaskList');
+            const listElementId = generateUniqueID();
+            const listItem = document.createElement('li');
+            listItem.classList.add('subtask-item'); // Füge Klasse hinzu
+            listItem.id = listElementId;
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.classList.add('subtask-checkbox');
+            const editIcon = document.createElement('div');
+            const deleteIcon = document.createElement('div');
+            createListItem(listItem, subtaskText);
+            buildEditIcon(editIcon);
+            buildDeleteIcon(deleteIcon);
+            createAppendChildElement(listItem, editIcon, deleteIcon, subtaskList, subtaskInput, subtaskText, checkbox);
+        }
+    });
 }
 
-function createListItem(listItem, subtaskText) {
+function createListItem(listItem, subtaskText, listElementId) {
     listItem.classList.add('subtask-item');
-    listItem.id = 'listElementId';
+    listItem.id = listElementId; // Verwende die generierte ID
     listItem.textContent = subtaskText;
 }
+
 
 function buildEditIcon(editIcon) {
     editIcon.classList.add('pencil_icon_div');
@@ -340,17 +417,23 @@ function buildDeleteIcon(deleteIcon) {
     deleteIcon.innerHTML = `<img class="addSubTaskIcons icon delete" src="../assets/img/delete-32.png" alt="" onclick="deleteSubtask(event)">`;
 }
 
-function createAppendChildElement(listItem, editIcon, deleteIcon, subtaskList, subtaskInput, subtaskText) {
+function createAppendChildElement(listItem, editIcon, deleteIcon, subtaskList, subtaskInput, subtaskText, checkbox) {
+    listItem.appendChild(checkbox); // Füge Checkbox hinzu
+    listItem.appendChild(document.createTextNode(subtaskText)); // Setze Text nach Checkbox
     listItem.appendChild(editIcon);
     listItem.appendChild(deleteIcon);
     subtaskList.appendChild(listItem);
-    subtasksArray.push(subtaskText);
+    subtasksArray.push({ id: listElementId, text: subtaskText });
+    subtaskIdsArray.push();
     subtaskInput.value = '';
 }
 
 function editSubtask(event) {
     const subtaskItem = event.target.closest('.subtask-item');
     const subtaskText = subtaskItem.textContent.trim();
+    if (subtaskItem.classList.contains('lineThrough')) {
+        subtaskItem.classList.remove('lineThrough');
+    }
     const inputField = document.createElement('input');
     const checkmarkIcon = document.createElement('img');
     inputField.type = 'text';
@@ -369,7 +452,13 @@ function createCheckMarkIcon(inputField, subtaskItem, checkmarkIcon) {
     checkmarkIcon.onclick = applyChanges;
     checkmarkIcon.addEventListener('click', () => {
         const editedText = inputField.value.trim();
-        subtaskItem.textContent = editedText;
+        // Checkbox erstellen
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.classList.add('subtask-checkbox');
+        subtaskItem.innerHTML = '';
+        subtaskItem.appendChild(checkbox);
+        subtaskItem.appendChild(document.createTextNode(editedText));
         subtaskItem.appendChild(createEditIcon());
         subtaskItem.appendChild(createDeleteIcon());
     });

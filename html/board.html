@@ -21,14 +21,15 @@
     <link rel="stylesheet" href="../style/add_task_template.css">
     <script src="../js/storage.js"></script>
     <script src="../js/summary.js"></script>
-    <script src="../js/contacts.js"></script>
     <script src="../js/menuTemplate.js"></script>
     <script src="../js/board.js"></script>
     <script src="../js/board2.js"></script>
     <script src="../js/board3.js"></script>
+    <script src="../js/board4.js"></script>
     <script src="../js/add_task.js"></script>
     <script src="../js/board.overlay.js"></script>
     <script src="../js/board.addTask.overlay.js"></script>
+    <script src="../js/contacts.js"></script>
     <script src="../js/add_task1.js"></script>
     <script src="../js/add_task2.js"></script>
     <script src="../js/add_task_templates.js"></script>
@@ -40,7 +41,7 @@
 
 
     <div class="overflow-hidden">
-        <div id="noteWindow" class="noteWindow" style="display: none">
+        <div id="noteWindow" class="noteWindow" style="display: none" onclick="closeOverlay()">
             <div id="show_final_board_notification_background" class="show_final_notification_background">
                 <div class="show_final_notification_div">
                     <div id="show_final_board_notification" class="show_final_notification">
@@ -49,22 +50,29 @@
                     </div>
                 </div>
             </div>
-            <div id="prio_board_notification" class="prio_notification">
-                <p>Please select a priority.</p>
-                <button id="prio_board_btn" onclick="prioBoardHideNotification()">Understood</button>
+
+            <div id="select_category_notification" class="select_category_notification">
+                Please select a category.
+                <button id="select_category_btn" onclick="selectCategoryHideNotification()">Understood</button>
             </div>
-            <div id="board_contacts_notification" class="contacts_notification">
-                Please select a contact.
-                <button id="contacts_board_btn" onclick="contactsBoardHideNotification()">Understood</button>
+            <div id="prio_notification" class="prio_notification">
+                Please select a priority.
+                <button id="select_prio_btn" onclick="prioHideNotification()">Understood</button>
             </div>
-            <div id="board_category_notification" class="board_category_notification">
+            <div id="category_notification" class="category_notification">
                 Please write your category.
-                <button id="category_board_btn" onclick="showBoardCategoryNotification()">Understood</button>
+                <button id="category_board_btn" onclick="categoryHideNotification()">Understood</button>
             </div>
             <div id="category_color_notification" class="category_color_notification">
-                Please select a color.
-                <button id="category_color_btn" onclick="categoryColorNotification()">Understood</button>
+                Please select a color for your category.
+                <button id="category_color_btn" onclick="categoryColorHideNotification()">Understood</button>
             </div>
+            <div id="confirm_category_notification" class="confirm_category_notification">please confirm the category
+                you
+                created.
+                <button id="category_confirm_btn" onclick="HideConfirmedCategoryNotification()">Understood</button>
+            </div>
+
         </div>
         <div class="addTaskOverlaySection d-none" id="addTaskOverlaySection" onclick="closeTaskOverviewPopUp()">
             <form class="add-task-overlay" id="add-task-form" onclick="doNotClose(event)"
@@ -135,8 +143,9 @@
 
                                         <div class="category" id="category" onclick="openCategoryDropdown()"
                                             style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; border-bottom: 1px solid rgb(209, 209, 209);">
-                                            Development
-                                            <div class="categoryColor" style="background-color: red; margin-left: 10px">
+                                            Select task category
+                                            <div id="categoryColor" class="categoryColor"
+                                                style="background-color: #FFFFFF">
                                             </div>
                                         </div>
 
@@ -341,7 +350,9 @@
                             class="add-icon">
                     </div>
                 </div>
-                <div id="target-to-do-table" class="table-heading drop-container task-container"></div>
+                <div id="target-to-do-table" class="table-heading drop-container task-container">
+                    <div id="noTask" class="no_tasks_class">No Task Available</div>
+                </div>
             </div>
 
             <div>
@@ -354,7 +365,9 @@
                             class="add-icon">
                     </div>
                 </div>
-                <div id="target-in-progress-table" class="table-heading drop-container task-container"></div>
+                <div id="target-in-progress-table" class="table-heading drop-container task-container">
+                    <div id="noTask" class="no_tasks_class">No Task Available</div>
+                </div>
             </div>
 
             <div>
@@ -367,7 +380,9 @@
                             class="add-icon">
                     </div>
                 </div>
-                <div id="target-await-feedback-table" class="table-heading drop-container task-container"></div>
+                <div id="target-await-feedback-table" class="table-heading drop-container task-container">
+                    <div id="noTask" class="no_tasks_class">No Task Available</div>
+                </div>
             </div>
 
             <div>
@@ -376,7 +391,9 @@
                         <h3>Done</h3>
                     </div>
                 </div>
-                <div id="target-done-table" class="table-heading drop-container task-container" id="done-table"></div>
+                <div id="target-done-table" class="table-heading drop-container task-container" id="done-table">
+                    <div id="noTask" class="no_tasks_class">No Task Available</div>
+                </div>
             </div>
         </div>
 

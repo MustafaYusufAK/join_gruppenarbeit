@@ -122,6 +122,11 @@ function extractAssigneeInfo() {
  */
 function createTaskObject() {
     const categorySelect = document.getElementById('category');
+    const categoryText = categorySelect ? categorySelect.innerText.trim() : '';
+    if (categoryText === 'Select task category') {
+        selectCategoryNotification();
+        return; // Beende die Funktion, um das Hinzufügen der Aufgabe zu verhindern
+    }
     const id = generateUniqueID();
     return {
         id: id,
@@ -130,7 +135,8 @@ function createTaskObject() {
         task_category: categorySelect ? categorySelect.innerText : '',
         createdAt: document.getElementById('createdAt').value,
         priority: priorityArray,
-        subtasks: subtasksArray,
+        subtasks: subtaskTextsArray,
+        subtasksId: subtaskIdsArray,
         categoryColors: categoryColorArray,
         assignedToValues: assignedToValuesArray,
         assignedToColors: assignedToColorsArray,
@@ -198,7 +204,7 @@ function finalizeBoardState() {
         restoreTasksFromLocalStorage();
         sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
         emptyArrays();
-    }, 1000);
+    }, 1500);
     clearAddTaskFields();
 }
 
@@ -216,12 +222,10 @@ function handleFilledFields(task) {
  * Shows a notification and resets arrays based on the status of assigned values and priorities.
  */
 function showNotificationAndResetArrays() {
-    if (assignedToValuesArray.length === 0) {
-        showBoardContactsNotification();
-    } else if (priorityArray.length === 0) {
-        showBoardPrioNotification();
+    if (priorityArray.length === 0) {
+        showPrioNotification();
     } else {
-        showBoardFinalNotification();
+        boardHideShowFinalNotification();
     }
 }
 
@@ -233,6 +237,34 @@ function addTaskFromOverlay() {
     const description = document.getElementById('description_text').value;
     const createdAt = document.getElementById('createdAt').value;
     const title = document.getElementById('title').value;
+    const newCategoryContainer = document.getElementById('newCategoryContainer');
+    const newCategoryInput = document.getElementById('newCategoryInput');
+    const newCategoryColor = document.getElementById('newCategoryColor');
+    let subtaskTextsArray = [];
+    let subtaskIdsArray = [];
+    const subtaskItems = document.querySelectorAll('.subtask-item');
+    subtaskItems.forEach(subtask => {
+        const subtaskText = subtask.textContent.trim();
+        const subtaskId = subtask.id;
+        if (subtaskText && subtaskId) {
+            subtaskTextsArray.push(subtaskText);
+            subtaskIdsArray.push(subtaskId);
+        }
+    });
+    if (!newCategoryContainer.classList.contains('d-none')) {
+        if (newCategoryInput && !newCategoryInput.value.trim()) {
+            categoryNotification();
+            return;
+        }
+        if (newCategoryColor && !newCategoryColor.style.backgroundColor) {
+            categoryColorNotification();
+            return;
+        }
+        if (newCategoryInput && newCategoryInput.value.trim() && newCategoryColor && newCategoryColor.style.backgroundColor) {
+            confirmCategoryNotification();
+            return;
+        }
+    }
     extractAssigneeInfo();
     if (title && description && createdAt && priorityArray.length > 0 && assignedToValuesArray.length > 0) {
         const task = createTaskObject();
@@ -311,7 +343,13 @@ function processAssignments(assignments, colors) {
     let assignePinnedTaskBall = '';
     assignments.forEach((assignment, index) => {
         const nameParts = assignment.trim().split(' ');
-        const initials = nameParts.map(part => part[0]).join('');
+        let initials = '';
+
+        if (nameParts.length >= 2) {
+            initials = nameParts[0][0] + nameParts[1][0];
+        } else if (nameParts.length === 1) {
+            initials = nameParts[0][0];
+        }
         const color = colors[index];
         const assignmentHTML = `
             <div class="assigne-ball" style="background-color: ${color}">
@@ -331,19 +369,29 @@ function processAssignments(assignments, colors) {
  * @param {string} priorityImageSrc - The source URL for the priority image.
  * @param {string} categorybackgroundColor - The background color for the category.
  */
-function addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc, categorybackgroundColor) {
+function addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc, categorybackgroundColor, progressBarId) {
     taskDiv.innerHTML = `
-    <div class="pinned-task-container" onclick="showTasksInOverViev('${task.id}')">
-        <div class="category-background-color" style="background-color: ${categorybackgroundColor}">
-            <div class="category-div-text">${task.task_category}</div>
-        </div>
-        <h3 class="pinned-task-headline">${task.title}</h3>
-        <p class="pinned-task-description">${task.description_text}</p>
-        <div id="ball-and-prio-img-div" class="ball-and-prio-img-div">
-        <div class="pinnedAssigneBallPosition">${assignePinnedTaskBall}</div>
-            <div class="pinnedPrioPosition"><div><img class="pinnedPrioImg" src="${priorityImageSrc}" alt="Priority Image"></div></div>
-        </div>
-    </div>`;
+            <div class="pinned-task-container" onclick="showTasksInOverViev('${task.id}')">
+                <div class="category-background-color" style="background-color: ${categorybackgroundColor}">
+                    <div class="category-div-text">${task.task_category}</div>
+                </div>
+                <h3 class="pinned-task-headline">${task.title}</h3>
+                <p class="pinned-task-discription">${task.description_text}</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progress-bar-${progressBarId}"></div>
+                </div>
+                <div id="ball-and-prio-img-div" class="ball-and-prio-img-div">
+                <div class="pinnedAssigneBallPosition">
+                    ${assignePinnedTaskBall}
+                    </div>
+                    <div class="pinnedPrioPosition">
+                    <div>
+                        <img class="pinnedPrioImg" src="${priorityImageSrc}" alt="Priority Image">
+                    </div>
+                    </div>
+                </div>
+            </div>`;
+    checkProgressBar(task.id);
 }
 
 /**
@@ -361,6 +409,8 @@ function initializeDragAndDrop() {
  * Shows tasks by clearing task containers, displaying tasks, and initializing drag and drop.
  */
 function showTasks() {
+    createSpecificNoTaskDivs();
+    createNoTaskDiv();
     const taskContainer = document.getElementById('target-to-do-table');
     const feedbackTaskContainer = document.getElementById('target-await-feedback-table');
     const inProgressContainer = document.getElementById('target-in-progress-table');
@@ -378,12 +428,14 @@ function showTasks() {
  */
 function displayTasks(taskContainer, feedbackTaskContainer, inProgressContainer, targetDoneTable) {
     allTasks.forEach(task => {
+        const progressBarId = generateUniqueID();
+        task.progressBarId = progressBarId; // Füge die progressBarId zum Task hinzu
         const categorybackgroundColor = task.categoryColors[0];
         let priorityImageSrc = getPriorityImageSrc(task.priority);
         const taskDiv = createTaskDiv(task);
         const targetContainer = determineTargetContainer(task, taskContainer, inProgressContainer, feedbackTaskContainer);
         const assignePinnedTaskBall = createAssignmentBalls(task);
-        addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc, categorybackgroundColor);
+        addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc, categorybackgroundColor, progressBarId);
         targetContainer.appendChild(taskDiv);
     });
     initializeDragAndDrop();
@@ -414,3 +466,59 @@ function getPriorityImageSrc(priority) {
     }
 }
 
+function createSpecificNoTaskDivs() {
+    let noTaskInToDo = document.createElement('div');
+    noTaskInToDo.id = 'noTaskInToDo';
+    let noTaskInAwait = document.createElement('div');
+    noTaskInAwait.id = 'noTaskInAwait';
+    let noTaskInProgress = document.createElement('div');
+    noTaskInProgress.id = 'noTaskInProgress';
+    let noTaskInDone = document.createElement('div');
+    noTaskInDone.id = 'noTaskInDone';
+    let taskContainer = document.getElementById('target-to-do-table');
+    let feedbackTaskContainer = document.getElementById('target-await-feedback-table');
+    let inProgressContainer = document.getElementById('target-in-progress-table');
+    let targetDoneTable = document.getElementById('target-done-table');
+    taskContainer.appendChild(noTaskInToDo);
+    feedbackTaskContainer.appendChild(noTaskInAwait);
+    inProgressContainer.appendChild(noTaskInProgress);
+    targetDoneTable.appendChild(noTaskInDone);
+}
+
+function createNoTaskDiv() {
+    let noTaskDiv = document.createElement('div');
+    noTaskDiv.id = 'noTask';
+    noTaskDiv.className = 'no_tasks_class';
+    noTaskDiv.textContent = 'No Task Available';
+    let noTaskInToDo = document.getElementById('noTaskInToDo');
+    let noTaskInAwait = document.getElementById('noTaskInAwait');
+    let noTaskInProgress = document.getElementById('noTaskInProgress');
+    let noTaskInDone = document.getElementById('noTaskInDone');
+    noTaskInToDo.appendChild(noTaskDiv);
+    noTaskInAwait.appendChild(noTaskDiv.cloneNode(true));
+    noTaskInProgress.appendChild(noTaskDiv.cloneNode(true));
+    noTaskInDone.appendChild(noTaskDiv.cloneNode(true));
+}
+
+function applyLineThroughAndCheckbox(currentTaskId) {
+    const task = allTasks.find(task => task.id === currentTaskId);
+    if (!task) {
+        console.error(`Aufgabe mit der ID "${currentTaskId}" wurde nicht gefunden.`);
+        return;
+    }
+    const subtasksStatus = task.subtasksStatus || [];
+    subtasksStatus.forEach((subtaskStatus, index) => {
+        const subtaskId = task.subtasksId[index];
+        const subtaskElement = document.getElementById(subtaskId);
+        const checkboxElement = subtaskElement.querySelector('.subtask-checkbox');
+        if (subtaskElement && checkboxElement) {
+            if (subtaskStatus === true) {
+                subtaskElement.classList.add('lineThrough');
+                checkboxElement.checked = true;
+            } else {
+                subtaskElement.classList.remove('lineThrough');
+                checkboxElement.checked = false;
+            }
+        }
+    });
+}

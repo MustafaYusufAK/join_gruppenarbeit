@@ -83,7 +83,7 @@
 }
 
 .newCategoryContainer {
-    width: 422px;
+    width: 100%;
     display: flex;
 }
 
@@ -130,6 +130,7 @@
 }
 
 #categoryOverlay {
+    cursor: pointer;
     box-sizing: border-box;
     padding: 5px 10px;
     width: 422px;
@@ -145,6 +146,7 @@
 }
 
 #category {
+    cursor: pointer;
     box-sizing: border-box;
     padding: 5px 10px;
     height: 36px;

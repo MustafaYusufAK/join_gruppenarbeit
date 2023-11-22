@@ -1,5 +1,4 @@
 .newCategoryContainer {
-    width: 422px;
     display: flex;
 }
 
@@ -62,6 +61,7 @@
 }
 
 #category {
+    cursor: pointer;
     box-sizing: border-box;
     padding: 5px 10px;
     height: 36px;

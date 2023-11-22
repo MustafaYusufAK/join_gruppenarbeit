@@ -1,5 +1,18 @@
 @media (max-width: 1200px) {
 
+    .contentSectionAddTask {
+        flex-direction: column;
+        background-color: #F5F5F5;
+        overflow-y: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .date_Prio_div {
+        width: 100%;
+    }
+
     .newCategoryContainer input {
         width: 100% !important;
     }
@@ -7,6 +20,8 @@
     .newCategoryContainer {
         width: 100% !important;
     }
+
+    #prio_notification {}
 
     .header_div {
         font-size: 56px;
@@ -134,7 +149,7 @@
 
     .subtaskInputfield {
         width: 95%;
-        height: 34px;
+        height: 36px;
         outline: none;
         text-indent: 1px;
         appearance: none;
@@ -217,6 +232,7 @@
     }
 
     #category {
+        cursor: pointer;
         margin-bottom: 12px;
         box-sizing: border-box;
         padding: 5px 10px;

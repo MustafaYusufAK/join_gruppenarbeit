@@ -1,14 +1,12 @@
-function cancelNewCategory(selectTask) {
+function cancelNewCategory() {
     document.getElementById('newCategoryInput').value = '';
     document.getElementById('newCategoryColor').style.backgroundColor = '';
     document.getElementById('newCategoryContainer').classList.add('d-none');
     document.getElementById('newCategoryColors').classList.add('d-none');
     document.getElementById('category').style.display = 'flex';
-    if (selectTask == undefined) {
-        document.getElementById('category').innerHTML = 'Select task category';
-    } else {
-
-    }
+    document.getElementById('category').innerHTML = 'Select task category';
+    document.getElementById('category').classList.remove('d-none');
+    closeCategoryDropdown();
 }
 
 function confirmNewCategory() {
@@ -18,12 +16,17 @@ function confirmNewCategory() {
 
     if (newCategoryInput.value === '') {
         newCategoryInput.focus();
-        showBoardCategoryNotification();
+        categoryNotification();
     } else if (newCategoryColor === '') {
         categoryColorNotification();
     } else {
         selectedCategory(newCategory, newCategoryColor);
-        cancelNewCategory('taskCategorySelected')
+        document.getElementById('newCategoryInput').value = '';
+        document.getElementById('newCategoryColor').style.backgroundColor = '';
+        document.getElementById('newCategoryContainer').classList.add('d-none');
+        document.getElementById('newCategoryColors').classList.add('d-none');
+        document.getElementById('category').style.display = 'flex';
+        document.getElementById('category').classList.remove('d-none');
     }
 }
 
@@ -36,6 +39,13 @@ function openCategoryDropdown() {
         border-bottom: none;
     `;
     document.getElementById('category').onclick = closeCategoryDropdown;
+    document.addEventListener('mouseup', function (event) {
+        var categoryDiv = document.getElementById('category');
+        var targetElement = event.target;
+        if (targetElement !== categoryDiv && !categoryDiv.contains(targetElement)) {
+            closeCategoryDropdown(); // Funktion wird aufgerufen, wenn außerhalb des categoryDiv geklickt wird
+        }
+    });
 }
 
 function newCategory() {
@@ -43,6 +53,7 @@ function newCategory() {
     document.getElementById('newCategoryContainer').classList.remove('d-none');
     document.getElementById('newCategoryColors').classList.remove('d-none');
     document.getElementById('category').style.display = 'none';
+    document.getElementById('category').classList.add('d-none');
 }
 
 function newCategoryOverlay() {
@@ -68,18 +79,18 @@ function closeCategoryDropdown() {
         border-bottom-right-radius: 10px;
         border-bottom: 1px solid #D1D1D1;
     `;
+    let categoryColor = document.getElementById('categoryColor');
+    if (!categoryColor) {
+        categoryColor = document.createElement('div');
+        categoryColor.id = 'categoryColor';
+        categoryColor.className = 'categoryColor';
+        categoryColor.style.backgroundColor = '#FFFFFF';
+        const category = document.getElementById('category');
+        category.appendChild(categoryColor);
+    } else {
+        categoryColor.style.backgroundColor = '#FFFFFF';
+    }
     document.getElementById('category').onclick = openCategoryDropdown;
-}
-
-function selectedCategory(category, color) {
-    category = category.charAt(0).toUpperCase() + category.slice(1);
-    document.getElementById('category').innerHTML = /*html*/ `
-        <div id="_xak1l2uph" class="categoryContainer">
-            ${category}
-            <div class="categoryColor" style="background-color: ${color}; margin-left: 10px"></div>
-        </div>`;
-    closeCategoryDropdown();
-    return color;
 }
 
 function addColorToNewCategory(color) {

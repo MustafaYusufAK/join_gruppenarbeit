@@ -158,20 +158,28 @@ function addSubtaskToBoard() {
     const subtaskText = subtaskBoardInput.value.trim();
     if (subtaskText !== '') {
         const boardSubtaskList = document.getElementById('boardSubtaskList');
+        const checkbox = document.createElement('input');
         const listItem = document.createElement('li');
         const editIcon = document.createElement('div');
         const deleteIcon = document.createElement('div');
+        styleCheckbox(checkbox);
         styleListItem(listItem, subtaskText);
         styleEditIcon(editIcon);
         styleDeleteIcon(deleteIcon);
-        appendChildForSubTextElements(subtaskText, listItem, editIcon, deleteIcon, boardSubtaskList);
+        appendChildForSubTextElements(checkbox, subtaskText, listItem, editIcon, deleteIcon, boardSubtaskList);
         subtaskBoardInput.value = '';
     }
 }
 
+function styleCheckbox(checkbox) {
+    checkbox.type = 'checkbox';
+    checkbox.classList.add('subtask-checkbox');
+}
+
 function styleListItem(listItem, subtaskText) {
     listItem.classList.add('subtask-item');
-    listItem.id = 'listElementId';
+    const listElementId = generateUniqueID(); // Generiere eine eindeutige ID für das Listenelement
+    listItem.id = listElementId;
     listItem.textContent = subtaskText;
 }
 
@@ -185,7 +193,8 @@ function styleDeleteIcon(deleteIcon) {
     deleteIcon.innerHTML = `<img class="addSubTaskIcons icon delete" src="../assets/img/delete-32.png" alt="" onclick="deleteSubtask(event)">`;
 }
 
-function appendChildForSubTextElements(subtaskText, listItem, editIcon, deleteIcon, boardSubtaskList) {
+function appendChildForSubTextElements(checkbox, subtaskText, listItem, editIcon, deleteIcon, boardSubtaskList) {
+    listItem.appendChild(checkbox); // Füge Checkbox hinzu
     listItem.appendChild(editIcon);
     listItem.appendChild(deleteIcon);
     boardSubtaskList.appendChild(listItem);

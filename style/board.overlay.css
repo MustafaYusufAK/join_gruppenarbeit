@@ -100,6 +100,12 @@
     justify-content: flex-start;
 }
 
+span {
+    font-size: 21px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 .d-none {
     display: none;
 }
@@ -405,14 +411,14 @@ button:hover {
     display: inline;
 }
 
+.boardSubtaskList {}
+
 .boardSubtaskList ul {
     list-style-type: circle;
     /* Aufzählungszeichen für die Liste */
 }
 
 .boardSubtaskList li::before {
-    content: "•";
-    /* Benutzerdefiniertes Aufzählungszeichen */
     margin-right: 0.5em;
 }
 
@@ -424,12 +430,12 @@ button:hover {
 }
 
 .subtask-item input {
+    margin-right: 5px;
     height: 36px;
     outline: none;
     padding-left: 8px;
     border-radius: 10px;
     border: 1px solid #DADADA;
-    margin: 0;
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
@@ -447,8 +453,6 @@ button:hover {
     height: 30px;
     margin-left: 10px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
 }
 
 .delete_icon_div {
@@ -456,8 +460,6 @@ button:hover {
     height: 30px;
     border-radius: 10px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
 }
 
 .delete_icon_div:hover {

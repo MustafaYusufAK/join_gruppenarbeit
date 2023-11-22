@@ -79,7 +79,7 @@ function editingShowTask() {
     const assignedToOptions = task.assignedToValues.map((contact, index) => {
         return `<option value="${contact}" data-id="_${index}" data-color="${task.assignedToColors[index]}">${contact}</option>`;
     }).join('');
-    const subtasksList = task.subtasks.map(subtask => subtasksListTemplate(subtask)).join('');
+    const subtasksList = task.subtasks && task.subtaskId && task.subtaskId.map((subtask, subtaskId) => subtasksListTemplate(subtask, subtaskId)).join('');
     editTaskOverviewTemplate(taskOverviewPopUp, title, descriptionText, idDateValue, subtasksList);
     boardOverlayContactDropdown(assignedToOptions);
     const assignedToList = document.getElementById('ballAssignedToList');
@@ -87,6 +87,7 @@ function editingShowTask() {
     clearBoardInputFields();
     boardClickEventlisteners();
     setMinDate();
+    applyLineThroughAndCheckbox(currentTaskId);
 }
 
 /**
@@ -94,9 +95,17 @@ function editingShowTask() {
  * @param {string} subtask - The subtask description.
  * @returns {string} - HTML for the subtask.
  */
-function subtasksListTemplate(subtask) {
-    return `<li class="subtask-item">${subtask}<div class="pencil_icon_div"><img class="addSubTaskIcons icon pencil" src="../assets/img/pencil-32.png" alt="" onclick="editSubtask(event)"></div>
-        <div class="delete_icon_div"><img class="addSubTaskIcons icon delete" src="../assets/img/delete-32.png" alt="" onclick="deleteSubtask(event)"></div></li>`;
+function subtasksListTemplate(subtask, subtaskId) {
+    return `<li id="${subtaskId}" class="subtask-item">
+    <input type="checkbox" class="subtask-checkbox">
+    ${subtask}
+    <div class="pencil_icon_div">
+        <img class="addSubTaskIcons icon pencil" src="../assets/img/pencil-32.png" alt="" onclick="editSubtask(event)">
+    </div>
+    <div class="delete_icon_div">
+        <img class="addSubTaskIcons icon delete" src="../assets/img/delete-32.png" alt="" onclick="deleteSubtask(event)">
+    </div>
+</li>`;
 }
 
 /**
@@ -218,9 +227,23 @@ function getBoardInputValues() {
     const dueDate = document.getElementById('editedCreatedAt').value;
     const boardOverlaySubTaskList = document.getElementById('boardSubtaskList');
     const subtaskItems = document.querySelectorAll('#boardSubtaskList .subtask-item');
+    const subtasksStatusArray = [];
+    const subtasksTextArray = []; // Array für Subtask-Texte
+    const subtasksIdArray = []; // Array für Subtask-Id's
+
+    subtaskItems.forEach(item => {
+        const text = item.textContent.trim(); // Hier wird der Text des subtask-items genommen
+        const id = item.id; // Hier wird die ID des Subtasks genommen
+        subtasksStatusArray.push(item.querySelector('.subtask-checkbox').checked);
+        subtasksTextArray.push(text); // Füge den Subtask-Text hinzu
+        subtasksIdArray.push(id); // Füge die Subtask-ID hinzu
+
+        // Hier kannst du die updateProgressBar-Funktion für jeden Subtask aufrufen
+        updateProgressBar(taskId, id); // item.id sollte die Subtask-ID sein
+    });
     boardOverlaySubTaskList.innerHTML = '';
     const subtasksArray = Array.from(subtaskItems, item => item.childNodes[0].textContent.trim());
-    return { taskId, title, descriptionText, dueDate, assignedToDiv, subtasksArray };
+    return { taskId, title, descriptionText, dueDate, assignedToDiv, subtasksStatusArray, subtasksTextArray, subtasksIdArray };
 }
 
 /**
@@ -235,16 +258,18 @@ function getBoardInputValues() {
  * @param {string[]} assignedShortValues - The short values of assigned contacts.
  * @param {string[]} assignedToColors - The colors of assigned contacts.
  */
-function updateTaskDetailsInArray(descriptionText, title, dueDate, taskIndex, updatedPriority, subtasksArray, assignedToValues, assignedShortValues, assignedToColors) {
+function updateTaskDetailsInArray(descriptionText, title, dueDate, taskIndex, updatedPriority, subtasksTextArray, assignedToValues, assignedShortValues, assignedToColors, subtasksStatusArray, subtasksIdArray) {
     const task = allTasks[taskIndex];
     task.title = title;
     task.description_text = descriptionText;
     task.createdAt = dueDate;
     task.priority = updatedPriority.slice();
-    task.subtasks = subtasksArray.slice();
+    task.subtasks = subtasksTextArray.slice();
     task.assignedToValues = assignedToValues.slice();
     task.assignedShortValues = assignedShortValues.slice();
     task.assignedToColors = assignedToColors.slice();
+    task.subtasksStatusArray = subtasksStatusArray;
+    task.subtasksIdArray = subtasksIdArray;
 }
 
 /**
@@ -261,7 +286,7 @@ function handleTaskNotFound(taskId) {
  */
 async function boardConfirm() {
     event.preventDefault();
-    const { taskId, title, descriptionText, dueDate, assignedToDiv, subtasksArray } = getBoardInputValues();
+    const { taskId, title, descriptionText, dueDate, assignedToDiv, subtasksStatusArray, subtasksTextArray, subtasksIdArray } = getBoardInputValues();
     const taskIndex = allTasks.findIndex(task => task.id === taskId);
     if (taskIndex !== -1) {
         const assigneeContainers = assignedToDiv.getElementsByClassName('assigneeContainer');
@@ -278,7 +303,7 @@ async function boardConfirm() {
         }
         const previousPriority = allTasks[taskIndex].priority;
         const updatedPriority = priorityArray.length > 0 ? priorityArray : previousPriority;
-        updateTaskDetailsInArray(descriptionText, title, dueDate, taskIndex, updatedPriority, subtasksArray, assignedToValues, assignedShortValues, assignedToColors);
+        updateTaskDetailsInArray(descriptionText, title, dueDate, taskIndex, updatedPriority, subtasksTextArray, assignedToValues, assignedShortValues, assignedToColors, subtasksStatusArray, subtasksIdArray);
         await saveTasks();
         priorityArray = [];
         currentTaskId = [];
@@ -376,6 +401,8 @@ function clearSubtasks() {
  * Clears the input fields, resets the assigned field, clears date input, resets priority buttons, updates category, and clears subtasks.
  */
 function forClearAddTaskWithBtn() {
+    cancelNewCategory();
+    closeCategoryDropdown();
     clearInputFields();
     resetAssignedField();
     clearDateInput();

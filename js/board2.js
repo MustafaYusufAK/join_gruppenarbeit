@@ -175,9 +175,10 @@ function displayTaskOverview(task) {
     const date = task.createdAt;
     const priority = task.priority.join(', ');
     const subTasks = task.subtasks;
-    let subTasksHTML = createSubTasksHTML(subTasks);
+    const subTasksId = task.subtasksId;
+    let subTasksHTML = createSubTasksHTML(subTasks, subTasksId);
     let taskPopUpSingleAssignmentContainer = createAssignmentContainerHTML(task);
-    taskOverviewTemplate(taskOverviewPopUp, task, categorybackgroundColor, title, description, date, priority, taskPopUpSingleAssignmentContainer,  subTasksHTML, currentId); 
+    taskOverviewTemplate(taskOverviewPopUp, task, categorybackgroundColor, title, description, date, priority, taskPopUpSingleAssignmentContainer, subTasksHTML, currentId);
 }
 
 /**
@@ -185,12 +186,13 @@ function displayTaskOverview(task) {
  * @param {Array} subTasks - The array of subtasks.
  * @returns {string} The HTML code for subtasks.
  */
-function createSubTasksHTML(subTasks) {
+function createSubTasksHTML(subTasks, subTasksId) {
     let subTasksHTML = '';
-    if (subTasks && subTasks.length > 0) {
+    if (subTasks && subTasksId && subTasks.length > 0) {
         subTasksHTML += '<ul class="edit-subTask">';
-        subTasks.forEach(subTask => {
-            subTasksHTML += `<li>${subTask}</li>`;
+        subTasks.forEach((subTask, index) => {
+            const subtaskStatus = task.subtasksStatus ? task.subtasksStatus[index] : false;
+            subTasksHTML += `<li id="${subtaskId[index]}" class="subTaskAlignment"><div class="${subtaskStatus ? 'lineThrough' : ''}">${subTask}</div></li>`;
         });
         subTasksHTML += '</ul>';
     }
@@ -211,7 +213,7 @@ function createSubTasksHTML(subTasks) {
  * @param {string} subTasksHTML - The HTML content for subtasks.
  * @param {string} currentId - The ID of the current task.
  */
-function taskOverviewTemplate(taskOverviewPopUp, task, categorybackgroundColor, title, description, date, priority, taskPopUpSingleAssignmentContainer,  subTasksHTML, currentId) {
+function taskOverviewTemplate(taskOverviewPopUp, task, categorybackgroundColor, title, description, date, priority, taskPopUpSingleAssignmentContainer, subTasksHTML, currentId) {
     taskOverviewPopUp.innerHTML = /*html*/ `
         <div class="wholeTaskOverview" id="wholeTaskOverview">
             <div class="categoryHeaderDiv">
@@ -267,15 +269,17 @@ function taskOverviewTemplate(taskOverviewPopUp, task, categorybackgroundColor, 
 function createAssignmentContainerHTML(task) {
     let taskPopUpSingleAssignmentContainer = '';
     if (task.assignedToValues && task.assignedToValues.length > 0) {
-        task.assignedToValues.forEach((assignment, index) => {
+        task.assignedToValues.forEach((assignment) => {
             const nameParts = assignment.trim().split(' ');
-            const initials = nameParts.map(part => part[0]).join('');
-            const color = task.assignedToColors[index];
-            const assignmentHTML = assignmentHTMLTemplate(color, initials, assignment);
-            taskPopUpSingleAssignmentContainer += assignmentHTML;
-        });
+            let initials = '';
+            if (nameParts.length >= 2) {
+                initials = nameParts[0][0] + nameParts[1][0];
+            } else if (nameParts.length === 1) {
+                initials = nameParts[0][0];
+            }
+        })
+        return taskPopUpSingleAssignmentContainer;
     }
-    return taskPopUpSingleAssignmentContainer;
 }
 
 /**
