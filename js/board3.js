@@ -79,7 +79,8 @@ function editingShowTask() {
     const assignedToOptions = task.assignedToValues.map((contact, index) => {
         return `<option value="${contact}" data-id="_${index}" data-color="${task.assignedToColors[index]}">${contact}</option>`;
     }).join('');
-    const subtasksList = task.subtasks && task.subtaskId && task.subtaskId.map((subtask, subtaskId) => subtasksListTemplate(subtask, subtaskId)).join('');
+    debugger;
+    const subtasksList = task.subtasks && task.subtasksId && task.subtasksId.map((subtasks, subtasksId) => subtasksListTemplate(subtasks, subtasksId)).join('');
     editTaskOverviewTemplate(taskOverviewPopUp, title, descriptionText, idDateValue, subtasksList);
     boardOverlayContactDropdown(assignedToOptions);
     const assignedToList = document.getElementById('ballAssignedToList');
@@ -95,10 +96,10 @@ function editingShowTask() {
  * @param {string} subtask - The subtask description.
  * @returns {string} - HTML for the subtask.
  */
-function subtasksListTemplate(subtask, subtaskId) {
-    return `<li id="${subtaskId}" class="subtask-item">
+function subtasksListTemplate(subtasks, subtasksId) {
+    return `<li id="${subtasksId}" class="subtask-item">
     <input type="checkbox" class="subtask-checkbox">
-    ${subtask}
+    ${subtasks}
     <div class="pencil_icon_div">
         <img class="addSubTaskIcons icon pencil" src="../assets/img/pencil-32.png" alt="" onclick="editSubtask(event)">
     </div>

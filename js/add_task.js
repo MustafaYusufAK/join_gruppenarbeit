@@ -32,6 +32,7 @@ function addTask() {
     const descriptionInput = document.getElementById('description_text');
     const createdAtInput = document.getElementById('createdAt');
     const subtaskInput = document.getElementById('subtaskInput');
+    const subtaskItems = document.querySelectorAll('.subtask-item');
     const subtaskList = document.getElementById('subtaskList');
     const newCategoryContainer = document.getElementById('newCategoryContainer');
     const newCategoryInput = document.getElementById('newCategoryInput');
@@ -55,7 +56,7 @@ function addTask() {
     }
     getValueForTaskContacts();
     if (title && description && createdAt && priorityArray.length > 0 && assignedToValuesArray.length > 0) {
-        createTask(title, description, createdAt, createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskList);
+        createTask(title, description, createdAt, createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskItems);
         checkUpNewCategory();
     } else {
         showNotification();
@@ -101,15 +102,25 @@ function checkUpNewCategory() {
  * @param {ID Element of subtask input} subtaskInput 
  * @param {ID Element of subtask list} subtaskList 
  */
-function createTask(title, description, createdAt, createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskList) {
+function createTask(title, description, createdAt, createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskItems) {
+    subtaskItems.forEach(subtask => {
+        const subtaskText = subtask.textContent.trim(); // Text der Unteraufgabe
+        const subtaskId = subtask.id; // ID des li-Elements
+        if (subtaskText && subtaskId) {
+            subtaskTextsArray.push(subtaskText);
+            subtaskIdsArray.push(subtaskId);
+        }
+    });
+
     const categorySelect = document.getElementById('category');
     const categoryColor = categorySelect ? categorySelect.querySelector('.categoryColor').style.backgroundColor : '';
     const category = categorySelect ? categorySelect.innerText.trim() : '';
     if (category === 'Select task category') {
         selectCategoryNotification();
         return; // Beende die Funktion, um das Hinzufügen der Aufgabe zu verhindern
+
     }
-    pushAndSaveTaskToUser(title, description, createdAt, category, categoryColor);
+    pushAndSaveTaskToUser(title, description, createdAt, category, categoryColor, subtaskInput, subtaskItems);
     resetInputFields(createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskList);
     resetSubTaskItems()
     removeStylefromPrirorityButton();
@@ -117,7 +128,7 @@ function createTask(title, description, createdAt, createdAtInput, titleInput, d
     showFinalNotification();
     setTimeout(() => {
         redirectToBoard();
-    }, 3000);
+    }, 1600);
     clearInputFields();
 }
 
@@ -173,7 +184,7 @@ function createTaskArray(title, description, category, createdAt) {
  * @param {category for task} category 
  * @param {color of category} categoryColor 
  */
-function pushAndSaveTaskToUser(title, description, createdAt, category, categoryColor) {
+function pushAndSaveTaskToUser(title, description, createdAt, category, categoryColor, subtaskInput) {
     if (title && description && createdAt && priorityArray.length > 0) {
         let task = createTaskArray(title, description, category, createdAt);
         titlesArray.push(title);
@@ -181,6 +192,7 @@ function pushAndSaveTaskToUser(title, description, createdAt, category, category
         createdAtArray.push(createdAt);
         categoryArray.push(category);
         categoryColorArray.push(categoryColor);
+
         allTasks.push(task);
         saveTasks();
     }
@@ -370,8 +382,8 @@ function changeClearBtnIconToHover(IdDefault, IdHover) {
 
 function addSubtask() {
     const subtaskInput = document.getElementById('subtaskInput');
-    const subtaskItems = document.querySelectorAll('.subtask-item');
-    subtaskItems.forEach(subtask => {
+
+    subtaskInput.forEach(subtask => {
         const subtaskText = subtask.textContent.trim(); // Text der Unteraufgabe
         const subtaskId = subtask.id; // ID des li-Elements
 

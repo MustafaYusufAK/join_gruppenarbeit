@@ -369,7 +369,7 @@ function processAssignments(assignments, colors) {
  * @param {string} priorityImageSrc - The source URL for the priority image.
  * @param {string} categorybackgroundColor - The background color for the category.
  */
-function addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc, categorybackgroundColor, progressBarId) {
+function addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc, categorybackgroundColor, progressBarId, taskId) {
     taskDiv.innerHTML = `
             <div class="pinned-task-container" onclick="showTasksInOverViev('${task.id}')">
                 <div class="category-background-color" style="background-color: ${categorybackgroundColor}">
@@ -391,7 +391,6 @@ function addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImage
                     </div>
                 </div>
             </div>`;
-    checkProgressBar(task.id);
 }
 
 /**
@@ -428,16 +427,18 @@ function showTasks() {
  */
 function displayTasks(taskContainer, feedbackTaskContainer, inProgressContainer, targetDoneTable) {
     allTasks.forEach(task => {
+        const taskId = task.id
         const progressBarId = generateUniqueID();
-        task.progressBarId = progressBarId; // Füge die progressBarId zum Task hinzu
         const categorybackgroundColor = task.categoryColors[0];
         let priorityImageSrc = getPriorityImageSrc(task.priority);
         const taskDiv = createTaskDiv(task);
         const targetContainer = determineTargetContainer(task, taskContainer, inProgressContainer, feedbackTaskContainer);
         const assignePinnedTaskBall = createAssignmentBalls(task);
-        addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc, categorybackgroundColor, progressBarId);
+        addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc, categorybackgroundColor, progressBarId, taskId);
         targetContainer.appendChild(taskDiv);
+        checkProgressBar(taskId, progressBarId);
     });
+
     initializeDragAndDrop();
     restoreTasksFromLocalStorage();
     sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);

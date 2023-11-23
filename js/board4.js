@@ -69,13 +69,13 @@ function hideOverlay() {
     overlaySection.classList.add('d-none');
 }
 
-function checkProgressBar(taskId) {
+function checkProgressBar(taskId, progressBarId) {
     const task = allTasks.find(task => task.id === taskId);
     if (!task) {
         console.error(`Task mit der ID "${taskId}" wurde nicht gefunden.`);
         return;
     }
-    const progressBarId = task.progressBarId;
+
     const progressBar = document.getElementById(`progress-bar-${progressBarId}`);
     if (!progressBar) {
         console.error(`Progress-Bar mit der ID "${progressBarId}" wurde nicht gefunden.`);

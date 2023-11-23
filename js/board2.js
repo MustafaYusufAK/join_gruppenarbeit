@@ -187,12 +187,14 @@ function displayTaskOverview(task) {
  * @returns {string} The HTML code for subtasks.
  */
 function createSubTasksHTML(subTasks, subTasksId) {
+    const taskSubtasks = allTasks.find(task => task.subtasks === subTasks);
+    const taskSubtasksId = allTasks.find(task => task.subtasksId === subTasksId);
     let subTasksHTML = '';
     if (subTasks && subTasksId && subTasks.length > 0) {
         subTasksHTML += '<ul class="edit-subTask">';
         subTasks.forEach((subTask, index) => {
-            const subtaskStatus = task.subtasksStatus ? task.subtasksStatus[index] : false;
-            subTasksHTML += `<li id="${subtaskId[index]}" class="subTaskAlignment"><div class="${subtaskStatus ? 'lineThrough' : ''}">${subTask}</div></li>`;
+            const subtaskStatus = taskSubtasksId ? taskSubtasksId[index] : false;
+            subTasksHTML += `<li id="${subTasksId[index]}" class="subTaskAlignment"><div class="${subtaskStatus ? 'lineThrough' : ''}">${subTask}</div></li>`;
         });
         subTasksHTML += '</ul>';
     }
