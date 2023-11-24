@@ -106,7 +106,6 @@ h3 {
 }
 
 .task-item {
-    margin-top: -35px;
     margin-bottom: 85px;
     display: flex;
     justify-content: center;
@@ -144,6 +143,7 @@ h3 {
     box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
     border-radius: 30px;
     cursor: pointer;
+    z-index: 0;
 }
 
 .table-header {
@@ -286,17 +286,6 @@ h3 {
     position: relative;
 }
 
-.subTaskContainer {}
-
-
-.pinned-task-headline {}
-
-
-.pinned-task-discription {}
-
-
-.add-icon {}
-
 .add-icon:hover {
     cursor: pointer;
     transform: scale(1.02);
@@ -388,7 +377,6 @@ h3 {
     margin-top: 20px;
     margin-bottom: 20px;
 }
-
 
 .taskCategory {
     display: flex;
@@ -500,7 +488,6 @@ h3 {
     width: 24px;
 }
 
-
 .boardContentContainer {
     display: flex;
     flex-wrap: wrap;
@@ -529,8 +516,6 @@ h3 {
 ul {
     list-style: none;
 }
-
-.subtaskList {}
 
 .subtaskList li::before {
     /* Benutzerdefiniertes Aufzählungszeichen */
@@ -564,32 +549,38 @@ ul {
 #noTaskInToDo {
     display: flex;
     justify-content: center;
+    position: relative;
 }
 
 #noTaskInProgress {
     display: flex;
     justify-content: center;
+    position: relative;
 }
 
 #noTaskInAwait {
     display: flex;
     justify-content: center;
+    position: relative;
 }
 
 #noTaskInDone {
     display: flex;
     justify-content: center;
+    position: relative;
 }
 
 .no_tasks_class {
-    height: 70%;
-    width: 75%;
     border-radius: 10px;
+    top: 5px;
+    z-index: 0;
     margin: 10px;
     justify-content: center;
     align-items: center;
     display: flex;
     background-color: #DADADA;
+    position: absolute;
+    padding: 8px;
 }
 
 .progress-bar-container {
@@ -612,4 +603,9 @@ ul {
 
 .subTaskAlignment {
     display: flex;
+}
+
+.assignment-container {
+    display: flex;
+    align-items: center;
 }

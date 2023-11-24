@@ -47,18 +47,20 @@ function applyLineThroughAndCheckbox(currentTaskId) {
         console.error(`Aufgabe mit der ID "${currentTaskId}" wurde nicht gefunden.`);
         return;
     }
-    const subtasksStatus = task.subtasksStatus || [];
-    subtasksStatus.forEach((subtaskStatus, index) => {
+    const subtasksStatusArray = task.subtasksStatusArray || [];
+    subtasksStatusArray.forEach((subtaskStatus, index) => {
         const subtaskId = task.subtasksId[index];
         const subtaskElement = document.getElementById(subtaskId);
-        const checkboxElement = subtaskElement.querySelector('.subtask-checkbox');
-        if (subtaskElement && checkboxElement) {
-            if (subtaskStatus === true) {
-                subtaskElement.classList.add('lineThrough');
-                checkboxElement.checked = true;
-            } else {
-                subtaskElement.classList.remove('lineThrough');
-                checkboxElement.checked = false;
+        if (subtaskElement) {
+            const checkboxElement = subtaskElement.querySelector('.subtask-checkbox');
+            if (checkboxElement) {
+                if (subtaskStatus === true) {
+                    subtaskElement.classList.add('lineThrough');
+                    checkboxElement.checked = true;
+                } else {
+                    subtaskElement.classList.remove('lineThrough');
+                    checkboxElement.checked = false;
+                }
             }
         }
     });
@@ -81,9 +83,9 @@ function checkProgressBar(taskId, progressBarId) {
         console.error(`Progress-Bar mit der ID "${progressBarId}" wurde nicht gefunden.`);
         return;
     }
-    const subtasks = task.subtasks;//Done
-    const subtasksStatus = task.subtasksStatus || [];
-    const filledSubtasksCount = subtasksStatus.filter(status => status).length;
+    const subtasks = task.subtasks;
+    const subtasksStatusArray = task.subtasksStatusArray || [];
+    const filledSubtasksCount = subtasksStatusArray.filter(status => status).length;
     const progressPercentage = (filledSubtasksCount / subtasks.length) * 100;
     progressBar.style.transition = 'width 0.5s ease';
     progressBar.style.height = '100%';

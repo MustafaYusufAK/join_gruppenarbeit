@@ -70,17 +70,20 @@ function editingShowTask() {
     const task = allTasks.find(task => task.id === currentShowedTaskId);
     currentTaskId = currentShowedTaskId;
     if (!task) {
-        console.error(`Task mit der ID "${taskId}" wurde nicht gefunden.`);
+        console.error(`Task mit der ID '${taskId}' wurde nicht gefunden.`);
         return;
     }
     const descriptionText = task.description_text;
     const idDateValue = task.createdAt;
     const title = task.title;
     const assignedToOptions = task.assignedToValues.map((contact, index) => {
-        return `<option value="${contact}" data-id="_${index}" data-color="${task.assignedToColors[index]}">${contact}</option>`;
+        return `<option value="${contact}" data-id="${index}" data-color="${task.assignedToColors[index]}">${contact}</option>`;
     }).join('');
-    debugger;
-    const subtasksList = task.subtasks && task.subtasksId && task.subtasksId.map((subtasks, subtasksId) => subtasksListTemplate(subtasks, subtasksId)).join('');
+    const subtasksList = task.subtasksId && task.subtasks && task.subtasksId.map((subtaskId, index) => {
+        const subtask = task.subtasks[index];
+        return subtasksListTemplate(subtaskId, subtask);
+    }).join('');
+
     editTaskOverviewTemplate(taskOverviewPopUp, title, descriptionText, idDateValue, subtasksList);
     boardOverlayContactDropdown(assignedToOptions);
     const assignedToList = document.getElementById('ballAssignedToList');
@@ -96,17 +99,17 @@ function editingShowTask() {
  * @param {string} subtask - The subtask description.
  * @returns {string} - HTML for the subtask.
  */
-function subtasksListTemplate(subtasks, subtasksId) {
+function subtasksListTemplate(subtasksId, subtasks) {
     return `<li id="${subtasksId}" class="subtask-item">
-    <input type="checkbox" class="subtask-checkbox">
-    ${subtasks}
-    <div class="pencil_icon_div">
-        <img class="addSubTaskIcons icon pencil" src="../assets/img/pencil-32.png" alt="" onclick="editSubtask(event)">
-    </div>
-    <div class="delete_icon_div">
-        <img class="addSubTaskIcons icon delete" src="../assets/img/delete-32.png" alt="" onclick="deleteSubtask(event)">
-    </div>
-</li>`;
+        <input type="checkbox" class="subtask-checkbox">
+        ${subtasks}
+        <div class="pencil_icon_div">
+            <img class="addSubTaskIcons icon pencil" src="../assets/img/pencil-32.png" alt="" onclick="editSubtask(event)">
+        </div>
+        <div class="delete_icon_div">
+            <img class="addSubTaskIcons icon delete" src="../assets/img/delete-32.png" alt="" onclick="deleteSubtask(event)">
+        </div>
+    </li>`;
 }
 
 /**
@@ -240,7 +243,7 @@ function getBoardInputValues() {
         subtasksIdArray.push(id); // Füge die Subtask-ID hinzu
 
         // Hier kannst du die updateProgressBar-Funktion für jeden Subtask aufrufen
-        updateProgressBar(taskId, id); // item.id sollte die Subtask-ID sein
+        updateProgressBar(taskId); // item.id sollte die Subtask-ID sein
     });
     boardOverlaySubTaskList.innerHTML = '';
     const subtasksArray = Array.from(subtaskItems, item => item.childNodes[0].textContent.trim());
@@ -259,7 +262,7 @@ function getBoardInputValues() {
  * @param {string[]} assignedShortValues - The short values of assigned contacts.
  * @param {string[]} assignedToColors - The colors of assigned contacts.
  */
-function updateTaskDetailsInArray(descriptionText, title, dueDate, taskIndex, updatedPriority, subtasksTextArray, assignedToValues, assignedShortValues, assignedToColors, subtasksStatusArray, subtasksIdArray) {
+function updateTaskDetailsInArray(descriptionText, title, dueDate, taskIndex, updatedPriority, subtasksTextArray, assignedToValues, assignedShortValues, assignedToColors, subtasksStatusArray) {
     const task = allTasks[taskIndex];
     task.title = title;
     task.description_text = descriptionText;
@@ -270,7 +273,6 @@ function updateTaskDetailsInArray(descriptionText, title, dueDate, taskIndex, up
     task.assignedShortValues = assignedShortValues.slice();
     task.assignedToColors = assignedToColors.slice();
     task.subtasksStatusArray = subtasksStatusArray;
-    task.subtasksIdArray = subtasksIdArray;
 }
 
 /**
@@ -287,7 +289,7 @@ function handleTaskNotFound(taskId) {
  */
 async function boardConfirm() {
     event.preventDefault();
-    const { taskId, title, descriptionText, dueDate, assignedToDiv, subtasksStatusArray, subtasksTextArray, subtasksIdArray } = getBoardInputValues();
+    const { taskId, title, descriptionText, dueDate, assignedToDiv, subtasksStatusArray, subtasksTextArray } = getBoardInputValues();
     const taskIndex = allTasks.findIndex(task => task.id === taskId);
     if (taskIndex !== -1) {
         const assigneeContainers = assignedToDiv.getElementsByClassName('assigneeContainer');
@@ -304,7 +306,7 @@ async function boardConfirm() {
         }
         const previousPriority = allTasks[taskIndex].priority;
         const updatedPriority = priorityArray.length > 0 ? priorityArray : previousPriority;
-        updateTaskDetailsInArray(descriptionText, title, dueDate, taskIndex, updatedPriority, subtasksTextArray, assignedToValues, assignedShortValues, assignedToColors, subtasksStatusArray, subtasksIdArray);
+        updateTaskDetailsInArray(descriptionText, title, dueDate, taskIndex, updatedPriority, subtasksTextArray, assignedToValues, assignedShortValues, assignedToColors, subtasksStatusArray);
         await saveTasks();
         priorityArray = [];
         currentTaskId = [];
@@ -408,7 +410,6 @@ function forClearAddTaskWithBtn() {
     resetAssignedField();
     clearDateInput();
     resetPriorityButtons();
-    updateCategory();
     clearSubtasks();
 }
 

@@ -344,19 +344,17 @@ function processAssignments(assignments, colors) {
     assignments.forEach((assignment, index) => {
         const nameParts = assignment.trim().split(' ');
         let initials = '';
-
         if (nameParts.length >= 2) {
             initials = nameParts[0][0] + nameParts[1][0];
         } else if (nameParts.length === 1) {
             initials = nameParts[0][0];
         }
         const color = colors[index];
-        const assignmentHTML = `
+        assignePinnedTaskBall = `
             <div class="assigne-ball" style="background-color: ${color}">
                 <div>${initials}</div>
             </div>
         `;
-        assignePinnedTaskBall += assignmentHTML;
     });
     return assignePinnedTaskBall;
 }
@@ -415,6 +413,8 @@ function showTasks() {
     const inProgressContainer = document.getElementById('target-in-progress-table');
     const targetDoneTable = document.getElementById('target-done-table');
     clearTaskContainers(taskContainer, feedbackTaskContainer, inProgressContainer, targetDoneTable);
+    createSpecificNoTaskDivs();
+    createNoTaskDiv();
     displayTasks(taskContainer, feedbackTaskContainer, inProgressContainer, targetDoneTable);
 }
 
@@ -429,6 +429,7 @@ function displayTasks(taskContainer, feedbackTaskContainer, inProgressContainer,
     allTasks.forEach(task => {
         const taskId = task.id
         const progressBarId = generateUniqueID();
+        task.progressBarId = progressBarId;
         const categorybackgroundColor = task.categoryColors[0];
         let priorityImageSrc = getPriorityImageSrc(task.priority);
         const taskDiv = createTaskDiv(task);

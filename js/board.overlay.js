@@ -85,19 +85,15 @@ function eventlisterAssigneeContainerForBoardOverlay(assigneeContainer) {
 function addEventListenerMouseOverAndOut() {
     document.addEventListener('mouseover', (event) => {
         if (event.target.classList.contains('assigneeContainer')) {
-            // Zeige den Value als Tooltip an
             event.target.setAttribute('title', event.target.getAttribute('value'));
         }
     });
     document.addEventListener('mouseout', (event) => {
         if (event.target.classList.contains('assigneeContainer')) {
-            // Entferne den Tooltip, wenn der Hover beendet ist
             event.target.removeAttribute('title');
         }
     });
 }
-
-
 
 function randomColorGenerator() {
     const getRandomColorComponent = () => Math.floor(Math.random() * 200);
@@ -158,15 +154,19 @@ function addSubtaskToBoard() {
     const subtaskText = subtaskBoardInput.value.trim();
     if (subtaskText !== '') {
         const boardSubtaskList = document.getElementById('boardSubtaskList');
-        const checkbox = document.createElement('input');
         const listItem = document.createElement('li');
+        const checkbox = document.createElement('input');
         const editIcon = document.createElement('div');
         const deleteIcon = document.createElement('div');
         styleCheckbox(checkbox);
         styleListItem(listItem, subtaskText);
         styleEditIcon(editIcon);
         styleDeleteIcon(deleteIcon);
-        appendChildForSubTextElements(checkbox, subtaskText, listItem, editIcon, deleteIcon, boardSubtaskList);
+        listItem.appendChild(checkbox);
+        listItem.appendChild(document.createTextNode(subtaskText));
+        listItem.appendChild(editIcon);
+        listItem.appendChild(deleteIcon);
+        boardSubtaskList.appendChild(listItem);
         subtaskBoardInput.value = '';
     }
 }
@@ -176,11 +176,10 @@ function styleCheckbox(checkbox) {
     checkbox.classList.add('subtask-checkbox');
 }
 
-function styleListItem(listItem, subtaskText) {
+function styleListItem(listItem) {
     listItem.classList.add('subtask-item');
-    const listElementId = generateUniqueID(); // Generiere eine eindeutige ID für das Listenelement
+    const listElementId = generateUniqueID();
     listItem.id = listElementId;
-    listItem.textContent = subtaskText;
 }
 
 function styleEditIcon(editIcon) {
@@ -194,11 +193,11 @@ function styleDeleteIcon(deleteIcon) {
 }
 
 function appendChildForSubTextElements(checkbox, subtaskText, listItem, editIcon, deleteIcon, boardSubtaskList) {
-    listItem.appendChild(checkbox); // Füge Checkbox hinzu
+    boardSubtaskList.appendChild(checkbox);
+    listItem.textContent = subtaskText;
     listItem.appendChild(editIcon);
     listItem.appendChild(deleteIcon);
     boardSubtaskList.appendChild(listItem);
-    subtasksArray.push(subtaskText);
 }
 
 function closeBoardTaskOverviewPopUp() {
@@ -222,147 +221,6 @@ function clearBoardInputFields() {
         }
     }
 }
-
-
-//-------------------------------------------------Macht diese Funktion nichts?-------------------------------------------------//
-// function addTaskFromBoardOverlay() {
-//     let titleInput = document.getElementById('title');
-//     let descriptionInput = document.getElementById('description_text');
-//     let categorySelect = document.getElementById('category');
-//     let createdAtInput = document.getElementById('createdAt');
-//     let assignedToValues = [];
-//     const assignedToDivs = document.querySelectorAll('#ballAssignedToList .assigneeContainer');
-//     assignedToDivs.forEach(div => {
-//         const assignedValue = div.getAttribute('value');
-//         if (assignedValue) {
-//             assignedToValues.push(assignedValue);
-//         }
-//     });
-
-//     let categoryColor = categorySelect.querySelector('.categoryColor').style.backgroundColor;
-//     let title = titleInput.value;
-//     let description = descriptionInput.value;
-//     let category = categorySelect.innerText;
-//     let assignedTo = assignedToDiv.innerText;
-//     let createdAt = createdAtInput.value;
-
-//     const selectedAssigneeContainer = document.querySelector('.assigneeContainer');
-//     let assignedToColor = null;
-
-//     if (selectedAssigneeContainer && !selectedAssigneeContainer.classList.contains('not_selected')) {
-//         assignedToColor = selectedAssigneeContainer.style.backgroundColor;
-//         assignedToColorsArray.push(assignedToColor);
-//     }
-//     let id = generateUniqueID();
-//     let priority = null;
-//     const priorityButtons = document.querySelectorAll('.prio_btn_characteristics');
-//     for (const button of priorityButtons) {
-//         if (!button.classList.contains('d-none')) {
-//             priority = button.value;
-//             priorityArray.push(priority);
-//             break;
-//         }
-//     }
-
-//     let task = {
-//         id: id,
-//         title: title,
-//         description_text: description,
-//         task_category: category,
-//         which_assigned_contact: assignedTo,
-//         createdAt: createdAt,
-//         priority: priorityArray,
-//         assignedToValues: assignedToValues,
-//         assignedToColors: [assignedToColor],
-//         subtasks: subtasksArray,
-//         categoryColors: categoryColorArray
-//     };
-
-//     allTasks.push(task);
-//     titlesArray.push(title);
-//     descriptionsArray.push(description);
-//     createdAtArray.push(createdAtInput.value);
-//     categoryArray.push(categorySelect.innerText);
-//     categoryColorArray.push(categoryColor);
-
-//     // Push assigned value to the array
-//     const assignedValue = selectedOption.value;
-//     // Push assigned values to the array
-//     assignedToValuesArray.push(...assignedToValues);
-
-
-
-
-
-
-
-//     // Reset the input fields
-//     createdAtInput.value = '';
-//     titleInput.value = '';
-//     descriptionInput.value = '';
-//     subtaskInput.value = '';
-//     which_assigned_contact.value = '';
-//     // Annahme: "subtaskItems" ist die Klasse der Elemente, die du löschen möchtest
-//     let subtaskItems = document.getElementsByClassName('subtask-item');
-//     for (let i = 0; i < subtaskItems.length; i++) {
-//         subtaskItems[i].innerHTML = ''; // Hier wird der Inhalt jedes Elements geleert
-//     }
-
-//     // Setze die Prioritätsbuttons zurück
-//     const urgentBtn = document.getElementById('normal_urgent_btn');
-//     const mediumBtn = document.getElementById('normal_medium_btn');
-//     const lowBtn = document.getElementById('normal_low_btn');
-
-//     if (urgentBtn) {
-//         urgentBtn.classList.remove('d-none');
-//     }
-
-//     if (mediumBtn) {
-//         mediumBtn.classList.remove('d-none');
-//     }
-
-//     if (lowBtn) {
-//         lowBtn.classList.remove('d-none');
-//     }
-
-//     // Setze die Prioritätsbuttons zurück
-//     const clickedUrgentBtn = document.getElementById('clicked_urgent_btn');
-//     const clickedMediumBtn = document.getElementById('clicked_medium_btn');
-//     const clickedLowBtn = document.getElementById('clicked_low_btn');
-
-//     if (clickedUrgentBtn) {
-//         clickedUrgentBtn.classList.add('d-none');
-//     }
-
-//     if (clickedMediumBtn) {
-//         clickedMediumBtn.classList.add('d-none');
-//     }
-
-//     if (clickedLowBtn) {
-//         clickedLowBtn.classList.add('d-none');
-//     }
-
-
-
-//     // Füge die gewünschte Option zum Select-Element hinzu
-//     const whichAssignedContactSelect = document.getElementById('which_assigned_contact');
-//     const newOption = document.createElement('option');
-//     newOption.value = 'Select contacts to assign';
-//     newOption.setAttribute('data-id', '_igorovhy5');
-//     newOption.setAttribute('data-color', '');
-//     newOption.innerText = 'Select contacts to assign';
-
-//     // Füge die neue Option hinzu
-//     whichAssignedContactSelect.add(newOption);
-
-
-//     saveTasks();
-
-// }
-
-
-
-
 
 function addFlexDirectionColumn(notification) {
     notification.style.flexDirection = 'column';

@@ -270,8 +270,9 @@ function taskOverviewTemplate(taskOverviewPopUp, task, categorybackgroundColor, 
  */
 function createAssignmentContainerHTML(task) {
     let taskPopUpSingleAssignmentContainer = '';
+
     if (task.assignedToValues && task.assignedToValues.length > 0) {
-        task.assignedToValues.forEach((assignment) => {
+        task.assignedToValues.forEach((assignment, index) => {
             const nameParts = assignment.trim().split(' ');
             let initials = '';
             if (nameParts.length >= 2) {
@@ -279,9 +280,13 @@ function createAssignmentContainerHTML(task) {
             } else if (nameParts.length === 1) {
                 initials = nameParts[0][0];
             }
-        })
-        return taskPopUpSingleAssignmentContainer;
+            const color = task.assignedToColors[index]; // Farbe für diese Zuweisung
+
+            taskPopUpSingleAssignmentContainer += assignmentHTMLTemplate(color, initials, assignment);
+        });
     }
+
+    return taskPopUpSingleAssignmentContainer;
 }
 
 /**
@@ -292,12 +297,12 @@ function createAssignmentContainerHTML(task) {
  * @returns {string} The HTML code for an assignment.
  */
 function assignmentHTMLTemplate(color, initials, assignment) {
-    return /*html*/ `
-    <div class="taskPopUpSingleAssignmentContainer">
-        <div class="assigne-ball" style="background-color:${color}">
-            ${initials}
+    return /*html*/`
+        <div class="assignment-container">
+            <div class="assigne-ball" style="background-color: ${color}">
+                <div>${initials}</div>
+            </div>
+            <div class="taskPopUpNameContainer">${assignment}</div>
         </div>
-        <div class="taskPopUpNameContainer">${assignment}</div>
-    </div>
-`;
+    `;
 }

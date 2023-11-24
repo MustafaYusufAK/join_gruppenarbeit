@@ -411,8 +411,6 @@ button:hover {
     display: inline;
 }
 
-.boardSubtaskList {}
-
 .boardSubtaskList ul {
     list-style-type: circle;
     /* Aufzählungszeichen für die Liste */

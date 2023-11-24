@@ -19,6 +19,7 @@ let priorityArray = [];
 let categoryArray = [];
 let categoryColorArray = [];
 let subtasksArray = [];
+let subTasks = [];
 let assignedToIDsArray = [];
 let assignedShortValues = [];
 let subtaskTextsArray = [];
@@ -382,42 +383,33 @@ function changeClearBtnIconToHover(IdDefault, IdHover) {
 
 function addSubtask() {
     const subtaskInput = document.getElementById('subtaskInput');
-
-    subtaskInput.forEach(subtask => {
-        const subtaskText = subtask.textContent.trim(); // Text der Unteraufgabe
-        const subtaskId = subtask.id; // ID des li-Elements
-
-        // Hinzufügen der Texte und IDs zu den entsprechenden Arrays, wenn sie vorhanden sind
-        if (subtaskText && subtaskId) {
-            subtaskTextsArray.push(subtaskText);
-            subtaskIdsArray.push(subtaskId);
-        }
-
-        if (subtaskText !== '') {
-            const subtaskList = document.getElementById('subtaskList');
-            const listElementId = generateUniqueID();
-            const listItem = document.createElement('li');
-            listItem.classList.add('subtask-item'); // Füge Klasse hinzu
-            listItem.id = listElementId;
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.classList.add('subtask-checkbox');
-            const editIcon = document.createElement('div');
-            const deleteIcon = document.createElement('div');
-            createListItem(listItem, subtaskText);
-            buildEditIcon(editIcon);
-            buildDeleteIcon(deleteIcon);
-            createAppendChildElement(listItem, editIcon, deleteIcon, subtaskList, subtaskInput, subtaskText, checkbox);
-        }
-    });
+    const subtaskText = subtaskInput.value.trim();
+    if (subtaskText !== '') {
+        const subtaskId = generateUniqueID();
+        subtaskTextsArray.push(subtaskText);
+        subtaskIdsArray.push(subtaskId);
+        const subtaskList = document.getElementById('subtaskList');
+        const checkbox = document.createElement('input');
+        const listItem = document.createElement('li');
+        listItem.classList.add('subtask-item');
+        const listElementId = generateUniqueID();
+        listItem.id = listElementId;
+        const editIcon = document.createElement('div');
+        const deleteIcon = document.createElement('div');
+        styleCheckbox(checkbox);
+        styleListItem(listItem);
+        styleEditIcon(editIcon);
+        styleDeleteIcon(deleteIcon);
+        createAppendChildElement(listItem, editIcon, deleteIcon, subtaskList, subtaskText, checkbox, listElementId);
+        subtaskInput.value = '';
+    }
 }
 
 function createListItem(listItem, subtaskText, listElementId) {
     listItem.classList.add('subtask-item');
-    listItem.id = listElementId; // Verwende die generierte ID
+    listItem.id = listElementId;
     listItem.textContent = subtaskText;
 }
-
 
 function buildEditIcon(editIcon) {
     editIcon.classList.add('pencil_icon_div');
@@ -429,15 +421,14 @@ function buildDeleteIcon(deleteIcon) {
     deleteIcon.innerHTML = `<img class="addSubTaskIcons icon delete" src="../assets/img/delete-32.png" alt="" onclick="deleteSubtask(event)">`;
 }
 
-function createAppendChildElement(listItem, editIcon, deleteIcon, subtaskList, subtaskInput, subtaskText, checkbox) {
-    listItem.appendChild(checkbox); // Füge Checkbox hinzu
-    listItem.appendChild(document.createTextNode(subtaskText)); // Setze Text nach Checkbox
+function createAppendChildElement(listItem, editIcon, deleteIcon, subtaskList, subtaskText, checkbox, listElementId) {
+    listItem.appendChild(checkbox);
+    listItem.appendChild(document.createTextNode(subtaskText));
     listItem.appendChild(editIcon);
     listItem.appendChild(deleteIcon);
     subtaskList.appendChild(listItem);
     subtasksArray.push({ id: listElementId, text: subtaskText });
     subtaskIdsArray.push();
-    subtaskInput.value = '';
 }
 
 function editSubtask(event) {
