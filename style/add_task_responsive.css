@@ -9,6 +9,10 @@
         align-items: center;
     }
 
+    .assignedToList {
+        width: auto !important;
+    }
+
     .date_Prio_div {
         width: 100%;
     }

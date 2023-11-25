@@ -123,8 +123,6 @@
     cursor: pointer;
 }
 
-
-
 .categoryAndSelect {
     width: auto;
     display: flex;
@@ -140,6 +138,7 @@
     flex-wrap: wrap;
     max-height: 44px;
     overflow-y: auto;
+    width: 375px;
 }
 
 .assigneeContainer {

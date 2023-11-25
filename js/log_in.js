@@ -43,7 +43,6 @@ async function logIn(guest) {
     let email = document.getElementById('email_log_in');
     let password1 = document.getElementById('password1_input');
     let users = JSON.parse(await getItem('users'));
-
     if (guest == 'guest@guest.com') {
         window.location.href = 'summary.html?msg=Welcomme to Join, Guest';
     } else {
@@ -114,14 +113,12 @@ function wrongEnter(users, emailValue, passwordValue) {
     let emailInput = document.getElementById('email')
     let passwordInput = document.getElementById('password1')
     let userEmailIndex = users.findIndex(u => u.email == emailValue.toLowerCase());
-
     if (userEmailIndex !== -1) {       
         if (users[userEmailIndex].password != passwordValue) {
             document.getElementById('password1_input').value = "";
             passwordInput.classList.add('log-in-wrong');
-        } else {
+        } else
             passwordInput.classList.remove('log-in-wrong');
-        }
         emailInput.classList.remove('log-in-wrong'); 
     } else {
         emailInput.classList.add('log-in-wrong');
@@ -159,10 +156,8 @@ function showPasswordIcon(password) {
     let password2 = document.getElementById('input_icon_password2')
     let passwordIcon1 = document.getElementById('password1_icon');
     let passwordIcon2 = document.getElementById('password2_icon');
-
-    if (password == 'password1' && passwordIcon1.src.endsWith('lock.svg')) {
+    if (password == 'password1' && passwordIcon1.src.endsWith('lock.svg'))
         password1.innerHTML = `<img onclick="showPassword('password1')" id="password1_icon" src="../assets/img/visibility_off.svg" alt="">`
-    }
     if (password == 'password2' && passwordIcon2.src.endsWith('lock.svg')) {
         password2.innerHTML = `<img onclick="showPassword('password2')" id="password2_icon" src="../assets/img/visibility_off.svg" alt="">`
     }
@@ -180,7 +175,6 @@ function showPasswordIcon(password) {
 function showPassword(password) {
     let password1 = document.getElementById('input_icon_password1')
     let password2 = document.getElementById('input_icon_password2')
-
     if (password == 'password1') {
         password1.innerHTML = `<img onclick="hidePassword('password1')" id="password1_icon" src="../assets/img/visibility.svg" alt="">`
         document.getElementById('password1_input').type = "text";
@@ -203,7 +197,6 @@ function showPassword(password) {
 function hidePassword(password) {
     let password1 = document.getElementById('input_icon_password1')
     let password2 = document.getElementById('input_icon_password2')
-
     if (password == 'password1') {
         password1.innerHTML = `<img onclick="showPassword('password1')" id="password1_icon" src="../assets/img/visibility_off.svg" alt="">`
         document.getElementById('password1_input').type = "password";

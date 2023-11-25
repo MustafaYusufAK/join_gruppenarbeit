@@ -103,7 +103,6 @@ async function saveUserToLocalStorage() {
     let users = JSON.parse(await getItem('users'));
     let user = users.find(u => u.email == emailValue.value.toLowerCase())
     let userNumber = lokalUsers.find(l => l.email == emailValue.value.toLowerCase())
-
     if (userNumber != undefined) {
         lokalUsers.splice(0);
         lokalUsers.push(user);
@@ -152,7 +151,6 @@ async function deleteUser(email) {
 async function saveContacts() {
     let users = JSON.parse(await getItem('users'));
     let userName = getUserName();
-
     let userIndex = users.findIndex(u => u.name === userName);
     users[userIndex].contacts = contacts; 
     await setItem('users', JSON.stringify(users));
@@ -170,7 +168,6 @@ async function saveContacts() {
 async function loadContacts() {
     let users = JSON.parse(await getItem('users'));
     let userName = getUserName();
-
     let userIndex = users.findIndex(u => u.name === userName);
     let userContacts = users[userIndex].contacts
     if (userContacts == undefined) {
@@ -192,7 +189,6 @@ async function loadContacts() {
 async function saveTasks() {
     let users = JSON.parse(await getItem('users'));
     let userName = getUserName();
-
     let userIndex = users.findIndex(u => u.name === userName);
     users[userIndex].tasks = allTasks; 
     await setItem('users', JSON.stringify(users));
@@ -201,7 +197,6 @@ async function saveTasks() {
 async function saveTasksCategory() {
     let users = JSON.parse(await getItem('users'));
     let userName = getUserName();
-
     let userIndex = users.findIndex(u => u.name === userName);
     users[userIndex].sortTasks = task_category; 
     await setItem('users', JSON.stringify(users));
@@ -219,7 +214,6 @@ async function saveTasksCategory() {
 async function loadTasks() {
     let users = JSON.parse(await getItem('users'));
     let userName = getUserName();
-
     let userIndex = users.findIndex(u => u.name === userName);
     let userTasks = users[userIndex].tasks;
     let usersortTasks = users[userIndex].sortTasks;

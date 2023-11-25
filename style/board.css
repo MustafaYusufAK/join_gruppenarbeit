@@ -44,14 +44,11 @@ h3 {
     margin-bottom: 80px;
 }
 
-
-
 .topic {
     margin-left: 240px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
 }
 
 .search {
@@ -151,6 +148,7 @@ h3 {
     align-items: center;
     justify-content: space-around;
     margin-top: 50px;
+    margin-bottom: 10px;
 }
 
 .pinnedPrioPosition {
@@ -496,116 +494,4 @@ h3 {
     padding: 0px;
     margin-top: 80px;
     margin-bottom: 80px;
-}
-
-.edit-subTask {
-    padding-left: 1rem;
-    margin-bottom: 0rem;
-}
-
-.edit-subTask li::before {
-    content: "•";
-    /* Benutzerdefiniertes Aufzählungszeichen */
-    margin-right: 0.5em;
-}
-
-.edit-subTask-titel {
-    margin-bottom: 10px;
-}
-
-ul {
-    list-style: none;
-}
-
-.subtaskList li::before {
-    /* Benutzerdefiniertes Aufzählungszeichen */
-    margin-right: 0.5em;
-    display: flex;
-    align-items: center;
-}
-
-.taskOverviewForm {
-    width: 100%;
-}
-
-.board_title_inputfield {
-    width: 370px;
-    height: 36px;
-    outline: none;
-    padding-left: 8px;
-    border-radius: 10px;
-    border: 1px solid #DADADA;
-}
-
-.board_description_inputfield {
-    width: 370px;
-    height: 118px;
-    border-radius: 8px;
-    outline: none;
-    padding-left: 8px;
-    border: 1px solid #DADADA;
-}
-
-#noTaskInToDo {
-    display: flex;
-    justify-content: center;
-    position: relative;
-}
-
-#noTaskInProgress {
-    display: flex;
-    justify-content: center;
-    position: relative;
-}
-
-#noTaskInAwait {
-    display: flex;
-    justify-content: center;
-    position: relative;
-}
-
-#noTaskInDone {
-    display: flex;
-    justify-content: center;
-    position: relative;
-}
-
-.no_tasks_class {
-    border-radius: 10px;
-    top: 5px;
-    z-index: 0;
-    margin: 10px;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    background-color: #DADADA;
-    position: absolute;
-    padding: 8px;
-}
-
-.progress-bar-container {
-    width: 100%;
-    height: 12px;
-    background-color: #f0f0f0;
-    margin-top: 10px;
-}
-
-.progress-bar {
-    transition: width 0.5s ease 0s;
-    height: 100%;
-    background-color: rgb(41, 171, 226);
-    width: 0%;
-}
-
-.lineThrough {
-    text-decoration: line-through;
-}
-
-.subTaskAlignment {
-    display: flex;
-}
-
-.assignment-container {
-    display: flex;
-    align-items: center;
 }

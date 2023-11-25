@@ -83,7 +83,6 @@ function editingShowTask() {
         const subtask = task.subtasks[index];
         return subtasksListTemplate(subtaskId, subtask);
     }).join('');
-
     editTaskOverviewTemplate(taskOverviewPopUp, title, descriptionText, idDateValue, subtasksList);
     boardOverlayContactDropdown(assignedToOptions);
     const assignedToList = document.getElementById('ballAssignedToList');
@@ -92,6 +91,96 @@ function editingShowTask() {
     boardClickEventlisteners();
     setMinDate();
     applyLineThroughAndCheckbox(currentTaskId);
+    simulatePriorityButtonClick(currentTaskId);
+}
+
+/**
+ * Updates the button state based on the priority and hides/shows the appropriate buttons.
+ *
+ * @param {string} prio - The priority value ('urgent', 'medium', or 'low').
+ */
+function updateButtonState(prio) {
+    document.getElementById(`board_${prio}_btn`).classList.add('d-none');
+    document.getElementById(`board_clicked_${prio}_btn`).classList.remove('d-none');
+    priorityArray.push(prio);
+}
+
+/**
+ * Simulates a priority button click for a given task ID and updates the button state accordingly.
+ *
+ * @param {string} taskId - The ID of the task.
+ */
+function simulatePriorityButtonClick(taskId) {
+    const task = allTasks.find(task => task.id === taskId);
+    if (!task) {
+        console.error(`Task with ID "${taskId}" was not found.`);
+        return;
+    }
+    const priority = task.priority;
+    if (priority.indexOf('urgent') !== -1) {
+        resetPriorityButtons();
+        updateButtonState('urgent');
+    } else if (priority.indexOf('medium') !== -1) {
+        resetPriorityButtons();
+        updateButtonState('medium');
+    } else if (priority.indexOf('low') !== -1) {
+        resetPriorityButtons();
+        updateButtonState('low');
+    } else {
+        console.error(`Invalid priority value "${priority}" for task with ID "${taskId}".`);
+    }
+}
+
+/**
+ * Switches the case for the priority button based on the priority value.
+ *
+ * @param {string} prio - The priority value ('urgent', 'medium', or 'low').
+ */
+function switchCasePriorityBtn(prio) {
+    switch (prio) {
+        case 'urgent':
+            reverseForUrgentBtn();
+            break;
+        case 'medium':
+            reverseForMediumBtn();
+            break;
+        case 'low':
+            reverseForLowBtn();
+            break;
+        default:
+            break;
+    }
+}
+
+/**
+ * Reverses the visibility of buttons for the 'low' priority.
+ */
+function reverseForLowBtn() {
+    document.getElementById('board_clicked_urgent_btn').classList.add('d-none');
+    document.getElementById('board_clicked_medium_btn').classList.add('d-none');
+    document.getElementById('board_urgent_btn').classList.remove('d-none');
+    document.getElementById('board_low_btn').classList.remove('d-none');
+}
+
+/**
+ * Reverses the visibility of buttons for the 'medium' priority.
+ */
+function reverseForMediumBtn() {
+    document.getElementById('board_clicked_urgent_btn').classList.add('d-none');
+    document.getElementById('board_clicked_low_btn').classList.add('d-none');
+    document.getElementById('board_urgent_btn').classList.remove('d-none');
+    document.getElementById('board_low_btn').classList.remove('d-none');
+}
+
+/**
+ * Reverses the visibility of buttons for the 'urgent' priority.
+ * Hides 'medium' and 'low' clicked buttons, and shows the 'urgent' and 'low' buttons.
+ */
+function reverseForUrgentBtn() {
+    document.getElementById('board_clicked_medium_btn').classList.add('d-none');
+    document.getElementById('board_clicked_low_btn').classList.add('d-none');
+    document.getElementById('board_urgent_btn').classList.remove('d-none');
+    document.getElementById('board_low_btn').classList.remove('d-none');
 }
 
 /**
@@ -121,7 +210,7 @@ function subtasksListTemplate(subtasksId, subtasks) {
  * @param {string} subtasksList - HTML list of subtasks.
  */
 function editTaskOverviewTemplate(taskOverviewPopUp, title, descriptionText, idDateValue, subtasksList) {
-    taskOverviewPopUp.innerHTML = `
+    taskOverviewPopUp.innerHTML = /*html*/ `
     <form class="taskOverviewForm" onsubmit="event.preventDefault(); boardConfirm();">
     <div class="board-vector-position"><img class="board-vector-class" src="../assets/img/Vector (1).svg" alt="" onclick="closeBoardTaskOverviewPopUp()"></div>
         <div class="add_title_section">
@@ -232,18 +321,15 @@ function getBoardInputValues() {
     const boardOverlaySubTaskList = document.getElementById('boardSubtaskList');
     const subtaskItems = document.querySelectorAll('#boardSubtaskList .subtask-item');
     const subtasksStatusArray = [];
-    const subtasksTextArray = []; // Array für Subtask-Texte
-    const subtasksIdArray = []; // Array für Subtask-Id's
-
+    const subtasksTextArray = [];
+    const subtasksIdArray = [];
     subtaskItems.forEach(item => {
-        const text = item.textContent.trim(); // Hier wird der Text des subtask-items genommen
-        const id = item.id; // Hier wird die ID des Subtasks genommen
+        const text = item.textContent.trim();
+        const id = item.id;
         subtasksStatusArray.push(item.querySelector('.subtask-checkbox').checked);
-        subtasksTextArray.push(text); // Füge den Subtask-Text hinzu
-        subtasksIdArray.push(id); // Füge die Subtask-ID hinzu
-
-        // Hier kannst du die updateProgressBar-Funktion für jeden Subtask aufrufen
-        updateProgressBar(taskId); // item.id sollte die Subtask-ID sein
+        subtasksTextArray.push(text);
+        subtasksIdArray.push(id);
+        updateProgressBar(taskId);
     });
     boardOverlaySubTaskList.innerHTML = '';
     const subtasksArray = Array.from(subtaskItems, item => item.childNodes[0].textContent.trim());
@@ -411,105 +497,5 @@ function forClearAddTaskWithBtn() {
     clearDateInput();
     resetPriorityButtons();
     clearSubtasks();
-}
-
-/**
- * Clears the arrays used for adding tasks.
- */
-function clearAddTaskArrays() {
-    subtasksArray = [];
-    categoryArray = [];
-    categoryColorArray = [];
-    assignedToValuesArray = [];
-    assignedToColorsArray = [];
-    assignedShortValues = [];
-    createdAtArray = [];
-    priorityArray = [];
-}
-
-/**
- * Clears all the fields and arrays used for adding tasks.
- */
-function clearAddTaskFields() {
-    clearInputFields();
-    resetAssignedField();
-    clearDateInput();
-    resetPriorityButtons();
-    clearSubtasks();
-    clearAddTaskArrays();
-}
-
-/**
- * Changes the icon of the clear button to the default state.
- * @param {string} IdHover - The ID of the button in the hover state.
- * @param {string} IdDefault - The ID of the button in the default state.
- */
-function changeClearBtnIconToDefault(IdHover, IdDefault) {
-    document.getElementById(IdHover).classList.add('d-none');
-    document.getElementById(IdDefault).classList.remove('d-none');
-}
-
-/**
- * Changes the icon of the clear button to the hover state.
- * @param {string} IdDefault - The ID of the button in the default state.
- * @param {string} IdHover - The ID of the button in the hover state.
- */
-function changeClearBtnIconToHover(IdDefault, IdHover) {
-    document.getElementById(IdDefault).classList.add('d-none');
-    document.getElementById(IdHover).classList.remove('d-none');
-}
-
-/**
- * Opens the overlay for adding tasks.
- */
-function openOverlay() {
-    const overlaySection = document.getElementById('addTaskOverlaySection');
-    const overlay = document.getElementById('add-task-form');
-    overlay.classList.add('slide-in');
-    overlaySection.classList.remove('d-none');
-}
-
-/**
- * Adds a task for the "To-Do" category and opens the overlay.
- */
-function addTaskForToDo() {
-    const overlaySection = document.getElementById('addTaskOverlaySection');
-    const overlay = document.getElementById('add-task-form');
-    overlay.classList.add('slide-in');
-    overlaySection.classList.remove('d-none');
-    inWhichContainer.push('for-To-Do-Container'); // Füge 'for-To-Do-Container' zum Array hinzu
-}
-
-/**
- * Adds a task for the "In Progress" category and opens the overlay.
- */
-function addTaskForInProgress() {
-    const overlaySection = document.getElementById('addTaskOverlaySection');
-    const overlay = document.getElementById('add-task-form');
-    overlay.classList.add('slide-in');
-    overlaySection.classList.remove('d-none');
-    inWhichContainer.push('in-Progress-Container');
-}
-
-/**
- * Adds a task for the "Await Feedback" category and opens the overlay.
- */
-function addTaskForAwaitFeedback() {
-    const overlaySection = document.getElementById('addTaskOverlaySection');
-    const overlay = document.getElementById('add-task-form');
-    overlay.classList.add('slide-in');
-    overlaySection.classList.remove('d-none');
-    inWhichContainer.push('for-Await-Feedback-Container');
-}
-
-/**
- * Closes the overlay, clearing the state.
- */
-function closeOverlay() {
-    inWhichContainer = [];
-    const overlaySection = document.getElementById('addTaskOverlaySection');
-    const overlay = document.getElementById('addTaskOverlaySection');
-    overlay.classList.remove('slide-in');
-    overlaySection.classList.add('d-none');
 }
 

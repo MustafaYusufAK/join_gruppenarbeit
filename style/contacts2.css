@@ -1,8 +1,4 @@
 @media screen and (max-height: 700px) {
-    .contact-menu {
-        max-height: 83%;
-    }
-
     .headline-contacts {
         font-size: 45px;
         padding: 15px;
@@ -152,7 +148,7 @@
 
     .contact-menu {
         margin-left: 0px;
-        max-height: 75%;
+        max-height: calc(100% - 184px);
     }
 
     .headline-flex-box {

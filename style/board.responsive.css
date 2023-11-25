@@ -20,8 +20,6 @@
 
 }
 
-
-
 @media (max-width: 1050px) {
 
     .categoryOvervievPopUp {
@@ -45,7 +43,6 @@
         align-items: center;
     }
 }
-
 
 @media (max-width: 750px) {
 
@@ -473,7 +470,6 @@
     }
 }
 
-
 @media (max-width: 1050px) {
 
     .add-task-overlay {
@@ -507,8 +503,6 @@
     }
 
 }
-
-
 
 @media (max-width: 750px) {
     .header_div h1 {

@@ -1,3 +1,6 @@
+/**
+ * Opens the category dropdown overlay.
+ */
 function openCategoryDropdownOverlay() {
     document.getElementById('categoryDropdownOverlay').classList.remove('d-none');
     document.getElementById('categoryOverlay').style.cssText = `
@@ -8,7 +11,11 @@ function openCategoryDropdownOverlay() {
     document.getElementById('categoryOverlay').onclick = closeCategoryDropdownOverlay;
 }
 
-
+/**
+ * Handles the selection of a category in the overlay.
+ * @param {string} category - The selected category.
+ * @param {string} color - The color associated with the category.
+ */
 function selectedCategoryOverlay(category, color) {
     category = category.charAt(0).toUpperCase() + category.slice(1);
     document.getElementById('categoryOverlay').innerHTML = /*html*/ `
@@ -18,6 +25,10 @@ function selectedCategoryOverlay(category, color) {
     closeCategoryDropdownOverlay();
 }
 
+/**
+ * Generates the content for the left and right container overlay.
+ * @returns {string} - The generated HTML content.
+ */
 function generateContentLeftAndRightContainerOverlay() {
     return /*html*/ `
         <div class="contentLeftAndRight contentLeftAndRightOverlay">

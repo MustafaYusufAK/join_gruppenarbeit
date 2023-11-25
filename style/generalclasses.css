@@ -29,8 +29,6 @@ body {
     padding-right: 25px;
 }
 
-/*---------------Background-Color--------------*/
-
 .background-color-2A3647 {
     background-color: #2A3647 !important;
 }
@@ -47,9 +45,6 @@ body {
     background-color: #29ABE2;
 }
 
-/*-----------------------Font Sizes--------------------*/
-
-/*--------Headlines--------*/
 h1 {
     font-size: 61px;
     font-weight: 700;
@@ -59,7 +54,7 @@ h2 {
     font-size: 27px;
     font-weight: 700;
 }
-/*--------Size 16px--------*/
+
 .fontSize-16-400 {
     font-size: 16px;
     font-weight: 400;
@@ -70,35 +65,26 @@ h2 {
     font-weight: 700;
 }
 
-/*--------Size 20px--------*/
-
 .fontSize-20-400 {
     font-size: 20px;
     font-weight: 400;
 }
-
-
-/*--------Size 21px--------*/
 
 .fontSize-21-700 {
     font-size: 21px;
     font-weight: 700;
 }
 
-
-/*--------Size 27px--------*/
 .fontSize-27-400 {
     font-size: 27px;
     font-weight: 400;
 }
 
-/*--------Size 27px--------*/
 .fontSize-47-500 {
     font-size: 47px;
     font-weight: 500;
 }
 
-/*--------Size 64px--------*/
 .fontSize-64-600 {
     font-size: 64px;
     font-weight: 600;
@@ -108,12 +94,6 @@ h2 {
     font-size: 64px;
     font-weight: 700;
 }
-
-
-
-
-
-/*-----------------------Font Color--------------------*/
 
 .color-000000 {
     color: #000000;

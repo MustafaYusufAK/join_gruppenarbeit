@@ -1,4 +1,6 @@
-
+/**
+ * Generates the side bar content dynamically based on the user's information.
+ */
 function generateSideBar() {
     let userName = getUserName();
     let menu = document.getElementById('content');
@@ -21,10 +23,14 @@ function generateSideBar() {
     generateHeader(menu, userName);
 }
 
+/**
+ * Generates the header content dynamically based on the user's information.
+ *
+ * @param {HTMLElement} menu - The menu element where the header will be appended.
+ * @param {string} userName - The name of the user.
+ */
 function generateHeader(menu, userName) {
-
     let userInitial = getInitials(userName)
-
     menu.innerHTML += /*html*/ `
         <header>
             <div class="logo-mobile"></div>
@@ -47,6 +53,12 @@ function generateHeader(menu, userName) {
         </header>`;
 }
 
+/**
+ * Extracts and returns the initials from the given user name.
+ *
+ * @param {string} userName - The full name of the user.
+ * @returns {string} The user's initials.
+ */
 function getInitials(userName) {
     let [firstName, lastName] = userName.split(' ');
 
@@ -60,11 +72,17 @@ function getInitials(userName) {
 
 }
 
+/**
+ * Displays the template pop-up menu.
+ */
 function showTemplatePopUp() {
     let menuPopUp = document.getElementById('template_menu_pop_up');
     menuPopUp.classList.remove('d-none')
 }
 
+/**
+ * Hides the template pop-up menu.
+ */
 function hideTemplatePopUp() {
     let menuPopUp = document.getElementById('template_menu_pop_up');
     menuPopUp.classList.add('d-none')

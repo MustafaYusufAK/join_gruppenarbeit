@@ -15,7 +15,6 @@ async function signUp() {
     let users = JSON.parse(await getItem('users'));
     let emailChecked = users.find(u => u.email == email.value.toLowerCase());
     let signUpSuccesfully = document.getElementById('sign_up_succesfully');
-    
     if (!emailChecked) {
         if (password1.value == password2.value) {
             users.push({
@@ -28,13 +27,10 @@ async function signUp() {
             signUpSuccesfully.style.animation = 'signUpSuccesfull 125ms ease-in-out forwards'
             resetForm('signup', email, password1, password2, name);
             setTimeout(function () { window.location.href = 'index.html' }, 800)
-
-        } else if (password1.value != password2.value) {
+        } else if (password1.value != password2.value)
             document.getElementById('password2').classList.add('log-in-wrong');
-        }
-    } else {
+    } else
         document.getElementById('email').classList.add('log-in-wrong');
-    }
     document.getElementById('sign_up_btn').disabled = false;
 }
 

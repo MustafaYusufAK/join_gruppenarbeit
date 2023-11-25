@@ -1,4 +1,5 @@
 let currentShowedTaskId;
+
 /**
  * Shows a task from the array by creating a task div, determining the target container, and adding content.
  */
@@ -187,7 +188,6 @@ function displayTaskOverview(task) {
  * @returns {string} The HTML code for subtasks.
  */
 function createSubTasksHTML(subTasks, subTasksId) {
-    const taskSubtasks = allTasks.find(task => task.subtasks === subTasks);
     const taskSubtasksId = allTasks.find(task => task.subtasksId === subTasksId);
     let subTasksHTML = '';
     if (subTasks && subTasksId && subTasks.length > 0) {
@@ -270,18 +270,15 @@ function taskOverviewTemplate(taskOverviewPopUp, task, categorybackgroundColor, 
  */
 function createAssignmentContainerHTML(task) {
     let taskPopUpSingleAssignmentContainer = '';
-
     if (task.assignedToValues && task.assignedToValues.length > 0) {
         task.assignedToValues.forEach((assignment, index) => {
             const nameParts = assignment.trim().split(' ');
             let initials = '';
-            if (nameParts.length >= 2) {
+            if (nameParts.length >= 2) 
                 initials = nameParts[0][0] + nameParts[1][0];
-            } else if (nameParts.length === 1) {
+            else if (nameParts.length === 1)
                 initials = nameParts[0][0];
-            }
-            const color = task.assignedToColors[index]; // Farbe für diese Zuweisung
-
+            const color = task.assignedToColors[index];
             taskPopUpSingleAssignmentContainer += assignmentHTMLTemplate(color, initials, assignment);
         });
     }
@@ -305,4 +302,62 @@ function assignmentHTMLTemplate(color, initials, assignment) {
             <div class="taskPopUpNameContainer">${assignment}</div>
         </div>
     `;
+}
+
+/**
+ * Creates specific div elements for displaying "No Task" messages in different task containers.
+ */
+function createSpecificNoTaskDivs() {
+    let noTaskInToDo = document.createElement('div');
+    noTaskInToDo.id = 'noTaskInToDo';
+    let noTaskInAwait = document.createElement('div');
+    noTaskInAwait.id = 'noTaskInAwait';
+    let noTaskInProgress = document.createElement('div');
+    noTaskInProgress.id = 'noTaskInProgress';
+    let noTaskInDone = document.createElement('div');
+    noTaskInDone.id = 'noTaskInDone';
+    let taskContainer = document.getElementById('target-to-do-table');
+    let feedbackTaskContainer = document.getElementById('target-await-feedback-table');
+    let inProgressContainer = document.getElementById('target-in-progress-table');
+    let targetDoneTable = document.getElementById('target-done-table');
+    taskContainer.appendChild(noTaskInToDo);
+    feedbackTaskContainer.appendChild(noTaskInAwait);
+    inProgressContainer.appendChild(noTaskInProgress);
+    targetDoneTable.appendChild(noTaskInDone);
+}
+
+/**
+ * Creates a common "No Task Available" div element and appends it to different task containers.
+ */
+function createNoTaskDiv() {
+    let noTaskDiv = document.createElement('div');
+    noTaskDiv.id = 'noTask';
+    noTaskDiv.className = 'no_tasks_class';
+    noTaskDiv.textContent = 'No Task Available';
+    let noTaskInToDo = document.getElementById('noTaskInToDo');
+    let noTaskInAwait = document.getElementById('noTaskInAwait');
+    let noTaskInProgress = document.getElementById('noTaskInProgress');
+    let noTaskInDone = document.getElementById('noTaskInDone');
+    noTaskInToDo.appendChild(noTaskDiv);
+    noTaskInAwait.appendChild(noTaskDiv.cloneNode(true));
+    noTaskInProgress.appendChild(noTaskDiv.cloneNode(true));
+    noTaskInDone.appendChild(noTaskDiv.cloneNode(true));
+}
+
+/**
+ * Applies line-through and checkbox status to subtasks based on their completion status.
+ * @param {string} currentTaskId - The ID of the current task.
+ */
+function applyLineThroughAndCheckbox(currentTaskId) {
+    const task = allTasks.find(task => task.id === currentTaskId);
+    if (!task) return console.error(`Aufgabe mit der ID "${currentTaskId}" wurde nicht gefunden.`);
+    (task.subtasksStatus || []).forEach((subtaskStatus, index) => {
+        const subtaskId = task.subtasksId[index];
+        const subtaskElement = document.getElementById(subtaskId);
+        const checkboxElement = subtaskElement?.querySelector('.subtask-checkbox');
+        if (subtaskElement && checkboxElement) {
+            subtaskElement.classList[subtaskStatus ? 'add' : 'remove']('lineThrough');
+            checkboxElement.checked = subtaskStatus;
+        }
+    });
 }

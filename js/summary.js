@@ -29,24 +29,15 @@ function hoverOverSummaryTasks(id, section, imgSrc) {
     document.getElementById(`${id}`).classList.remove('summary-progress-none-hover');
     document.getElementById(`${id}_count`).classList.remove('color-000000');
     document.getElementById(`${id}_section`).classList.remove('color-2A3647');
-
-
     document.getElementById(`${id}`).classList.add('summary-progress-hover');
     document.getElementById(`${id}_count`).classList.add('color-FFFFFF');
     document.getElementById(`${id}_section`).classList.add('color-FFFFFF');
-
-
-    if (section == 'to_do_and_done') {
+    if (section == 'to_do_and_done')
         hoverOverToDoAndDone(id, imgSrc);
-    };
-
-    if (section == 'urgend-tasks') {
+    if (section == 'urgend-tasks') 
         hoverOverUrgendTask(id);
-    };
-
-    if (section == 'summary-task-board') {
+    if (section == 'summary-task-board')
         hoverOverTaskCounts(id);
-    };
 }
 
 /**
@@ -68,7 +59,6 @@ function hoverOverUrgendTask(id) {
     document.getElementById(`${id}_taskfield`).classList.remove('summary-urgend');
     document.getElementById(`${id}_date`).classList.remove('color-2A3647');
     document.getElementById(`${id}_deadline`).classList.remove('color-2A3647');
-
     document.getElementById(`${id}_taskfield`).classList.add('summary-urgend-hover');
     document.getElementById(`${id}_date`).classList.add('color-FFFFFF');
     document.getElementById(`${id}_deadline`).classList.add('color-FFFFFF');
@@ -97,22 +87,15 @@ function hoverLeaveSummaryTasks(id, section, imgSrc) {
     document.getElementById(`${id}`).classList.remove('summary-progress-hover');
     document.getElementById(`${id}_count`).classList.remove('color-FFFFFF');
     document.getElementById(`${id}_section`).classList.remove('color-FFFFFF');
-
     document.getElementById(`${id}`).classList.add('summary-progress-none-hover');
     document.getElementById(`${id}_count`).classList.add('color-000000');
     document.getElementById(`${id}_section`).classList.add('color-2A3647');
-
-    if (section == 'to_do_and_done') {
+    if (section == 'to_do_and_done')
         hoverLeaveToDoAndDone(id, imgSrc);
-    };
-
-    if (section == 'urgend-tasks') {
+    if (section == 'urgend-tasks')
         hoverLeaveUrgendTask(id);
-    };
-
-    if (section == 'summary-task-board') {
+    if (section == 'summary-task-board') 
         hoverLeaveTaskCounts(id);
-    };
 }
 
 
@@ -144,7 +127,6 @@ function hoverLeaveUrgendTask(id) {
     document.getElementById(`${id}_taskfield`).classList.remove('summary-urgend-hover');
     document.getElementById(`${id}_date`).classList.remove('color-FFFFFF');
     document.getElementById(`${id}_deadline`).classList.remove('color-FFFFFF');
-
     document.getElementById(`${id}_taskfield`).classList.add('summary-urgend');
     document.getElementById(`${id}_date`).classList.add('color-2A3647');
     document.getElementById(`${id}_deadline`).classList.add('color-2A3647');
@@ -172,7 +154,6 @@ function playSummaryGreetingAnimation() {
         let greetingUser = document.getElementById('greeting_user');
         let greetingBackground = document.getElementById('greeting_background');
         let greetingUserBackground = document.getElementById('greeting_user_background');
-
         greetingUser.style.animation = 'reduceGreeting 2s ease-in-out forwards'
         greetingBackground.style.animation = 'reduceGreetingBg 2s ease-in-out forwards'
         greetingUserBackground.style.animation = 'reduceGreeting 2s ease-in-out forwards'
@@ -190,7 +171,6 @@ function playSummaryGreetingAnimation() {
 function generateUserName() {
     let userName = getUserName()
     let greeting = getGreeting();
-
     document.getElementById('user_name').innerHTML = `${userName}`;
     document.getElementById('user_greeting').innerHTML = `${greeting}`;
     playSummaryGreetingAnimation();
@@ -208,14 +188,13 @@ function generateUserName() {
 function getGreeting() {
     const now = new Date();
     const currentHour = now.getHours();
-
     if (currentHour >= 0 && currentHour < 12) {
         return "Good morning,";
     } else if (currentHour >= 12 && currentHour < 18) {
         return "Good afternoon,";
-    } else {
+    } else 
         return "Good evening,";
-    }
+    
 }
 
 
@@ -242,27 +221,13 @@ function openTaskBoard() {
  */
 async function fillSummary() {
     let userName = getUserName();
-
     let users = JSON.parse(await getItem('users'));
-
     let user = users.find(u => u.name == userName);
-
-    //ToDo//
     countTasks(user,'to_do_count', 'toDo');
-
-    //Done//
     countTasks(user, 'done_count', 'done');
-
-    //urgend//
     countPriority(user, 'priority', 'urgent', 'urgend_count');
-
-    //Task Progress//
     countTasks(user, 'task_progress_count', 'progress');
-
-    //Task Await Feedback//
     countTasks(user, 'task_feedback_count', 'feedback');
-
-    //Tasks at Board//
     countBoardTasks(user, 'task_board_count', 'tasks');
 }
 
@@ -284,9 +249,8 @@ function countPriority(user, taskcategory, status, containerID) {
         const task = user['tasks'][i];
         if (task[taskcategory] == status) {
             taskCount++;
-            if (status == 'urgent') {
+            if (status == 'urgent')
                 findDueDate(user);
-            }
         }
     }
     document.getElementById(containerID).innerHTML = taskCount;
@@ -342,14 +306,12 @@ function findDueDate(user) {
     for (let i = 0; i < tasks.length; i++) {
         if (tasks[i]['priority'] == 'urgent') {            
             let task = new Date(tasks[i]['createdAt']);
-            if (task < closestDate || closestDate === null) {
+            if (task < closestDate || closestDate === null)
                 closestDate = task;
-            }
         }
     }
-    if (closestDate == Infinity) {
+    if (closestDate == Infinity)
         return;
-    } else {
+     else
         urgendDate.innerHTML = closestDate.toLocaleDateString();
-    }
 }

@@ -29,16 +29,11 @@ nav {
     margin-bottom: 10px;
 }
 
-
-
-
 .nav-sub:hover {
     background-color: #2A3D59;
     color: white;
     cursor: pointer;
 }
-
-
 
 .nav-bottom {
     display: flex;
@@ -127,7 +122,6 @@ header {
     font-size: 27px;
     font-weight: 700;
 }
-
 
 .template-menu-pop-up-bg {
     z-index: 99;

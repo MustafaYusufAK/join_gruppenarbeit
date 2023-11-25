@@ -1,3 +1,6 @@
+/**
+ * Cancels the creation of a new category.
+ */
 function cancelNewCategory() {
     document.getElementById('newCategoryInput').value = '';
     document.getElementById('newCategoryColor').style.backgroundColor = '';
@@ -9,11 +12,13 @@ function cancelNewCategory() {
     closeCategoryDropdown();
 }
 
+/**
+ * Confirms the creation of a new category.
+ */
 function confirmNewCategory() {
     let newCategory = document.getElementById('newCategoryInput').value;
     let newCategoryColor = document.getElementById('newCategoryColor').style.backgroundColor;
     let newCategoryInput = document.getElementById('newCategoryInput');
-
     if (newCategoryInput.value === '') {
         newCategoryInput.focus();
         categoryNotification();
@@ -30,7 +35,9 @@ function confirmNewCategory() {
     }
 }
 
-
+/**
+ * Opens the category dropdown.
+ */
 function openCategoryDropdown() {
     document.getElementById('categoryDropdown').classList.remove('d-none');
     document.getElementById('category').style.cssText = `
@@ -48,6 +55,9 @@ function openCategoryDropdown() {
     });
 }
 
+/**
+ * Handles the creation of a new category.
+ */
 function newCategory() {
     closeCategoryDropdown();
     document.getElementById('newCategoryContainer').classList.remove('d-none');
@@ -56,6 +66,9 @@ function newCategory() {
     document.getElementById('category').classList.add('d-none');
 }
 
+/**
+ * Handles the creation of a new category in the overlay.
+ */
 function newCategoryOverlay() {
     closeCategoryDropdownOverlay();
     document.getElementById('newCategoryContainerOverlay').classList.remove('d-none');
@@ -63,6 +76,9 @@ function newCategoryOverlay() {
     document.getElementById('categoryOverlay').style.display = 'none';
 }
 
+/**
+ * Cancels the creation of a new category in the overlay.
+ */
 function cancelNewCategoryOverlay() {
     document.getElementById('newCategoryInputOverlay').value = '';
     document.getElementById('newCategoryColorOverlay').style.backgroundColor = '';
@@ -72,6 +88,9 @@ function cancelNewCategoryOverlay() {
     document.getElementById('categoryOverlay').innerHTML = 'Select task category';
 }
 
+/**
+ * Closes the category dropdown.
+ */
 function closeCategoryDropdown() {
     document.getElementById('categoryDropdown').classList.add('d-none');
     document.getElementById('category').style.cssText = `
@@ -87,16 +106,22 @@ function closeCategoryDropdown() {
         categoryColor.style.backgroundColor = '#FFFFFF';
         const category = document.getElementById('category');
         category.appendChild(categoryColor);
-    } else {
+    } else
         categoryColor.style.backgroundColor = '#FFFFFF';
-    }
     document.getElementById('category').onclick = openCategoryDropdown;
 }
 
+/**
+ * Adds a color to the new category.
+ * @param {string} color - The selected color.
+ */
 function addColorToNewCategory(color) {
     document.getElementById('newCategoryColor').style.backgroundColor = color;
 }
 
+/**
+ * Confirms the creation of a new category in the overlay.
+ */
 function confirmNewCategoryOverlay() {
     let newCategory = document.getElementById('newCategoryInputOverlay').value;
     let newCategoryColor = document.getElementById('newCategoryColorOverlay').style.backgroundColor;
@@ -113,10 +138,17 @@ function confirmNewCategoryOverlay() {
     }
 }
 
+/**
+ * Adds a color to the new category in the overlay.
+ * @param {string} color - The selected color.
+ */
 function addColorToNewCategoryOverlay(color) {
     document.getElementById('newCategoryColorOverlay').style.backgroundColor = color;
 }
 
+/**
+ * Assigns unique IDs to options in the 'which_assigned_contact' select element.
+ */
 function assignOptionIDs() {
     const selectElement = document.getElementById('which_assigned_contact');
     const options = selectElement.getElementsByTagName('option');

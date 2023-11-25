@@ -135,7 +135,6 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    gap: 61px;
 }
 
 .urgend-task-border {
@@ -158,7 +157,7 @@
 .summary-task-board-container {
     width: 30%;
     height: 100%;
-    padding: 10px;
+    padding: 4px;
 }
 
 .summary-tasks {
