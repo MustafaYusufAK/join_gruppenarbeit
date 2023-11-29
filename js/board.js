@@ -5,6 +5,7 @@ let tasksInProgress = [];
 let tasksAwaitFeedback = [];
 let tasksDone = [];
 
+
 /**
  * Initializes the Kanban board by loading tasks, contacts, generating the sidebar,
  * showing tasks, restoring tasks from local storage, sorting tasks into arrays,
@@ -69,14 +70,15 @@ function fillEmptyCategory() {
  * @param {Array} tasksAwaitFeedback - An array to store tasks awaiting feedback.
  * @param {Array} tasksDone - An array to store completed tasks.
  */
-function sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone) {
+async function sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone) {
     allTasks.forEach(task => {
         const taskDiv = document.getElementById(`task-${task.id}`);
         if (!taskDiv) return;
         const targetArray = getTargetArray(taskDiv, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
         const shouldAddTask = !targetArray.some(existingTask => existingTask.id === task.id);
         if (shouldAddTask) targetArray.push(task);
-    });
+    });    
+    await saveTasksCategory(tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
 }
 
 /**
