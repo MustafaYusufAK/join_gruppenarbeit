@@ -223,11 +223,11 @@ async function fillSummary() {
     let userName = getUserName();
     let users = JSON.parse(await getItem('users'));
     let user = users.find(u => u.name == userName);
-    countTasks(user,'to_do_count', 'toDo');
-    countTasks(user, 'done_count', 'done');
-    countPriority(user, 'priority', 'urgent', 'urgend_count');
-    countTasks(user, 'task_progress_count', 'progress');
-    countTasks(user, 'task_feedback_count', 'feedback');
+    countTasks('to_do_count', 'toDo');
+    countTasks('done_count', 'done');
+    countPriority('priority', 'urgent', 'urgend_count');
+    countTasks('task_progress_count', 'progress');
+    countTasks('task_feedback_count', 'feedback');
     countBoardTasks('task_board_count');
 }
 
@@ -243,14 +243,14 @@ async function fillSummary() {
  * @param {string} status 
  * @param {string} containerID 
  */
-function countPriority(user, taskcategory, status, containerID) {
+function countPriority(taskcategory, status, containerID) {
     let taskCount = 0;
     for (let i = 0; i < allTasks.length; i++) {
         const task = allTasks[i];
         if (task[taskcategory] == status) {
             taskCount++;
             if (status == 'urgent')
-                findDueDate(user);
+                findDueDate();
         }
     }
     document.getElementById(containerID).innerHTML = taskCount;
@@ -266,7 +266,7 @@ function countPriority(user, taskcategory, status, containerID) {
  * @param {string} containerID 
  * @param {string} category 
  */
-function countTasks(user, containerID, category) {
+function countTasks(containerID, category) {
 let taskCounter =  sortTasks[category];
 document.getElementById(containerID).innerHTML = taskCounter.length;
 }
@@ -299,7 +299,7 @@ function countBoardTasks(containerID) {
  * @param {string} user 
  * @returns 
  */
-function findDueDate(user) {
+function findDueDate() {
     let urgendDate = document.getElementById('urgend_date');
     let closestDate = Infinity;
     // let tasks = user['tasks']
