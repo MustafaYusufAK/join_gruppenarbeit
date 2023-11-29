@@ -1,6 +1,6 @@
-body {
+/* body {
     padding: 20px;
-}
+} */
 
 .header-logo {
     height: 89px;
@@ -172,7 +172,7 @@ a:hover {
 
 .content-log-in {
     width: 100%;
-    height: clamp(600px, calc(100vh - 60px), calc(100vh - 60px));
+    height: clamp(600px, calc(100vh - 60px), calc(100vh - 110px));
     display: flex;
     justify-content: center;
     align-items: center;
@@ -531,7 +531,7 @@ a:hover {
     }
 
     .log-in {
-        width: 90%;
+        width: 60%;
         padding: 32px 0px;
     }
 
@@ -624,9 +624,14 @@ a:hover {
 }
 
 @media (max-width: 650px) {
-
+    
     .log-in {
+        width: 90%;
         height: 500px;
+    }
+
+    .log-in-input {
+        width: 80%;
     }
 
     .header-logo {
@@ -694,6 +699,10 @@ a:hover {
     .login-guest-btn {
         width: 180px;
         height: 51px;
+    }
+
+    .sign-up {
+        width: 95%;
     }
 
     .sign-up-form {
