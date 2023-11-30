@@ -184,8 +184,8 @@ a:hover {
     align-items: center;
     justify-content: space-between;
     background-color: #FFFFFF;
-    width: 60%;
-    height: clamp(500px, 60%, 60%);
+    width: clamp(300px, 95%, 700px);
+    height: 500px;
     padding: 48px 115px;
     border-radius: 30px;
 }
@@ -265,7 +265,7 @@ a:hover {
 
 .sign-up-form {
     height: 391px;
-    width: 422px;
+    width: clamp(300px, 90%, 422px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -278,7 +278,7 @@ a:hover {
     align-items: center;
     justify-content: space-between;
     background-color: #FFFFFF;
-    width: 598px;
+    width: clamp(300px, 95%, 600px);
     height: clamp(595px, 60%, 60%);
     padding: 48px 88px;
     border-radius: 30px;
@@ -531,7 +531,6 @@ a:hover {
     }
 
     .log-in {
-        width: 60%;
         padding: 32px 0px;
     }
 
@@ -577,12 +576,11 @@ a:hover {
     }
 
     .sign-up-form {
-        width: 364px;
+        /* width: 364px; */
         height: 392px;
     }
 
     .sign-up {
-        width: 60%;
         padding: 32px 0px;
     }
 
@@ -618,21 +616,20 @@ a:hover {
 
 @media (max-width: 700px) {
 
-    .log-in {
+    /* .log-in {
         height: 500px;
-    }
+    } */
 }
 
 @media (max-width: 650px) {
     
-    .log-in {
-        width: 90%;
+    /* .log-in {
         height: 500px;
-    }
+    } */
 
-    .log-in-input {
+    /* .log-in-input {
         width: 80%;
-    }
+    } */
 
     .header-logo {
         text-wrap: wrap;
@@ -701,12 +698,8 @@ a:hover {
         height: 51px;
     }
 
-    .sign-up {
-        width: 95%;
-    }
-
     .sign-up-form {
-        width: 90%;
+        /* width: 90%; */
     }
 
     .startscreen-logo-side {
@@ -740,10 +733,6 @@ a:hover {
             opacity: 0;
             display: none;
         }
-    }
-
-    .sign-up {
-        width: 95%;
     }
 
     .startscreen-logo-side {
