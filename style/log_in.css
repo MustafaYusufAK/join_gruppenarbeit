@@ -1,7 +1,3 @@
-/* body {
-    padding: 20px;
-} */
-
 .header-logo {
     height: 89px;
     display: flex;
@@ -614,22 +610,7 @@ a:hover {
 
 }
 
-@media (max-width: 700px) {
-
-    /* .log-in {
-        height: 500px;
-    } */
-}
-
 @media (max-width: 650px) {
-    
-    /* .log-in {
-        height: 500px;
-    } */
-
-    /* .log-in-input {
-        width: 80%;
-    } */
 
     .header-logo {
         text-wrap: wrap;
@@ -696,11 +677,7 @@ a:hover {
     .login-guest-btn {
         width: 180px;
         height: 51px;
-    }
-
-    .sign-up-form {
-        /* width: 90%; */
-    }
+    }   
 
     .startscreen-logo-side {
         top: 10px;
