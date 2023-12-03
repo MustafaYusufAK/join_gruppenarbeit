@@ -234,48 +234,6 @@ async function saveTasksCategory(tasksToDo, tasksInProgress, tasksAwaitFeedback,
  * @async
  */
 async function loadTasks() {
-    // let users = JSON.parse(await getItem('users'));
-    // let userName = getUserName();
-    // let userIndex = users.findIndex(u => u.name === userName);
-    // let userTasks = users[userIndex].tasks;
-    // let usersortTasks = users[userIndex].sortTasks;
-
-    // if (userTasks == undefined) {
-    //     allTasks = [];        
-    //     await saveTasks();   
-    // }
-    // if(usersortTasks == undefined) {
-    //     task_category = {
-    //         'toDo': '',
-    //         'progress': '',
-    //         'feedback': '',
-    //         'done': '',
-    //     };
-    //     await saveTasksCategory();
-    // } else {
-    //     allTasks = userTasks;
-    //     sortTasks = usersortTasks;
-    // }
-
     allTasks = JSON.parse(await getItem('allTasks'));
     sortTasks = JSON.parse(await getItem('sortTasks'));
-    // let sortTasks = JSON.parse(await getItem('sortTasks'));
-
-    // if (tasks == undefined) {
-    //     allTasks = [];
-    //     await saveTasks();
-    // }
-    // // if (sortTasks == undefined) {
-    // //     task_category = {
-    // //         'toDo': '',
-    // //         'progress': '',
-    // //         'feedback': '',
-    // //         'done': '',
-    // //     };
-    // //     await saveTasksCategory();
-    // // } 
-    // else {
-    //     allTasks = tasks;
-    //     // sortTasks = usersortTasks;
-    // }
 }
