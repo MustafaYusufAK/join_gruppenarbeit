@@ -181,15 +181,15 @@ async function saveContacts() {
  * @async
  */
 async function loadContacts() {
-    let users = JSON.parse(await getItem('users'));
-    let userName = getUserName();
-    let userIndex = users.findIndex(u => u.name === userName);
-    let userContacts = users[userIndex].contacts
-    if (userContacts == undefined) {
-        contacts = []
-    } else {
-        contacts = userContacts
-    }
+    // let users = JSON.parse(await getItem('users'));
+    // let userName = getUserName();
+    // let userIndex = users.findIndex(u => u.name === userName);
+    // let userContacts = users[userIndex].contacts
+    // if (userContacts == undefined) {
+    //     contacts = []
+    // } else {
+    //     contacts = userContacts
+    // }
     contacts = JSON.parse(await getItem('contacts'));
 }
 

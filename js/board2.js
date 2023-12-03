@@ -98,6 +98,7 @@ function onDrop(event) {
         const targetContainerId = targetContainer.id;
         moveTo(taskId, targetContainerId);
     }
+    sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
     event.target.classList.remove('drag-over');
 }
 
@@ -136,7 +137,7 @@ async function deleteTask(taskId) {
         hideOverlay();
     } else
         console.error('Task not found for deletion');
-        
+    clearSortTasks();
     sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
     await saveTasksCategory(tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone)
     await saveTasks();
