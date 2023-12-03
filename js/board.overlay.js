@@ -216,6 +216,11 @@ function updatePriority(prio) {
     pushUpdatePriority(prio);
 }
 
+/**
+ * Updates the priority of a task and adds it to the priority array.
+ *
+ * @param {string} prio - The priority value to be updated.
+ */
 function pushUpdatePriority(prio) {
     switchCasePriorityBtn(prio);
     selectedPrioButton = prio;
@@ -240,8 +245,9 @@ function addSubtaskToBoard() {
         styleListItem(listItem, subtaskText);
         styleEditIcon(editIcon);
         styleDeleteIcon(deleteIcon);
-        listItem.appendChild(checkbox);
-        listItem.appendChild(document.createTextNode(subtaskText));
+        const styledListItem = styleListItem(listItem); // Das zurückgegebene Listenelement erhalten
+        styledListItem.appendChild(checkbox);
+        styledListItem.appendChild(document.createTextNode(subtaskText));
         listItem.appendChild(editIcon);
         listItem.appendChild(deleteIcon);
         boardSubtaskList.appendChild(listItem);
@@ -267,6 +273,7 @@ function styleListItem(listItem) {
     listItem.classList.add('subtask-item');
     const listElementId = generateUniqueID();
     listItem.id = listElementId;
+    return listItem; // Hinzufügen der Rückgabe des Listenelements
 }
 
 /**

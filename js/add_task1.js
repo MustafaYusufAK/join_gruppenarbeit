@@ -211,6 +211,21 @@ function addSubtask() {
 }
 
 /**
+ * Adds the first subtask to the list if the input is not empty.
+ * Generates a unique ID for the subtask, creates a list item,
+ * and resets the subtask input field.
+ */
+function addFirstSubtask() {
+    const subtaskInput = document.getElementById('subtaskInput');
+    const subtaskText = subtaskInput.value.trim();
+    if (subtaskText !== '') {
+        const subtaskId = generateUniqueID();
+        createSubtaskListItem(subtaskText);
+        resetSubtaskInput(subtaskInput);
+    }
+}
+
+/**
  * Adds subtask information to global arrays.
  * @param {string} subtaskText - The text of the subtask.
  * @param {string} subtaskId - The ID of the subtask.
@@ -357,8 +372,8 @@ function createCheckMarkIcon(inputField, subtaskItem, checkmarkIcon) {
         subtaskItem.innerHTML = '';
         subtaskItem.appendChild(checkbox);
         subtaskItem.appendChild(document.createTextNode(editedText));
-        subtaskItem.appendChild(createEditIcon());
-        subtaskItem.appendChild(createDeleteIcon());
+        subtaskItem.appendChild(createIcon('edit'));
+        subtaskItem.appendChild(createIcon('delete'));
     });
 }
 
@@ -380,34 +395,6 @@ function applyChanges(event) {
 }
 
 /**
- * Creates an edit icon element.
- * @returns {HTMLDivElement} - The created edit icon element.
- */
-function createEditIcon() {
-    const editIconContainer = document.createElement('div');
-    editIconContainer.classList.add('edit-icon-container');
-    const editIcon = document.createElement('img');
-    addAttributesForIcons(editIcon, 'pencil');
-    editIcon.onclick = editSubtask;
-    editIconContainer.appendChild(editIcon);
-    return editIconContainer;
-}
-
-/**
- * Creates a delete icon element.
- * @returns {HTMLDivElement} - The created delete icon element.
- */
-function createDeleteIcon() {
-    const deleteIconContainer = document.createElement('div');
-    deleteIconContainer.classList.add('delete-icon-container');
-    const deleteIcon = document.createElement('img');
-    addAttributesForIcons(deleteIcon, 'delete');
-    deleteIcon.onclick = deleteSubtask;
-    deleteIconContainer.appendChild(deleteIcon);
-    return deleteIconContainer;
-}
-
-/**
  * Adds attributes to an icon element based on the provided path.
  * @param {HTMLImageElement} icon - The icon element to be modified.
  * @param {string} path - The path for the icon source.
@@ -426,6 +413,8 @@ function addAttributesForIcons(icon, path) {
 function deleteSubtask(event) {
     const subtaskItem = event.target.closest('.subtask-item');
     subtaskItem.remove();
+    subtaskTextsArray = [];
+    subtaskIdsArray = [];
 }
 
 /**

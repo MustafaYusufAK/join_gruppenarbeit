@@ -61,9 +61,64 @@ function ballForBoardOverlay(assignedToColors, assignedToValues, assignedToList)
 }
 
 /**
- * Displays the task details in the board overlay for editing.
+ * Holt den Beschreibungstext einer Aufgabe.
+ * @param {Object} task - Die Aufgabe
+ * @returns {string} - Der Beschreibungstext der Aufgabe
  */
-function editingShowTask() {
+function getDescriptionText(task) {
+    return task.description_text;
+}
+
+/**
+ * Retrieves the creation date value from the provided task.
+ * @param {Object} task - The task containing creation date information
+ * @returns {any} - The value representing the creation date of the task
+ */
+function getIdDateValue(task) {
+    return task.createdAt;
+}
+
+/**
+ * Retrieves the title from the provided task.
+ * @param {Object} task - The task containing title information
+ * @returns {string} - The title of the task
+ */
+function getTitle(task) {
+    return task.title;
+}
+
+/**
+ * Generates a list of options for the 'assigned to' field based on the provided task.
+ * @param {Object} task - The task containing 'assigned to' information
+ * @returns {string} - The HTML string representing the options for the 'assigned to' field
+ */
+function getAssignedToOptions(task) {
+    return task.assignedToValues.map((contact, index) => {
+        return `<option value="${contact}" data-id="${index}" data-color="${task.assignedToColors[index]}">${contact}</option>`;
+    }).join('');
+}
+
+/**
+ * Generates a list of subtasks based on the provided task.
+ * @param {Object} task - The task containing subtasks information
+ * @returns {string} - The HTML string representing the list of subtasks
+ */
+function getSubtasksList(task) {
+    if (task.subtasksId && task.subtasks) {
+        return task.subtasksId.map((subtaskId, index) => {
+            const subtask = task.subtasks[index];
+            return subtasksListTemplate(subtaskId, subtask);
+        }).join('');
+    }
+    return '';
+}
+
+/**
+ * Initializes the task based on the currently displayed task ID.
+ * @param {number} currentShowedTaskId - The ID of the currently displayed task
+ * @returns {Object|null} - The task found or null if not found
+ */
+function initializeTask(currentShowedTaskId) {
     currentTaskId = [];
     const taskOverviewPopUp = document.getElementById('taskOverviewPopUp');
     taskOverviewPopUp.innerHTML = '';
@@ -71,27 +126,66 @@ function editingShowTask() {
     currentTaskId = currentShowedTaskId;
     if (!task) {
         console.error(`Task mit der ID '${taskId}' wurde nicht gefunden.`);
-        return;
+        return null;
     }
-    const descriptionText = task.description_text;
-    const idDateValue = task.createdAt;
-    const title = task.title;
-    const assignedToOptions = task.assignedToValues.map((contact, index) => {
-        return `<option value="${contact}" data-id="${index}" data-color="${task.assignedToColors[index]}">${contact}</option>`;
-    }).join('');
-    const subtasksList = task.subtasksId && task.subtasks && task.subtasksId.map((subtaskId, index) => {
-        const subtask = task.subtasks[index];
-        return subtasksListTemplate(subtaskId, subtask);
-    }).join('');
+    return task;
+}
+
+/**
+ * Updates the task details in the task overview.
+ *
+ * @param {Object} task - The task object to update.
+ */
+function updateTaskDetails(task) {
+    const descriptionText = getDescriptionText(task);
+    const idDateValue = getIdDateValue(task);
+    const title = getTitle(task);
+    const assignedToOptions = getAssignedToOptions(task);
+    const subtasksList = getSubtasksList(task);
     editTaskOverviewTemplate(taskOverviewPopUp, title, descriptionText, idDateValue, subtasksList);
     boardOverlayContactDropdown(assignedToOptions);
+}
+
+
+/**
+ * Displays assigned contacts in the board overlay.
+ *
+ * @param {Object} task - The task object containing assigned contact information.
+ */
+function displayAssignedContacts(task) {
     const assignedToList = document.getElementById('ballAssignedToList');
     ballForBoardOverlay(task.assignedToColors, task.assignedToValues, assignedToList);
+}
+
+/**
+ * Performs various actions related to tasks on the board.
+ * - Clears board input fields.
+ * - Sets click event listeners on the board.
+ * - Sets a minimum date.
+ * - Applies line-through and checkbox to the specified task.
+ * - Simulates a priority button click for the specified task.
+ */
+function performTaskActions() {
     clearBoardInputFields();
     boardClickEventlisteners();
     setMinDate();
     applyLineThroughAndCheckbox(currentTaskId);
     simulatePriorityButtonClick(currentTaskId);
+}
+
+/**
+ * Prepares and displays task details for editing.
+ * - Retrieves the task details based on the current displayed task ID.
+ * - Updates the task details in the display.
+ * - Shows assigned contacts for the task.
+ * - Performs various actions related to task operations on the board.
+ */
+function editingShowTask() {
+    const task = initializeTask(currentShowedTaskId);
+    if (!task) return;
+    updateTaskDetails(task);
+    displayAssignedContacts(task);
+    performTaskActions();
 }
 
 /**
@@ -158,6 +252,7 @@ function switchCasePriorityBtn(prio) {
 function reverseForLowBtn() {
     document.getElementById('board_clicked_urgent_btn').classList.add('d-none');
     document.getElementById('board_clicked_medium_btn').classList.add('d-none');
+    document.getElementById('board_medium_btn').classList.remove('d-none');
     document.getElementById('board_urgent_btn').classList.remove('d-none');
     document.getElementById('board_low_btn').classList.remove('d-none');
 }
@@ -309,15 +404,45 @@ function editTaskOverviewTemplate(taskOverviewPopUp, title, descriptionText, idD
 }
 
 /**
- * Retrieves input values from the board overlay form.
- * @returns {object} - Object containing task details.
- */
+ * Retrieves and organizes input values from the board for task creation/editing.
+ * @returns {{
+*  taskId: string,
+*  title: string,
+*  descriptionText: string,
+*  dueDate: string,
+*  assignedToDiv: HTMLElement,
+*  subtasksStatusArray: boolean[],
+*  subtasksTextArray: string[],
+*  subtasksIdArray: string[]
+* }} An object containing input values and subtask information.
+*/
 function getBoardInputValues() {
     const taskId = currentTaskId;
-    const title = document.getElementById('boardOverlayTitle').value;
-    const descriptionText = document.getElementById('boardOverlaydescriptionText').value;
+    const title = getInputElementValue('boardOverlayTitle');
+    const descriptionText = getInputElementValue('boardOverlaydescriptionText');
     const assignedToDiv = document.getElementById('ballAssignedToList');
-    const dueDate = document.getElementById('editedCreatedAt').value;
+    const dueDate = getInputElementValue('editedCreatedAt');
+    const subtasksInfo = getSubtaskItemsInfo();
+    const { subtasksStatusArray, subtasksTextArray, subtasksIdArray } = subtasksInfo;
+    clearBoardSubTaskList();
+    return { taskId, title, descriptionText, dueDate, assignedToDiv, ...subtasksInfo };
+}
+
+/**
+ * Retrieves the value of an input element based on the provided element ID.
+ * @param {string} elementId - The ID of the input element to retrieve the value from.
+ * @returns {string} The value of the input element.
+ */
+function getInputElementValue(elementId) {
+    return document.getElementById(elementId).value;
+}
+
+/**
+ * Retrieves information about subtask items present in the board overlay.
+ * @returns {Object} Information about subtasks, including their status, text, and IDs.
+ *                   Format: { subtasksStatusArray: boolean[], subtasksTextArray: string[], subtasksIdArray: string[] }
+ */
+function getSubtaskItemsInfo() {
     const boardOverlaySubTaskList = document.getElementById('boardSubtaskList');
     const subtaskItems = document.querySelectorAll('#boardSubtaskList .subtask-item');
     const subtasksStatusArray = [];
@@ -329,173 +454,18 @@ function getBoardInputValues() {
         subtasksStatusArray.push(item.querySelector('.subtask-checkbox').checked);
         subtasksTextArray.push(text);
         subtasksIdArray.push(id);
-        updateProgressBar(taskId);
+        updateProgressBar(currentTaskId);
     });
-    boardOverlaySubTaskList.innerHTML = '';
     const subtasksArray = Array.from(subtaskItems, item => item.childNodes[0].textContent.trim());
-    return { taskId, title, descriptionText, dueDate, assignedToDiv, subtasksStatusArray, subtasksTextArray, subtasksIdArray };
+    return { subtasksStatusArray, subtasksTextArray, subtasksIdArray };
 }
 
 /**
- * Updates the task details in the tasks array.
- * @param {string} descriptionText - The task description.
- * @param {string} title - The task title.
- * @param {string} dueDate - The due date of the task.
- * @param {number} taskIndex - The index of the task in the array.
- * @param {string[]} updatedPriority - The updated priority array.
- * @param {string[]} subtasksArray - The array of subtasks.
- * @param {string[]} assignedToValues - The values of assigned contacts.
- * @param {string[]} assignedShortValues - The short values of assigned contacts.
- * @param {string[]} assignedToColors - The colors of assigned contacts.
+ * Clears the content of the board overlay subtask list.
  */
-function updateTaskDetailsInArray(descriptionText, title, dueDate, taskIndex, updatedPriority, subtasksTextArray, assignedToValues, assignedShortValues, assignedToColors, subtasksStatusArray) {
-    const task = allTasks[taskIndex];
-    task.title = title;
-    task.description_text = descriptionText;
-    task.createdAt = dueDate;
-    task.priority = updatedPriority.slice();
-    task.subtasks = subtasksTextArray.slice();
-    task.assignedToValues = assignedToValues.slice();
-    task.assignedShortValues = assignedShortValues.slice();
-    task.assignedToColors = assignedToColors.slice();
-    task.subtasksStatusArray = subtasksStatusArray;
+function clearBoardSubTaskList() {
+    const boardOverlaySubTaskList = document.getElementById('boardSubtaskList');
+    boardOverlaySubTaskList.innerHTML = '';
 }
 
-/**
- * Handles the case when a task is not found in the tasks array.
- * @param {number|string} taskId - The ID of the task.
- */
-function handleTaskNotFound(taskId) {
-    console.error(`Task mit der ID "${taskId}" wurde nicht im allTasks-Array gefunden.`);
-    return;
-}
-
-/**
- * Handles the submission of the board overlay form.
- */
-async function boardConfirm() {
-    event.preventDefault();
-    const { taskId, title, descriptionText, dueDate, assignedToDiv, subtasksStatusArray, subtasksTextArray } = getBoardInputValues();
-    const taskIndex = allTasks.findIndex(task => task.id === taskId);
-    if (taskIndex !== -1) {
-        const assigneeContainers = assignedToDiv.getElementsByClassName('assigneeContainer');
-        const assignedToValues = [];
-        const assignedShortValues = [];
-        const assignedToColors = [];
-        for (const container of assigneeContainers) {
-            const backgroundColor = container.style.backgroundColor;
-            const contactValue = container.getAttribute('value');
-            const contactText = container.textContent.trim();
-            assignedToValues.push(contactValue);
-            assignedShortValues.push(contactText);
-            assignedToColors.push(backgroundColor);
-        }
-        const previousPriority = allTasks[taskIndex].priority;
-        const updatedPriority = priorityArray.length > 0 ? priorityArray : previousPriority;
-        updateTaskDetailsInArray(descriptionText, title, dueDate, taskIndex, updatedPriority, subtasksTextArray, assignedToValues, assignedShortValues, assignedToColors, subtasksStatusArray);
-        await saveTasks();
-        priorityArray = [];
-        currentTaskId = [];
-        closeTaskOverviewPopUp();
-        showTasks();
-        restoreTasksFromLocalStorage();
-        sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
-    } else {
-        handleTaskNotFound(taskId);
-    }
-}
-
-/**
- * Closes the task overview popup.
- */
-function closeTaskOverviewPopUp() {
-    inWhichContainer = [];
-    const addTaskOverlaySection = document.getElementById('addTaskOverlaySection');
-    const overlaySection = document.getElementById('overlaySection');
-    overlaySection.classList.add('d-none');
-    addTaskOverlaySection.classList.add('d-none');
-}
-
-/**
- * Clears the input fields for title and description.
- */
-function clearInputFields() {
-    const titleInput = document.getElementById('title');
-    const descriptionInput = document.getElementById('description_text');
-    titleInput.value = '';
-    descriptionInput.value = '';
-}
-
-/**
- * Prevents the event from propagating to parent elements.
- * @param {Event} event - The event object.
- */
-function doNotClose(event) {
-    event.stopPropagation();
-}
-
-/**
- * Resets the assigned field to its default value.
- */
-function resetAssignedField() {
-    const assignedToSelect = document.getElementById('which_assigned_contact');
-    assignedToSelect.selectedIndex = 0;
-}
-
-/**
- * Clears the date input field.
- */
-function clearDateInput() {
-    const dueDateInput = document.getElementById('createdAt');
-    dueDateInput.value = '';
-}
-
-/**
- * Resets the priority buttons to their default state.
- */
-function resetPriorityButtons() {
-    const buttons = ['urgent', 'medium', 'low'];
-    buttons.forEach(button => {
-        const normalBtn = document.getElementById(`addTask_overlay_${button}_btn`);
-        const clickedBtn = document.getElementById(`addTask_overlay_clicked_${button}_btn`);
-        normalBtn.classList.remove('d-none');
-        clickedBtn.classList.add('d-none');
-    });
-}
-
-/**
- * Updates the category based on the selected option in the dropdown.
- */
-function updateCategory() {
-    const categoryDropdown = document.getElementById('categoryDropdown');
-    const categoryContainer = document.getElementById('category');
-    const categoryOptions = categoryDropdown.getElementsByClassName('categoryOption');
-    if (categoryOptions.length >= 2) {
-        const secondCategoryOption = categoryOptions[1];
-        categoryContainer.innerHTML = secondCategoryOption.outerHTML;
-    }
-}
-
-/**
- * Clears the subtask input and the subtask list.
- */
-function clearSubtasks() {
-    const subtaskInput = document.getElementById('subtaskInput');
-    const subtaskList = document.getElementById('subtaskList');
-    subtaskInput.value = '';
-    subtaskList.innerHTML = '';
-}
-
-/**
- * Clears the input fields, resets the assigned field, clears date input, resets priority buttons, updates category, and clears subtasks.
- */
-function forClearAddTaskWithBtn() {
-    cancelNewCategory();
-    closeCategoryDropdown();
-    clearInputFields();
-    resetAssignedField();
-    clearDateInput();
-    resetPriorityButtons();
-    clearSubtasks();
-}
 
