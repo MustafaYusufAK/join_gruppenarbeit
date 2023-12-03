@@ -5,7 +5,6 @@ let tasksInProgress = [];
 let tasksAwaitFeedback = [];
 let tasksDone = [];
 
-
 /**
  * Initializes the Kanban board by loading tasks, contacts, generating the sidebar,
  * showing tasks, restoring tasks from local storage, sorting tasks into arrays,
@@ -24,6 +23,7 @@ async function initForBoard() {
     getRandomColor();
     assignOptionIDs();
     setMinDateForBoard();
+    addToggleTaskNavigateContainerListener();
 }
 
 /**
@@ -51,6 +51,18 @@ function resetAssignedField() {
 }
 
 /**
+ * Fills the empty category if the category is not selected with default values.
+ */
+function fillEmptyCategory() {
+    const defaultCategoryText = 'Keine Category ausgewählt';
+    const defaultCategoryColor = '#808080';
+    if (category === '')
+        category = defaultCategoryText;
+    if (categoryColorArray.length === 0)
+        categoryColorArray.push(defaultCategoryColor);
+}
+
+/**
  * Sorts tasks into different arrays based on their current status on the board.
  * @param {Array} allTasks - An array containing all tasks.
  * @param {Array} tasksToDo - An array to store tasks in the "To Do" status.
@@ -58,15 +70,14 @@ function resetAssignedField() {
  * @param {Array} tasksAwaitFeedback - An array to store tasks awaiting feedback.
  * @param {Array} tasksDone - An array to store completed tasks.
  */
-async function sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone) {
+function sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone) {
     allTasks.forEach(task => {
         const taskDiv = document.getElementById(`task-${task.id}`);
         if (!taskDiv) return;
         const targetArray = getTargetArray(taskDiv, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
         const shouldAddTask = !targetArray.some(existingTask => existingTask.id === task.id);
         if (shouldAddTask) targetArray.push(task);
-    });    
-    await saveTasksCategory(tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
+    });
 }
 
 /**
@@ -107,8 +118,10 @@ function extractAssigneeInfo() {
  * Creates a task object based on the user input.
  * @returns {Object} A task object.
  */
-function createTaskObject(categorySelect) {
-    if (categorySelect === 'Select task category') {
+function createTaskObject() {
+    const categorySelect = document.getElementById('category');
+    const categoryText = categorySelect ? categorySelect.innerText.trim() : '';
+    if (categoryText === 'Select task category') {
         selectCategoryNotification();
         return;
     }
@@ -117,12 +130,11 @@ function createTaskObject(categorySelect) {
         id: id,
         title: document.getElementById('title').value,
         description_text: document.getElementById('description_text').value,
-        task_category: categoryArray,
+        task_category: categorySelect ? categorySelect.innerText : '',
         createdAt: document.getElementById('createdAt').value,
         priority: priorityArray,
         subtasks: subtaskTextsArray,
         subtasksId: subtaskIdsArray,
-        subtasksStatusArray: subtasksStatusArray,
         categoryColors: categoryColorArray,
         assignedToValues: assignedToValuesArray,
         assignedToColors: assignedToColorsArray,
@@ -136,11 +148,16 @@ function createTaskObject(categorySelect) {
  * @returns {Object} An object containing task information.
  */
 function gatherTaskInfo() {
+    const description = document.getElementById('description_text').value;
     const createdAt = document.getElementById('createdAt').value;
     const title = document.getElementById('title').value;
+    const categorySelect = document.getElementById('category');
+    const categoryColor = categorySelect ? categorySelect.querySelector('.categoryColor').style.backgroundColor : '';
     return {
         title,
+        description,
         createdAt,
+        categoryColor,
     };
 }
 
@@ -152,6 +169,8 @@ async function updateArrays(task) {
     titlesArray.push(task.title);
     descriptionsArray.push(task.description);
     createdAtArray.push(task.createdAt);
+    categoryArray.push(task.category);
+    categoryColorArray.push(task.categoryColor);
     allTasks.push(task);
     await saveTasks();
 }
@@ -168,9 +187,6 @@ function emptyArrays() {
     assignedShortValues = [];
     createdAtArray = [];
     priorityArray = [];
-    subtaskTextsArray = [];
-    subtaskIdsArray = [];
-    subtasksStatusArray = [];
 }
 
 /**
@@ -206,30 +222,9 @@ function handleFilledFields(task) {
 function showNotificationAndResetArrays() {
     if (priorityArray.length === 0) {
         showPrioNotification();
-        priorityArray = [];
-        assignedToValuesArray = [];
-        assignedToColorsArray = [];
-        assignedShortValues = [];
-        subtasksArray = [];
-        subtasksStatusArray = [];
     } else {
         boardHideShowFinalNotification();
     }
-}
-
-/**
- * Empties arrays related to handling new categories.
- * Clears subtasks, category, category colors, assigned values, assigned colors,
- * assigned short values, and creation dates arrays.
- */
-function emptyHandleNewCategoryArray() {
-    subtasksArray = [];
-    categoryArray = [];
-    categoryColorArray = [];
-    assignedToValuesArray = [];
-    assignedToColorsArray = [];
-    assignedShortValues = [];
-    createdAtArray = [];
 }
 
 /**
@@ -237,59 +232,14 @@ function emptyHandleNewCategoryArray() {
  */
 function addTaskFromOverlay() {
     event.preventDefault();
-    const { categorySelect, categoryColors, description, createdAt, title, newCategoryContainer, newCategoryInput, newCategoryColor, subtaskItems } = declareVariables();
-
-    if (!newCategoryContainer.classList.contains('d-none')) {
-        handleNewCategoryValidation(newCategoryInput, newCategoryColor);
-    } else if (categorySelect === 'Select task category') {
-        emptyHandleNewCategoryArray();
-        selectCategoryNotification();
-        return false; // Beendet die Funktion, wenn 'categorySelect' den Wert 'Select task category' hat
-    } else {
-        pushCategoryIntoTask(categorySelect, categoryColors);
-        let subtaskTextsArray = [];
-        let subtaskIdsArray = [];
-        collectSubtaskInfo(subtaskItems, subtaskTextsArray, subtaskIdsArray);
-        extractAssigneeInfo();
-        validateTaskFields(title, categorySelect, categoryColors, description, createdAt) ? handleFilledFields(createTaskObject(categorySelect)) : showNotificationAndResetArrays();
-    }
+    const { description, createdAt, title, newCategoryContainer, newCategoryInput, newCategoryColor, subtaskItems } = declareVariables();
+    let subtaskTextsArray = [];
+    let subtaskIdsArray = [];
+    collectSubtaskInfo(subtaskItems, subtaskTextsArray, subtaskIdsArray);
+    if (!newCategoryContainer.classList.contains('d-none')) handleNewCategoryValidation(newCategoryInput, newCategoryColor);
+    extractAssigneeInfo();
+    validateTaskFields(title, description, createdAt) ? handleFilledFields(createTaskObject()) : showNotificationAndResetArrays();
 }
-
-/**
- * Pushes selected category and its color into respective arrays.
- * If the category is 'Select task category', it triggers a notification and returns false.
- * Otherwise, it pushes the category and its color into their respective arrays and returns true.
- *
- * @param {string} categorySelect - The selected category.
- * @param {string} categoryColors - The color associated with the selected category.
- * @returns {boolean} Returns true if the category and color were successfully added, otherwise false.
- */
-function pushCategoryIntoTask(categorySelect, categoryColors) {
-    categoryArray = [];
-    categoryColorArray = [];
-    if (categorySelect === 'Select task category') {
-        selectCategoryNotification();
-        return false;
-    } else {
-        categoryArray.push(categorySelect);
-        categoryColorArray.push(categoryColors);
-        return true; // Änderung: Rückgabewert bei erfolgreicher Zuweisung
-    }
-}
-
-/**
- * Controls the entry of a task category and its associated color.
- * If both the category and color are default values, the function terminates.
- *
- * @param {string} categorySelect - The selected category.
- * @param {string} categoryColors - The color associated with the selected category.
- */
-function controlCategoryEntry(categorySelect, categoryColors) {
-    if (categorySelect === 'Select task category' && categoryColors === 'background-color: #FFFFFF;') {
-        return; // Beendet die Funktion, wenn beide Bedingungen erfüllt sind
-    }
-}
-
 
 /**
  * Retrieves various DOM elements and their values used in task creation.
@@ -297,10 +247,7 @@ function controlCategoryEntry(categorySelect, categoryColors) {
  * newCategoryContainer, newCategoryInput, newCategoryColor, and subtaskItems.
  */
 function declareVariables() {
-    const categorySelect = document.getElementById('category');
     return {
-        categorySelect: categorySelect ? categorySelect.innerText.trim() : '',
-        categoryColors: categorySelect ? categorySelect.querySelector('.categoryColor').style.backgroundColor : '',
         description: document.getElementById('description_text').value,
         createdAt: document.getElementById('createdAt').value,
         title: document.getElementById('title').value,
@@ -321,7 +268,6 @@ function collectSubtaskInfo(subtaskItems, subtaskTextsArray, subtaskIdsArray) {
     subtaskItems.forEach(subtask => {
         const subtaskText = subtask.textContent.trim();
         const subtaskId = subtask.id;
-        subtasksStatusArray.push(subtask.querySelector('.subtask-checkbox').checked);
         if (subtaskText && subtaskId) {
             subtaskTextsArray.push(subtaskText);
             subtaskIdsArray.push(subtaskId);
@@ -353,8 +299,8 @@ function handleNewCategoryValidation(newCategoryInput, newCategoryColor) {
  * @returns {boolean} - Returns true if all required fields are non-empty,
  * including title, description, createdAt, priorityArray, and assignedToValuesArray.
  */
-function validateTaskFields(title, categorySelect, categoryColors, description, createdAt) {
-    return title && categorySelect && categoryColors && description && createdAt && priorityArray.length > 0;
+function validateTaskFields(title, description, createdAt) {
+    return title && description && createdAt && priorityArray.length > 0 && assignedToValuesArray.length > 0;
 }
 
 /**
@@ -379,15 +325,17 @@ function createTaskDiv(task) {
  * @param {HTMLElement} feedbackTaskContainer - The feedback task container element.
  * @returns {HTMLElement} The target container for the task.
  */
-function determineTargetContainer(task, taskContainer, inProgressContainer, feedbackTaskContainer) {
+function determineTargetContainer(task, taskContainer, inProgressContainer, feedbackTaskContainer, doneTaskContainer) {
     let targetContainer = taskContainer;
     const inWhichContainer = task.inWhichContainer;
-    if (inWhichContainer && inWhichContainer.includes('for-To-Do-Container')) {
+    if (inWhichContainer && inWhichContainer.includes('for-To-Do-Container')) 
         targetContainer = taskContainer;
-    } else if (inWhichContainer && inWhichContainer.includes('in-Progress-Container')) {
+     else if (inWhichContainer && inWhichContainer.includes('in-Progress-Container')) 
         targetContainer = inProgressContainer;
-    } else if (inWhichContainer && inWhichContainer.includes('for-Await-Feedback-Container'))
+     else if (inWhichContainer && inWhichContainer.includes('for-Await-Feedback-Container'))
         targetContainer = feedbackTaskContainer;
+    else if (inWhichContainer && inWhichContainer.includes('for-Done-Container'))
+        targetContainer = doneTaskContainer;
     return targetContainer;
 }
 
@@ -447,15 +395,24 @@ function processAssignments(assignments, colors) {
  * @param {string} priorityImageSrc - The source URL for the priority image.
  * @param {string} categorybackgroundColor - The background color for the category.
  */
-function addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc, categorybackgroundColor, progressBarId, taskId) {
-    taskDiv.innerHTML = `
-            <div class="pinned-task-container" onclick="showTasksInOverViev('${task.id}')">
+function addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc, categorybackgroundColor, progressBarId) {
+    taskDiv.innerHTML = /*html*/ `
+            <div class="pinned-task-container" onclick="showTasksInOverview('${task.id}', event)">
                 <div class="category-background-color" style="background-color: ${categorybackgroundColor}">
                     <div class="category-div-text">${task.task_category}</div>
                 </div>
+                <img src="../assets/img/dots.svg" class="navigate-tasks-mobile" onclick="toggleTaskNavigateContainer(event)">
+                <div class="task-navigate-container">
+                    <div class="mobile-taskcategory to-do-category">To Do</div>
+                    <div class="mobile-taskcategory in-progress-category">In Progress</div>
+                    <div class="mobile-taskcategory await-feedback-category">Await Feedback</div>
+                    <div class="mobile-taskcategory done-category">Done</div>
+                </div>
                 <h3 class="pinned-task-headline">${task.title}</h3>
                 <p class="pinned-task-discription">${task.description_text}</p>
-                <div id="progress-div-${taskId}"></div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progress-bar-${progressBarId}"></div>
+                </div>
                 <div id="ball-and-prio-img-div" class="ball-and-prio-img-div">
                 <div class="pinnedAssigneBallPosition">
                     ${assignePinnedTaskBall}
@@ -494,4 +451,53 @@ function showTasks() {
     createSpecificNoTaskDivs();
     createNoTaskDiv();
     displayTasks(taskContainer, feedbackTaskContainer, inProgressContainer, targetDoneTable);
+}
+
+/**
+ * Displays tasks by creating task div elements, determining target containers, adding content, and initializing drag and drop.
+ * @param {HTMLElement} taskContainer - The task container element.
+ * @param {HTMLElement} feedbackTaskContainer - The feedback task container element.
+ * @param {HTMLElement} inProgressContainer - The in-progress container element.
+ * @param {HTMLElement} targetDoneTable - The target done table element.
+ */
+function displayTasks(taskContainer, feedbackTaskContainer, inProgressContainer, targetDoneTable) {
+    allTasks.forEach(task => {
+        const taskId = task.id
+        const progressBarId = generateUniqueID();
+        task.progressBarId = progressBarId;
+        const categorybackgroundColor = task.categoryColors[0];
+        let priorityImageSrc = getPriorityImageSrc(task.priority);
+        const taskDiv = createTaskDiv(task);
+        const targetContainer = determineTargetContainer(task, taskContainer, inProgressContainer, feedbackTaskContainer, targetDoneTable);
+        const assignePinnedTaskBall = createAssignmentBalls(task);
+        addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc, categorybackgroundColor, progressBarId, taskId);
+        targetContainer.appendChild(taskDiv);
+        checkProgressBar(taskId, progressBarId);
+    });
+    initializeDragAndDrop();
+    restoreTasksFromLocalStorage();
+    sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
+}
+
+/**
+ * Clears the content of specified containers.
+ * @param {...HTMLElement} containers - The containers to clear.
+ */
+function clearTaskContainers(...containers) {
+    containers.forEach(container => container.innerHTML = '');
+}
+
+/**
+ * Gets the source URL for the priority image based on the priority.
+ * @param {string} priority - The priority string.
+ * @returns {string} The source URL for the priority image.
+ */
+function getPriorityImageSrc(priority) {
+    if (priority.includes('low')) {
+        return '../assets/img/Prio baja.svg';
+    } else if (priority.includes('medium')) {
+        return '../assets/img/Prio media.svg';
+    } else if (priority.includes('urgent')) {
+        return '../assets/img/Prio alta.svg';
+    }
 }
