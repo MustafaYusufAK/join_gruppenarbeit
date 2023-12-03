@@ -24,6 +24,7 @@ async function initForBoard() {
     assignOptionIDs();
     setMinDateForBoard();
     addToggleTaskNavigateContainerListener();
+    addToggleTaskNavigateContainerListener();
 }
 
 /**
@@ -244,14 +245,59 @@ function showNotificationAndResetArrays() {
  */
 function addTaskFromOverlay() {
     event.preventDefault();
-    const { description, createdAt, title, newCategoryContainer, newCategoryInput, newCategoryColor, subtaskItems } = declareVariables();
-    let subtaskTextsArray = [];
-    let subtaskIdsArray = [];
-    collectSubtaskInfo(subtaskItems, subtaskTextsArray, subtaskIdsArray);
-    if (!newCategoryContainer.classList.contains('d-none')) handleNewCategoryValidation(newCategoryInput, newCategoryColor);
-    extractAssigneeInfo();
-    validateTaskFields(title, description, createdAt) ? handleFilledFields(createTaskObject()) : showNotificationAndResetArrays();
+    const { categorySelect, categoryColors, description, createdAt, title, newCategoryContainer, newCategoryInput, newCategoryColor, subtaskItems } = declareVariables();
+
+    if (!newCategoryContainer.classList.contains('d-none')) {
+        handleNewCategoryValidation(newCategoryInput, newCategoryColor);
+    } else if (categorySelect === 'Select task category') {
+        emptyHandleNewCategoryArray();
+        selectCategoryNotification();
+        return false; // Beendet die Funktion, wenn 'categorySelect' den Wert 'Select task category' hat
+    } else {
+        pushCategoryIntoTask(categorySelect, categoryColors);
+        let subtaskTextsArray = [];
+        let subtaskIdsArray = [];
+        collectSubtaskInfo(subtaskItems, subtaskTextsArray, subtaskIdsArray);
+        extractAssigneeInfo();
+        validateTaskFields(title, categorySelect, categoryColors, description, createdAt) ? handleFilledFields(createTaskObject(categorySelect)) : showNotificationAndResetArrays();
+    }
 }
+
+/**
+ * Pushes selected category and its color into respective arrays.
+ * If the category is 'Select task category', it triggers a notification and returns false.
+ * Otherwise, it pushes the category and its color into their respective arrays and returns true.
+ *
+ * @param {string} categorySelect - The selected category.
+ * @param {string} categoryColors - The color associated with the selected category.
+ * @returns {boolean} Returns true if the category and color were successfully added, otherwise false.
+ */
+function pushCategoryIntoTask(categorySelect, categoryColors) {
+    categoryArray = [];
+    categoryColorArray = [];
+    if (categorySelect === 'Select task category') {
+        selectCategoryNotification();
+        return false;
+    } else {
+        categoryArray.push(categorySelect);
+        categoryColorArray.push(categoryColors);
+        return true; // Änderung: Rückgabewert bei erfolgreicher Zuweisung
+    }
+}
+
+/**
+ * Controls the entry of a task category and its associated color.
+ * If both the category and color are default values, the function terminates.
+ *
+ * @param {string} categorySelect - The selected category.
+ * @param {string} categoryColors - The color associated with the selected category.
+ */
+function controlCategoryEntry(categorySelect, categoryColors) {
+    if (categorySelect === 'Select task category' && categoryColors === 'background-color: #FFFFFF;') {
+        return; // Beendet die Funktion, wenn beide Bedingungen erfüllt sind
+    }
+}
+
 
 /**
  * Retrieves various DOM elements and their values used in task creation.
