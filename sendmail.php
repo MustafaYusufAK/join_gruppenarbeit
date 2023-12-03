@@ -4,7 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $subject = "Reset Your Password";
 
     // HTML-Template einlesen
-    $message = file_get_contents('email.html');
+    $message = file_get_contents('./html/email.html');
 
     // Platzhalter in der Vorlage ersetzen
     $username = $_POST["username"]; // Benutzername aus dem POST-Daten erhalten

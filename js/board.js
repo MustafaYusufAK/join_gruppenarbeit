@@ -70,14 +70,26 @@ function fillEmptyCategory() {
  * @param {Array} tasksAwaitFeedback - An array to store tasks awaiting feedback.
  * @param {Array} tasksDone - An array to store completed tasks.
  */
-function sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone) {
-    allTasks.forEach(task => {
-        const taskDiv = document.getElementById(`task-${task.id}`);
-        if (!taskDiv) return;
-        const targetArray = getTargetArray(taskDiv, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
-        const shouldAddTask = !targetArray.some(existingTask => existingTask.id === task.id);
-        if (shouldAddTask) targetArray.push(task);
-    });
+async function sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone) {    
+    if (allTasks.length > 0) {
+        allTasks.forEach(task => {
+            const taskDiv = document.getElementById(`task-${task.id}`);
+            if (!taskDiv) return;
+            const targetArray = getTargetArray(taskDiv, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
+            const shouldAddTask = !targetArray.some(existingTask => existingTask.id === task.id);
+            if (shouldAddTask) targetArray.push(task);
+        });
+    } else {
+        clearSortTasks();
+    }
+    await saveTasksCategory(tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
+}
+
+function clearSortTasks() {
+    tasksToDo = [];
+    tasksInProgress = [];
+    tasksAwaitFeedback = [];
+    tasksDone = [];
 }
 
 /**
@@ -373,11 +385,11 @@ function createTaskDiv(task) {
 function determineTargetContainer(task, taskContainer, inProgressContainer, feedbackTaskContainer, doneTaskContainer) {
     let targetContainer = taskContainer;
     const inWhichContainer = task.inWhichContainer;
-    if (inWhichContainer && inWhichContainer.includes('for-To-Do-Container')) 
+    if (inWhichContainer && inWhichContainer.includes('for-To-Do-Container'))
         targetContainer = taskContainer;
-     else if (inWhichContainer && inWhichContainer.includes('in-Progress-Container')) 
+    else if (inWhichContainer && inWhichContainer.includes('in-Progress-Container'))
         targetContainer = inProgressContainer;
-     else if (inWhichContainer && inWhichContainer.includes('for-Await-Feedback-Container'))
+    else if (inWhichContainer && inWhichContainer.includes('for-Await-Feedback-Container'))
         targetContainer = feedbackTaskContainer;
     else if (inWhichContainer && inWhichContainer.includes('for-Done-Container'))
         targetContainer = doneTaskContainer;
