@@ -77,6 +77,7 @@ function restoreTasksFromLocalStorage() {
     }
 }
 
+
 /**
  * Sets the data format on drag start.
  * @param {Event} event - The drag event.
@@ -135,7 +136,11 @@ async function deleteTask(taskId) {
         hideOverlay();
     } else
         console.error('Task not found for deletion');
+        
+    sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
+    await saveTasksCategory(tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone)
     await saveTasks();
+
 }
 
 /**
@@ -146,13 +151,25 @@ function hideOverlay() {
     overlaySection.classList.add('d-none');
 }
 
+<<<<<<< HEAD
 async function showTasksInOverview(taskId, event) {
     const clickedElement = event.target;
     const taskArray = findTaskArray(taskId);
+=======
+/**
+ * Shows details of a task in the overview.
+ * @param {string} taskId - The ID of the task to show.
+ */
+async function showTasksInOverview(taskId, event) {
+    const clickedElement = event.target;
+    const taskArray = findTaskArray(taskId);
+
+>>>>>>> 7de754ed4be574f5c0b712d4ca906db5db90c5b8
     if (clickedElement.classList.contains('navigate-tasks-mobile')) {
         event.stopPropagation();
     } else if (clickedElement.classList.contains('mobile-taskcategory')) {
         currentShowedTaskId = taskId;
+<<<<<<< HEAD
         if (clickedElement.classList.contains('to-do-category')) 
             await moveTaskToCategory(taskArray, tasksToDo);
          else if (clickedElement.classList.contains('in-progress-category')) 
@@ -161,10 +178,79 @@ async function showTasksInOverview(taskId, event) {
             await moveTaskToCategory(taskArray, tasksAwaitFeedback);
          else if (clickedElement.classList.contains('done-category'))
             await moveTaskToCategory(taskArray, tasksDone);
+=======
+
+        if (clickedElement.classList.contains('to-do-category')) {
+            await moveTaskToCategory(taskArray, tasksToDo);
+        } else if (clickedElement.classList.contains('in-progress-category')) {
+            await moveTaskToCategory(taskArray, tasksInProgress);
+        } else if (clickedElement.classList.contains('await-feedback-category')) {
+            await moveTaskToCategory(taskArray, tasksAwaitFeedback);
+        } else if (clickedElement.classList.contains('done-category')) {
+            await moveTaskToCategory(taskArray, tasksDone);
+        }
+>>>>>>> 7de754ed4be574f5c0b712d4ca906db5db90c5b8
     } else if (!clickedElement.classList.contains('navigate-tasks-mobile') || !clickedElement.classList.contains('mobile-taskcategory')) {
         const overlaySection = document.getElementById('overlaySection');
         overlaySection.classList.remove('d-none');
         displayTaskOverview(taskArray);
+<<<<<<< HEAD
+    }
+}
+
+async function moveTaskToCategory(taskArray, newArray) {
+    if (taskArray && newArray) {
+        const taskIndex = taskArray.findIndex(task => task.id === currentShowedTaskId);
+
+        if (taskIndex !== -1) {
+            const task = taskArray.splice(taskIndex, 1)[0];
+            task.inWhichContainer = determineContainerKey(newArray);
+            newArray.push(task);
+            await saveTasks();
+            await saveTasksCategory();
+            showTasks();
+        } else {
+            console.error('Task not found in the old array');
+        }
+    } else {
+        console.error('Invalid task array or new array');
+    }
+}
+
+function determineContainerKey(array) {
+    if (array === tasksToDo) {
+        return 'for-To-Do-Container';
+    } else if (array === tasksInProgress) {
+        return 'in-Progress-Container';
+    } else if (array === tasksAwaitFeedback) {
+        return 'for-Await-Feedback-Container';
+    } else if (array === tasksDone) {
+        return 'for-Done-Container';
+    } else {
+        return '';
+    }
+}
+
+
+function findTaskArray(taskId) {
+    const task = allTasks.find(task => task.id === taskId);
+
+    if (task) {
+        if (tasksToDo.includes(task)) {
+            return tasksToDo;
+        } else if (tasksInProgress.includes(task)) {
+            return tasksInProgress;
+        } else if (tasksAwaitFeedback.includes(task)) {
+            return tasksAwaitFeedback;
+        } else if (tasksDone.includes(task)) {
+            return tasksDone;
+        } else {
+            return null; // Falls die Aufgabe in keinem Array gefunden wird
+        }
+    } else {
+        return null; // Falls die Aufgabe mit der gegebenen taskId nicht gefunden wird
+=======
+>>>>>>> 7de754ed4be574f5c0b712d4ca906db5db90c5b8
     }
 }
 
@@ -221,6 +307,7 @@ function findTaskArray(taskId) {
         return null; // Falls die Aufgabe mit der gegebenen taskId nicht gefunden wird
     }
 }
+
 
 /**
  * Displays the overview details of a task.
@@ -420,6 +507,7 @@ function applyLineThroughAndCheckbox(currentTaskId) {
         }
     });
 }
+<<<<<<< HEAD
 
 /**
  * Displays tasks by creating task div elements, determining target containers, adding content, and initializing drag and drop.
@@ -511,3 +599,5 @@ function getPriorityImageSrc(priority) {
         return '../assets/img/Prio alta.svg';
     }
 }
+=======
+>>>>>>> 7de754ed4be574f5c0b712d4ca906db5db90c5b8

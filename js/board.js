@@ -24,6 +24,7 @@ async function initForBoard() {
     assignOptionIDs();
     setMinDateForBoard();
     addToggleTaskNavigateContainerListener();
+    addToggleTaskNavigateContainerListener();
 }
 
 /**
@@ -118,8 +119,10 @@ function extractAssigneeInfo() {
  * Creates a task object based on the user input.
  * @returns {Object} A task object.
  */
-function createTaskObject(categorySelect) {
-    if (categorySelect === 'Select task category') {
+function createTaskObject() {
+    const categorySelect = document.getElementById('category');
+    const categoryText = categorySelect ? categorySelect.innerText.trim() : '';
+    if (categoryText === 'Select task category') {
         selectCategoryNotification();
         return;
     }
@@ -128,12 +131,11 @@ function createTaskObject(categorySelect) {
         id: id,
         title: document.getElementById('title').value,
         description_text: document.getElementById('description_text').value,
-        task_category: categoryArray,
+        task_category: categorySelect ? categorySelect.innerText : '',
         createdAt: document.getElementById('createdAt').value,
         priority: priorityArray,
         subtasks: subtaskTextsArray,
         subtasksId: subtaskIdsArray,
-        subtasksStatusArray: subtasksStatusArray,
         categoryColors: categoryColorArray,
         assignedToValues: assignedToValuesArray,
         assignedToColors: assignedToColorsArray,
@@ -186,9 +188,6 @@ function emptyArrays() {
     assignedShortValues = [];
     createdAtArray = [];
     priorityArray = [];
-    subtaskTextsArray = [];
-    subtaskIdsArray = [];
-    subtasksStatusArray = [];
 }
 
 /**
@@ -224,30 +223,9 @@ function handleFilledFields(task) {
 function showNotificationAndResetArrays() {
     if (priorityArray.length === 0) {
         showPrioNotification();
-        priorityArray = [];
-        assignedToValuesArray = [];
-        assignedToColorsArray = [];
-        assignedShortValues = [];
-        subtasksArray = [];
-        subtasksStatusArray = [];
     } else {
         boardHideShowFinalNotification();
     }
-}
-
-/**
- * Empties arrays related to handling new categories.
- * Clears subtasks, category, category colors, assigned values, assigned colors,
- * assigned short values, and creation dates arrays.
- */
-function emptyHandleNewCategoryArray() {
-    subtasksArray = [];
-    categoryArray = [];
-    categoryColorArray = [];
-    assignedToValuesArray = [];
-    assignedToColorsArray = [];
-    assignedShortValues = [];
-    createdAtArray = [];
 }
 
 /**
@@ -256,6 +234,7 @@ function emptyHandleNewCategoryArray() {
 function addTaskFromOverlay() {
     event.preventDefault();
     const { categorySelect, categoryColors, description, createdAt, title, newCategoryContainer, newCategoryInput, newCategoryColor, subtaskItems } = declareVariables();
+
     if (!newCategoryContainer.classList.contains('d-none')) {
         handleNewCategoryValidation(newCategoryInput, newCategoryColor);
     } else if (categorySelect === 'Select task category') {
@@ -314,10 +293,7 @@ function controlCategoryEntry(categorySelect, categoryColors) {
  * newCategoryContainer, newCategoryInput, newCategoryColor, and subtaskItems.
  */
 function declareVariables() {
-    const categorySelect = document.getElementById('category');
     return {
-        categorySelect: categorySelect ? categorySelect.innerText.trim() : '',
-        categoryColors: categorySelect ? categorySelect.querySelector('.categoryColor').style.backgroundColor : '',
         description: document.getElementById('description_text').value,
         createdAt: document.getElementById('createdAt').value,
         title: document.getElementById('title').value,
@@ -338,7 +314,6 @@ function collectSubtaskInfo(subtaskItems, subtaskTextsArray, subtaskIdsArray) {
     subtaskItems.forEach(subtask => {
         const subtaskText = subtask.textContent.trim();
         const subtaskId = subtask.id;
-        subtasksStatusArray.push(subtask.querySelector('.subtask-checkbox').checked);
         if (subtaskText && subtaskId) {
             subtaskTextsArray.push(subtaskText);
             subtaskIdsArray.push(subtaskId);
@@ -370,8 +345,8 @@ function handleNewCategoryValidation(newCategoryInput, newCategoryColor) {
  * @returns {boolean} - Returns true if all required fields are non-empty,
  * including title, description, createdAt, priorityArray, and assignedToValuesArray.
  */
-function validateTaskFields(title, categorySelect, categoryColors, description, createdAt) {
-    return title && categorySelect && categoryColors && description && createdAt && priorityArray.length > 0;
+function validateTaskFields(title, description, createdAt) {
+    return title && description && createdAt && priorityArray.length > 0 && assignedToValuesArray.length > 0;
 }
 
 /**
@@ -522,4 +497,53 @@ function showTasks() {
     createSpecificNoTaskDivs();
     createNoTaskDiv();
     displayTasks(taskContainer, feedbackTaskContainer, inProgressContainer, targetDoneTable);
+}
+
+/**
+ * Displays tasks by creating task div elements, determining target containers, adding content, and initializing drag and drop.
+ * @param {HTMLElement} taskContainer - The task container element.
+ * @param {HTMLElement} feedbackTaskContainer - The feedback task container element.
+ * @param {HTMLElement} inProgressContainer - The in-progress container element.
+ * @param {HTMLElement} targetDoneTable - The target done table element.
+ */
+function displayTasks(taskContainer, feedbackTaskContainer, inProgressContainer, targetDoneTable) {
+    allTasks.forEach(task => {
+        const taskId = task.id
+        const progressBarId = generateUniqueID();
+        task.progressBarId = progressBarId;
+        const categorybackgroundColor = task.categoryColors[0];
+        let priorityImageSrc = getPriorityImageSrc(task.priority);
+        const taskDiv = createTaskDiv(task);
+        const targetContainer = determineTargetContainer(task, taskContainer, inProgressContainer, feedbackTaskContainer, targetDoneTable);
+        const assignePinnedTaskBall = createAssignmentBalls(task);
+        addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc, categorybackgroundColor, progressBarId, taskId);
+        targetContainer.appendChild(taskDiv);
+        checkProgressBar(taskId, progressBarId);
+    });
+    initializeDragAndDrop();
+    restoreTasksFromLocalStorage();
+    sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
+}
+
+/**
+ * Clears the content of specified containers.
+ * @param {...HTMLElement} containers - The containers to clear.
+ */
+function clearTaskContainers(...containers) {
+    containers.forEach(container => container.innerHTML = '');
+}
+
+/**
+ * Gets the source URL for the priority image based on the priority.
+ * @param {string} priority - The priority string.
+ * @returns {string} The source URL for the priority image.
+ */
+function getPriorityImageSrc(priority) {
+    if (priority.includes('low')) {
+        return '../assets/img/Prio baja.svg';
+    } else if (priority.includes('medium')) {
+        return '../assets/img/Prio media.svg';
+    } else if (priority.includes('urgent')) {
+        return '../assets/img/Prio alta.svg';
+    }
 }

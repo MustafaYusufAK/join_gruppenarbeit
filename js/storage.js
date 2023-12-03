@@ -3,6 +3,12 @@ const STORAGE_URL = 'https://remote-storage.developerakademie.org/item'
 
 let lokalUsers = [];
 let allTasks = [];
+let sortTasks = {
+    'toDo': '',
+    'progress': '',
+    'feedback': '',
+    'done': '',
+}
 
 //------------------------------------------------------------------------------//
 //-----------------------------save User at Backend-----------------------------//
@@ -15,10 +21,10 @@ let allTasks = [];
  * @param {string} value 
  * @returns 
  */
-async function setItem(key, value){
-    const payload = {key, value, token: STORAGE_TOKEN};
-    return fetch(STORAGE_URL, {method: 'POST', body: JSON.stringify(payload)})
-    .then(res => res.json());
+async function setItem(key, value) {
+    const payload = { key, value, token: STORAGE_TOKEN };
+    return fetch(STORAGE_URL, { method: 'POST', body: JSON.stringify(payload) })
+        .then(res => res.json());
 }
 
 
@@ -32,11 +38,20 @@ async function setItem(key, value){
  * @param {string} key 
  * @returns 
  */
-async function getItem(key){
+async function getItem(key) {
     const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
-    return fetch(url).then(res => res.json().then(res => res.data.value));
+    return await fetch(url).then(res => res.json().then(res => res.data.value));
 }
 
+// async function getItem(key) {
+//     const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
+//     const response = await fetch(url);
+//     if(response.ok) {
+//         return await fetch(url).then(res => res.json().then(res => res.data.value));
+//     } else {
+//         return [];
+//     }
+// }
 
 //------------------------------------------------------------------------------//
 //-----------------------------get Username from URL----------------------------//
@@ -49,7 +64,7 @@ async function getItem(key){
 function getUserName() {
     const urlParams = new URLSearchParams(window.location.search);
     const msg = urlParams.get('msg');
-    if (msg){
+    if (msg) {
         let userName = msg.split(', ');
         return userName[1];
     } else {
@@ -149,11 +164,11 @@ async function deleteUser(email) {
  * @async
  */
 async function saveContacts() {
-    let users = JSON.parse(await getItem('users'));
-    let userName = getUserName();
-    let userIndex = users.findIndex(u => u.name === userName);
-    users[userIndex].contacts = contacts; 
-    await setItem('users', JSON.stringify(users));
+    // let users = JSON.parse(await getItem('users'));
+    // let userName = getUserName();
+    // let userIndex = users.findIndex(u => u.name === userName);
+    // users[userIndex].contacts = contacts;
+    await setItem('contacts', JSON.stringify(contacts));
 }
 
 
@@ -175,6 +190,7 @@ async function loadContacts() {
     } else {
         contacts = userContacts
     }
+    contacts = JSON.parse(await getItem('contacts'));
 }
 
 
@@ -187,19 +203,19 @@ async function loadContacts() {
  * @async
  */
 async function saveTasks() {
-    let users = JSON.parse(await getItem('users'));
-    let userName = getUserName();
-    let userIndex = users.findIndex(u => u.name === userName);
-    users[userIndex].tasks = allTasks; 
-    await setItem('users', JSON.stringify(users));
+    await setItem('allTasks', JSON.stringify(allTasks));
 }
 
-async function saveTasksCategory() {
-    let users = JSON.parse(await getItem('users'));
-    let userName = getUserName();
-    let userIndex = users.findIndex(u => u.name === userName);
-    users[userIndex].sortTasks = task_category; 
-    await setItem('users', JSON.stringify(users));
+async function saveTasksCategory(tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone) {
+    sortTasks = {
+        'toDo': tasksToDo,
+        'progress': tasksInProgress,
+        'feedback': tasksAwaitFeedback,
+        'done': tasksDone,
+    };
+
+    await setItem('sortTasks', JSON.stringify(sortTasks));
+
 }
 
 
@@ -212,25 +228,6 @@ async function saveTasksCategory() {
  * @async
  */
 async function loadTasks() {
-    let users = JSON.parse(await getItem('users'));
-    let userName = getUserName();
-    let userIndex = users.findIndex(u => u.name === userName);
-    let userTasks = users[userIndex].tasks;
-    let usersortTasks = users[userIndex].sortTasks;
-    if (userTasks == undefined) {
-        allTasks = [];        
-        await saveTasks();   
-    }
-    if(usersortTasks == undefined) {
-        task_category = {
-            'toDo': '',
-            'progress': '',
-            'feedback': '',
-            'done': '',
-        };
-        await saveTasksCategory();
-    } else {
-        allTasks = userTasks;
-        sortTasks = usersortTasks;
-    }
+    allTasks = JSON.parse(await getItem('allTasks'));
+    sortTasks = JSON.parse(await getItem('sortTasks'));
 }
