@@ -151,25 +151,13 @@ function hideOverlay() {
     overlaySection.classList.add('d-none');
 }
 
-<<<<<<< HEAD
 async function showTasksInOverview(taskId, event) {
     const clickedElement = event.target;
     const taskArray = findTaskArray(taskId);
-=======
-/**
- * Shows details of a task in the overview.
- * @param {string} taskId - The ID of the task to show.
- */
-async function showTasksInOverview(taskId, event) {
-    const clickedElement = event.target;
-    const taskArray = findTaskArray(taskId);
-
->>>>>>> 7de754ed4be574f5c0b712d4ca906db5db90c5b8
     if (clickedElement.classList.contains('navigate-tasks-mobile')) {
         event.stopPropagation();
     } else if (clickedElement.classList.contains('mobile-taskcategory')) {
         currentShowedTaskId = taskId;
-<<<<<<< HEAD
         if (clickedElement.classList.contains('to-do-category')) 
             await moveTaskToCategory(taskArray, tasksToDo);
          else if (clickedElement.classList.contains('in-progress-category')) 
@@ -178,23 +166,10 @@ async function showTasksInOverview(taskId, event) {
             await moveTaskToCategory(taskArray, tasksAwaitFeedback);
          else if (clickedElement.classList.contains('done-category'))
             await moveTaskToCategory(taskArray, tasksDone);
-=======
-
-        if (clickedElement.classList.contains('to-do-category')) {
-            await moveTaskToCategory(taskArray, tasksToDo);
-        } else if (clickedElement.classList.contains('in-progress-category')) {
-            await moveTaskToCategory(taskArray, tasksInProgress);
-        } else if (clickedElement.classList.contains('await-feedback-category')) {
-            await moveTaskToCategory(taskArray, tasksAwaitFeedback);
-        } else if (clickedElement.classList.contains('done-category')) {
-            await moveTaskToCategory(taskArray, tasksDone);
-        }
->>>>>>> 7de754ed4be574f5c0b712d4ca906db5db90c5b8
     } else if (!clickedElement.classList.contains('navigate-tasks-mobile') || !clickedElement.classList.contains('mobile-taskcategory')) {
         const overlaySection = document.getElementById('overlaySection');
         overlaySection.classList.remove('d-none');
         displayTaskOverview(taskArray);
-<<<<<<< HEAD
     }
 }
 
@@ -249,8 +224,6 @@ function findTaskArray(taskId) {
         }
     } else {
         return null; // Falls die Aufgabe mit der gegebenen taskId nicht gefunden wird
-=======
->>>>>>> 7de754ed4be574f5c0b712d4ca906db5db90c5b8
     }
 }
 
@@ -507,7 +480,6 @@ function applyLineThroughAndCheckbox(currentTaskId) {
         }
     });
 }
-<<<<<<< HEAD
 
 /**
  * Displays tasks by creating task div elements, determining target containers, adding content, and initializing drag and drop.
@@ -599,5 +571,3 @@ function getPriorityImageSrc(priority) {
         return '../assets/img/Prio alta.svg';
     }
 }
-=======
->>>>>>> 7de754ed4be574f5c0b712d4ca906db5db90c5b8

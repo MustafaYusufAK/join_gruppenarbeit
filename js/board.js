@@ -24,7 +24,6 @@ async function initForBoard() {
     assignOptionIDs();
     setMinDateForBoard();
     addToggleTaskNavigateContainerListener();
-    addToggleTaskNavigateContainerListener();
 }
 
 /**
@@ -497,32 +496,6 @@ function showTasks() {
     createSpecificNoTaskDivs();
     createNoTaskDiv();
     displayTasks(taskContainer, feedbackTaskContainer, inProgressContainer, targetDoneTable);
-}
-
-/**
- * Displays tasks by creating task div elements, determining target containers, adding content, and initializing drag and drop.
- * @param {HTMLElement} taskContainer - The task container element.
- * @param {HTMLElement} feedbackTaskContainer - The feedback task container element.
- * @param {HTMLElement} inProgressContainer - The in-progress container element.
- * @param {HTMLElement} targetDoneTable - The target done table element.
- */
-function displayTasks(taskContainer, feedbackTaskContainer, inProgressContainer, targetDoneTable) {
-    allTasks.forEach(task => {
-        const taskId = task.id
-        const progressBarId = generateUniqueID();
-        task.progressBarId = progressBarId;
-        const categorybackgroundColor = task.categoryColors[0];
-        let priorityImageSrc = getPriorityImageSrc(task.priority);
-        const taskDiv = createTaskDiv(task);
-        const targetContainer = determineTargetContainer(task, taskContainer, inProgressContainer, feedbackTaskContainer, targetDoneTable);
-        const assignePinnedTaskBall = createAssignmentBalls(task);
-        addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc, categorybackgroundColor, progressBarId, taskId);
-        targetContainer.appendChild(taskDiv);
-        checkProgressBar(taskId, progressBarId);
-    });
-    initializeDragAndDrop();
-    restoreTasksFromLocalStorage();
-    sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
 }
 
 /**
