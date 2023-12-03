@@ -135,7 +135,11 @@ async function deleteTask(taskId) {
         hideOverlay();
     } else
         console.error('Task not found for deletion');
+        
+    sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
+    await saveTasksCategory(tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone)
     await saveTasks();
+
 }
 
 /**
