@@ -357,3 +357,26 @@ function setMinDate() {
     const currentDate = `${year}-${month}-${day}`;
     document.getElementById('editedCreatedAt').min = currentDate;
 }
+
+function toggleTaskNavigateContainer(event) {
+    let clickedElement = event.target;
+    let containerToDisplay = clickedElement.nextElementSibling;
+    if (containerToDisplay.classList.contains('task-navigate-container')) {
+        containerToDisplay.style.display = 'block';
+    }
+}
+
+function hideTaskNavigateContainers(event) {
+    let clickedElement = event.target;
+    if (!clickedElement.classList.contains('task-navigate-container')) {
+        let taskNavigateContainers = document.querySelectorAll('.task-navigate-container');
+        taskNavigateContainers.forEach(container => {
+            container.style.display = 'none';
+        });
+    }
+}
+
+function addToggleTaskNavigateContainerListener() {
+    let taskBoard = document.getElementById('findTask');
+    taskBoard.addEventListener('click', hideTaskNavigateContainers);
+}

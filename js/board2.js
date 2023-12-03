@@ -8,7 +8,8 @@ function showTaskFromArray() {
     const taskContainer = document.getElementById('target-to-do-table');
     const feedbackTaskContainer = document.getElementById('target-await-feedback-table');
     const inProgressContainer = document.getElementById('target-in-progress-table');
-    const targetContainer = determineTargetContainer(task, taskContainer, inProgressContainer, feedbackTaskContainer);
+    const doneTaskContainer = document.getElementById('target-done-table');
+    const targetContainer = determineTargetContainer(task, taskContainer, inProgressContainer, feedbackTaskContainer, doneTaskContainer);
     const taskDiv = createTaskDiv(task);
     const priorityImageSrc = getPriorityImageSrc(task.priority);
     const assignePinnedTaskBall = createAssignmentBalls(task);
@@ -46,7 +47,6 @@ function moveTo(taskId, targetContainerId) {
         targetContainer.appendChild(taskDiv);
         updateTaskStatusInLocalStorage(taskId, targetContainerId);
     }
-    sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
 }
 
 /**
@@ -146,20 +146,79 @@ function hideOverlay() {
     overlaySection.classList.add('d-none');
 }
 
-/**
- * Shows details of a task in the overview.
- * @param {string} taskId - The ID of the task to show.
- */
-function showTasksInOverViev(taskId) {
-    currentShowedTaskId = [];
-    const taskOverviewPopUp = document.getElementById('taskOverviewPopUp');
-    const overlaySection = document.getElementById('overlaySection');
-    overlaySection.classList.remove('d-none');
-    taskOverviewPopUp.innerHTML = '';
+async function showTasksInOverview(taskId, event) {
+    const clickedElement = event.target;
+    const taskArray = findTaskArray(taskId);
+    if (clickedElement.classList.contains('navigate-tasks-mobile')) {
+        event.stopPropagation();
+    } else if (clickedElement.classList.contains('mobile-taskcategory')) {
+        currentShowedTaskId = taskId;
+        if (clickedElement.classList.contains('to-do-category')) 
+            await moveTaskToCategory(taskArray, tasksToDo);
+         else if (clickedElement.classList.contains('in-progress-category')) 
+            await moveTaskToCategory(taskArray, tasksInProgress);
+         else if (clickedElement.classList.contains('await-feedback-category')) 
+            await moveTaskToCategory(taskArray, tasksAwaitFeedback);
+         else if (clickedElement.classList.contains('done-category'))
+            await moveTaskToCategory(taskArray, tasksDone);
+    } else if (!clickedElement.classList.contains('navigate-tasks-mobile') || !clickedElement.classList.contains('mobile-taskcategory')) {
+        const overlaySection = document.getElementById('overlaySection');
+        overlaySection.classList.remove('d-none');
+        displayTaskOverview(taskArray);
+    }
+}
+
+async function moveTaskToCategory(taskArray, newArray) {
+    if (taskArray && newArray) {
+        const taskIndex = taskArray.findIndex(task => task.id === currentShowedTaskId);
+
+        if (taskIndex !== -1) {
+            const task = taskArray.splice(taskIndex, 1)[0];
+            task.inWhichContainer = determineContainerKey(newArray);
+            newArray.push(task);
+            await saveTasks();
+            await saveTasksCategory();
+            showTasks();
+        } else {
+            console.error('Task not found in the old array');
+        }
+    } else {
+        console.error('Invalid task array or new array');
+    }
+}
+
+function determineContainerKey(array) {
+    if (array === tasksToDo) {
+        return 'for-To-Do-Container';
+    } else if (array === tasksInProgress) {
+        return 'in-Progress-Container';
+    } else if (array === tasksAwaitFeedback) {
+        return 'for-Await-Feedback-Container';
+    } else if (array === tasksDone) {
+        return 'for-Done-Container';
+    } else {
+        return '';
+    }
+}
+
+
+function findTaskArray(taskId) {
     const task = allTasks.find(task => task.id === taskId);
-    currentShowedTaskId = taskId;
+
     if (task) {
-        displayTaskOverview(task);
+        if (tasksToDo.includes(task)) {
+            return tasksToDo;
+        } else if (tasksInProgress.includes(task)) {
+            return tasksInProgress;
+        } else if (tasksAwaitFeedback.includes(task)) {
+            return tasksAwaitFeedback;
+        } else if (tasksDone.includes(task)) {
+            return tasksDone;
+        } else {
+            return null; // Falls die Aufgabe in keinem Array gefunden wird
+        }
+    } else {
+        return null; // Falls die Aufgabe mit der gegebenen taskId nicht gefunden wird
     }
 }
 
@@ -377,7 +436,7 @@ function displayTasks(taskContainer, feedbackTaskContainer, inProgressContainer,
         const categorybackgroundColor = task.categoryColors[0];
         let priorityImageSrc = getPriorityImageSrc(task.priority);
         const taskDiv = createTaskDiv(task);
-        const targetContainer = determineTargetContainer(task, taskContainer, inProgressContainer, feedbackTaskContainer);
+        const targetContainer = determineTargetContainer(task, taskContainer, inProgressContainer, feedbackTaskContainer, targetDoneTable);
         const assignePinnedTaskBall = createAssignmentBalls(task);
         addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc, categorybackgroundColor, progressBarId, taskId);
         targetContainer.appendChild(taskDiv);

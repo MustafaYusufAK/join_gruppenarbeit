@@ -23,6 +23,7 @@ async function initForBoard() {
     getRandomColor();
     assignOptionIDs();
     setMinDateForBoard();
+    addToggleTaskNavigateContainerListener();
 }
 
 /**
@@ -47,6 +48,18 @@ function resetAssignedField() {
     assigneeBalls.forEach(ball => {
         ball.dispatchEvent(clickEvent);
     });
+}
+
+/**
+ * Fills the empty category if the category is not selected with default values.
+ */
+function fillEmptyCategory() {
+    const defaultCategoryText = 'Keine Category ausgewählt';
+    const defaultCategoryColor = '#808080';
+    if (category === '')
+        category = defaultCategoryText;
+    if (categoryColorArray.length === 0)
+        categoryColorArray.push(defaultCategoryColor);
 }
 
 /**
@@ -134,11 +147,16 @@ function createTaskObject(categorySelect) {
  * @returns {Object} An object containing task information.
  */
 function gatherTaskInfo() {
+    const description = document.getElementById('description_text').value;
     const createdAt = document.getElementById('createdAt').value;
     const title = document.getElementById('title').value;
+    const categorySelect = document.getElementById('category');
+    const categoryColor = categorySelect ? categorySelect.querySelector('.categoryColor').style.backgroundColor : '';
     return {
         title,
+        description,
         createdAt,
+        categoryColor,
     };
 }
 
@@ -150,6 +168,8 @@ async function updateArrays(task) {
     titlesArray.push(task.title);
     descriptionsArray.push(task.description);
     createdAtArray.push(task.createdAt);
+    categoryArray.push(task.category);
+    categoryColorArray.push(task.categoryColor);
     allTasks.push(task);
     await saveTasks();
 }
@@ -236,7 +256,6 @@ function emptyHandleNewCategoryArray() {
 function addTaskFromOverlay() {
     event.preventDefault();
     const { categorySelect, categoryColors, description, createdAt, title, newCategoryContainer, newCategoryInput, newCategoryColor, subtaskItems } = declareVariables();
-
     if (!newCategoryContainer.classList.contains('d-none')) {
         handleNewCategoryValidation(newCategoryInput, newCategoryColor);
     } else if (categorySelect === 'Select task category') {
@@ -377,15 +396,17 @@ function createTaskDiv(task) {
  * @param {HTMLElement} feedbackTaskContainer - The feedback task container element.
  * @returns {HTMLElement} The target container for the task.
  */
-function determineTargetContainer(task, taskContainer, inProgressContainer, feedbackTaskContainer) {
+function determineTargetContainer(task, taskContainer, inProgressContainer, feedbackTaskContainer, doneTaskContainer) {
     let targetContainer = taskContainer;
     const inWhichContainer = task.inWhichContainer;
-    if (inWhichContainer && inWhichContainer.includes('for-To-Do-Container')) {
+    if (inWhichContainer && inWhichContainer.includes('for-To-Do-Container')) 
         targetContainer = taskContainer;
-    } else if (inWhichContainer && inWhichContainer.includes('in-Progress-Container')) {
+     else if (inWhichContainer && inWhichContainer.includes('in-Progress-Container')) 
         targetContainer = inProgressContainer;
-    } else if (inWhichContainer && inWhichContainer.includes('for-Await-Feedback-Container'))
+     else if (inWhichContainer && inWhichContainer.includes('for-Await-Feedback-Container'))
         targetContainer = feedbackTaskContainer;
+    else if (inWhichContainer && inWhichContainer.includes('for-Done-Container'))
+        targetContainer = doneTaskContainer;
     return targetContainer;
 }
 
@@ -445,15 +466,24 @@ function processAssignments(assignments, colors) {
  * @param {string} priorityImageSrc - The source URL for the priority image.
  * @param {string} categorybackgroundColor - The background color for the category.
  */
-function addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc, categorybackgroundColor, progressBarId, taskId) {
-    taskDiv.innerHTML = `
-            <div class="pinned-task-container" onclick="showTasksInOverViev('${task.id}')">
+function addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc, categorybackgroundColor, progressBarId) {
+    taskDiv.innerHTML = /*html*/ `
+            <div class="pinned-task-container" onclick="showTasksInOverview('${task.id}', event)">
                 <div class="category-background-color" style="background-color: ${categorybackgroundColor}">
                     <div class="category-div-text">${task.task_category}</div>
                 </div>
+                <img src="../assets/img/dots.svg" class="navigate-tasks-mobile" onclick="toggleTaskNavigateContainer(event)">
+                <div class="task-navigate-container">
+                    <div class="mobile-taskcategory to-do-category">To Do</div>
+                    <div class="mobile-taskcategory in-progress-category">In Progress</div>
+                    <div class="mobile-taskcategory await-feedback-category">Await Feedback</div>
+                    <div class="mobile-taskcategory done-category">Done</div>
+                </div>
                 <h3 class="pinned-task-headline">${task.title}</h3>
                 <p class="pinned-task-discription">${task.description_text}</p>
-                <div id="progress-div-${taskId}"></div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progress-bar-${progressBarId}"></div>
+                </div>
                 <div id="ball-and-prio-img-div" class="ball-and-prio-img-div">
                 <div class="pinnedAssigneBallPosition">
                     ${assignePinnedTaskBall}
