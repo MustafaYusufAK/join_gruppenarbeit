@@ -203,12 +203,6 @@ async function loadContacts() {
  * @async
  */
 async function saveTasks() {
-    // let users = JSON.parse(await getItem('users'));
-    // let userName = getUserName();
-    // let userIndex = users.findIndex(u => u.name === userName);
-    // users[userIndex].tasks = allTasks; 
-    // await setItem('users', JSON.stringify(users));
-
     await setItem('allTasks', JSON.stringify(allTasks));
 }
 
