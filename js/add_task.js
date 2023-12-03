@@ -27,26 +27,37 @@ let assignedToIDsArray = [];
 let assignedShortValues = [];
 let subtaskTextsArray = [];
 let subtaskIdsArray = [];
+let subtasksStatusArray = [];
 
 /**
  * add new Task to Board
  */
 function addTask() {
     event.preventDefault();
-    const titleInput = document.getElementById('title');
-    const descriptionInput = document.getElementById('description_text');
-    const createdAtInput = document.getElementById('createdAt');
-    const subtaskInput = document.getElementById('subtaskInput');
+    const title = document.getElementById('title').value;
+    const description = document.getElementById('description_text').value;
+    const createdAt = document.getElementById('createdAt').value;
     const subtaskItems = document.querySelectorAll('.subtask-item');
-    const newCategoryContainer = document.getElementById('newCategoryContainer');
-    const newCategoryInput = document.getElementById('newCategoryInput');
-    const newCategoryColor = document.getElementById('newCategoryColor');
-    const title = titleInput.value;
-    const description = descriptionInput.value;
-    const createdAt = createdAtInput.value;
-    if (!newCategoryContainer.classList.contains('d-none'))
-        handleNewCategoryValidation(newCategoryInput, newCategoryColor);
-    processTask(title, description, createdAt, createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskItems);
+    const { categoryInfo } = getCategoryInfo();
+    const { categoryColor } = getCategoryColor();
+    if (!document.getElementById('newCategoryContainer').classList.contains('d-none')) {
+        handleNewCategoryValidation(
+            document.getElementById('newCategoryInput'),
+            document.getElementById('newCategoryColor')
+        );
+    }
+    processTask(
+        title,
+        description,
+        createdAt,
+        document.getElementById('createdAt'),
+        document.getElementById('title'),
+        document.getElementById('description_text'),
+        document.getElementById('subtaskInput'),
+        subtaskItems,
+        categoryInfo,
+        categoryColor
+    );
 }
 
 /**
@@ -82,15 +93,30 @@ function handleNewCategoryValidation(newCategoryInput, newCategoryColor) {
  * @param {HTMLInputElement} subtaskInput - The input field for subtasks.
  * @param {NodeListOf<Element>} subtaskItems - The list of subtask elements.
  */
-function processTask(title, description, createdAt, createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskItems) {
+function processTask(title, description, createdAt, createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskItems, categoryInfo, categoryColor) {
     getValueForTaskContacts();
-    if (title && description && createdAt && priorityArray.length > 0 && assignedToValuesArray.length > 0) {
-        createTask(title, description, createdAt, createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskItems);
+    if (title && description && createdAt && priorityArray.length > 0) {
+        createTask(title, description, createdAt, createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskItems, categoryInfo, categoryColor);
         checkUpNewCategory();
     } else {
         showNotification();
-        resetTaskInformation();
     }
+}
+
+/**
+ * Empties the arrays related to task categories, subtasks, and assignments.
+ * Resets arrays used for category, subtask, and assignment details.
+ */
+function emptyArrayForPrio() {
+    categoryArray = [];
+    categoryColorArray = [];
+    subtaskTextsArray = [];
+    subtaskIdsArray = [];
+    subtasksStatusArray = [];
+    categoryColorArray = [];
+    assignedToValuesArray = [];
+    assignedToColorsArray = [];
+    assignedShortValues = [];
 }
 
 
@@ -101,14 +127,17 @@ function checkUpNewCategory() {
     if (!newCategoryContainer.classList.contains('d-none')) {
         if (newCategoryInput && !newCategoryInput.value.trim()) {
             categoryNotification();
+            emptyArrayForPrio();
             return;
         }
         if (newCategoryColor && !newCategoryColor.style.backgroundColor) {
             categoryColorNotification();
+            emptyArrayForPrio();
             return;
         }
         if (newCategoryInput && newCategoryInput.value.trim() && newCategoryColor && newCategoryColor.style.backgroundColor) {
             confirmCategoryNotification();
+            emptyArrayForPrio();
             return;
         }
     }
@@ -122,6 +151,7 @@ function checkUpNewCategory() {
 function extractSubtaskInfo(subtask) {
     const subtaskText = subtask.textContent.trim();
     const subtaskId = subtask.id;
+    subtasksStatusArray.push(subtask.querySelector('.subtask-checkbox').checked);
     if (subtaskText && subtaskId) {
         subtaskTextsArray.push(subtaskText);
         subtaskIdsArray.push(subtaskId);
@@ -135,9 +165,14 @@ function extractSubtaskInfo(subtask) {
  */
 function getCategoryInfo() {
     const categorySelect = document.getElementById('category');
+    const categoryInfo = categorySelect ? categorySelect.innerText.trim() : '';
+    return { categoryInfo };
+}
+
+function getCategoryColor() {
+    const categorySelect = document.getElementById('category');
     const categoryColor = categorySelect ? categorySelect.querySelector('.categoryColor').style.backgroundColor : '';
-    const category = categorySelect ? categorySelect.innerText.trim() : '';
-    return { category, categoryColor };
+    return { categoryColor };
 }
 
 /**
@@ -146,12 +181,29 @@ function getCategoryInfo() {
  * @param {string} category - The task category.
  * @returns {boolean} - Returns true if the category is invalid, otherwise false.
  */
-function handleInvalidCategory(category) {
-    if (category === 'Select task category') {
+function handleInvalidCategory(categoryInfo) {
+    if (categoryInfo === 'Select task category') {
+        emptyArrayCategory();
         selectCategoryNotification();
         return true;
     }
     return false;
+}
+
+/**
+ * Empties arrays related to categories, subtasks, and assignments.
+ * Resets arrays used for category details, subtasks, and assignments.
+ */
+function emptyArrayCategory() {
+    categoryArray = [];
+    categoryColorArray = [];
+    subtaskTextsArray = [];
+    subtaskIdsArray = [];
+    subtasksStatusArray = [];
+    categoryColorArray = [];
+    assignedToValuesArray = [];
+    assignedToColorsArray = [];
+    assignedShortValues = [];
 }
 
 /**
@@ -165,8 +217,8 @@ function handleInvalidCategory(category) {
  * @param {HTMLElement} subtaskInput - The input field for subtasks.
  * @param {Array<HTMLElement>} subtaskItems - Array of subtask elements.
  */
-function createAndSaveTask(title, description, createdAt, category, categoryColor, subtaskInput, subtaskItems) {
-    pushAndSaveTaskToUser(title, description, createdAt, category, categoryColor, subtaskInput, subtaskItems);
+function createAndSaveTask(title, description, createdAt, subtaskInput, subtaskItems, categoryInfo, categoryColor) {
+    pushAndSaveTaskToUser(title, description, createdAt, subtaskInput, subtaskItems, categoryInfo, categoryColor);
 }
 
 /**
@@ -209,13 +261,12 @@ function finalizeTaskHandling() {
  * @param {HTMLElement} subtaskInput - The input field for subtasks.
  * @param {Array<HTMLElement>} subtaskItems - Array of subtask elements.
  */
-function createTask(title, description, createdAt, createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskItems) {
+function createTask(title, description, createdAt, createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskItems, categoryInfo, categoryColor) {
     subtaskItems.forEach(extractSubtaskInfo);
-    const { category, categoryColor } = getCategoryInfo();
-    if (handleInvalidCategory(category)) {
+    if (handleInvalidCategory(categoryInfo)) {
         return;
     }
-    createAndSaveTask(title, description, createdAt, category, categoryColor, subtaskInput, subtaskItems);
+    createAndSaveTask(title, description, createdAt, subtaskInput, subtaskItems, categoryInfo, categoryColor,);
     resetInputAndSubtaskFields(createdAtInput, titleInput, descriptionInput, subtaskInput, subtaskList);
     finalizeTaskHandling();
 }
@@ -245,17 +296,18 @@ function getValueForTaskContacts() {
  * @param {due date of task} createdAt 
  * @returns 
  */
-function createTaskArray(title, description, category, createdAt) {
+function createTaskArray(title, description, createdAt, categoryInfo, categoryColor) {
     const id = generateUniqueID();
     let task = {
         id: id,
         title: title,
         description_text: description,
-        task_category: category,
+        task_category: categoryInfo,
         createdAt: createdAt,
         priority: priorityArray,
         subtasks: subtaskTextsArray,
         subtasksId: subtaskIdsArray,
+        subtasksStatusArray: subtasksStatusArray,
         categoryColors: categoryColorArray,
         assignedToValues: assignedToValuesArray,
         assignedToColors: assignedToColorsArray,
@@ -272,13 +324,11 @@ function createTaskArray(title, description, category, createdAt) {
  * @param {category for task} category 
  * @param {color of category} categoryColor 
  */
-function pushAndSaveTaskToUser(title, description, createdAt, category, categoryColor, subtaskInput) {
-    if (title && description && createdAt && priorityArray.length > 0) {
-        let task = createTaskArray(title, description, category, createdAt);
+function pushAndSaveTaskToUser(title, description, createdAt, subtaskInput, subtaskItems, categoryInfo, categoryColor) {
+    if (title && description && createdAt && categoryInfo && categoryColor) {
+        let task = createTaskArray(title, description, createdAt, categoryInfo, categoryColor);
         titlesArray.push(title);
         descriptionsArray.push(description);
-        createdAtArray.push(createdAt);
-        categoryArray.push(category);
         categoryColorArray.push(categoryColor);
         allTasks.push(task);
         saveTasks();
@@ -330,6 +380,24 @@ function removeStylefromPrirorityButton() {
 }
 
 /**
+ * reset style from prirorty Button
+ */
+function addStylefromPrirorityButton() {
+    const urgentBtn = document.getElementById('clicked_urgent_btn');
+    const mediumBtn = document.getElementById('clicked_medium_btn');
+    const lowBtn = document.getElementById('clicked_low_btn');
+    if (urgentBtn) {
+        urgentBtn.classList.add('d-none');
+    }
+    if (mediumBtn) {
+        mediumBtn.classList.add('d-none');
+    }
+    if (lowBtn) {
+        lowBtn.classList.add('d-none');
+    }
+}
+
+/**
  * add style from prirorty Button
  */
 function addStylefromPrirorityButton() {
@@ -350,6 +418,7 @@ function addStylefromPrirorityButton() {
 function showNotification() {
     if (priorityArray.length === 0) {
         showPrioNotification();
+        resetTaskInformation();
     } else {
         showFinalNotification();
     }
@@ -366,6 +435,10 @@ function resetTaskInformation() {
     assignedToColorsArray = [];
     assignedShortValues = [];
     createdAtArray = [];
+    priorityArray = [];
+    subtaskTextsArray = [];
+    subtaskIdsArray = [];
+    subtasksStatusArray = [];
 }
 
 /**
@@ -428,42 +501,4 @@ function clearInputFields() {
     closeCategoryDropdown();
     resetTaskInformation();
     clear();
-}
-
-/**
- * Clears specific input fields and resets associated arrays.
- */
-function clear() {
-    const titleInput = document.getElementById('title');
-    const descriptionInput = document.getElementById('description_text');
-    titleInput.value = '';
-    descriptionInput.value = '';
-    const assignedToSelect = document.getElementById('which_assigned_contact');
-    assignedToSelect.selectedIndex = 0;
-    const dueDateInput = document.getElementById('createdAt');
-    dueDateInput.value = '';
-    const subtask = document.getElementById('subtaskList');
-    subtask.innerHTML = '';
-    resetAssignedField();
-    priorityArray = [];
-}
-
-/**
- * Changes the icon of a button to the default state.
- * @param {string} IdHover - The ID of the icon in hover state.
- * @param {string} IdDefault - The ID of the icon in default state.
- */
-function changeClearBtnIconToDefault(IdHover, IdDefault) {
-    document.getElementById(IdHover).classList.add('d-none');
-    document.getElementById(IdDefault).classList.remove('d-none');
-}
-
-/**
- * Changes the icon of a button to the hover state.
- * @param {string} IdDefault - The ID of the icon in default state.
- * @param {string} IdHover - The ID of the icon in hover state.
- */
-function changeClearBtnIconToHover(IdDefault, IdHover) {
-    document.getElementById(IdDefault).classList.add('d-none');
-    document.getElementById(IdHover).classList.remove('d-none');
 }

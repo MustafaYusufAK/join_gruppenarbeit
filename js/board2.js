@@ -274,7 +274,7 @@ function createAssignmentContainerHTML(task) {
         task.assignedToValues.forEach((assignment, index) => {
             const nameParts = assignment.trim().split(' ');
             let initials = '';
-            if (nameParts.length >= 2) 
+            if (nameParts.length >= 2)
                 initials = nameParts[0][0] + nameParts[1][0];
             else if (nameParts.length === 1)
                 initials = nameParts[0][0];
@@ -360,4 +360,95 @@ function applyLineThroughAndCheckbox(currentTaskId) {
             checkboxElement.checked = subtaskStatus;
         }
     });
+}
+
+/**
+ * Displays tasks by creating task div elements, determining target containers, adding content, and initializing drag and drop.
+ * @param {HTMLElement} taskContainer - The task container element.
+ * @param {HTMLElement} feedbackTaskContainer - The feedback task container element.
+ * @param {HTMLElement} inProgressContainer - The in-progress container element.
+ * @param {HTMLElement} targetDoneTable - The target done table element.
+ */
+function displayTasks(taskContainer, feedbackTaskContainer, inProgressContainer, targetDoneTable) {
+    allTasks.forEach(task => {
+        const taskId = task.id
+        const progressBarId = generateUniqueID();
+        task.progressBarId = progressBarId;
+        const categorybackgroundColor = task.categoryColors[0];
+        let priorityImageSrc = getPriorityImageSrc(task.priority);
+        const taskDiv = createTaskDiv(task);
+        const targetContainer = determineTargetContainer(task, taskContainer, inProgressContainer, feedbackTaskContainer);
+        const assignePinnedTaskBall = createAssignmentBalls(task);
+        addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc, categorybackgroundColor, progressBarId, taskId);
+        targetContainer.appendChild(taskDiv);
+        createProgressBar(progressBarId, taskId);
+        setStylesForTaskDiv(taskId)
+        updateProgressBar(taskId);
+        checkProgressBar(taskId, progressBarId);
+    });
+    initializeDragAndDrop();
+    restoreTasksFromLocalStorage();
+    sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
+}
+
+function createProgressBar(progressBarId, taskId) {
+    const task = allTasks.find(task => task.id === taskId);
+    if (!task || !task.subtasks || !task.subtasksId || task.subtasks.length === 0 || task.subtasksId.length === 0) {
+        return; // Beende die Funktion frühzeitig, wenn die Bedingungen nicht erfüllt sind
+    }
+    const taskDiv = document.getElementById(`progress-div-${taskId}`);
+    if (!taskDiv) {
+        return; // Beende die Funktion, wenn das Task-Div nicht gefunden wurde
+    }
+    const existingProgressBar = taskDiv.querySelector(`#progress-bar-${progressBarId}`);
+    if (existingProgressBar) {
+        console.warn('Der Fortschrittsbalken existiert bereits für diese Aufgabe.');
+        return; // Beende die Funktion, wenn der Fortschrittsbalken bereits vorhanden ist
+    }
+    const progressBarContainer = document.createElement('div');
+    progressBarContainer.classList.add('progress-bar-container');
+    const progressBarCounter = document.createElement('div');
+    progressBarCounter.id = `progress-bar-counter-${progressBarId}`;
+    progressBarCounter.classList.add('progress-bar-counter');
+    const progressBar = document.createElement('div');
+    progressBar.classList.add('progress-bar');
+    progressBar.id = `progress-bar-${progressBarId}`;
+    progressBarContainer.appendChild(progressBar);
+    taskDiv.appendChild(progressBarCounter);
+    taskDiv.appendChild(progressBarContainer);
+}
+
+function setStylesForTaskDiv(taskId) {
+    const taskDiv = document.getElementById(`progress-div-${taskId}`);
+    if (taskDiv) {
+        taskDiv.style.height = '12px';
+        taskDiv.style.width = '100%';
+        taskDiv.style.marginBottom = '10px';
+        taskDiv.style.justifyContent = 'flex-end';
+        taskDiv.style.display = 'flex';
+        taskDiv.style.flexDirection = 'row-reverse';
+    }
+}
+
+/**
+ * Clears the content of specified containers.
+ * @param {...HTMLElement} containers - The containers to clear.
+ */
+function clearTaskContainers(...containers) {
+    containers.forEach(container => container.innerHTML = '');
+}
+
+/**
+ * Gets the source URL for the priority image based on the priority.
+ * @param {string} priority - The priority string.
+ * @returns {string} The source URL for the priority image.
+ */
+function getPriorityImageSrc(priority) {
+    if (priority.includes('low')) {
+        return '../assets/img/Prio baja.svg';
+    } else if (priority.includes('medium')) {
+        return '../assets/img/Prio media.svg';
+    } else if (priority.includes('urgent')) {
+        return '../assets/img/Prio alta.svg';
+    }
 }

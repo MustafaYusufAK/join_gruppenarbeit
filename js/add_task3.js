@@ -1,31 +1,4 @@
 /**
- * Adds a subtask to the list.
- */
-function addFirstSubtask() {
-    const subtaskInput = document.getElementById('subtaskInput');
-    const subtaskText = subtaskInput.value.trim();
-    if (subtaskText !== '') {
-        const subtaskList = document.getElementById('subtaskList');
-        const listElementId = generateUniqueID();
-        const listItem = document.createElement('li');
-        listItem.classList.add('subtask-item');
-        listItem.id = listElementId;
-        listItem.appendChild(document.createTextNode(subtaskText));
-        const editIcon = document.createElement('div');
-        editIcon.classList.add('pencil_icon_div');
-        editIcon.innerHTML = `<img class="addSubTaskIcons icon pencil" src="../assets/img/pencil-32.png" alt="" onclick="editFirstSubtask(event)">`;
-        const deleteIcon = document.createElement('div');
-        deleteIcon.classList.add('delete_icon_div');
-        deleteIcon.innerHTML = `<img class="addSubTaskIcons icon delete" src="../assets/img/delete-32.png" alt="" onclick="deleteSubtask(event)">`;
-        listItem.appendChild(editIcon);
-        listItem.appendChild(deleteIcon);
-        subtaskList.appendChild(listItem);
-        subtasksArray.push({ id: listElementId, text: subtaskText });
-        subtaskInput.value = '';
-    }
-}
-
-/**
  * Creates an edit icon for subtasks.
  * @returns {HTMLDivElement} - The created edit icon container.
  */
@@ -57,7 +30,6 @@ function createDeleteIcon() {
     return deleteIconContainer;
 }
 
-
 /**
  * Edits the first subtask.
  * @param {Event} event - The event object.
@@ -65,10 +37,10 @@ function createDeleteIcon() {
 function editFirstSubtask(event) {
     const subtaskItem = event.target.closest('.subtask-item');
     const subtaskText = subtaskItem.textContent.trim();
-    if (subtaskItem.classList.contains('lineThrough')) 
+    if (subtaskItem.classList.contains('lineThrough'))
         subtaskItem.classList.remove('lineThrough');
     const inputField = createInputField(subtaskText);
-    const checkmarkIcon = createCheckmarkIcon(inputField);
+    const checkmarkIcon = createCheckmarkIcon(inputField, subtaskItem,);
     subtaskItem.innerHTML = '';
     subtaskItem.appendChild(inputField);
     subtaskItem.appendChild(checkmarkIcon);
@@ -92,7 +64,7 @@ function createInputField(value) {
  * @param {HTMLInputElement} inputField - The associated input field.
  * @returns {HTMLImageElement} - The created checkmark icon element.
  */
-function createCheckmarkIcon(inputField) {
+function createCheckmarkIcon(inputField, subtaskItem,) {
     const checkmarkIcon = document.createElement('img');
     checkmarkIcon.classList.add('addSubTaskIcons', 'icon', 'checkmark');
     checkmarkIcon.src = '../assets/img/check-mark-3-32.png';
@@ -101,8 +73,8 @@ function createCheckmarkIcon(inputField) {
         const editedText = inputField.value.trim();
         subtaskItem.innerHTML = '';
         subtaskItem.appendChild(document.createTextNode(editedText));
-        subtaskItem.appendChild(createEditIcon());
-        subtaskItem.appendChild(createDeleteIcon());
+        subtaskItem.appendChild(createIcon('edit'));
+        subtaskItem.appendChild(createIcon('delete'));
     });
     return checkmarkIcon;
 }

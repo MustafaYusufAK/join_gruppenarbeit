@@ -160,3 +160,43 @@ function assignOptionIDs() {
         option.setAttribute('data-color', color);
     }
 }
+
+/**
+ * Clears specific input fields and resets associated arrays.
+ */
+function clear() {
+    const titleInput = document.getElementById('title');
+    const descriptionInput = document.getElementById('description_text');
+    titleInput.value = '';
+    descriptionInput.value = '';
+    const assignedToSelect = document.getElementById('which_assigned_contact');
+    assignedToSelect.selectedIndex = 0;
+    const dueDateInput = document.getElementById('createdAt');
+    dueDateInput.value = '';
+    const subtask = document.getElementById('subtaskList');
+    subtask.innerHTML = '';
+    resetAssignedField();
+    priorityArray = [];
+    removeStylefromPrirorityButton();
+    addStylefromPrirorityButton();
+}
+
+/**
+ * Changes the icon of a button to the default state.
+ * @param {string} IdHover - The ID of the icon in hover state.
+ * @param {string} IdDefault - The ID of the icon in default state.
+ */
+function changeClearBtnIconToDefault(IdHover, IdDefault) {
+    document.getElementById(IdHover).classList.add('d-none');
+    document.getElementById(IdDefault).classList.remove('d-none');
+}
+
+/**
+ * Changes the icon of a button to the hover state.
+ * @param {string} IdDefault - The ID of the icon in default state.
+ * @param {string} IdHover - The ID of the icon in hover state.
+ */
+function changeClearBtnIconToHover(IdDefault, IdHover) {
+    document.getElementById(IdDefault).classList.add('d-none');
+    document.getElementById(IdHover).classList.remove('d-none');
+}
