@@ -103,7 +103,7 @@ h3 {
 }
 
 .task-item {
-    margin-bottom: 85px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: center;
 }
@@ -119,12 +119,12 @@ h3 {
     display: flex;
     justify-content: space-between;
     width: 240px;
-    margin-left: 40px;
-    margin-right: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
     color: rgb(42, 54, 71);
     font-weight: bold;
     overflow-x: hidden;
-    height: 450px;
+    height: 660px;
 }
 
 .pinned-task-container {
@@ -141,6 +141,15 @@ h3 {
     border-radius: 30px;
     cursor: pointer;
     z-index: 0;
+    position: relative;
+}
+.navigate-tasks-mobile {
+    position: absolute;
+    right: 8px;
+    top: 17px;
+    height: 44px;
+    width: 44px;
+    display: none;
 }
 
 .table-header {

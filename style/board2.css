@@ -1,3 +1,4 @@
+
 .edit-subTask {
     padding-left: 1rem;
     margin-bottom: 0rem;
@@ -82,9 +83,7 @@ ul {
 }
 
 .progress-bar-container {
-    align-items: center;
-    display: flex;
-    width: 75%;
+    width: 100%;
     height: 12px;
     background-color: #f0f0f0;
     margin-top: 10px;
@@ -110,12 +109,4 @@ ul {
 .assignment-container {
     display: flex;
     align-items: center;
-}
-
-.progress-bar-counter {
-    align-items: center;
-    display: flex;
-    margin-left: 5px;
-    width: 40px;
-    height: 30px;
 }

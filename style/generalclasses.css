@@ -111,6 +111,13 @@ h2 {
     color: #29ABE2;
 }
 
+.task-navigate-container {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    display: none;
+}
+
 @media (max-width: 1000px) {
     h1 {
         font-size: 47px;
@@ -146,5 +153,23 @@ h2 {
 @media (max-width: 500px) {
     .fontSize-21-700 {
         font-size: 16px;
+    }
+}
+
+@media (max-width: 1300px) {
+    .navigate-tasks-mobile {
+        display: block;
+    }
+}
+
+@media (max-width: 350px) {
+    .table-heading {
+        margin-left: 25px;
+    }
+}
+
+@media (max-width: 330px) {
+    .table-heading {
+        margin-left: 15px;
     }
 }

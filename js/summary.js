@@ -223,12 +223,12 @@ async function fillSummary() {
     let userName = getUserName();
     let users = JSON.parse(await getItem('users'));
     let user = users.find(u => u.name == userName);
-    countTasks(user,'to_do_count', 'toDo');
-    countTasks(user, 'done_count', 'done');
-    countPriority(user, 'priority', 'urgent', 'urgend_count');
-    countTasks(user, 'task_progress_count', 'progress');
-    countTasks(user, 'task_feedback_count', 'feedback');
-    countBoardTasks(user, 'task_board_count', 'tasks');
+    countTasks('to_do_count', 'toDo');
+    countTasks('done_count', 'done');
+    countPriority('priority', 'urgent', 'urgend_count');
+    countTasks('task_progress_count', 'progress');
+    countTasks('task_feedback_count', 'feedback');
+    countBoardTasks('task_board_count');
 }
 
 
@@ -243,14 +243,14 @@ async function fillSummary() {
  * @param {string} status 
  * @param {string} containerID 
  */
-function countPriority(user, taskcategory, status, containerID) {
+function countPriority(taskcategory, status, containerID) {
     let taskCount = 0;
-    for (let i = 0; i < user['tasks'].length; i++) {
-        const task = user['tasks'][i];
+    for (let i = 0; i < allTasks.length; i++) {
+        const task = allTasks[i];
         if (task[taskcategory] == status) {
             taskCount++;
             if (status == 'urgent')
-                findDueDate(user);
+                findDueDate();
         }
     }
     document.getElementById(containerID).innerHTML = taskCount;
@@ -266,8 +266,8 @@ function countPriority(user, taskcategory, status, containerID) {
  * @param {string} containerID 
  * @param {string} category 
  */
-function countTasks(user, containerID, category) {
-let taskCounter =  user.sortTasks[category];
+function countTasks(containerID, category) {
+let taskCounter =  sortTasks[category];
 document.getElementById(containerID).innerHTML = taskCounter.length;
 }
 
@@ -281,9 +281,9 @@ document.getElementById(containerID).innerHTML = taskCounter.length;
  * @param {string} user 
  * @param {string} containerID 
  */
-function countBoardTasks(user, containerID, taskarray) {
+function countBoardTasks(containerID) {
     let taskAtBoard = 0;
-    for (let i = 0; i < user[taskarray].length; i++) {
+    for (let i = 0; i < allTasks.length; i++) {
         taskAtBoard++
     }
     document.getElementById(containerID).innerHTML = taskAtBoard;
@@ -299,13 +299,13 @@ function countBoardTasks(user, containerID, taskarray) {
  * @param {string} user 
  * @returns 
  */
-function findDueDate(user) {
+function findDueDate() {
     let urgendDate = document.getElementById('urgend_date');
     let closestDate = Infinity;
-    let tasks = user['tasks']
-    for (let i = 0; i < tasks.length; i++) {
-        if (tasks[i]['priority'] == 'urgent') {            
-            let task = new Date(tasks[i]['createdAt']);
+    // let tasks = user['tasks']
+    for (let i = 0; i < allTasks.length; i++) {
+        if (allTasks[i]['priority'] == 'urgent') {            
+            let task = new Date(allTasks[i]['createdAt']);
             if (task < closestDate || closestDate === null)
                 closestDate = task;
         }
