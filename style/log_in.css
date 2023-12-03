@@ -1,7 +1,3 @@
-body {
-    padding: 20px;
-}
-
 .header-logo {
     height: 89px;
     display: flex;
@@ -172,7 +168,7 @@ a:hover {
 
 .content-log-in {
     width: 100%;
-    height: clamp(600px, calc(100vh - 60px), calc(100vh - 60px));
+    height: clamp(600px, calc(100vh - 60px), calc(100vh - 110px));
     display: flex;
     justify-content: center;
     align-items: center;
@@ -184,8 +180,8 @@ a:hover {
     align-items: center;
     justify-content: space-between;
     background-color: #FFFFFF;
-    width: 60%;
-    height: clamp(500px, 60%, 60%);
+    width: clamp(300px, 95%, 700px);
+    height: 500px;
     padding: 48px 115px;
     border-radius: 30px;
 }
@@ -265,7 +261,7 @@ a:hover {
 
 .sign-up-form {
     height: 391px;
-    width: 422px;
+    width: clamp(300px, 90%, 422px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -278,7 +274,7 @@ a:hover {
     align-items: center;
     justify-content: space-between;
     background-color: #FFFFFF;
-    width: 598px;
+    width: clamp(300px, 95%, 600px);
     height: clamp(595px, 60%, 60%);
     padding: 48px 88px;
     border-radius: 30px;
@@ -531,7 +527,6 @@ a:hover {
     }
 
     .log-in {
-        width: 90%;
         padding: 32px 0px;
     }
 
@@ -577,12 +572,11 @@ a:hover {
     }
 
     .sign-up-form {
-        width: 364px;
+        /* width: 364px; */
         height: 392px;
     }
 
     .sign-up {
-        width: 60%;
         padding: 32px 0px;
     }
 
@@ -616,18 +610,7 @@ a:hover {
 
 }
 
-@media (max-width: 700px) {
-
-    .log-in {
-        height: 500px;
-    }
-}
-
 @media (max-width: 650px) {
-
-    .log-in {
-        height: 500px;
-    }
 
     .header-logo {
         text-wrap: wrap;
@@ -694,11 +677,7 @@ a:hover {
     .login-guest-btn {
         width: 180px;
         height: 51px;
-    }
-
-    .sign-up-form {
-        width: 90%;
-    }
+    }   
 
     .startscreen-logo-side {
         top: 10px;
@@ -731,10 +710,6 @@ a:hover {
             opacity: 0;
             display: none;
         }
-    }
-
-    .sign-up {
-        width: 95%;
     }
 
     .startscreen-logo-side {
