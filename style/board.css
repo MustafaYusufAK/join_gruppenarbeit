@@ -143,6 +143,7 @@ h3 {
     z-index: 0;
     position: relative;
 }
+
 .navigate-tasks-mobile {
     position: absolute;
     right: 8px;
@@ -171,7 +172,6 @@ h3 {
 }
 
 .assigne-ball {
-    margin-left: -5px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -219,7 +219,7 @@ h3 {
     justify-content: flex-start;
     height: auto;
     gap: 25px;
-    /* overflow-y: auto; */
+    overflow-y: auto;
 }
 
 .taskPopUpSingleAssignmentContainer {
