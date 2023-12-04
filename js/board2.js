@@ -134,21 +134,19 @@ function hideOverlay() {
     overlaySection.classList.add('d-none');
 }
 
+/**
+ * Displays task-related information based on user interactions in the overview.
+ *
+ * @param {string} taskId - The ID of the task.
+ * @param {Event} event - The click event triggering the function.
+ */
 async function showTasksInOverview(taskId, event) {
     const clickedElement = event.target;
     const taskArray = findTaskArray(taskId);
     if (clickedElement.classList.contains('navigate-tasks-mobile')) {
         event.stopPropagation();
     } else if (clickedElement.classList.contains('mobile-taskcategory')) {
-        currentShowedTaskId = taskId;
-        if (clickedElement.classList.contains('to-do-category'))
-            await moveTaskToCategory(taskArray, tasksToDo);
-        else if (clickedElement.classList.contains('in-progress-category'))
-            await moveTaskToCategory(taskArray, tasksInProgress);
-        else if (clickedElement.classList.contains('await-feedback-category'))
-            await moveTaskToCategory(taskArray, tasksAwaitFeedback);
-        else if (clickedElement.classList.contains('done-category'))
-            await moveTaskToCategory(taskArray, tasksDone);
+        handleMobileTaskCategoryClick(clickedElement, taskId, taskArray);
     } else if (!clickedElement.classList.contains('navigate-tasks-mobile') || !clickedElement.classList.contains('mobile-taskcategory')) {
         const overlaySection = document.getElementById('overlaySection');
         overlaySection.classList.remove('d-none');
@@ -156,10 +154,35 @@ async function showTasksInOverview(taskId, event) {
     }
 }
 
+/**
+ * Handles the click event on mobile task categories.
+ *
+ * @param {HTMLElement} clickedElement - The clicked element.
+ * @param {string} taskId - The ID of the task.
+ * @param {Array} taskArray - The array containing the task.
+ */
+async function handleMobileTaskCategoryClick(clickedElement, taskId, taskArray) {
+    currentShowedTaskId = taskId;
+    if (clickedElement.classList.contains('to-do-category')) {
+        await moveTaskToCategory(taskArray, tasksToDo);
+    } else if (clickedElement.classList.contains('in-progress-category')) {
+        await moveTaskToCategory(taskArray, tasksInProgress);
+    } else if (clickedElement.classList.contains('await-feedback-category')) {
+        await moveTaskToCategory(taskArray, tasksAwaitFeedback);
+    } else if (clickedElement.classList.contains('done-category')) {
+        await moveTaskToCategory(taskArray, tasksDone);
+    }
+}
+
+/**
+ * Moves a task from one array to another, updating its container and saving changes.
+ *
+ * @param {Array} taskArray - The array from which the task is moved.
+ * @param {Array} newArray - The array to which the task is moved.
+ */
 async function moveTaskToCategory(taskArray, newArray) {
     if (taskArray && newArray) {
         const taskIndex = taskArray.findIndex(task => task.id === currentShowedTaskId);
-
         if (taskIndex !== -1) {
             const task = taskArray.splice(taskIndex, 1)[0];
             task.inWhichContainer = determineContainerKey(newArray);
@@ -167,14 +190,18 @@ async function moveTaskToCategory(taskArray, newArray) {
             await saveTasks();
             await saveTasksCategory();
             showTasks();
-        } else {
+        } else 
             console.error('Task not found in the old array');
-        }
-    } else {
+    } else
         console.error('Invalid task array or new array');
-    }
 }
 
+/**
+ * Determines the container key based on the provided array.
+ *
+ * @param {Array} array - The array for which to determine the container key.
+ * @returns {string} The container key.
+ */
 function determineContainerKey(array) {
     if (array === tasksToDo) {
         return 'for-To-Do-Container';
@@ -189,10 +216,14 @@ function determineContainerKey(array) {
     }
 }
 
-
+/**
+ * Finds the array containing the specified task based on its ID.
+ *
+ * @param {string} taskId - The ID of the task.
+ * @returns {Array|null} The array containing the task, or null if not found.
+ */
 function findTaskArray(taskId) {
     const task = allTasks.find(task => task.id === taskId);
-
     if (task) {
         if (tasksToDo.includes(task)) {
             return tasksToDo;
@@ -202,68 +233,11 @@ function findTaskArray(taskId) {
             return tasksAwaitFeedback;
         } else if (tasksDone.includes(task)) {
             return tasksDone;
-        } else {
-            return null; // Falls die Aufgabe in keinem Array gefunden wird
-        }
-    } else {
-        return null; // Falls die Aufgabe mit der gegebenen taskId nicht gefunden wird
-    }
+        } else 
+            return null;
+    } else
+        return null;
 }
-
-async function moveTaskToCategory(taskArray, newArray) {
-    if (taskArray && newArray) {
-        const taskIndex = taskArray.findIndex(task => task.id === currentShowedTaskId);
-
-        if (taskIndex !== -1) {
-            const task = taskArray.splice(taskIndex, 1)[0];
-            task.inWhichContainer = determineContainerKey(newArray);
-            newArray.push(task);
-            await saveTasks();
-            await saveTasksCategory();
-            showTasks();
-        } else {
-            console.error('Task not found in the old array');
-        }
-    } else {
-        console.error('Invalid task array or new array');
-    }
-}
-
-function determineContainerKey(array) {
-    if (array === tasksToDo) {
-        return 'for-To-Do-Container';
-    } else if (array === tasksInProgress) {
-        return 'in-Progress-Container';
-    } else if (array === tasksAwaitFeedback) {
-        return 'for-Await-Feedback-Container';
-    } else if (array === tasksDone) {
-        return 'for-Done-Container';
-    } else {
-        return '';
-    }
-}
-
-
-function findTaskArray(taskId) {
-    const task = allTasks.find(task => task.id === taskId);
-
-    if (task) {
-        if (tasksToDo.includes(task)) {
-            return tasksToDo;
-        } else if (tasksInProgress.includes(task)) {
-            return tasksInProgress;
-        } else if (tasksAwaitFeedback.includes(task)) {
-            return tasksAwaitFeedback;
-        } else if (tasksDone.includes(task)) {
-            return tasksDone;
-        } else {
-            return null; // Falls die Aufgabe in keinem Array gefunden wird
-        }
-    } else {
-        return null; // Falls die Aufgabe mit der gegebenen taskId nicht gefunden wird
-    }
-}
-
 
 /**
  * Displays the overview details of a task.
@@ -494,19 +468,23 @@ function displayTasks(taskContainer, feedbackTaskContainer, inProgressContainer,
     sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
 }
 
+/**
+ * Creates a progress bar for a task and appends it to the task's div.
+ *
+ * @param {string} progressBarId - The ID of the progress bar.
+ * @param {string} taskId - The ID of the task associated with the progress bar.
+ */
 function createProgressBar(progressBarId, taskId) {
     const task = allTasks.find(task => task.id === taskId);
-    if (!task || !task.subtasks || !task.subtasksId || task.subtasks.length === 0 || task.subtasksId.length === 0) {
-        return; // Beende die Funktion frühzeitig, wenn die Bedingungen nicht erfüllt sind
-    }
+    if (!task || !task.subtasks || !task.subtasksId || task.subtasks.length === 0 || task.subtasksId.length === 0)
+        return;
     const taskDiv = document.getElementById(`progress-div-${taskId}`);
-    if (!taskDiv) {
-        return; // Beende die Funktion, wenn das Task-Div nicht gefunden wurde
-    }
+    if (!taskDiv)
+        return;
     const existingProgressBar = taskDiv.querySelector(`#progress-bar-${progressBarId}`);
     if (existingProgressBar) {
         console.warn('Der Fortschrittsbalken existiert bereits für diese Aufgabe.');
-        return; // Beende die Funktion, wenn der Fortschrittsbalken bereits vorhanden ist
+        return;
     }
     const progressBarContainer = document.createElement('div');
     progressBarContainer.classList.add('progress-bar-container');
@@ -521,6 +499,11 @@ function createProgressBar(progressBarId, taskId) {
     taskDiv.appendChild(progressBarContainer);
 }
 
+/**
+ * Sets styles for the task div associated with a given task ID.
+ *
+ * @param {string} taskId - The ID of the task.
+ */
 function setStylesForTaskDiv(taskId) {
     const taskDiv = document.getElementById(`progress-div-${taskId}`);
     if (taskDiv) {

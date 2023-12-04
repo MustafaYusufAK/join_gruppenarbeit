@@ -116,14 +116,25 @@ function extractAssigneeInfo() {
 }
 
 /**
- * Creates a task object based on the user input.
- * @returns {Object} A task object.
+ * Creates a task object based on the provided category.
+ *
+ * @param {string} categorySelect - The selected task category.
+ * @returns {Object|undefined} The created task object or undefined if the category is invalid.
  */
 function createTaskObject(categorySelect) {
     if (categorySelect === 'Select task category') {
         selectCategoryNotification();
         return;
     }
+    return buildTaskObject();
+}
+
+/**
+ * Builds and returns a task object with various properties.
+ *
+ * @returns {Object} The built task object.
+ */
+function buildTaskObject() {
     const id = generateUniqueID();
     return {
         id: id,
@@ -142,6 +153,7 @@ function createTaskObject(categorySelect) {
         inWhichContainer: inWhichContainer.length > 0 ? inWhichContainer : ''
     };
 }
+
 
 /**
  * Gathers information about the task from user input.
@@ -256,7 +268,7 @@ function addTaskFromOverlay() {
     } else if (categorySelect === 'Select task category') {
         emptyHandleNewCategoryArray();
         selectCategoryNotification();
-        return false; // Beendet die Funktion, wenn 'categorySelect' den Wert 'Select task category' hat
+        return false;
     } else {
         pushCategoryIntoTask(categorySelect, categoryColors);
         let subtaskTextsArray = [];
@@ -285,7 +297,7 @@ function pushCategoryIntoTask(categorySelect, categoryColors) {
     } else {
         categoryArray.push(categorySelect);
         categoryColorArray.push(categoryColors);
-        return true; // Änderung: Rückgabewert bei erfolgreicher Zuweisung
+        return true;
     }
 }
 
@@ -298,7 +310,7 @@ function pushCategoryIntoTask(categorySelect, categoryColors) {
  */
 function controlCategoryEntry(categorySelect, categoryColors) {
     if (categorySelect === 'Select task category' && categoryColors === 'background-color: #FFFFFF;') {
-        return; // Beendet die Funktion, wenn beide Bedingungen erfüllt sind
+        return;
     }
 }
 

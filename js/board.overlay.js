@@ -230,27 +230,39 @@ function pushUpdatePriority(prio) {
 }
 
 /**
- * Adds a subtask to the board subtask list.
+ * Adds a new subtask element to the board.
+ *
+ * @param {string} subtaskText - The text content of the subtask.
+ * @returns {HTMLLIElement} The created list item element.
+ */
+function createSubtaskElement(subtaskText) {
+    const listItem = document.createElement('li');
+    const checkbox = document.createElement('input');
+    const editIcon = document.createElement('div');
+    const deleteIcon = document.createElement('div');
+    styleCheckbox(checkbox);
+    styleListItem(listItem, subtaskText);
+    styleEditIcon(editIcon);
+    styleDeleteIcon(deleteIcon);
+    const styledListItem = styleListItem(listItem);
+    styledListItem.appendChild(checkbox);
+    styledListItem.appendChild(document.createTextNode(subtaskText));
+    listItem.appendChild(editIcon);
+    listItem.appendChild(deleteIcon);
+    return styledListItem;
+}
+
+/**
+ * Adds a new subtask to the board based on the input value.
+ *
  */
 function addSubtaskToBoard() {
     const subtaskBoardInput = document.getElementById('subtaskBoardInput');
     const subtaskText = subtaskBoardInput.value.trim();
     if (subtaskText !== '') {
         const boardSubtaskList = document.getElementById('boardSubtaskList');
-        const listItem = document.createElement('li');
-        const checkbox = document.createElement('input');
-        const editIcon = document.createElement('div');
-        const deleteIcon = document.createElement('div');
-        styleCheckbox(checkbox);
-        styleListItem(listItem, subtaskText);
-        styleEditIcon(editIcon);
-        styleDeleteIcon(deleteIcon);
-        const styledListItem = styleListItem(listItem); // Das zurückgegebene Listenelement erhalten
-        styledListItem.appendChild(checkbox);
-        styledListItem.appendChild(document.createTextNode(subtaskText));
-        listItem.appendChild(editIcon);
-        listItem.appendChild(deleteIcon);
-        boardSubtaskList.appendChild(listItem);
+        const newSubtask = createSubtaskElement(subtaskText);
+        boardSubtaskList.appendChild(newSubtask);
         subtaskBoardInput.value = '';
     }
 }
@@ -273,7 +285,7 @@ function styleListItem(listItem) {
     listItem.classList.add('subtask-item');
     const listElementId = generateUniqueID();
     listItem.id = listElementId;
-    return listItem; // Hinzufügen der Rückgabe des Listenelements
+    return listItem;
 }
 
 /**
@@ -358,6 +370,11 @@ function setMinDate() {
     document.getElementById('editedCreatedAt').min = currentDate;
 }
 
+/**
+ * Toggles the visibility of the task navigate container based on a click event.
+ *
+ * @param {Event} event - The click event.
+ */
 function toggleTaskNavigateContainer(event) {
     let clickedElement = event.target;
     let containerToDisplay = clickedElement.nextElementSibling;
@@ -366,6 +383,11 @@ function toggleTaskNavigateContainer(event) {
     }
 }
 
+/**
+ * Hides all task navigate containers if the clicked element is not a task navigate container.
+ *
+ * @param {Event} event - The click event.
+ */
 function hideTaskNavigateContainers(event) {
     let clickedElement = event.target;
     if (!clickedElement.classList.contains('task-navigate-container')) {
@@ -376,6 +398,10 @@ function hideTaskNavigateContainers(event) {
     }
 }
 
+/**
+ * Adds a click event listener to the task board to hide task navigate containers.
+ *
+ */
 function addToggleTaskNavigateContainerListener() {
     let taskBoard = document.getElementById('findTask');
     taskBoard.addEventListener('click', hideTaskNavigateContainers);

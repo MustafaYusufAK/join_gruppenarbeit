@@ -1,6 +1,8 @@
 .edit-subTask {
     padding-left: 1rem;
     margin-bottom: 0rem;
+    height: 70px;
+    overflow-y: scroll;
 }
 
 .edit-subTask li::before {

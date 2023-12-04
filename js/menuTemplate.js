@@ -15,8 +15,8 @@ function generateSideBar() {
                 <a href="./contacts.html?msg=Welcomme to Join, ${userName}" class="nav-sub contacts-background"><img src="../assets/img/Icons (3).svg">Contacts</a>
             </div>
             <div class="nav-bottom">
-                <a href="../html/privacy_policy.html" class="nav-bottom-a privacy-policy-background" target= "_blank">Privacy Policy</a>
-                <a href="../html/legal_notice.html" class="nav-bottom-a legal-notice-background" target= "_blank">Legal Notice</a>
+                <a href="../html/privacy_policy.html" class="nav-bottom-a privacy-policy-background">Privacy Policy</a>
+                <a href="../html/legal_notice.html" class="nav-bottom-a legal-notice-background">Legal Notice</a>
             </div>
         </div>
     </nav>`;
@@ -43,9 +43,9 @@ function generateHeader(menu, userName) {
             </div>
             <div id="template_menu_pop_up" class="template-menu-pop-up-bg d-none" onclick="hideTemplatePopUp()">
                 <div class="template-menu-pop-up">
-                    <a href="../html/privacy_policy.html" class="nav-bottom-a privacy-policy-background" target="_blank">Privacy
+                    <a href="../html/privacy_policy.html" class="nav-bottom-a privacy-policy-background">Privacy
                         Policy</a>
-                    <a href="../html/legal_notice.html" class="nav-bottom-a legal-notice-background" target="_blank">Legal
+                    <a href="../html/legal_notice.html" class="nav-bottom-a legal-notice-background">Legal
                         Notice</a>
                     <a href="../html/index.html" class="nav-bottom-a log-out-background">Log out</a>
                 </div>
@@ -87,3 +87,17 @@ function hideTemplatePopUp() {
     let menuPopUp = document.getElementById('template_menu_pop_up');
     menuPopUp.classList.add('d-none')
 }
+
+/**
+ * Listens for the 'wheel' event on the document and prevents the default behavior
+ * if the Ctrl (Control) or Meta (Command) key is pressed, effectively preventing
+ * zooming when scrolling.
+ *
+ * @param {WheelEvent} event - The 'wheel' event object.
+ *
+ */
+document.addEventListener('wheel', function (event) {
+    if (event.ctrlKey === true || event.metaKey === true) {
+        event.preventDefault();
+    }
+}, { passive: false });

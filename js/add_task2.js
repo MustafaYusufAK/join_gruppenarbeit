@@ -50,7 +50,7 @@ function openCategoryDropdown() {
         var categoryDiv = document.getElementById('category');
         var targetElement = event.target;
         if (targetElement !== categoryDiv && !categoryDiv.contains(targetElement)) {
-            closeCategoryDropdown(); // Funktion wird aufgerufen, wenn außerhalb des categoryDiv geklickt wird
+            closeCategoryDropdown();
         }
     });
 }
