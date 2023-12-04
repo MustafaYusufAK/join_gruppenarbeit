@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"">
     <link rel="stylesheet" href="../font/fonts.css">
     <link rel="icon" type="image/x-icon" href="../assets/img/Logo for Favicon construction.svg">
     <link rel="stylesheet" href="../style/menuTemplate.css">
@@ -53,7 +53,7 @@
             <div class="flex-box-overlay">
                 <img src="../assets/img/Frame 79.svg" alt="person-image" class="over-logo-person">
             </div>
-            <div class="close-button" onclick="toggleOverlay()"><img src="../assets/img/close.svg" alt="close-button">
+            <div class="close-button" onclick="toggleOverlayAddContact()"><img src="../assets/img/close.svg" alt="close-button">
             </div>
             <div class="input-fields">
                 <form onsubmit="addNewContact(event)">
@@ -61,7 +61,7 @@
                     <input required class="input email-icon" id="add-email" type="email" placeholder="Email" maxlength="23">
                     <input required class="input phone-icon" type="tel" id="add-phone" placeholder="Phone" pattern="[0-9+\s ]*" maxlength="24">
                     <div class="overlay-buttons buttons-margin-left">
-                        <div onclick="toggleOverlay()" class="cancel-button">
+                        <div onclick="toggleOverlayAddContact()" class="cancel-button">
                             Cancel
                         </div>
                         <button class="create-button" type="submit">

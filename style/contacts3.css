@@ -192,7 +192,7 @@
     }
 }
 
-@media screen and (max-height: 700px) {
+@media screen and (max-height: 650px) {
     .contact-menu {
         max-height: 72%;
     }

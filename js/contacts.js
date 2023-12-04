@@ -144,16 +144,15 @@ function openContact(contactName, contactEmail, i, randomColor) {
     const initials = generateInitials(contactName);
     showContact.innerHTML = '';
     showContact.innerHTML = showContactTemplate(contactName, contactEmail, i, randomColor, initials);
+    showContact.classList.add('slide-contact-info');
     document.getElementById('change-color-icon').innerHTML = /*html*/ `<div class="big-contact-icon" id="color-icon-change-${i}"></div>`
     const bigContactIcon = document.getElementById(`big-contact-icon-${i}`);
     bigContactIcon.style.backgroundColor = randomColor;
     const element = document.getElementById(`contact-icon-${i}`);
     if (isWideScreen() || isHeightScreen())
         element.onclick = toggleContactsMobile(showContacts);
-    let mobileContactIcon = document.getElementById('add-button-mobile');
-    mobileContactIcon.classList.add('d-none');
-    let editInputFields = document.getElementById('edit-input-fields');
-    editInputFields.innerHTML = editContactTemplate(i);
+    document.getElementById('add-button-mobile').classList.add('d-none');
+    document.getElementById('edit-input-fields').innerHTML = editContactTemplate(i);      
 }
 
 /**
@@ -354,6 +353,16 @@ function toggleOverlay(show = false) {
         overlay.classList.add('show-overlay');
     } else {
         overlay.classList.remove('show-overlay');
+    }
+}
+
+function toggleOverlayAddContact(show = false) {
+    let overlay = document.getElementById('overlay-add-contact');
+    if (show) {
+        overlay.classList.add('show-overlay');
+    } else {
+        overlay.classList.remove('show-overlay');
+        emptyInput();
     }
 }
 
