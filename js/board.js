@@ -82,6 +82,7 @@ async function sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwa
     } else {
         clearSortTasks();
     }
+    await saveTasks()
     await saveTasksCategory(tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
 }
 

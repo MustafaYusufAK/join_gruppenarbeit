@@ -170,7 +170,7 @@ async function showTasksInOverview(taskId, event) {
     } else if (!clickedElement.classList.contains('navigate-tasks-mobile') || !clickedElement.classList.contains('mobile-taskcategory')) {
         const overlaySection = document.getElementById('overlaySection');
         overlaySection.classList.remove('d-none');
-        displayTaskOverview(taskArray);
+        displayTaskOverview(taskArray[0]);
     }
 }
 
