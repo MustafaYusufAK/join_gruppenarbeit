@@ -82,6 +82,7 @@ header {
     font-weight: 500;
     display: flex;
     flex: 1;
+    font-size: 21px;
 }
 
 .help-icon {

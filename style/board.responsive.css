@@ -1,5 +1,4 @@
 @media (max-width: 1200px) {
-
     .board_title_inputfield {
         width: auto;
         height: 36px;
@@ -17,11 +16,9 @@
         padding-left: 8px;
         border: 1px solid #DADADA;
     }
-
 }
 
 @media (max-width: 1050px) {
-
     .categoryOvervievPopUp {
         font-size: 18px;
         width: 152px;
@@ -46,7 +43,6 @@
 }
 
 @media (max-width: 750px) {
-
     .categoryOvervievPopUp {
         font-size: 16px;
         width: 132px;
@@ -124,7 +120,6 @@
 }
 
 @media (max-width: 450px) {
-
     .categoryOvervievPopUp {
         font-size: 16px;
         width: 132px;
@@ -206,7 +201,6 @@
 }
 
 @media (max-width: 1200px) {
-
     .add-task-overlay {
         max-height: 75vh;
         background-color: white;

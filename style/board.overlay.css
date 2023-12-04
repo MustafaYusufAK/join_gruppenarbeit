@@ -468,3 +468,7 @@ button:hover {
     border: 1px solid #ccc;
     border-radius: 10px;
 }
+
+.contacts-background:hover {
+    background-color: #2A3D59 !important;
+}

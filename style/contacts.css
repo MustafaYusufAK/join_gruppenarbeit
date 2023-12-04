@@ -243,7 +243,8 @@
 }
 
 #show-contact {
-    margin-left: 720px;
+    transform: translate(1000px, 0%);
+    transition: 175ms ease-in-out;
 }
 
 .name-contact {
@@ -402,13 +403,13 @@
     border-radius: 10px;
     font-size: 21px;
     cursor: pointer;
-    width: 110px;
+    width: 96px;
     align-items: center;
     height: 48px;
     gap: 10px;
     background-image: url(../assets/img/close.svg);
     background-repeat: no-repeat;
-    background-position: 90px 18px;
+    background-position: 84px 18px;
 }
 
 .cancel-button:hover {
@@ -416,7 +417,7 @@
     border: 1px solid #29ABE2;
     background-image: url('../assets/img/cancel-blue.svg');
     background-repeat: no-repeat;
-    background-position: 84px 12px;
+    background-position: 78px 12px;
 }
 
 .create-button {
@@ -429,8 +430,8 @@
     padding-right: 20px;
     background-image: url(../assets/img/check.svg);
     background-repeat: no-repeat;
-    background-position: 150px 11px;
-    width: 178px;
+    background-position: 153px 11px;
+    width: 180px;
 }
 
 .create-button:hover {
@@ -504,24 +505,4 @@
 
 footer {
     display: absolute;
-}
-
-@media (max-width: 1320px) {
-    .headline-contacts {
-        font-size: 50px;
-        padding: 30px 10px 30px 30px;
-    }
-
-    .subheadline {
-        font-size: 24px;
-        padding: 30px 0px 30px 10px;
-    }
-
-    .big-contact-icon {
-        font-size: 40px;
-    }
-
-    .name-contact {
-        font-size: 40px;
-    }
 }
