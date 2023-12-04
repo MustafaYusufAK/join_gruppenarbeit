@@ -497,8 +497,12 @@ function resetAssignedField() {
  * Clears various input fields and performs additional cleanup actions.
  */
 function clearInputFields() {
+    clearSubtasks();
+    resetAssignedField();
     cancelNewCategory();
     closeCategoryDropdown();
     resetTaskInformation();
     clear();
+    resetPriorityButtons();
+    clearSubtasks();
 }

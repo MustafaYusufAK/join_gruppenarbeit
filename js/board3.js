@@ -125,7 +125,7 @@ function initializeTask(currentShowedTaskId) {
     const task = allTasks.find(task => task.id === currentShowedTaskId);
     currentTaskId = currentShowedTaskId;
     if (!task) {
-        console.error(`Task mit der ID '${taskId}' wurde nicht gefunden.`);
+        console.error(`Task mit der ID '${currentTaskId}' wurde nicht gefunden.`);
         return null;
     }
     return task;
@@ -180,7 +180,7 @@ function performTaskActions() {
  * - Shows assigned contacts for the task.
  * - Performs various actions related to task operations on the board.
  */
-function editingShowTask() {
+function editingShowTask(currentShowedTaskId) {
     const task = initializeTask(currentShowedTaskId);
     if (!task) return;
     updateTaskDetails(task);

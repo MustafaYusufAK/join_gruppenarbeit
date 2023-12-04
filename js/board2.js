@@ -1,24 +1,6 @@
 let currentShowedTaskId;
 
 /**
- * Shows a task from the array by creating a task div, determining the target container, and adding content.
- */
-function showTaskFromArray() {
-    const task = allTasks[allTasks.length - 1];
-    const taskContainer = document.getElementById('target-to-do-table');
-    const feedbackTaskContainer = document.getElementById('target-await-feedback-table');
-    const inProgressContainer = document.getElementById('target-in-progress-table');
-    const doneTaskContainer = document.getElementById('target-done-table');
-    const targetContainer = determineTargetContainer(task, taskContainer, inProgressContainer, feedbackTaskContainer, doneTaskContainer);
-    const taskDiv = createTaskDiv(task);
-    const priorityImageSrc = getPriorityImageSrc(task.priority);
-    const assignePinnedTaskBall = createAssignmentBalls(task);
-    addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc);
-    targetContainer.appendChild(taskDiv);
-    initializeDragAndDrop();
-}
-
-/**
  * Rotates the element by 10 degrees on drag start.
  * @param {Event} event - The drag event.
  */
@@ -159,18 +141,18 @@ async function showTasksInOverview(taskId, event) {
         event.stopPropagation();
     } else if (clickedElement.classList.contains('mobile-taskcategory')) {
         currentShowedTaskId = taskId;
-        if (clickedElement.classList.contains('to-do-category')) 
+        if (clickedElement.classList.contains('to-do-category'))
             await moveTaskToCategory(taskArray, tasksToDo);
-         else if (clickedElement.classList.contains('in-progress-category')) 
+        else if (clickedElement.classList.contains('in-progress-category'))
             await moveTaskToCategory(taskArray, tasksInProgress);
-         else if (clickedElement.classList.contains('await-feedback-category')) 
+        else if (clickedElement.classList.contains('await-feedback-category'))
             await moveTaskToCategory(taskArray, tasksAwaitFeedback);
-         else if (clickedElement.classList.contains('done-category'))
+        else if (clickedElement.classList.contains('done-category'))
             await moveTaskToCategory(taskArray, tasksDone);
     } else if (!clickedElement.classList.contains('navigate-tasks-mobile') || !clickedElement.classList.contains('mobile-taskcategory')) {
         const overlaySection = document.getElementById('overlaySection');
         overlaySection.classList.remove('d-none');
-        displayTaskOverview(taskArray[0]);
+        displayTaskOverview(taskId);
     }
 }
 
@@ -287,7 +269,8 @@ function findTaskArray(taskId) {
  * Displays the overview details of a task.
  * @param {Object} task - The task.
  */
-function displayTaskOverview(task) {
+function displayTaskOverview(taskId) {
+    const task = allTasks.find(task => task.id === taskId);
     const taskOverviewPopUp = document.getElementById('taskOverviewPopUp');
     const categorybackgroundColor = task.categoryColors[0];
     const currentId = task.id;

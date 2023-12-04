@@ -425,16 +425,6 @@ function closeTaskOverviewPopUp() {
 }
 
 /**
- * Clears the input fields for title and description.
- */
-function clearInputFields() {
-    const titleInput = document.getElementById('title');
-    const descriptionInput = document.getElementById('description_text');
-    titleInput.value = '';
-    descriptionInput.value = '';
-}
-
-/**
  * Prevents the event from propagating to parent elements.
  * @param {Event} event - The event object.
  */

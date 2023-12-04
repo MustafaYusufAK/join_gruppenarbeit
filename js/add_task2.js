@@ -171,6 +171,8 @@ function clear() {
     descriptionInput.value = '';
     const assignedToSelect = document.getElementById('which_assigned_contact');
     assignedToSelect.selectedIndex = 0;
+    const assignedToList = document.getElementById('assignedToList');
+    assignedToList.innerHTML = '';
     const dueDateInput = document.getElementById('createdAt');
     dueDateInput.value = '';
     const subtask = document.getElementById('subtaskList');

@@ -51,18 +51,6 @@ function resetAssignedField() {
 }
 
 /**
- * Fills the empty category if the category is not selected with default values.
- */
-function fillEmptyCategory() {
-    const defaultCategoryText = 'Keine Category ausgewählt';
-    const defaultCategoryColor = '#808080';
-    if (category === '')
-        category = defaultCategoryText;
-    if (categoryColorArray.length === 0)
-        categoryColorArray.push(defaultCategoryColor);
-}
-
-/**
  * Sorts tasks into different arrays based on their current status on the board.
  * @param {Array} allTasks - An array containing all tasks.
  * @param {Array} tasksToDo - An array to store tasks in the "To Do" status.
@@ -70,7 +58,7 @@ function fillEmptyCategory() {
  * @param {Array} tasksAwaitFeedback - An array to store tasks awaiting feedback.
  * @param {Array} tasksDone - An array to store completed tasks.
  */
-async function sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone) {    
+async function sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone) {
     if (allTasks.length > 0) {
         allTasks.forEach(task => {
             const taskDiv = document.getElementById(`task-${task.id}`);
@@ -131,10 +119,8 @@ function extractAssigneeInfo() {
  * Creates a task object based on the user input.
  * @returns {Object} A task object.
  */
-function createTaskObject() {
-    const categorySelect = document.getElementById('category');
-    const categoryText = categorySelect ? categorySelect.innerText.trim() : '';
-    if (categoryText === 'Select task category') {
+function createTaskObject(categorySelect) {
+    if (categorySelect === 'Select task category') {
         selectCategoryNotification();
         return;
     }
@@ -143,11 +129,12 @@ function createTaskObject() {
         id: id,
         title: document.getElementById('title').value,
         description_text: document.getElementById('description_text').value,
-        task_category: categorySelect ? categorySelect.innerText : '',
+        task_category: categoryArray,
         createdAt: document.getElementById('createdAt').value,
         priority: priorityArray,
         subtasks: subtaskTextsArray,
         subtasksId: subtaskIdsArray,
+        subtasksStatusArray: subtasksStatusArray,
         categoryColors: categoryColorArray,
         assignedToValues: assignedToValuesArray,
         assignedToColors: assignedToColorsArray,
@@ -161,16 +148,11 @@ function createTaskObject() {
  * @returns {Object} An object containing task information.
  */
 function gatherTaskInfo() {
-    const description = document.getElementById('description_text').value;
     const createdAt = document.getElementById('createdAt').value;
     const title = document.getElementById('title').value;
-    const categorySelect = document.getElementById('category');
-    const categoryColor = categorySelect ? categorySelect.querySelector('.categoryColor').style.backgroundColor : '';
     return {
         title,
-        description,
         createdAt,
-        categoryColor,
     };
 }
 
@@ -182,8 +164,6 @@ async function updateArrays(task) {
     titlesArray.push(task.title);
     descriptionsArray.push(task.description);
     createdAtArray.push(task.createdAt);
-    categoryArray.push(task.category);
-    categoryColorArray.push(task.categoryColor);
     allTasks.push(task);
     await saveTasks();
 }
@@ -200,6 +180,9 @@ function emptyArrays() {
     assignedShortValues = [];
     createdAtArray = [];
     priorityArray = [];
+    subtaskTextsArray = [];
+    subtaskIdsArray = [];
+    subtasksStatusArray = [];
 }
 
 /**
@@ -235,9 +218,30 @@ function handleFilledFields(task) {
 function showNotificationAndResetArrays() {
     if (priorityArray.length === 0) {
         showPrioNotification();
+        priorityArray = [];
+        assignedToValuesArray = [];
+        assignedToColorsArray = [];
+        assignedShortValues = [];
+        subtasksArray = [];
+        subtasksStatusArray = [];
     } else {
         boardHideShowFinalNotification();
     }
+}
+
+/**
+ * Empties arrays related to handling new categories.
+ * Clears subtasks, category, category colors, assigned values, assigned colors,
+ * assigned short values, and creation dates arrays.
+ */
+function emptyHandleNewCategoryArray() {
+    subtasksArray = [];
+    categoryArray = [];
+    categoryColorArray = [];
+    assignedToValuesArray = [];
+    assignedToColorsArray = [];
+    assignedShortValues = [];
+    createdAtArray = [];
 }
 
 /**
@@ -305,7 +309,10 @@ function controlCategoryEntry(categorySelect, categoryColors) {
  * newCategoryContainer, newCategoryInput, newCategoryColor, and subtaskItems.
  */
 function declareVariables() {
+    const categorySelect = document.getElementById('category');
     return {
+        categorySelect: categorySelect ? categorySelect.innerText.trim() : '',
+        categoryColors: categorySelect ? categorySelect.querySelector('.categoryColor').style.backgroundColor : '',
         description: document.getElementById('description_text').value,
         createdAt: document.getElementById('createdAt').value,
         title: document.getElementById('title').value,
@@ -326,6 +333,7 @@ function collectSubtaskInfo(subtaskItems, subtaskTextsArray, subtaskIdsArray) {
     subtaskItems.forEach(subtask => {
         const subtaskText = subtask.textContent.trim();
         const subtaskId = subtask.id;
+        subtasksStatusArray.push(subtask.querySelector('.subtask-checkbox').checked);
         if (subtaskText && subtaskId) {
             subtaskTextsArray.push(subtaskText);
             subtaskIdsArray.push(subtaskId);
@@ -357,8 +365,8 @@ function handleNewCategoryValidation(newCategoryInput, newCategoryColor) {
  * @returns {boolean} - Returns true if all required fields are non-empty,
  * including title, description, createdAt, priorityArray, and assignedToValuesArray.
  */
-function validateTaskFields(title, description, createdAt) {
-    return title && description && createdAt && priorityArray.length > 0 && assignedToValuesArray.length > 0;
+function validateTaskFields(title, categorySelect, categoryColors, description, createdAt) {
+    return title && categorySelect && categoryColors && description && createdAt && priorityArray.length > 0;
 }
 
 /**
@@ -453,7 +461,7 @@ function processAssignments(assignments, colors) {
  * @param {string} priorityImageSrc - The source URL for the priority image.
  * @param {string} categorybackgroundColor - The background color for the category.
  */
-function addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc, categorybackgroundColor, progressBarId) {
+function addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImageSrc, categorybackgroundColor, progressBarId, taskId) {
     taskDiv.innerHTML = /*html*/ `
             <div class="pinned-task-container" onclick="showTasksInOverview('${task.id}', event)">
                 <div class="category-background-color" style="background-color: ${categorybackgroundColor}">
@@ -468,9 +476,7 @@ function addContentToTaskDiv(task, taskDiv, assignePinnedTaskBall, priorityImage
                 </div>
                 <h3 class="pinned-task-headline">${task.title}</h3>
                 <p class="pinned-task-discription">${task.description_text}</p>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" id="progress-bar-${progressBarId}"></div>
-                </div>
+                <div id="progress-div-${taskId}"></div>
                 <div id="ball-and-prio-img-div" class="ball-and-prio-img-div">
                 <div class="pinnedAssigneBallPosition">
                     ${assignePinnedTaskBall}
