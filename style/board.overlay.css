@@ -480,3 +480,7 @@ button:hover {
 .contacts-background:hover {
     background-color: #2A3D59 !important;
 }
+
+#target-done-table {
+    padding-bottom: 70px;
+}

@@ -154,15 +154,11 @@ header {
     color: #CDCDCD;
     font-size: 16px;
     font-weight: 400;
-    width: 130px;
+    width: 140px;
     height: 46px;
     padding: 8px 16px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
 
-}
-
-.template-menu-pop-up a:hover {
-    background-color: #2A3D59;
 }
