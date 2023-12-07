@@ -339,9 +339,8 @@ function createAppendChildElement(listItem, editIcon, deleteIcon, subtaskList, s
 function editSubtask(event) {
     const subtaskItem = event.target.closest('.subtask-item');
     const subtaskText = subtaskItem.textContent.trim();
-    if (subtaskItem.classList.contains('lineThrough')) {
+    if (subtaskItem.classList.contains('lineThrough'))
         subtaskItem.classList.remove('lineThrough');
-    }
     const inputField = document.createElement('input');
     const checkmarkIcon = document.createElement('img');
     inputField.type = 'text';

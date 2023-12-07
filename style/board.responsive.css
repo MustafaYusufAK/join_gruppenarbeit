@@ -511,11 +511,6 @@
         margin: 0px;
         width: 100%;
     }
-
-    .table-header {
-        width: unset;
-    }
-
 }
 
 @media (max-width: 450px) {

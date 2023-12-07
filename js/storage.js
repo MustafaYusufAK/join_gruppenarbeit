@@ -213,9 +213,7 @@ async function saveTasksCategory(tasksToDo, tasksInProgress, tasksAwaitFeedback,
         'feedback': tasksAwaitFeedback,
         'done': tasksDone,
     };
-
     await setItem('sortTasks', JSON.stringify(sortTasks));
-
 }
 
 
@@ -230,4 +228,28 @@ async function saveTasksCategory(tasksToDo, tasksInProgress, tasksAwaitFeedback,
 async function loadTasks() {
     allTasks = JSON.parse(await getItem('allTasks'));
     sortTasks = JSON.parse(await getItem('sortTasks'));
+}
+
+/**
+ * Updates the task status on the server by sending a POST request with the task ID and target container ID.
+ *
+ * @param {string} taskId - The ID of the task to update.
+ * @param {string} targetContainerId - The ID of the target container.
+ */
+async function updateTaskStatusOnServer(taskId, targetContainerId) {
+    const payload = { key: `taskStatus_${taskId}`, value: targetContainerId, token: STORAGE_TOKEN };
+    await fetch(STORAGE_URL, { method: 'POST', body: JSON.stringify(payload) });
+}
+
+/**
+ * Loads task status information from the server and updates the local sortTasks object.
+ *
+ */
+async function loadTaskStatusFromServer() {
+    const taskStatusKeys = Object.keys(sortTasks).map(category => `taskStatus_${sortTasks[category]}`);
+    const taskStatusValues = await Promise.all(taskStatusKeys.map(key => getItem(key)));
+    taskStatusValues.forEach((value, index) => {
+        const category = Object.keys(sortTasks)[index];
+        sortTasks[category] = value;
+    });
 }

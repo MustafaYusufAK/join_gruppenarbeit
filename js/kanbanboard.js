@@ -174,6 +174,16 @@ function performTaskActions() {
 }
 
 /**
+ * Reverses the visibility of buttons for the 'medium' priority.
+ */
+function reverseForMediumBtn() {
+    document.getElementById('board_clicked_urgent_btn').classList.add('d-none');
+    document.getElementById('board_clicked_low_btn').classList.add('d-none');
+    document.getElementById('board_urgent_btn').classList.remove('d-none');
+    document.getElementById('board_low_btn').classList.remove('d-none');
+}
+
+/**
  * Prepares and displays task details for editing.
  * - Retrieves the task details based on the current displayed task ID.
  * - Updates the task details in the display.
@@ -253,27 +263,6 @@ function reverseForLowBtn() {
     document.getElementById('board_clicked_urgent_btn').classList.add('d-none');
     document.getElementById('board_clicked_medium_btn').classList.add('d-none');
     document.getElementById('board_medium_btn').classList.remove('d-none');
-    document.getElementById('board_urgent_btn').classList.remove('d-none');
-    document.getElementById('board_low_btn').classList.remove('d-none');
-}
-
-/**
- * Reverses the visibility of buttons for the 'medium' priority.
- */
-function reverseForMediumBtn() {
-    document.getElementById('board_clicked_urgent_btn').classList.add('d-none');
-    document.getElementById('board_clicked_low_btn').classList.add('d-none');
-    document.getElementById('board_urgent_btn').classList.remove('d-none');
-    document.getElementById('board_low_btn').classList.remove('d-none');
-}
-
-/**
- * Reverses the visibility of buttons for the 'urgent' priority.
- * Hides 'medium' and 'low' clicked buttons, and shows the 'urgent' and 'low' buttons.
- */
-function reverseForUrgentBtn() {
-    document.getElementById('board_clicked_medium_btn').classList.add('d-none');
-    document.getElementById('board_clicked_low_btn').classList.add('d-none');
     document.getElementById('board_urgent_btn').classList.remove('d-none');
     document.getElementById('board_low_btn').classList.remove('d-none');
 }
@@ -436,6 +425,18 @@ function getBoardInputValues() {
 function getInputElementValue(elementId) {
     return document.getElementById(elementId).value;
 }
+
+/**
+ * Reverses the visibility of buttons for the 'urgent' priority.
+ * Hides 'medium' and 'low' clicked buttons, and shows the 'urgent' and 'low' buttons.
+ */
+function reverseForUrgentBtn() {
+    document.getElementById('board_clicked_medium_btn').classList.add('d-none');
+    document.getElementById('board_clicked_low_btn').classList.add('d-none');
+    document.getElementById('board_urgent_btn').classList.remove('d-none');
+    document.getElementById('board_low_btn').classList.remove('d-none');
+}
+
 
 /**
  * Retrieves information about subtask items present in the board overlay.

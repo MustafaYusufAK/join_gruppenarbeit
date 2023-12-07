@@ -16,7 +16,6 @@ async function initForBoard() {
     await loadContacts();
     generateSideBar();
     showTasks();
-    restoreTasksFromLocalStorage();
     sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
     addTaskOverlayClickEventlisteners();
     createContactDropdown();
@@ -70,7 +69,7 @@ async function sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwa
     } else {
         clearSortTasks();
     }
-    await saveTasks()
+    await saveTasks();
     await saveTasksCategory(tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
 }
 
@@ -207,11 +206,10 @@ function finalizeBoardState() {
     setTimeout(() => {
         closeOverlay();
         showTasks();
-        restoreTasksFromLocalStorage();
         sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
         emptyArrays();
     }, 1500);
-    clearAddTaskFields();
+    forClearAddTaskWithBtn();
 }
 
 /**
@@ -262,7 +260,6 @@ function emptyHandleNewCategoryArray() {
 function addTaskFromOverlay() {
     event.preventDefault();
     const { categorySelect, categoryColors, description, createdAt, title, newCategoryContainer, newCategoryInput, newCategoryColor, subtaskItems } = declareVariables();
-
     if (!newCategoryContainer.classList.contains('d-none')) {
         handleNewCategoryValidation(newCategoryInput, newCategoryColor);
     } else if (categorySelect === 'Select task category') {
@@ -517,8 +514,6 @@ function initializeDragAndDrop() {
  * Shows tasks by clearing task containers, displaying tasks, and initializing drag and drop.
  */
 function showTasks() {
-    createSpecificNoTaskDivs();
-    createNoTaskDiv();
     const taskContainer = document.getElementById('target-to-do-table');
     const feedbackTaskContainer = document.getElementById('target-await-feedback-table');
     const inProgressContainer = document.getElementById('target-in-progress-table');

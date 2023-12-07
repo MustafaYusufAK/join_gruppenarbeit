@@ -169,6 +169,12 @@ function getCategoryInfo() {
     return { categoryInfo };
 }
 
+/**
+ * Retrieves the background color of the selected category.
+ *
+ * @returns {Object} An object containing the background color of the selected category.
+ * @property {string} categoryColor - The background color of the selected category.
+ */
 function getCategoryColor() {
     const categorySelect = document.getElementById('category');
     const categoryColor = categorySelect ? categorySelect.querySelector('.categoryColor').style.backgroundColor : '';
@@ -368,34 +374,15 @@ function removeStylefromPrirorityButton() {
     const urgentBtn = document.getElementById('normal_urgent_btn');
     const mediumBtn = document.getElementById('normal_medium_btn');
     const lowBtn = document.getElementById('normal_low_btn');
-    if (urgentBtn) {
+    if (urgentBtn) 
         urgentBtn.classList.remove('d-none');
-    }
-    if (mediumBtn) {
+    if (mediumBtn)
         mediumBtn.classList.remove('d-none');
-    }
-    if (lowBtn) {
+    if (lowBtn)
         lowBtn.classList.remove('d-none');
-    }
 }
 
-/**
- * reset style from prirorty Button
- */
-function addStylefromPrirorityButton() {
-    const urgentBtn = document.getElementById('clicked_urgent_btn');
-    const mediumBtn = document.getElementById('clicked_medium_btn');
-    const lowBtn = document.getElementById('clicked_low_btn');
-    if (urgentBtn) {
-        urgentBtn.classList.add('d-none');
-    }
-    if (mediumBtn) {
-        mediumBtn.classList.add('d-none');
-    }
-    if (lowBtn) {
-        lowBtn.classList.add('d-none');
-    }
-}
+
 
 /**
  * add style from prirorty Button
@@ -422,6 +409,21 @@ function showNotification() {
     } else {
         showFinalNotification();
     }
+}
+
+/**
+ * reset style from prirorty Button
+ */
+function addStylefromPrirorityButton() {
+    const urgentBtn = document.getElementById('clicked_urgent_btn');
+    const mediumBtn = document.getElementById('clicked_medium_btn');
+    const lowBtn = document.getElementById('clicked_low_btn');
+    if (urgentBtn)
+        urgentBtn.classList.add('d-none');
+    if (mediumBtn)
+        mediumBtn.classList.add('d-none');
+    if (lowBtn)
+        lowBtn.classList.add('d-none');
 }
 
 /**
@@ -503,6 +505,5 @@ function clearInputFields() {
     closeCategoryDropdown();
     resetTaskInformation();
     clear();
-    resetPriorityButtons();
     clearSubtasks();
 }

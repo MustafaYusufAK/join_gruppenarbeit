@@ -87,3 +87,25 @@ function styleCheckbox(checkbox) {
     checkbox.type = 'checkbox';
     checkbox.classList.add('subtask-checkbox');
 }
+
+function resetPriorityButtonsAddTask() {
+    const buttons = ['urgent', 'medium', 'low'];
+    buttons.forEach(button => {
+        const normalBtn = document.getElementById(`normal_${button}_btn`);
+        const clickedBtn = document.getElementById(`clicked_${button}_btn`);
+        normalBtn.classList.remove('d-none');
+        clickedBtn.classList.add('d-none');
+    });
+}
+
+/**
+ * Clears all the fields and arrays used for adding tasks.
+ */
+function clearAddTaskFields() {
+    clearInputFields();
+    resetPriorityButtonsAddTask();
+    resetAssignedField();
+    clearDateInput();
+    clearSubtasks();
+    clearAddTaskArrays();
+}

@@ -17,50 +17,6 @@ function onDragEnd(event) {
 }
 
 /**
- * Moves a task to a target container.
- * Updates the task status in local storage and sorts tasks into arrays.
- * @param {string} taskId - The task ID.
- * @param {string} targetContainerId - The target container ID.
- */
-function moveTo(taskId, targetContainerId) {
-    const taskDiv = document.getElementById(taskId);
-    const targetContainer = document.getElementById(targetContainerId);
-    if (taskDiv && targetContainer) {
-        targetContainer.appendChild(taskDiv);
-        updateTaskStatusInLocalStorage(taskId, targetContainerId);
-    }
-}
-
-/**
- * Updates the task status in local storage.
- * @param {string} taskId - The task ID.
- * @param {string} targetContainerId - The target container ID.
- */
-function updateTaskStatusInLocalStorage(taskId, targetContainerId) {
-    tasksToDo = [];
-    tasksInProgress = [];
-    tasksAwaitFeedback = [];
-    tasksDone = [];
-    let tasksStatus = JSON.parse(localStorage.getItem('tasksStatus')) || {};
-    tasksStatus[taskId] = targetContainerId;
-    localStorage.setItem('tasksStatus', JSON.stringify(tasksStatus));
-}
-
-/**
- * Restores tasks from local storage.
- */
-function restoreTasksFromLocalStorage() {
-    const tasksStatus = JSON.parse(localStorage.getItem('tasksStatus'));
-    if (tasksStatus) {
-        for (const taskId in tasksStatus) {
-            const targetContainerId = tasksStatus[taskId];
-            moveTo(taskId, targetContainerId);
-        }
-    }
-}
-
-
-/**
  * Sets the data format on drag start.
  * @param {Event} event - The drag event.
  */
@@ -72,17 +28,61 @@ function onDragStart(event) {
  * Prevents the default behavior and moves the task to the target container on drop.
  * @param {Event} event - The drop event.
  */
-function onDrop(event) {
+async function onDrop(event) {
     event.preventDefault();
     const targetContainer = event.target.closest('.drop-container');
-    if (targetContainer) {
-        const taskId = event.dataTransfer.getData('text/plain');
-        const targetContainerId = targetContainer.id;
-        moveTo(taskId, targetContainerId);
-    }
-    sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
+    const taskIdWithPrefix = event.dataTransfer.getData('text/plain');
+    const taskId = taskIdWithPrefix.split('-')[1];
+    const targetContainerId = targetContainer.id;
+    const targetArray = getTargetArrayFromContainerId(targetContainerId, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
+    moveTaskToContainer(taskId, targetArray);
     event.target.classList.remove('drag-over');
 }
+
+/**
+ * Moves a task with the specified ID to the provided target array and updates its container.
+ *
+ * @param {string} taskId - The ID of the task to be moved.
+ * @param {Array} targetArray - The array to which the task will be moved.
+ */
+async function moveTaskToContainer(taskId, targetArray) {
+    const taskIndex = allTasks.findIndex(task => task.id === taskId);
+    if (taskIndex !== -1) {
+        allTasks[taskIndex].inWhichContainer = determineContainerKey(targetArray);
+        targetArray.push(allTasks[taskIndex]);
+        await saveTasks();
+        await saveTasksCategory(tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
+        showTasks();
+    } else {
+        console.error('Task not found in the allTasks array');
+    }
+}
+
+/**
+ * Determines and returns the target array based on the provided container ID.
+ *
+ * @param {string} containerId - The ID of the container.
+ * @param {Array} tasksToDo - The array for tasks in the "To Do" category.
+ * @param {Array} tasksInProgress - The array for tasks in progress.
+ * @param {Array} tasksAwaitFeedback - The array for tasks awaiting feedback.
+ * @param {Array} tasksDone - The array for completed tasks.
+ * @returns {Array|null} The target array corresponding to the provided container ID, or null if not found.
+ */
+function getTargetArrayFromContainerId(containerId, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone) {
+    switch (containerId) {
+        case 'target-to-do-table':
+            return tasksToDo;
+        case 'target-in-progress-table':
+            return tasksInProgress;
+        case 'target-await-feedback-table':
+            return tasksAwaitFeedback;
+        case 'target-done-table':
+            return tasksDone;
+        default:
+            return null;
+    }
+}
+
 
 /**
  * Allows dropping elements and highlights the target container during drag over.
@@ -121,9 +121,8 @@ async function deleteTask(taskId) {
         console.error('Task not found for deletion');
     clearSortTasks();
     sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
-    await saveTasksCategory(tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone)
+    await saveTasksCategory(tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
     await saveTasks();
-
 }
 
 /**
@@ -190,7 +189,7 @@ async function moveTaskToCategory(taskArray, newArray) {
             await saveTasks();
             await saveTasksCategory();
             showTasks();
-        } else 
+        } else
             console.error('Task not found in the old array');
     } else
         console.error('Invalid task array or new array');
@@ -233,7 +232,7 @@ function findTaskArray(taskId) {
             return tasksAwaitFeedback;
         } else if (tasksDone.includes(task)) {
             return tasksDone;
-        } else 
+        } else
             return null;
     } else
         return null;
@@ -464,7 +463,6 @@ function displayTasks(taskContainer, feedbackTaskContainer, inProgressContainer,
         checkProgressBar(taskId, progressBarId);
     });
     initializeDragAndDrop();
-    restoreTasksFromLocalStorage();
     sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
 }
 

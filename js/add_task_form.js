@@ -55,16 +55,7 @@ function openCategoryDropdown() {
     });
 }
 
-/**
- * Handles the creation of a new category.
- */
-function newCategory() {
-    closeCategoryDropdown();
-    document.getElementById('newCategoryContainer').classList.remove('d-none');
-    document.getElementById('newCategoryColors').classList.remove('d-none');
-    document.getElementById('category').style.display = 'none';
-    document.getElementById('category').classList.add('d-none');
-}
+
 
 /**
  * Handles the creation of a new category in the overlay.
@@ -76,17 +67,7 @@ function newCategoryOverlay() {
     document.getElementById('categoryOverlay').style.display = 'none';
 }
 
-/**
- * Cancels the creation of a new category in the overlay.
- */
-function cancelNewCategoryOverlay() {
-    document.getElementById('newCategoryInputOverlay').value = '';
-    document.getElementById('newCategoryColorOverlay').style.backgroundColor = '';
-    document.getElementById('newCategoryContainerOverlay').classList.add('d-none');
-    document.getElementById('newCategoryColorsOverlay').classList.add('d-none');
-    document.getElementById('categoryOverlay').style.display = 'flex';
-    document.getElementById('categoryOverlay').innerHTML = 'Select task category';
-}
+
 
 /**
  * Closes the category dropdown.
@@ -117,6 +98,18 @@ function closeCategoryDropdown() {
  */
 function addColorToNewCategory(color) {
     document.getElementById('newCategoryColor').style.backgroundColor = color;
+}
+
+/**
+ * Cancels the creation of a new category in the overlay.
+ */
+function cancelNewCategoryOverlay() {
+    document.getElementById('newCategoryInputOverlay').value = '';
+    document.getElementById('newCategoryColorOverlay').style.backgroundColor = '';
+    document.getElementById('newCategoryContainerOverlay').classList.add('d-none');
+    document.getElementById('newCategoryColorsOverlay').classList.add('d-none');
+    document.getElementById('categoryOverlay').style.display = 'flex';
+    document.getElementById('categoryOverlay').innerHTML = 'Select task category';
 }
 
 /**
@@ -165,6 +158,28 @@ function assignOptionIDs() {
  * Clears specific input fields and resets associated arrays.
  */
 function clear() {
+    emptyValue();
+    resetAssignedField();
+    priorityArray = [];
+    removeStylefromPrirorityButton();
+    addStylefromPrirorityButton();
+}
+
+/**
+ * Handles the creation of a new category.
+ */
+function newCategory() {
+    closeCategoryDropdown();
+    document.getElementById('newCategoryContainer').classList.remove('d-none');
+    document.getElementById('newCategoryColors').classList.remove('d-none');
+    document.getElementById('category').style.display = 'none';
+    document.getElementById('category').classList.add('d-none');
+}
+
+/**
+ * Empties the values of various input and select fields on the page.
+ */
+function emptyValue() {
     const titleInput = document.getElementById('title');
     const descriptionInput = document.getElementById('description_text');
     titleInput.value = '';
@@ -177,10 +192,6 @@ function clear() {
     dueDateInput.value = '';
     const subtask = document.getElementById('subtaskList');
     subtask.innerHTML = '';
-    resetAssignedField();
-    priorityArray = [];
-    removeStylefromPrirorityButton();
-    addStylefromPrirorityButton();
 }
 
 /**

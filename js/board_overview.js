@@ -10,11 +10,10 @@ function findTask() {
         const taskText = headline.textContent.toLowerCase();
         const description = container.querySelector('.pinned-task-discription');
         const taskDescription = description.textContent.toLowerCase();
-        if (taskText.includes(searchInput) || taskDescription.includes(searchInput)) {
+        if (taskText.includes(searchInput) || taskDescription.includes(searchInput))
             container.classList.remove('d-none');
-        } else {
+         else
             container.classList.add('d-none');
-        }
     });
 }
 
@@ -60,6 +59,17 @@ function updateProgressBar(taskId) {
     const totalSubtasksCount = subtasksStatusArray.length;
     const progressPercentage = (filledSubtasksCount / totalSubtasksCount) * 100;
     progressBar.style.width = `${progressPercentage}%`;
+}
+
+/**
+ * Adds a task for the "In Progress" category and opens the overlay.
+ */
+function addTaskForInProgress() {
+    const overlaySection = document.getElementById('addTaskOverlaySection');
+    const overlay = document.getElementById('add-task-form');
+    overlay.classList.add('slide-in');
+    overlaySection.classList.remove('d-none');
+    inWhichContainer.push('in-Progress-Container');
 }
 
 /**
@@ -118,7 +128,6 @@ function calculateProgress(subtasksStatusArray, subtasks, progressBarId) {
     const progressPercentage = (filledSubtasksCount / subtasks.length) * 100;
     const progressBar = document.getElementById(`progress-bar-${progressBarId}`);
     const progressBarCounter = document.getElementById(`progress-bar-counter-${progressBarId}`);
-
     if (progressBar && progressBarCounter) {
         progressBarCounter.innerText = `${filledSubtasksCount}/${subtasks.length}`;
         progressBar.style.transition = 'width 0.5s ease';
@@ -138,12 +147,9 @@ function checkProgressBar(taskId, progressBarId) {
     const task = allTasks.find(task => task.id === taskId);
     const progressBar = document.getElementById(`progress-bar-${progressBarId}`);
     const progressBarCounter = document.getElementById(`progress-bar-counter-${progressBarId}`);
-
     if (!task || !progressBar || !progressBarCounter) return;
-
     const subtasks = task.subtasks || [];
     const subtasksStatusArray = task.subtasksStatusArray || [];
-
     calculateProgress(subtasksStatusArray, subtasks, progressBarId);
 }
 
@@ -181,18 +187,6 @@ function clearAddTaskArrays() {
 }
 
 /**
- * Clears all the fields and arrays used for adding tasks.
- */
-function clearAddTaskFields() {
-    clearInputFields();
-    resetAssignedField();
-    clearDateInput();
-    resetPriorityButtons();
-    clearSubtasks();
-    clearAddTaskArrays();
-}
-
-/**
  * Changes the icon of the clear button to the default state.
  * @param {string} IdHover - The ID of the button in the hover state.
  * @param {string} IdDefault - The ID of the button in the default state.
@@ -220,28 +214,6 @@ function openOverlay() {
     const overlay = document.getElementById('add-task-form');
     overlay.classList.add('slide-in');
     overlaySection.classList.remove('d-none');
-}
-
-/**
- * Adds a task for the "To-Do" category and opens the overlay.
- */
-function addTaskForToDo() {
-    const overlaySection = document.getElementById('addTaskOverlaySection');
-    const overlay = document.getElementById('add-task-form');
-    overlay.classList.add('slide-in');
-    overlaySection.classList.remove('d-none');
-    inWhichContainer.push('for-To-Do-Container'); // Füge 'for-To-Do-Container' zum Array hinzu
-}
-
-/**
- * Adds a task for the "In Progress" category and opens the overlay.
- */
-function addTaskForInProgress() {
-    const overlaySection = document.getElementById('addTaskOverlaySection');
-    const overlay = document.getElementById('add-task-form');
-    overlay.classList.add('slide-in');
-    overlaySection.classList.remove('d-none');
-    inWhichContainer.push('in-Progress-Container');
 }
 
 /**
@@ -290,6 +262,17 @@ function updateTaskDetailsInArray(descriptionText, title, dueDate, taskIndex, up
     task.assignedShortValues = assignedShortValues.slice();
     task.assignedToColors = assignedToColors.slice();
     task.subtasksStatusArray = subtasksStatusArray;
+}
+
+/**
+ * Adds a task for the "To-Do" category and opens the overlay.
+ */
+function addTaskForToDo() {
+    const overlaySection = document.getElementById('addTaskOverlaySection');
+    const overlay = document.getElementById('add-task-form');
+    overlay.classList.add('slide-in');
+    overlaySection.classList.remove('d-none');
+    inWhichContainer.push('for-To-Do-Container'); // Füge 'for-To-Do-Container' zum Array hinzu
 }
 
 /**
@@ -409,7 +392,6 @@ async function updateTaskAndSave(taskIndex, taskDetails, assigneeDetails, update
     currentTaskId = [];
     closeTaskOverviewPopUp();
     showTasks();
-    restoreTasksFromLocalStorage();
     sortTaskIntoArrays(allTasks, tasksToDo, tasksInProgress, tasksAwaitFeedback, tasksDone);
 }
 
