@@ -43,16 +43,6 @@ async function getItem(key) {
     return await fetch(url).then(res => res.json().then(res => res.data.value));
 }
 
-// async function getItem(key) {
-//     const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
-//     const response = await fetch(url);
-//     if(response.ok) {
-//         return await fetch(url).then(res => res.json().then(res => res.data.value));
-//     } else {
-//         return [];
-//     }
-// }
-
 //------------------------------------------------------------------------------//
 //-----------------------------get Username from URL----------------------------//
 //------------------------------------------------------------------------------//
@@ -164,10 +154,6 @@ async function deleteUser(email) {
  * @async
  */
 async function saveContacts() {
-    // let users = JSON.parse(await getItem('users'));
-    // let userName = getUserName();
-    // let userIndex = users.findIndex(u => u.name === userName);
-    // users[userIndex].contacts = contacts;
     await setItem('contacts', JSON.stringify(contacts));
 }
 
@@ -181,15 +167,6 @@ async function saveContacts() {
  * @async
  */
 async function loadContacts() {
-    // let users = JSON.parse(await getItem('users'));
-    // let userName = getUserName();
-    // let userIndex = users.findIndex(u => u.name === userName);
-    // let userContacts = users[userIndex].contacts
-    // if (userContacts == undefined) {
-    //     contacts = []
-    // } else {
-    //     contacts = userContacts
-    // }
     contacts = JSON.parse(await getItem('contacts'));
 }
 
